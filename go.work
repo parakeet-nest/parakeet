@@ -1,0 +1,10 @@
+go 1.22.1
+
+use(
+    examples/01-generate
+    examples/02-generate-stream
+    examples/03-chat
+    examples/04-chat-stream
+    examples/05-context
+    examples/06-summary
+)
