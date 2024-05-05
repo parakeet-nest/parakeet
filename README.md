@@ -245,13 +245,3 @@ func main() {
 	}
 }
 ```
-
-
-## Use Jupyter Lab
-> prerequisites: open this project with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/tutorial)
-
-```bash
-pipx run jupyter lab
-# wait for some seconds for the server to start
-# open http://localhost:8888/lab with the proposed token
-```
