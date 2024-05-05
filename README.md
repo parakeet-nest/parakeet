@@ -1,4 +1,4 @@
-# 🦜 Parakeet
+# 🦜🪺 Parakeet
 
 Parakeet is the simplest Go library to create **GenAI apps** with [Ollma](https://ollama.com/).
 
