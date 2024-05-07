@@ -298,6 +298,8 @@ documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 
 ### Bbolt vector store
 
+**[Bbolt](https://github.com/etcd-io/bbolt)** is an embedded key/value database for Go.
+
 **Create a store, and open an existing store**:
 ```golang
 store := embeddings.BboltVectorStore{}
