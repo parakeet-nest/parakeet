@@ -295,3 +295,9 @@ documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 ```
 
 > 👀 you will find a complete example in `examples/08-embeddings`
+
+
+## Demos
+
+- https://github.com/parakeet-nest/parakeet-demo
+- https://github.com/parakeet-nest/tiny-genai-stack
