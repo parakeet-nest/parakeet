@@ -1,6 +1,6 @@
 {
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Gitpod Dark",
+    "workbench.colorTheme": "Catppuccin Frappé",
     "editor.fontSize": 16,
     "terminal.integrated.fontSize": 16,
     "editor.insertSpaces": true,

@@ -296,6 +296,17 @@ documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 
 > 👀 you will find a complete example in `examples/08-embeddings`
 
+### Bbolt vector store
+
+**Create a store, and open an existing store**:
+```golang
+store := embeddings.BboltVectorStore{}
+store.Initialize("../embeddings.db")
+```
+
+> 👀 you will find a complete example in `examples/09-embeddings`
+> - `examples/09-embeddings/create-embeddings`: create and populate the vector store
+> - `examples/09-embeddings/use-embeddings`: search similarities in the vector store
 
 ## Demos
 

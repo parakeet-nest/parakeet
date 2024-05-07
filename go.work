@@ -9,4 +9,5 @@ use(
     examples/06-summary
     examples/07-explain
     examples/08-embeddings
+    examples/09-embeddings/create-embeddings
 )

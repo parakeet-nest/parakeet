@@ -73,9 +73,9 @@ type Query struct {
 /* Embeddings */
 
 type VectorRecord struct {
-	Id        string
-	Prompt    string
-	Embedding []float64
+	Id        string `json:"id"`
+	Prompt    string `json:"prompt"`
+	Embedding []float64 `json:"embedding"`
 }
 
 type Query4Embedding struct {
