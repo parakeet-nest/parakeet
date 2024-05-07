@@ -12,7 +12,9 @@ func main() {
 	//ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	ollamaUrl := "http://host.docker.internal:11434"
-	model := "phi3"
+	//model := "phi3"
+	model := "qwen:0.5b"
+	// https://ollama.com/library/qwen:0.5b
 
 	systemContent := `    You are an AI assistant. Your name is Seven. 
 	Some people are calling you Seven of Nine.

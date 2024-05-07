@@ -1,6 +1,6 @@
 # 🦜🪺 Parakeet
 
-Parakeet is the simplest Go library to create **GenAI apps** with [Ollma](https://ollama.com/).
+Parakeet is the simplest Go library to create **GenAI apps** with **[Ollma](https://ollama.com/)**.
 
 > A GenAI app is an application that uses generative AI technology. Generative AI can create new text, images, or other content based on what it's been trained on. So a GenAI app could help you write a poem, design a logo, or even compose a song! These are still under development, but they have the potential to be creative tools for many purposes. - [Gemini](https://gemini.google.com)
 
@@ -245,3 +245,53 @@ func main() {
 	}
 }
 ```
+
+## Embeddings
+
+### Create embeddings
+
+```golang
+embedding, err := embeddings.CreateEmbedding(
+	ollamaUrl,
+	llm.Query4Embedding{
+		Model:  "all-minilm",
+		Prompt: "Jean-Luc Picard is a fictional character in the Star Trek franchise.",
+	},
+	"Picard", // identifier
+)
+```
+
+## Vector stores
+
+A vector store allows to store and search for embeddings in an efficient way.
+
+### In memory vector store
+
+**Create a store**:
+```golang
+store := embeddings.MemoryVectorStore{
+	Records: make(map[string]llm.VectorRecord),
+}
+```
+
+**Save embeddings**:
+```golang
+store.Save(embedding)
+```
+
+**Search embeddings**:
+```golang
+embeddingFromQuestion, err := embeddings.CreateEmbedding(
+	ollamaUrl,
+	llm.Query4Embedding{
+		Model:  "all-minilm",
+		Prompt: "Who is Jean-Luc Picard?",
+	},
+	"question",
+)
+similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
+
+documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
+```
+
+> 👀 you will find a complete example in `examples/08-embeddings`

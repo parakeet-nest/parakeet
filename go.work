@@ -7,4 +7,6 @@ use(
     examples/04-chat-stream
     examples/05-context
     examples/06-summary
+    examples/07-explain
+    examples/08-embeddings
 )

@@ -69,3 +69,17 @@ type Query struct {
 // TODO:
 // Format
 // KeepAlive
+
+/* Embeddings */
+
+type VectorRecord struct {
+	Id        string
+	Prompt    string
+	Embedding []float64
+}
+
+type Query4Embedding struct {
+	Prompt string `json:"prompt"`
+	Model  string `json:"model"`
+}
+
