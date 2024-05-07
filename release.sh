@@ -6,6 +6,8 @@ Todo:
 - update of release.env:
   - TAG
   - ABOUT
+
+Remark: delete tag: git tag -d v0.0.1
 COMMENT
 
 read -r -d '' PARAKEET_MAIN <<- EOM
