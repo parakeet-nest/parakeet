@@ -8,6 +8,11 @@ use(
     examples/05-context
     examples/06-summary
     examples/07-explain
-    examples/08-embeddings
-    examples/09-embeddings/create-embeddings
+    examples/08-embeddings-memory
+    examples/09-embeddings-bbolt/create-embeddings
+    examples/09-embeddings-bbolt/use-embeddings
+    examples/09-embeddings-bbolt/embeddins-from-txt
+    examples/10-chat-conversational-memory
+    examples/11-chat-conversational-bbolt/begin
+    examples/11-chat-conversational-bbolt/resume
 )

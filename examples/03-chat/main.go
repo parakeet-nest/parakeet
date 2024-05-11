@@ -37,7 +37,6 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: options,
-		Stream: false,
 	}
 
 	answer, err := completion.Chat(ollamaUrl, query)

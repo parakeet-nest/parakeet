@@ -6,11 +6,11 @@ type MemoryVectorStore struct {
 	Records map[string]llm.VectorRecord
 }
 
-func (mvs MemoryVectorStore) Get(id string) (llm.VectorRecord, error) {
+func (mvs *MemoryVectorStore) Get(id string) (llm.VectorRecord, error) {
 	return mvs.Records[id], nil
 }
 
-func (mvs MemoryVectorStore) GetAll() ([]llm.VectorRecord, error) {
+func (mvs *MemoryVectorStore) GetAll() ([]llm.VectorRecord, error) {
 	var records []llm.VectorRecord
 	for _, record := range mvs.Records {
 		records = append(records, record)
@@ -18,7 +18,7 @@ func (mvs MemoryVectorStore) GetAll() ([]llm.VectorRecord, error) {
 	return records, nil
 }
 
-func (mvs MemoryVectorStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
+func (mvs *MemoryVectorStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
 	mvs.Records[vectorRecord.Id] = vectorRecord
 	return vectorRecord, nil
 }
@@ -31,7 +31,7 @@ func (mvs MemoryVectorStore) Save(vectorRecord llm.VectorRecord) (llm.VectorReco
 // Returns:
 //   - llm.VectorRecord: The vector record with the maximum similarity.
 //   - error: Error if any.
-func (mvs MemoryVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.VectorRecord) (llm.VectorRecord, error) {
+func (mvs *MemoryVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.VectorRecord) (llm.VectorRecord, error) {
 
 	var maxDistance float64 = -1.0
 	var selectedKeyRecord string
@@ -57,7 +57,7 @@ func (mvs MemoryVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vecto
 // Returns:
 //   - []llm.VectorRecord: a slice of vector records that have a cosine distance similarity greater than or equal to the limit.
 //   - error: an error if any occurred during the search.
-func (mvs MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64) ([]llm.VectorRecord, error) {
+func (mvs *MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64) ([]llm.VectorRecord, error) {
 
 	var records []llm.VectorRecord
 

@@ -10,6 +10,12 @@ type Message struct {
 	Content string `json:"content"`
 }
 
+type MessageRecord struct {
+	Id      string `json:"id"`
+	Role    string `json:"role"`
+	Content string `json:"content"`
+}
+
 type Answer struct {
 	Model    string  `json:"model"`
 	Message  Message `json:"message"` // For Chat Completion
@@ -66,6 +72,7 @@ type Query struct {
 	Prompt   string    `json:"prompt"`  // For "Simple" Completion
 	Context  []int     `json:"context"` // For "Simple" Completion
 }
+
 // TODO:
 // Format
 // KeepAlive
@@ -73,8 +80,8 @@ type Query struct {
 /* Embeddings */
 
 type VectorRecord struct {
-	Id        string `json:"id"`
-	Prompt    string `json:"prompt"`
+	Id        string    `json:"id"`
+	Prompt    string    `json:"prompt"`
 	Embedding []float64 `json:"embedding"`
 }
 
@@ -82,4 +89,3 @@ type Query4Embedding struct {
 	Prompt string `json:"prompt"`
 	Model  string `json:"model"`
 }
-

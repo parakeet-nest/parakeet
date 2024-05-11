@@ -34,7 +34,6 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: options,
-		Stream:  false,
 	}
 
 	_, err := completion.ChatStream(ollamaUrl, query,

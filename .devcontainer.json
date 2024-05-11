@@ -10,7 +10,8 @@
                 "pomdtr.excalidraw-editor",
                 "Codeium.codeium",
                 "Tobermory.es6-string-html",
-                "marp-team.marp-vscode"
+                "marp-team.marp-vscode",
+                "vallyscode.crayons"
             ]
         }
     },

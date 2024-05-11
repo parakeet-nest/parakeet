@@ -10,9 +10,9 @@ import (
 )
 
 func main() {
-	//ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "http://localhost:11434"
 	// if working from a container
-	ollamaUrl := "http://host.docker.internal:11434"
+	//ollamaUrl := "http://host.docker.internal:11434"
 	//ollamaUrl := "http://bob.local:11434"
 	var embeddingsModel = "all-minilm" // This model is for the embeddings of the documents
 	var smallChatModel = "qwen:0.5b"   // This model is for the chat completion

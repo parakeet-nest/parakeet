@@ -63,6 +63,14 @@ func (bvs *BboltVectorStore) Save(vectorRecord llm.VectorRecord) (llm.VectorReco
 	return vectorRecord, nil
 }
 
+// SearchMaxSimilarity searches for the vector record in the BboltVectorStore that has the maximum cosine distance similarity to the given embeddingFromQuestion.
+//
+// Parameters:
+// - embeddingFromQuestion: the vector record to compare similarities with.
+//
+// Returns:
+// - llm.VectorRecord: the vector record with the maximum cosine distance similarity.
+// - error: an error if any occurred during the search.
 func (bvs *BboltVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.VectorRecord) (llm.VectorRecord, error) {
 	var maxDistance float64 = -1.0
 	var selectedKeyRecord string
@@ -84,6 +92,15 @@ func (bvs *BboltVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vecto
 
 }
 
+// SearchSimilarities searches for vector records in the BboltVectorStore that have a cosine distance similarity greater than or equal to the given limit.
+//
+// Parameters:
+//   - embeddingFromQuestion: the vector record to compare similarities with.
+//   - limit: the minimum cosine distance similarity threshold.
+//
+// Returns:
+//   - []llm.VectorRecord: a slice of vector records that have a cosine distance similarity greater than or equal to the limit.
+//   - error: an error if any occurred during the search.
 func (bvs *BboltVectorStore) SearchSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64) ([]llm.VectorRecord, error) {
 
 	records, err := bvs.GetAll()
