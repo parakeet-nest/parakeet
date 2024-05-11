@@ -1,3 +1,9 @@
+/*
+Topic: Parakeet
+Use history.BboltMessages{} to handle the conversational history in a Bbolt bucket
+with Ollama and parakeet
+*/
+
 package main
 
 import (

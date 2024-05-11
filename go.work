@@ -11,8 +11,10 @@ use(
     examples/08-embeddings-memory
     examples/09-embeddings-bbolt/create-embeddings
     examples/09-embeddings-bbolt/use-embeddings
-    examples/09-embeddings-bbolt/embeddins-from-txt
+    examples/09-embeddings-bbolt/embeddings-from-txt
     examples/10-chat-conversational-memory
     examples/11-chat-conversational-bbolt/begin
     examples/11-chat-conversational-bbolt/resume
+    demo/embeddings-from-code
+    demo/search
 )

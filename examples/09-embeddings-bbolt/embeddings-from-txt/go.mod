@@ -2,7 +2,7 @@ module 09-embeddings-from-txt
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.0.2
+require github.com/parakeet-nest/parakeet v0.0.3
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect

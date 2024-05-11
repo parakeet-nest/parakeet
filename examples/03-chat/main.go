@@ -1,3 +1,9 @@
+/*
+Topic: Parakeet
+Generate a chat completion with Ollama and parakeet
+no streaming
+*/
+
 package main
 
 import (

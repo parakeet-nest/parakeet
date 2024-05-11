@@ -1,4 +1,4 @@
-module 09-embeddings-use
+module demo-embeddings-from-code
 
 go 1.22.1
 
@@ -9,4 +9,4 @@ require (
 	golang.org/x/sys v0.20.0 // indirect
 )
 
-replace github.com/parakeet-nest/parakeet => ../../..
+replace github.com/parakeet-nest/parakeet => ../..

@@ -1,3 +1,9 @@
+/*
+Topic: Parakeet
+Generate a simple completion with Ollama and parakeet
+The output is streamed
+*/
+
 package main
 
 import (

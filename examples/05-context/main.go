@@ -1,3 +1,9 @@
+/*
+Topic: Parakeet
+Use the context in a system message to make the completion (theanswer of the LLM) more accurate
+with Ollama and parakeet
+*/
+
 package main
 
 import (

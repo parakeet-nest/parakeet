@@ -1,3 +1,8 @@
+/*
+Topic: Parakeet
+Use history.MemoryMessages to handle the conversational history in memory
+with Ollama and parakeet
+*/
 package main
 
 import (
