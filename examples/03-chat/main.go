@@ -15,9 +15,9 @@ import (
 )
 
 func main() {
-	//ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "http://localhost:11434"
 	// if working from a container
-	ollamaUrl := "http://host.docker.internal:11434"
+	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "deepseek-coder"
 
 	systemContent := `You are an expert in computer programming.

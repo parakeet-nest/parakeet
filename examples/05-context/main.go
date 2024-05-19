@@ -15,9 +15,9 @@ import (
 )
 
 func main() {
-	//ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "http://localhost:11434"
 	// if working from a container
-	ollamaUrl := "http://host.docker.internal:11434"
+	//ollamaUrl := "http://host.docker.internal:11434"
 	//model := "phi3"
 	model := "qwen:0.5b"
 	// https://ollama.com/library/qwen:0.5b

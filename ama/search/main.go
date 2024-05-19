@@ -15,20 +15,19 @@ func main() {
 	//ollamaUrl := "http://host.docker.internal:11434"
 	//ollamaUrl := "http://bob.local:11434"
 	
-	var embeddingsModel = "magicoder:latest"
-	var smallChatModel = "magicoder:latest"
+	embeddingsModel := "all-minilm"
+	chatModel := "magicoder:latest"
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
 
 	systemContent := `You are a Golang developer and an expert in computer programming.
-	Please make friendly answer for the noobs. Use the provided context to answer.
+	Please make friendly answer for the noobs. Use the provided context and doc to answer.
 	Add source code examples if you can.`
 
 	// Question for the Chat system
 	//userContent := `[Brief] How to create a stream completion with Parakeet?`
-	userContent := `[Brief] How to create a stream chat completion with Parakeet?`
-
+	userContent := `How to create a stream chat completion with Parakeet?`
 
 	// Create an embedding from the user question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
@@ -44,20 +43,15 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	//similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
 
-	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.0)
+	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
 
-	documentsContent := "<context>"
-	for _, similarity := range similarities {
-		documentsContent += fmt.Sprintf("<doc>%s</doc>", similarity.Prompt)
-	}
-	documentsContent += "</context>"
+	documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 
-	fmt.Println("🎉 similarities", similarities)
+	fmt.Println("🎉 similarities", len(similarities))
 
 	query := llm.Query{
-		Model: smallChatModel,
+		Model: chatModel,
 		Messages: []llm.Message{
 			{Role: "system", Content: systemContent},
 			{Role: "system", Content: documentsContent},

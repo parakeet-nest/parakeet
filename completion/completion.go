@@ -83,6 +83,7 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 			onChunk(llm.Answer{})
 		}
 
+		// ? 🤔 and if I used answer + error as a parameter?
 		err = onChunk(answer)
 
 		// generate an error to stop the stream

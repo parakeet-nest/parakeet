@@ -15,6 +15,7 @@ use(
     examples/10-chat-conversational-memory
     examples/11-chat-conversational-bbolt/begin
     examples/11-chat-conversational-bbolt/resume
-    demo/embeddings-from-code
-    demo/search
+    ama/embeddings-from-code
+    ama/search
+    prompting/01-draft
 )

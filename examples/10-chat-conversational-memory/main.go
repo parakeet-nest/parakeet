@@ -15,10 +15,10 @@ import (
 )
 
 func main() {
-	//ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	ollamaUrl := "http://bob.local:11434" // Pi5
+	//ollamaUrl := "http://bob.local:11434" // Pi5
 
 	//model := "qwen:0.5b" // speed is fast, but the model seems not recognize the history
 	model := "tinydolphin" // fast, and perfect answer (short, brief)

@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	//ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "http://localhost:11434"
 	// if working from a container
-	ollamaUrl := "http://host.docker.internal:11434"
+	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "gemma:2b"
 
 	systemContent := `Your job is to produce a final concise summary of the provided context.`

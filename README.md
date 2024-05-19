@@ -434,6 +434,122 @@ store.Initialize("../embeddings.db")
 > - `examples/09-embeddings-bbolt/create-embeddings`: create and populate the vector store
 > - `examples/09-embeddings-bbolt/use-embeddings`: search similarities in the vector store
 
+
+## Create embeddings from text files and Similarity search
+
+### Create embeddings
+```golang
+ollamaUrl := "http://localhost:11434"
+embeddingsModel := "all-minilm"
+
+store := embeddings.BboltVectorStore{}
+store.Initialize("../embeddings.db")
+
+// Parse all golang source code of the examples
+// Create embeddings from documents and save them in the store
+counter := 0
+_, err := content.ForEachFile("../../examples", ".go", func(path string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("📝 Creating embedding from:", path)
+	counter++
+	embedding, err := embeddings.CreateEmbedding(
+		ollamaUrl,
+		llm.Query4Embedding{
+			Model:  embeddingsModel,
+			Prompt: string(data),
+		},
+		strconv.Itoa(counter), // don't forget the id (unique identifier)
+	)
+	fmt.Println("📦 Created: ", len(embedding.Embedding))
+
+	if err != nil {
+		fmt.Println("😡:", err)
+	} else {
+		_, err := store.Save(embedding)
+		if err != nil {
+			fmt.Println("😡:", err)
+		}
+	}
+	return nil
+})
+if err != nil {
+	log.Fatalln("😡:", err)
+}
+```
+
+### Similarity search
+
+```golang
+ollamaUrl := "http://localhost:11434"
+embeddingsModel := "all-minilm"
+chatModel := "magicoder:latest"
+
+store := embeddings.BboltVectorStore{}
+store.Initialize("../embeddings.db")
+
+systemContent := `You are a Golang developer and an expert in computer programming.
+Please make friendly answer for the noobs. Use the provided context and doc to answer.
+Add source code examples if you can.`
+
+// Question for the Chat system
+userContent := `How to create a stream chat completion with Parakeet?`
+
+// Create an embedding from the user question
+embeddingFromQuestion, err := embeddings.CreateEmbedding(
+	ollamaUrl,
+	llm.Query4Embedding{
+		Model:  embeddingsModel,
+		Prompt: userContent,
+	},
+	"question",
+)
+if err != nil {
+	log.Fatalln("😡:", err)
+}
+fmt.Println("🔎 searching for similarity...")
+
+similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
+
+// Generate the context from the similarities
+// This will generate a string with a content like this one:
+// `<context><doc>...<doc><doc>...<doc></context>`
+documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
+
+fmt.Println("🎉 similarities", len(similarities))
+
+query := llm.Query{
+	Model: chatModel,
+	Messages: []llm.Message{
+		{Role: "system", Content: systemContent},
+		{Role: "system", Content: documentsContent},
+		{Role: "user", Content: userContent},
+	},
+	Options: llm.Options{
+		Temperature: 0.4,
+		RepeatLastN: 2,
+	},
+	Stream: false,
+}
+
+fmt.Println("")
+fmt.Println("🤖 answer:")
+
+// Answer the question
+_, err = completion.ChatStream(ollamaUrl, query,
+	func(answer llm.Answer) error {
+		fmt.Print(answer.Message.Content)
+		return nil
+	})
+
+if err != nil {
+	log.Fatal("😡:", err)
+}
+```
+
 ## Demos
 
 - https://github.com/parakeet-nest/parakeet-demo
