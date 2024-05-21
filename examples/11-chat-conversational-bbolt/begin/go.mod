@@ -2,7 +2,7 @@ module 11-chat-bbolt-begin
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.0.4
+require github.com/parakeet-nest/parakeet v0.0.5
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect
