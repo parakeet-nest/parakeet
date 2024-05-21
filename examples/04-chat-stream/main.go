@@ -29,7 +29,7 @@ func main() {
 	And, please, be structured with bullet points`
 
 	options := llm.Options{
-		Temperature: 0.5, // default (0.8)
+		Temperature: 0.0, // default (0.8)
 		RepeatLastN: 2, // default (64) the default value will "freeze" deepseek-coder
 	}
 
@@ -42,11 +42,15 @@ func main() {
 		Options: options,
 	}
 
-	_, err := completion.ChatStream(ollamaUrl, query,
+	fullAnswer, err := completion.ChatStream(ollamaUrl, query,
 		func(answer llm.Answer) error {
 			fmt.Print(answer.Message.Content)
 			return nil
 		})
+	
+	fmt.Println("📝 Full answer:")
+	fmt.Println(fullAnswer.Message.Role)
+	fmt.Println(fullAnswer.Message.Content)
 
 	if err != nil {
 		log.Fatal("😡:", err)

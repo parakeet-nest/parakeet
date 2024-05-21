@@ -68,8 +68,11 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 	}
 	reader := bufio.NewReader(resp.Body)
 
+	var fullAnswer llm.Answer
 	var answer llm.Answer
 	for {
+		
+
 		line, err := reader.ReadBytes('\n')
 		if err != nil {
 			if err == io.EOF {
@@ -82,16 +85,18 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 		if err != nil {
 			onChunk(llm.Answer{})
 		}
-
+		fullAnswer.Message.Content += answer.Message.Content
+		
 		// ? 🤔 and if I used answer + error as a parameter?
 		err = onChunk(answer)
+
 
 		// generate an error to stop the stream
 		if err != nil {
 			return llm.Answer{}, err
 		}
 	}
-
-	return answer, nil
+	fullAnswer.Message.Role = answer.Message.Role
+	return fullAnswer, nil
 
 }

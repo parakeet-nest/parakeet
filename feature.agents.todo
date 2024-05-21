@@ -1,0 +1,13 @@
+a kind of actor?
+or find anoter name (AIActor, GenAIActor, etc.)
+
+type Agent struct {
+    Instruction
+    Context
+}
+
+methods:
+- TalkToAgent(agent)
+- OnQuestionFromAgent()
+
+Listening -> http, mqtt, ...
