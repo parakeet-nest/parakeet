@@ -54,6 +54,8 @@ type AnswerChat struct {
 - https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion
 - https://github.com/ollama/ollama/blob/main/api/types.go
 - https://github.com/ollama/ollama/blob/main/docs/modelfile.md
+
+- https://github.com/ollama/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values
 */
 
 type Options struct {
@@ -62,8 +64,22 @@ type Options struct {
 	Seed          int      `json:"seed,omitempty"`
 	RepeatPenalty float64  `json:"repeat_penalty,omitempty"`
 	Stop          []string `json:"stop,omitempty"`
+
+	NumKeep          int     `json:"num_keep,omitempty"`
+	NumPredict       int     `json:"num_predict,omitempty"`
+	TopK             int     `json:"top_k,omitempty"`
+	TopP             float64 `json:"top_p,omitempty"`
+	TFSZ             float64 `json:"tfs_z,omitempty"`
+	TypicalP         float64 `json:"typical_p,omitempty"`
+	PresencePenalty  float64 `json:"presence_penalty,omitempty"`
+	FrequencyPenalty float64 `json:"frequency_penalty,omitempty"`
+	Mirostat         int     `json:"mirostat,omitempty"`
+	MirostatTau      float64 `json:"mirostat_tau,omitempty"`
+	MirostatEta      float64 `json:"mirostat_eta,omitempty"`
+	PenalizeNewline  bool    `json:"penalize_newline,omitempty"`
 }
 
+// https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
 type Query struct {
 	Model    string    `json:"model"`
 	Messages []Message `json:"messages"` // For Chat Completion
@@ -71,11 +87,14 @@ type Query struct {
 	Stream   bool      `json:"stream"`
 	Prompt   string    `json:"prompt"`  // For "Simple" Completion
 	Context  []int     `json:"context"` // For "Simple" Completion
+
+	Format	string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
+	KeepAlive	bool `json:"keep_alive,omitempty"`
+	Raw	bool `json:"raw,omitempty"`
+	System string `json:"system,omitempty"`
+	Template string `json:"template,omitempty"`
 }
 
-// TODO:
-// Format
-// KeepAlive
 
 /* Embeddings */
 

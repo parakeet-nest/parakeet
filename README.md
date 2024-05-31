@@ -1,4 +1,8 @@
 # 🦜🪺 Parakeet
+<!-- meta-data 
+topic: this an introduction on what is parakeet
+key-words: parakeet genai apps
+-->
 
 Parakeet is the simplest Go library to create **GenAI apps** with **[Ollma](https://ollama.com/)**.
 
@@ -6,12 +10,23 @@ Parakeet is the simplest Go library to create **GenAI apps** with **[Ollma](http
 
 > ✋ Parakeet is only for creating GenAI apps generating **text** (not image, music,...).
 
+<!--split-->
+
+<!-- meta-data 
+topic: how to install parakeet
+-->
 ## Install
 
 ```bash
 go get github.com/parakeet-nest/parakeet
 ```
 
+<!--split-->
+
+<!-- meta-data 
+topic: how to do a simple completion with parakeet
+key-words: completion parakeet
+-->
 ## Simple completion
 
 The simple completion can be used to generate a response for a given prompt with a provided model.
@@ -48,6 +63,11 @@ func main() {
 }
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ### Simple completion with stream
 
 ```golang
@@ -84,9 +104,13 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 }
-
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ### Completion with context
 > see: https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion
 
@@ -140,6 +164,11 @@ func main() {
 }
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ## Chat completion
 
 The chat completion can be used to generate a conversational response for a given set of messages with a provided model.
@@ -194,6 +223,11 @@ func main() {
 ✋ **To keep a conversational memory** for the next chat completion, update the list of messages with the previous question and answer.
 > I plan to add the support of [bbolt](https://github.com/etcd-io/bbolt) in the incoming v0.0.1 of Parakeet to store the conversational memory.
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ### Chat completion with stream
 
 ```golang
@@ -246,6 +280,11 @@ func main() {
 }
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ## Chat completion with conversational memeory
 
 ### In memory history
@@ -353,6 +392,11 @@ func main() {
 }
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ### Bbolt history
 
 **[Bbolt](https://github.com/etcd-io/bbolt)** is an embedded key/value database for Go.
@@ -368,7 +412,11 @@ conversation.Initialize("../conversation.db")
 > - `examples/11-chat-conversational-bbolt/begin`: start a conversation and save the history
 > - `examples/11-chat-conversational-bbolt/resume`: load the messages from the history bucket and resue the conversation
 
+<!--split-->
 
+<!-- meta-data 
+
+-->
 ## Embeddings
 
 ### Create embeddings
@@ -384,6 +432,11 @@ embedding, err := embeddings.CreateEmbedding(
 )
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ## Vector stores
 
 A vector store allows to store and search for embeddings in an efficient way.
@@ -420,6 +473,11 @@ documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 
 > 👀 you will find a complete example in `examples/08-embeddings`
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ### Bbolt vector store
 
 **[Bbolt](https://github.com/etcd-io/bbolt)** is an embedded key/value database for Go.
@@ -435,6 +493,11 @@ store.Initialize("../embeddings.db")
 > - `examples/09-embeddings-bbolt/use-embeddings`: search similarities in the vector store
 
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ## Create embeddings from text files and Similarity search
 
 ### Create embeddings
@@ -480,6 +543,12 @@ if err != nil {
 	log.Fatalln("😡:", err)
 }
 ```
+
+<!--split-->
+
+<!-- meta-data 
+
+-->
 
 ### Similarity search
 
@@ -550,6 +619,11 @@ if err != nil {
 }
 ```
 
+<!--split-->
+
+<!-- meta-data 
+
+-->
 ## Demos
 
 - https://github.com/parakeet-nest/parakeet-demo
