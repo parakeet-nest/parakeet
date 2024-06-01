@@ -25,5 +25,6 @@ use(
     examples/15-mistral-function-calling
     examples/16-fake-function-calling
     examples/17-fake-function-calling
-
+    examples/18-call-functions-for-real
+    examples/18-call-functions-for-real/wasm
 )

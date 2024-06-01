@@ -16,18 +16,35 @@ func main() {
 	//ollamaUrl := "http://bob.local:11434"
 	
 	embeddingsModel := "all-minilm"
-	chatModel := "magicoder:latest"
+	//embeddingsModel := "codestral"
+	//embeddingsModel := "magicoder:latest"
+	//embeddingsModel := "phi3:mini"
+
+	//chatModel := "magicoder:latest"
+	chatModel := "codestral"
+	//chatModel := "deepseek-coder:6.7b"
+	//chatModel := "phi3:mini" 
+	//chatModel := "llama3" 
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
 
-	systemContent := `You are a Golang developer and an expert in computer programming.
-	Please make friendly answer for the noobs. Use the provided context and doc to answer.
+	systemContent := `You are a Golang developer and an expert with the Parakeet library.
+	Please make friendly answer for the noobs. Use onlythe provided context and doc to answer.
 	Add source code examples if you can.`
+
+	// ✋ it's important to explain the LLM that it must use only the context and doc
+	// otherwise it will use first its knowledge and then the answer
+	// will be less accurate
 
 	// Question for the Chat system
 	//userContent := `[Brief] How to create a stream completion with Parakeet?`
-	userContent := `How to create a stream chat completion with Parakeet?`
+	//userContent := `Explain how to create a stream chat completion with Parakeet?`
+	//userContent := `How to create a simple completion with Parakeet?`
+	
+	userContent := `Explain, using Parakeet, how to generate a list of tools for doing function calling? And give an example.`
+
+	//userContent := `Explain how can I generate JSON output`
 
 	// Create an embedding from the user question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
@@ -58,10 +75,10 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: llm.Options{
-			Temperature: 0.4,
+			Temperature: 0.3,
 			RepeatLastN: 2,
 		},
-		Stream: false,
+		//Stream: false,
 	}
 
 	fmt.Println("")

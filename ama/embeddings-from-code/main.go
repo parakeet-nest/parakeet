@@ -18,6 +18,9 @@ func main() {
 	//var embeddingsModel = "magicoder:latest"
 	
 	embeddingsModel := "all-minilm"
+	//embeddingsModel := "codestral"
+	//embeddingsModel := "magicoder:latest"
+
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
@@ -26,7 +29,9 @@ func main() {
 	// Create embeddings from documents and save them in the store
 
 	counter := 0
-	_, err := content.ForEachFile("../../examples", ".go", func(path string) error {
+	//	_, err := content.ForEachFile("../../examples", ".go", func(path string) error {
+
+	_, err := content.ForEachFile("../..", ".go", func(path string) error {
 		data, err := os.ReadFile(path)
 		if err != nil {
 			return err

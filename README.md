@@ -285,7 +285,7 @@ func main() {
 <!-- meta-data 
 
 -->
-## Chat completion with conversational memeory
+## Chat completion with conversational memory
 
 ### In memory history
 
@@ -549,7 +549,6 @@ if err != nil {
 <!-- meta-data 
 
 -->
-
 ### Similarity search
 
 ```golang
@@ -624,7 +623,223 @@ if err != nil {
 <!-- meta-data 
 
 -->
-## Demos
+## Function Calling
+
+What is **"Function Calling"**? First, it's not a feature where a LLM can call and execute a function. "Function Calling" is the ability for certain LLMs to provide a specific output with the same format (we could say: "a predictable output format").
+
+So, the principle is simple:
+
+- You (or your GenAI application) will create a prompt with a delimited list of tools (the functions) composed by name, descriptions, and parameters: `SayHello`, `AddNumbers`, etc.
+- Then, you will add your question ("Hey, say 'hello' to Bob!") to the prompt and send all of this to the LLM.
+- If the LLM "understand" that the `SayHello` function can be used to say "hello" to Bob, then the LLM will answer with only the name of the function with the parameter(s). For example: `{"name":"SayHello","arguments":{"name":"Bob"}}`.
+
+Then, it will be up to you to implement the call of the function.
+
+The [latest version (v0.3) of Mistral 7b](https://ollama.com/library/mistral:7b) supports function calling and is available for Ollama.
+
+### Define a list of tools
+
+First, you have to provide the LLM with a list of tools with the following format:
+
+```golang
+toolsList := []llm.Tool{
+	{
+		Type: "function",
+		Function: llm.Function{
+			Name:        "hello",
+			Description: "Say hello to a given person with his name",
+			Parameters: llm.Parameters{
+				Type: "object",
+				Properties: map[string]llm.Property{
+					"name": {
+						Type:        "string",
+						Description: "The name of the person",
+					},
+				},
+				Required: []string{"name"},
+			},
+		},
+	},
+	{
+		Type: "function",
+		Function: llm.Function{
+			Name:        "addNumbers",
+			Description: "Make an addition of the two given numbers",
+			Parameters: llm.Parameters{
+				Type: "object",
+				Properties: map[string]llm.Property{
+					"a": {
+						Type:        "number",
+						Description: "first operand",
+					},
+					"b": {
+						Type:        "number",
+						Description: "second operand",
+					},
+				},
+				Required: []string{"a", "b"},
+			},
+		},
+	},
+}
+```
+
+### Generate a prompt from the tools list and the user instructions
+
+The `tools.GenerateContent` method generates a string with the tools in JSON format surrounded by `[AVAILABLE_TOOLS]` and `[/AVAILABLE_TOOLS]`:
+```golang
+toolsContent, err := tools.GenerateContent(toolsList)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+```
+
+
+The `tools.GenerateInstructions` method generates a string with the user instructions surrounded by `[INST]` and `[/INST]`:
+```golang
+userContent := tools.GenerateInstructions(`say "hello" to Bob`)
+```
+
+Then, you can add these two strings to the messages list:
+```golang
+messages := []llm.Message{
+	{Role: "system", Content: toolsContent},
+	{Role: "user", Content: userContent},
+}
+```
+
+### Send the prompt (messages) to the LLM
+
+It's important to set the `Temperature` to `0.0`:
+```golang
+options := llm.Options{
+	Temperature:   0.0,
+	RepeatLastN:   2,
+	RepeatPenalty: 2.0,
+}
+
+You must set the `Format` to `json` and `Raw` to `true`:
+query := llm.Query{
+	Model: model,
+	Messages: messages,
+	Options: options,
+	Format:  "json",
+	Raw:     true,
+}
+```
+> When building the payload to be sent to Ollama, we need to set the `Raw` field to true, thanks to that, no formatting will be applied to the prompt (we override the prompt template of Mistral), and we need to set the `Format` field to `"json"`.
+
+No you can call the `Chat` method. The answer of the LLM will be in JSON format:
+```golang
+answer, err := completion.Chat(ollamaUrl, query)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+// PrettyString is a helper that prettyfies the JSON string
+result, err := gear.PrettyString(answer.Message.Content)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+fmt.Println(result)
+```
+
+You should get this answer:
+```json
+{
+  "name": "hello",
+  "arguments": {
+    "name": "Bob"
+  }
+}
+```
+
+You can try with the other tool (or function):
+```golang
+userContent := tools.GenerateInstructions(`add 2 and 40`)
+```
+
+You should get this answer:
+```json
+{
+  "name": "addNumbers",
+  "arguments": {
+    "a": 2,
+    "b": 40
+  }
+}
+```
+
+> **Remark**: always test the format of the output, even if Mistral is trained for "function calling", the result are not entirely predictable.
+
+Look at this sample for a complete sample: [examples/15-mistral-function-calling](examples/15-mistral-function-calling)
+
+
+## Function Calling with LLMs that do not implement Function Calling
+
+It is possible to reproduce this feature with some LLMs that do not implement the "Function Calling" feature natively, but we need to supervise them and explain precisely what we need. The result (the output) will be less predictable, so you will need to add some tests before using the output, but with some "clever" LLMs, you will obtain correct results. I did my experiments with **[phi3:mini](https://ollama.com/library/phi3:mini)**.
+
+The trick is simple:
+
+Add this message at the begining of the list of messages:
+```golang
+systemContentIntroduction := `You have access to the following tools:`
+```
+
+Add this message at the end of the list of messages, just before the user message:
+```golang
+systemContentInstructions := `If the question of the user matched the description of a tool, the tool will be called.
+To call a tool, respond with a JSON object with the following structure: 
+{
+	"name": <name of the called tool>,
+	"arguments": {
+	<name of the argument>: <value of the argument>
+	}
+}
+
+search the name of the tool in the list of tools with the Name field
+`
+```
+
+At the end, you will have this:
+```golang
+messages := []llm.Message{
+	{Role: "system", Content: systemContentIntroduction},
+	{Role: "system", Content: toolsContent},
+	{Role: "system", Content: systemContentInstructions},
+	{Role: "user", Content: `say "hello" to Bob`},
+}
+```
+
+Look at this sample for a complete sample: [examples/17-fake-function-calling](examples/17-fake-function-calling)
+
+<!--split-->
+
+<!-- meta-data 
+
+-->
+## Wasm plugins
+
+The release `0.0.6` of Parakeet brings the support of **WebAssembly** thanks to the **[Extism project](https://extism.org/)**. That means you can write your own wasm plugins for Parakeet to add new features (for example, a chunking helper for doing RAG) with various languages (Rust, Go, C, ...).
+
+Or you can use the Wasm plugins with the "Function Calling" feature, which is implemented in Parakeet.
+
+You can find an example of "Wasm Function Calling" in [examples/18-call-functions-for-real](examples/18-call-functions-for-real) - the wasm plugin is located in the `wasm` folder and it is built with **[TinyGo](https://tinygo.org/)**.
+
+🚧 more samples to come.
+<!--split-->
+
+<!-- meta-data 
+
+-->
+## Parakeet Demos
 
 - https://github.com/parakeet-nest/parakeet-demo
 - https://github.com/parakeet-nest/tiny-genai-stack
+
+## Blog Posts
+
+- [Parakeet, an easy way to create GenAI applications with Ollama and Golang](https://k33g.hashnode.dev/parakeet-an-easy-way-to-create-genai-applications-with-ollama-and-golang)
+- [Understand RAG with Parakeet](https://k33g.hashnode.dev/understand-rag-with-parakeet)
+-[Function Calling with Ollama, Mistral 7B, Bash and Jq](https://k33g.hashnode.dev/function-calling-with-ollama-mistral-7b-bash-and-jq)
+- [Function Calling with Ollama and LLMs that do not support function calling](https://k33g.hashnode.dev/function-calling-with-ollama-and-llms-that-do-not-support-function-calling)
+

@@ -15,6 +15,21 @@ import (
 	"log"
 )
 
+/*
+This Go code snippet defines a main function that performs a chat completion using the Ollama and Parakeet libraries.
+
+Here's a breakdown of what the code does:
+
+1. It sets the ollamaUrl variable to the URL of the Ollama server running on localhost.
+2 .It sets the model variable to the name of the model to be used for the chat completion.
+3. It defines the dataContent variable, which contains contextual information about a chicken.
+4 .It defines the systemContent variable, which describes the role of the AI assistant and the expected inputs and outputs.
+5 .It defines the userContent variable, which represents the user's input.
+6. It creates an options variable with various settings for the chat completion, such as temperature, repeat penalties, and formatting options.
+7. It creates a query variable, which contains the model name, the messages to be exchanged during the chat completion, and the options.
+8. It calls the completion.Chat function with the Ollama URL and the query to perform the chat completion.
+9. If the chat completion is successful, it prints the content of the last message received from the chat.
+*/
 func main() {
 	ollamaUrl := "http://localhost:11434"
 	// if working from a container

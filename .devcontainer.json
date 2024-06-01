@@ -1,5 +1,5 @@
 {
-    "image":"k33g/genai-go-workspace:0.0.7",
+    "image":"k33g/parakeet-workspace:0.0.0",
     "mounts": [
         "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
     ],

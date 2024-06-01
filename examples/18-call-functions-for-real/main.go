@@ -1,16 +1,22 @@
 /*
 Topic: Parakeet
-Generate a chat completion using fa kind ofunction calling with LLM that does not implement function calling
+Generate a chat completion using function calling
 no streaming
+This example:
+- uses Mistral model
+- make a list of tools
+- use the list of tools to generate content for the prompt
+- retrieve the function from the list of tools
 */
 
 package main
 
 import (
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/tools"
-	"github.com/parakeet-nest/parakeet/gear"
+	"github.com/parakeet-nest/parakeet/wasm"
 
 	"fmt"
 	"log"
@@ -20,10 +26,9 @@ func main() {
 	ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	//model := "mistral:7b"
-	model := "phi3:mini"
+	model := "mistral:7b"
 
-	systemContentIntroduction := `You have access to the following tools:`
+	wasmPlugin, _ := wasm.NewPlugin("./wasm/plugin.wasm", nil)
 
 	toolsList := []llm.Tool{
 		{
@@ -71,36 +76,21 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	systemContentInstructions := `If the question of the user matched the description of a tool, the tool will be called.
-	To call a tool, respond with a JSON object with the following structure: 
-	{
-	  "name": <name of the called tool>,
-	  "arguments": {
-	    <name of the argument>: <value of the argument>
-	  }
-	}
-	
-	search the name of the tool in the list of tools with the Name field
-	`
-
 	options := llm.Options{
 		Temperature:   0.0,
 		RepeatLastN:   2,
 		RepeatPenalty: 2.0,
-		Seed:          123,
-		//Stop:        []string{},
 	}
 
 	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
-			{Role: "system", Content: systemContentIntroduction},
 			{Role: "system", Content: toolsContent},
-			{Role: "system", Content: systemContentInstructions},
-			{Role: "user", Content: `say "hello" to Bob`},
+			{Role: "user", Content: tools.GenerateInstructions(`say "hello" to Bob`)},
 		},
 		Options: options,
 		Format:  "json",
+		Raw:     true,
 	}
 
 	answer, err := completion.Chat(ollamaUrl, query)
@@ -108,22 +98,31 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	result, err := gear.PrettyString(answer.Message.Content)
+	jsonRes, err := gear.JSONParse(answer.Message.Content)
+
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	fmt.Println(result)
+	functionName := jsonRes["name"].(string)
+	name := jsonRes["arguments"].(map[string]interface{})["name"].(string)
+
+	fmt.Println("Calling", functionName, "with", name)
+
+	// call the function of the wasm plugin
+	res, _ := wasmPlugin.Call(functionName, []byte(name))
+
+	// display the result
+	fmt.Println(string(res))
 
 	query = llm.Query{
 		Model: model,
 		Messages: []llm.Message{
-			{Role: "system", Content: systemContentIntroduction},
 			{Role: "system", Content: toolsContent},
-			{Role: "system", Content: systemContentInstructions},
-			{Role: "user", Content: `add 5 and 40`},
+			{Role: "user", Content: tools.GenerateInstructions(`add 2 and 40`)},
 		},
 		Options: options,
 		Format:  "json",
+		Raw:     true,
 	}
 
 	answer, err = completion.Chat(ollamaUrl, query)
@@ -131,10 +130,19 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	result, err = gear.PrettyString(answer.Message.Content)
+	jsonRes, err = gear.JSONParse(answer.Message.Content)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	fmt.Println(result)
+
+	functionName = jsonRes["name"].(string)
+	arguments := jsonRes["arguments"].(map[string]interface{})
+	fmt.Println("Calling", functionName, "with", arguments)
+
+	// call the function of the wasm plugin
+	res, _ = wasmPlugin.Call(functionName, []byte(gear.JSONStringify(arguments)))
+
+	// display the result
+	fmt.Println(string(res))
 
 }
