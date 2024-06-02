@@ -1,8 +1,6 @@
+<!-- TOPIC: Parakeet - A Go Library for Creating GenAI Apps SUMMARY: Parakeet is a simple Go library used to create text-based GenAI apps, allowing users to generate new content based on training data. KEYWORDS: Parakeet, GenAI, Go, Library, Text Generation, AI -->
+
 # 🦜🪺 Parakeet
-<!-- meta-data 
-topic: this an introduction on what is parakeet
-key-words: parakeet genai apps
--->
 
 Parakeet is the simplest Go library to create **GenAI apps** with **[Ollma](https://ollama.com/)**.
 
@@ -10,23 +8,14 @@ Parakeet is the simplest Go library to create **GenAI apps** with **[Ollma](http
 
 > ✋ Parakeet is only for creating GenAI apps generating **text** (not image, music,...).
 
-<!--split-->
-
-<!-- meta-data 
-topic: how to install parakeet
--->
 ## Install
 
 ```bash
 go get github.com/parakeet-nest/parakeet
 ```
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-topic: how to do a simple completion with parakeet
-key-words: completion parakeet
--->
+<!-- TOPIC: Simple Completion in Golang using Parakeet and LLaMA SUMMARY: This code snippet demonstrates the use of simple completion in Golang to generate a response for a given prompt with a provided model, specifically using Parakeet and LLaMA. KEYWORDS: Golang, Parakeet, LLaMA, Simple Completion, AI-powered Text Generation -->
 ## Simple completion
 
 The simple completion can be used to generate a response for a given prompt with a provided model.
@@ -62,12 +51,10 @@ func main() {
 	fmt.Println(answer.Response)
 }
 ```
+<!-- split -->
 
-<!--split-->
 
-<!-- meta-data 
-
--->
+<!-- TOPIC: Golang programming and Stream completion with LLaMA model SUMMARY: This code snippet demonstrates the use of LLaMA model for generating a response to a given question using Go language. The code sets up an LLaMA connection, defines a query with a prompt and options, and then generates a stream of answers. KEYWORDS: Golang, LLaMA, Stream completion, Natural Language Processing -->
 ### Simple completion with stream
 
 ```golang
@@ -105,12 +92,9 @@ func main() {
 	}
 }
 ```
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Contextual completion with Ollama SUMMARY: The code demonstrates the use of Ollama's API to generate completions in a conversational context. KEYWORDS: Ollama, contextual completion, conversation, API, tinydolphin, James T Kirk, best friend -->
 ### Completion with context
 > see: https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion
 
@@ -163,12 +147,9 @@ func main() {
 	fmt.Println(answer.Response)
 }
 ```
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Chat Completion SUMMARY: The chat completion feature is used to generate a conversational response for a given set of messages with a provided model. KEYWORDS: Go, Golang, Parakeet, Conversational AI, Chat Completion, BBolt -->
 ## Chat completion
 
 The chat completion can be used to generate a conversational response for a given set of messages with a provided model.
@@ -222,12 +203,9 @@ func main() {
 
 ✋ **To keep a conversational memory** for the next chat completion, update the list of messages with the previous question and answer.
 > I plan to add the support of [bbolt](https://github.com/etcd-io/bbolt) in the incoming v0.0.1 of Parakeet to store the conversational memory.
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Chat Completion with Stream using Golang and LLaMA API SUMMARY: This Go program uses the LLaMA API to create a chat completion stream, generating responses based on user input and system content. It provides a basic "hello world" example in Golang. KEYWORDS: Golang, LLaMA API, Chat Completion, Stream, Programming -->
 ### Chat completion with stream
 
 ```golang
@@ -279,12 +257,9 @@ func main() {
 	}
 }
 ```
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Chat completion with conversational memory SUMMARY: A Go program that uses the Parakeet library to store messages in memory and complete conversations using a conversational memory history. KEYWORDS: Parakeet, conversational memory, chat completion, Go programming language -->
 ## Chat completion with conversational memory
 
 ### In memory history
@@ -391,12 +366,9 @@ func main() {
 
 }
 ```
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Bbolt history and usage in Go SUMMARY: A brief introduction to using bbolt, an embedded key-value database for Go, for storing message histories. KEYWORDS: bbolt, Go, key-value database, message history, Golang -->
 ### Bbolt history
 
 **[Bbolt](https://github.com/etcd-io/bbolt)** is an embedded key/value database for Go.
@@ -411,12 +383,9 @@ conversation.Initialize("../conversation.db")
 > 👀 you will find a complete example in `examples/11-chat-conversational-bbolt`
 > - `examples/11-chat-conversational-bbolt/begin`: start a conversation and save the history
 > - `examples/11-chat-conversational-bbolt/resume`: load the messages from the history bucket and resue the conversation
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Embeddings and Vector Stores SUMMARY: This document discusses creating embeddings, storing them in an efficient way using a vector store, and searching for similar embeddings. KEYWORDS: Embeddings, Vector Store, MemoryVectorStore, BBolt -->
 ## Embeddings
 
 ### Create embeddings
@@ -432,11 +401,6 @@ embedding, err := embeddings.CreateEmbedding(
 )
 ```
 
-<!--split-->
-
-<!-- meta-data 
-
--->
 ## Vector stores
 
 A vector store allows to store and search for embeddings in an efficient way.
@@ -473,11 +437,6 @@ documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 
 > 👀 you will find a complete example in `examples/08-embeddings`
 
-<!--split-->
-
-<!-- meta-data 
-
--->
 ### Bbolt vector store
 
 **[Bbolt](https://github.com/etcd-io/bbolt)** is an embedded key/value database for Go.
@@ -491,13 +450,9 @@ store.Initialize("../embeddings.db")
 > 👀 you will find a complete example in `examples/09-embeddings-bbolt`
 > - `examples/09-embeddings-bbolt/create-embeddings`: create and populate the vector store
 > - `examples/09-embeddings-bbolt/use-embeddings`: search similarities in the vector store
+<!-- split -->
 
-
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Natural Language Processing, Computer Programming, Golang SUMMARY: This document discusses the process of creating embeddings from text files and performing similarity searches using a Bolt Vector Store. The document also demonstrates how to use these embeddings to generate context for a chat system. KEYWORDS: Embeddings, Similarity Search, Bolt Vector Store, Natural Language Processing, Computer Programming, Golang -->
 ## Create embeddings from text files and Similarity search
 
 ### Create embeddings
@@ -544,11 +499,6 @@ if err != nil {
 }
 ```
 
-<!--split-->
-
-<!-- meta-data 
-
--->
 ### Similarity search
 
 ```golang
@@ -617,12 +567,9 @@ if err != nil {
 	log.Fatal("😡:", err)
 }
 ```
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Function Calling SUMMARY: A feature in LLMs that allows them to provide a specific output with the same format (predictable output format). KEYWORDS: function calling, predictable output format, LLMs. -->
 ## Function Calling
 
 What is **"Function Calling"**? First, it's not a feature where a LLM can call and execute a function. "Function Calling" is the ability for certain LLMs to provide a specific output with the same format (we could say: "a predictable output format").
@@ -772,8 +719,9 @@ You should get this answer:
 > **Remark**: always test the format of the output, even if Mistral is trained for "function calling", the result are not entirely predictable.
 
 Look at this sample for a complete sample: [examples/15-mistral-function-calling](examples/15-mistral-function-calling)
+<!-- split -->
 
-
+<!-- TOPIC: Function Calling with LLMs that do not implement Function Calling SUMMARY: A technique to reproduce function calling feature in LLMs without native support by adding specific messages at the beginning and end of the conversation. KEYWORDS: phi3, mini, golang, JSON, tool calling, argument passing -->
 ## Function Calling with LLMs that do not implement Function Calling
 
 It is possible to reproduce this feature with some LLMs that do not implement the "Function Calling" feature natively, but we need to supervise them and explain precisely what we need. The result (the output) will be less predictable, so you will need to add some tests before using the output, but with some "clever" LLMs, you will obtain correct results. I did my experiments with **[phi3:mini](https://ollama.com/library/phi3:mini)**.
@@ -811,12 +759,9 @@ messages := []llm.Message{
 ```
 
 Look at this sample for a complete sample: [examples/17-fake-function-calling](examples/17-fake-function-calling)
+<!-- split -->
 
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: WebAssembly plugins for Parakeet SUMMARY: The release of Parakeet's version 0.0.6 brings support for WebAssembly, allowing users to write their own wasm plugins in various languages (Rust, Go, C, etc.) and use them with the "Function Calling" feature. KEYWORDS: Parakeet, WebAssembly, Wasm plugins, Extism project, TinyGo, Function Calling -->
 ## Wasm plugins
 
 The release `0.0.6` of Parakeet brings the support of **WebAssembly** thanks to the **[Extism project](https://extism.org/)**. That means you can write your own wasm plugins for Parakeet to add new features (for example, a chunking helper for doing RAG) with various languages (Rust, Go, C, ...).
@@ -826,13 +771,9 @@ Or you can use the Wasm plugins with the "Function Calling" feature, which is im
 You can find an example of "Wasm Function Calling" in [examples/18-call-functions-for-real](examples/18-call-functions-for-real) - the wasm plugin is located in the `wasm` folder and it is built with **[TinyGo](https://tinygo.org/)**.
 
 🚧 more samples to come.
+<!-- split -->
 
-
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Other Parakeet methods for interacting with models SUMMARY: This document describes two methods used to interact with models in Parakeet, including retrieving information about a model and pulling a model. KEYWORDS: Parakeet, models, API, ShowModelInformation, PullModel -->
 ## Other Parakeet methods
 
 ### Get Information about a model
@@ -870,7 +811,9 @@ llm.PullModel(url, model string) (llm.PullResult, int, error)
   - PullResult: The result of the pull operation.
   - int: The HTTP status code of the response.
   - error: An error if the request fails.
+<!-- split -->
 
+<!-- TOPIC: Prompt helpers and meta prompts SUMMARY: A collection of special instructions, known as meta-prompts, to guide language models in generating specific kinds of responses. KEYWORDS: Meta prompts, prompt helpers, AI, LLM, natural language processing, NLP -->
 ### Prompt helpers
 
 #### Meta prompts
@@ -909,13 +852,9 @@ Meta-prompts are special instructions embedded within a prompt to guide a langua
 - `prompt.ForKids(s string) string`
 - `prompt.AdvantagesOnly(s string) string`
 - `prompt.AsARecipe(s string) string`
+<!-- split -->
 
-
-<!--split-->
-
-<!-- meta-data 
-
--->
+<!-- TOPIC: Parakeet Demos and Blog Posts SUMMARY: A collection of Parakeet demos and blog posts showcasing the ease of creating GenAI applications with Ollama, Golang, and other tools. KEYWORDS: Parakeet, GenAI, Ollama, Golang, function calling, RAG, Mistral 7B, Bash, Jq, LLMs -->
 ## Parakeet Demos
 
 - https://github.com/parakeet-nest/parakeet-demo

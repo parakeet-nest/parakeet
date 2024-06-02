@@ -21,17 +21,19 @@ func main() {
 	//embeddingsModel := "phi3:mini"
 
 	//chatModel := "magicoder:latest"
-	chatModel := "codestral"
+	//chatModel := "codestral"
 	//chatModel := "deepseek-coder:6.7b"
 	//chatModel := "phi3:mini" 
 	//chatModel := "llama3" 
+	chatModel := "granite-code:3b"
+
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
 
-	systemContent := `You are a Golang developer and an expert with the Parakeet library.
-	Please make friendly answer for the noobs. Use only the provided context and doc to answer.
-	Add source code examples if you can.`
+	systemContent := `You are an expert with the Parakeet library.
+	Please make friendly answer for the noobs. Use only the provided document to answer.
+	Add source code examples if you can, only in Golang.`
 
 	// ✋ it's important to explain the LLM that it must use only the context and doc
 	// otherwise it will use first its knowledge and then the answer
@@ -39,9 +41,10 @@ func main() {
 
 	// Question for the Chat system
 	//userContent := `[Brief] How to create a stream completion with Parakeet?`
-	//userContent := `Explain how to create a stream chat completion with Parakeet?`
 	//userContent := `How to create a simple completion with Parakeet?`
 	
+	//userContent := `Explain how to create a stream chat completion with Parakeet?`
+
 	userContent := `Explain, using Parakeet, how to generate a list of tools for doing function calling? And give an example.`
 
 	//userContent := `Explain how can I generate JSON output`
@@ -61,7 +64,7 @@ func main() {
 	fmt.Println("🔎 searching for similarity...")
 
 
-	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
+	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.4)
 
 	documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 
@@ -75,7 +78,7 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: llm.Options{
-			Temperature: 0.3,
+			Temperature: 0.8,
 			RepeatLastN: 2,
 		},
 		//Stream: false,

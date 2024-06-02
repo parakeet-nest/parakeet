@@ -29,4 +29,6 @@ use(
     examples/18-call-functions-for-real/wasm
     examples/19-play-with-granite
     examples/20-analysis-with-granite
+    chat-with-readme/embeddings-from-readme
+    chat-with-readme/search
 )

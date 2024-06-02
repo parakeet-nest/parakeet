@@ -79,3 +79,11 @@ If it does, it appends the file path to the textFiles slice and calls the callba
 
 The function returns a slice of file paths that match the given extension and an error if the search encounters any issues.
 */
+
+func ReadTextFile(path string) (string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
