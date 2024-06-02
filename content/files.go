@@ -80,6 +80,14 @@ If it does, it appends the file path to the textFiles slice and calls the callba
 The function returns a slice of file paths that match the given extension and an error if the search encounters any issues.
 */
 
+// ReadTextFile reads the contents of a text file at the given path and returns the contents as a string.
+//
+// Parameters:
+// - path: the path to the text file.
+//
+// Returns:
+// - string: the contents of the text file as a string.
+// - error: an error if the file cannot be read.
 func ReadTextFile(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

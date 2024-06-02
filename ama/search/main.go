@@ -21,10 +21,12 @@ func main() {
 	//embeddingsModel := "phi3:mini"
 
 	//chatModel := "magicoder:latest"
-	chatModel := "codestral"
+	//chatModel := "codestral"
 	//chatModel := "deepseek-coder:6.7b"
 	//chatModel := "phi3:mini" 
 	//chatModel := "llama3" 
+	chatModel := "granite-code:3b"
+
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
@@ -42,9 +44,9 @@ func main() {
 	//userContent := `Explain how to create a stream chat completion with Parakeet?`
 	//userContent := `How to create a simple completion with Parakeet?`
 	
-	userContent := `Explain, using Parakeet, how to generate a list of tools for doing function calling? And give an example.`
+	//userContent := `Explain, using Parakeet, how to generate a list of tools for doing function calling? And give an example.`
 
-	//userContent := `Explain how can I generate JSON output`
+	userContent := `Explain how can I generate JSON output`
 
 	// Create an embedding from the user question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
