@@ -31,6 +31,10 @@ func JSONParse(str string) (map[string]interface{}, error) {
 	return result, nil
 }
 
+// JSONStringify converts a map[string]interface{} object into a JSON string.
+//
+// It takes a map[string]interface{} object as input and returns a JSON string.
+// If there is an error during the JSON marshaling process, an empty string is returned.
 func JSONStringify(obj map[string]interface{}) string {
 	b, err := json.Marshal(obj)
 	if err != nil {

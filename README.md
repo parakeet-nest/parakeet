@@ -826,6 +826,91 @@ Or you can use the Wasm plugins with the "Function Calling" feature, which is im
 You can find an example of "Wasm Function Calling" in [examples/18-call-functions-for-real](examples/18-call-functions-for-real) - the wasm plugin is located in the `wasm` folder and it is built with **[TinyGo](https://tinygo.org/)**.
 
 🚧 more samples to come.
+
+
+<!--split-->
+
+<!-- meta-data 
+
+-->
+## Other Parakeet methods
+
+### Get Information about a model
+
+```golang
+llm.ShowModelInformation(url, model string) (llm.ModelInformation, int, error)
+```
+
+`ShowModelInformation` retrieves information about a model from the specified URL.
+
+**Parameters**:
+  - url: the base URL of the API.
+  - model: the name of the model to retrieve information for.
+
+**Returns**:
+  - ModelInformation: the information about the model.
+  - int: the HTTP status code of the response.
+  - error: an error if the request fails.
+
+**✋ Remark**: if the model does not exist, it will return an error with a status code of 404.
+
+### Pull a model
+
+```golang
+llm.PullModel(url, model string) (llm.PullResult, int, error)
+```
+
+`PullModel` sends a POST request to the specified URL to pull a model with the given name.
+
+**Parameters**:
+  - url: The URL to send the request to.
+  - model: The name of the model to pull.
+
+**Returns**:
+  - PullResult: The result of the pull operation.
+  - int: The HTTP status code of the response.
+  - error: An error if the request fails.
+
+### Prompt helpers
+
+#### Meta prompts
+> package: `prompt`
+
+Meta-prompts are special instructions embedded within a prompt to guide a language model in generating a specific kind of response.
+
+|  Meta-Prompt   |  Purpose  |
+| :------------  | :-------- |
+|[Brief] What is AI? | For a concise answer
+|[In Layman’s Terms] Explain LLM | For a simplified explanation
+|[As a Story] Describe the evolution of cars | To get the information in story form
+|[Pros and Cons] Is AI useful? | For a balanced view with advantages and disadvantages
+|[Step-by-Step] How to do a smart prompt? | For a detailed, step-by-step guide
+|[Factual] What is the best pizza of the world? | For a straightforward, factual answer
+|[Opinion] What is the best pizza of the world? | To get an opinion-based answer
+|[Comparison] Compare pineapple pizza to pepperoni pizza | For a comparative analysis
+|[Timeline] What are the key milestones to develop a WebApp? | For a chronological account of key events
+|[As a Poem] How to cook a cake? | For a poetic description
+|[For Kids] How to cook a cake? | For a child-friendly explanation
+|[Advantages Only] What are the benefits of AI? | To get a list of only the advantages
+|[As a Recipe] How to cook a cake? | To receive the information in the form of a recipe
+
+##### Meta prompts methods
+
+- `prompt.Brief(s string) string`
+- `prompt.InLaymansTerms(s string) string`
+- `prompt.AsAStory(s string) string`
+- `prompt.ProsAndCons(s string) string`
+- `prompt.StepByStep(s string) string`
+- `prompt.Factual(s string) string`
+- `prompt.Opinion(s string) string`
+- `prompt.Comparison(s string) string`
+- `prompt.Timeline(s string) string`
+- `prompt.AsAPoem(s string) string`
+- `prompt.ForKids(s string) string`
+- `prompt.AdvantagesOnly(s string) string`
+- `prompt.AsARecipe(s string) string`
+
+
 <!--split-->
 
 <!-- meta-data 
