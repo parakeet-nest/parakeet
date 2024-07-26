@@ -29,6 +29,8 @@ use(
     examples/18-call-functions-for-real/wasm
     examples/19-play-with-granite
     examples/20-analysis-with-granite
+    examples/21-characters
+    examples/22-characters
     chat-with-readme/embeddings-from-readme
     chat-with-readme/search
 )

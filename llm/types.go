@@ -1,5 +1,7 @@
 package llm
 
+import "time"
+
 type LLM struct {
 	Name string `json:"name"`
 	Url  string `json:"url"`
@@ -23,15 +25,13 @@ type Answer struct {
 	Response string  `json:"response"` // For "Simple" Completion
 	Context  []int   `json:"context"`  // For "Simple" Completion
 
-	/*
-		CreatedAt time.Time `json:"created_at"`
-		TotalDuration      int64 `json:"total_duration"`
-		LoadDuration       int   `json:"load_duration"`
-		PromptEvalCount    int   `json:"prompt_eval_count"`
-		PromptEvalDuration int   `json:"prompt_eval_duration"`
-		EvalCount          int   `json:"eval_count"`
-		EvalDuration       int64 `json:"eval_duration"`
-	*/
+	CreatedAt          time.Time `json:"created_at"`
+	TotalDuration      int64     `json:"total_duration"`
+	LoadDuration       int       `json:"load_duration"`
+	PromptEvalCount    int       `json:"prompt_eval_count"`
+	PromptEvalDuration int       `json:"prompt_eval_duration"`
+	EvalCount          int       `json:"eval_count"`
+	EvalDuration       int64     `json:"eval_duration"`
 }
 
 /*
@@ -88,13 +88,12 @@ type Query struct {
 	Prompt   string    `json:"prompt"`  // For "Simple" Completion
 	Context  []int     `json:"context"` // For "Simple" Completion
 
-	Format	string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
-	KeepAlive	bool `json:"keep_alive,omitempty"`
-	Raw	bool `json:"raw,omitempty"`
-	System string `json:"system,omitempty"`
-	Template string `json:"template,omitempty"`
+	Format    string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
+	KeepAlive bool   `json:"keep_alive,omitempty"`
+	Raw       bool   `json:"raw,omitempty"`
+	System    string `json:"system,omitempty"`
+	Template  string `json:"template,omitempty"`
 }
-
 
 /* Embeddings */
 

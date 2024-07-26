@@ -38,6 +38,7 @@ func main() {
 	//model := "tinyllama"
 	//model := "qwen:0.5b" // freeze
 
+	/*
 	dataContent := `<context>
 	This is the data related to a chicken
 	scientific_name: Gallus gallus domesticus
@@ -47,9 +48,10 @@ func main() {
 	average_lifespan: 6-8 years
 	countries: Worldwide
 	</context>`
+	*/
 
 	systemContent := `You are a helpful AI assistant. The user will enter the name of an animal.
-	The assistant will then return the following information about the annimal:
+	The assistant will then return the following information about the animal:
 	- the scientific name of the animal (the name of json field is: scientific_name)
 	- the main species of the animal  (the name of json field is: main_species)
 	- the decimal average length of the animal (the name of json field is: average_length)
@@ -70,7 +72,7 @@ func main() {
 	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
-			{Role: "system", Content: dataContent},
+			//{Role: "system", Content: dataContent},
 			{Role: "system", Content: systemContent},
 			{Role: "user", Content: userContent},
 		},
