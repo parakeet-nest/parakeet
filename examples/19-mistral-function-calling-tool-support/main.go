@@ -12,12 +12,10 @@ This example:
 package main
 
 import (
-	"strings"
+	"encoding/json"
 
 	"github.com/parakeet-nest/parakeet/completion"
-	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/llm"
-	"github.com/parakeet-nest/parakeet/tools"
 
 	"fmt"
 	"log"
@@ -86,16 +84,8 @@ func main() {
 		},
 	}
 
-	toolsContent, err := tools.GenerateContent(toolsList)
-	if err != nil {
-		log.Fatal("😡:", err)
-	}
-
-	userContent := tools.GenerateInstructions(`say "hello" to Bob`)
-
 	messages := []llm.Message{
-		{Role: "system", Content: toolsContent},
-		{Role: "user", Content: userContent},
+		{Role: "user", Content: `say "hello" to Bob`},
 	}
 
 	options := llm.Options{
@@ -107,42 +97,64 @@ func main() {
 	query := llm.Query{
 		Model:    model,
 		Messages: messages,
+		Tools:    toolsList,
 		Options:  options,
 		Format:   "json",
-		Raw:      true,
 	}
 
 	answer, err := completion.Chat(ollamaUrl, query)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	result, err := gear.PrettyString(answer.Message.Content)
+
+	// []map[string]interface{}
+	toolCalls := answer.Message.ToolCalls
+	fmt.Println("👋", toolCalls)
+
+
+	// Access the first item
+	firstItem := toolCalls[0]
+
+	// Access the "function" map
+	functionMap, _ := firstItem["function"].(map[string]interface{})
+	// Access the "arguments" map
+	argumentsMap, _ := functionMap["arguments"].(map[string]interface{})
+	// Access the "name" field in arguments
+	name, _ := argumentsMap["name"].(string)
+	fmt.Println("Name:", name)
+	// Access the "name" field in function
+	functionName, _ := functionMap["name"].(string)
+	fmt.Println("Function name:", functionName)
+
+
+	jsonBytes, err := json.Marshal(toolCalls)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	fmt.Println(strings.TrimSpace(result))
+	// Convert JSON bytes to string
+	result := string(jsonBytes)
 
-	userContent = tools.GenerateInstructions(`add 2 and 40`)
+	fmt.Println(result)
+
 	messages = []llm.Message{
-		{Role: "system", Content: toolsContent},
-		{Role: "user", Content: userContent},
+		{Role: "user", Content: `add 2 and 40`},
 	}
 
 	query = llm.Query{
 		Model:    model,
 		Messages: messages,
+		Tools:    toolsList,
 		Options:  options,
 		Format:   "json",
-		Raw:      true,
 	}
 
 	answer, err = completion.Chat(ollamaUrl, query)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	result, err = gear.PrettyString(answer.Message.Content)
+	result, err = answer.Message.ToolCallsToJSONString()
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	fmt.Println(strings.TrimSpace(result))
+	fmt.Println(result)
 }

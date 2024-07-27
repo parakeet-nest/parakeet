@@ -15,6 +15,11 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 
 	query.Stream = false
 
+	// if tool call is not used
+	if query.Tools == nil {
+		query.Tools = []llm.Tool{}
+	}
+
 	jsonQuery, err := json.Marshal(query)
 	if err != nil {
 		return llm.Answer{}, err
@@ -40,11 +45,12 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 	if err != nil {
 		return llm.Answer{}, err
 	}
-	//fmt.Println(string(body))
 
 	var answer llm.Answer
-	//err = json.Unmarshal([]byte(string(body)), &answer)
 	err = json.Unmarshal(body, &answer)
+
+	//fmt.Println("🔵🟦:", answer.Message.ToolCalls)
+	//fmt.Println("🔵🟦:", reflect.TypeOf(answer.Message.ToolCalls))
 
 	if err != nil {
 		return llm.Answer{}, err
@@ -71,7 +77,6 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 	var fullAnswer llm.Answer
 	var answer llm.Answer
 	for {
-		
 
 		line, err := reader.ReadBytes('\n')
 		if err != nil {
@@ -86,10 +91,9 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 			onChunk(llm.Answer{})
 		}
 		fullAnswer.Message.Content += answer.Message.Content
-		
+
 		// ? 🤔 and if I used answer + error as a parameter?
 		err = onChunk(answer)
-
 
 		// generate an error to stop the stream
 		if err != nil {

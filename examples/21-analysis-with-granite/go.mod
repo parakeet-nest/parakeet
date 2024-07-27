@@ -1,4 +1,4 @@
-module 22-characters
+module 21-analysis-with-granite
 
 go 1.22.1
 

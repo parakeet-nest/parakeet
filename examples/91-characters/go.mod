@@ -1,4 +1,4 @@
-module 19-play-with-granite
+module 91-characters
 
 go 1.22.1
 

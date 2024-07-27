@@ -1,4 +1,4 @@
-module 20-analysis-with-granite
+module 90-characters
 
 go 1.22.1
 

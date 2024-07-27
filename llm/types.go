@@ -1,6 +1,9 @@
 package llm
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type LLM struct {
 	Name string `json:"name"`
@@ -8,8 +11,21 @@ type LLM struct {
 }
 
 type Message struct {
-	Role    string `json:"role"`
-	Content string `json:"content"`
+	Role      string      `json:"role"`
+	Content   string      `json:"content"`
+	ToolCalls []map[string]interface{} `json:"tool_calls,omitempty"` // only if it used
+	//ToolCalls interface{} `json:"tool_calls,omitempty"` // only if it used
+}
+
+func (m *Message) ToolCallsToJSONString() (string, error) {
+	// Marshal the data into JSON
+	jsonBytes, err := json.Marshal(m.ToolCalls)
+	if err != nil {
+		return "", err
+	}
+	// Convert JSON bytes to string
+	jsonString := string(jsonBytes)
+	return jsonString, nil
 }
 
 type MessageRecord struct {
@@ -87,6 +103,7 @@ type Query struct {
 	Stream   bool      `json:"stream"`
 	Prompt   string    `json:"prompt"`  // For "Simple" Completion
 	Context  []int     `json:"context"` // For "Simple" Completion
+	Tools    []Tool    `json:"tools"`
 
 	Format    string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
 	KeepAlive bool   `json:"keep_alive,omitempty"`

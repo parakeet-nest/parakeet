@@ -570,7 +570,7 @@ if err != nil {
 <!-- split -->
 
 <!-- TOPIC: Function Calling SUMMARY: A feature in LLMs that allows them to provide a specific output with the same format (predictable output format). KEYWORDS: function calling, predictable output format, LLMs. -->
-## Function Calling
+## Function Calling (before tool support)
 
 What is **"Function Calling"**? First, it's not a feature where a LLM can call and execute a function. "Function Calling" is the ability for certain LLMs to provide a specific output with the same format (we could say: "a predictable output format").
 
@@ -759,6 +759,136 @@ messages := []llm.Message{
 ```
 
 Look at this sample for a complete sample: [examples/17-fake-function-calling](examples/17-fake-function-calling)
+<!-- split -->
+
+
+## Function Calling with tool support
+> Ollama API: chat request with tools https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
+
+Since Ollama `0.3.0`, Ollama supports **tools calling**, blog post: https://ollama.com/blog/tool-support.
+A list of supported models can be found under the Tools category on the models page: https://ollama.com/search?c=tools
+
+
+### Define a list of tools
+
+> use a supported model
+```golang
+model := "mistral:7b"
+
+toolsList := []llm.Tool{
+	{
+		Type: "function",
+		Function: llm.Function{
+			Name:        "hello",
+			Description: "Say hello to a given person with his name",
+			Parameters: llm.Parameters{
+				Type: "object",
+				Properties: map[string]llm.Property{
+					"name": {
+						Type:        "string",
+						Description: "The name of the person",
+					},
+				},
+				Required: []string{"name"},
+			},
+		},
+	},
+	{
+		Type: "function",
+		Function: llm.Function{
+			Name:        "addNumbers",
+			Description: "Make an addition of the two given numbers",
+			Parameters: llm.Parameters{
+				Type: "object",
+				Properties: map[string]llm.Property{
+					"a": {
+						Type:        "number",
+						Description: "first operand",
+					},
+					"b": {
+						Type:        "number",
+						Description: "second operand",
+					},
+				},
+				Required: []string{"a", "b"},
+			},
+		},
+	},
+}
+```
+
+### Set the Tools property of the query
+
+> - set the `Temperature` to `0.0`
+> - you don't need to set the row mode to true
+> - set `query.Tools` with `toolsList`
+```golang
+messages := []llm.Message{
+	{Role: "user", Content: `say "hello" to Bob`},
+}
+
+options := llm.Options{
+	Temperature:   0.0,
+	RepeatLastN:   2,
+	RepeatPenalty: 2.0,
+}
+
+query := llm.Query{
+	Model:    model,
+	Messages: messages,
+	Tools:    toolsList,
+	Options:  options,
+	Format:   "json",
+}
+```
+
+### Run the completion
+
+```go
+answer, err := completion.Chat(ollamaUrl, query)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+
+// It's a []map[string]interface{}
+toolCalls := answer.Message.ToolCalls
+
+// Convert toolCalls into a JSON string
+jsonBytes, err := json.Marshal(toolCalls)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+// Convert JSON bytes to string
+result := string(jsonBytes)
+
+fmt.Println(result)
+```
+
+The result will look like this:
+```json
+[{"function":{"arguments":{"name":"Bob"},"name":"hello"}}]
+```
+
+#### Or you can use the `ToolCallsToJSONString` helper
+
+```golang
+answer, err = completion.Chat(ollamaUrl, query)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+
+result, err = answer.Message.ToolCallsToJSONString()
+if err != nil {
+	log.Fatal("😡:", err)
+}
+fmt.Println(result)
+```
+The result will look like this:
+```json
+[{"function":{"arguments":{"name":"Bob"},"name":"hello"}}]
+```
+
+Look at this sample for a complete sample: [examples/19-mistral-function-calling-tool-support](19-mistral-function-calling-tool-support)
 <!-- split -->
 
 <!-- TOPIC: WebAssembly plugins for Parakeet SUMMARY: The release of Parakeet's version 0.0.6 brings support for WebAssembly, allowing users to write their own wasm plugins in various languages (Rust, Go, C, etc.) and use them with the "Function Calling" feature. KEYWORDS: Parakeet, WebAssembly, Wasm plugins, Extism project, TinyGo, Function Calling -->

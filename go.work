@@ -27,10 +27,14 @@ use(
     examples/17-fake-function-calling
     examples/18-call-functions-for-real
     examples/18-call-functions-for-real/wasm
-    examples/19-play-with-granite
-    examples/20-analysis-with-granite
-    examples/21-characters
-    examples/22-characters
+    examples/19-mistral-function-calling-tool-support
+
+    examples/20-play-with-granite
+    examples/21-analysis-with-granite
+
+    examples/90-characters
+    examples/91-characters
+
     chat-with-readme/embeddings-from-readme
     chat-with-readme/search
 )
