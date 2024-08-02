@@ -77,3 +77,25 @@ func TestGenerateContextFromDocs(t *testing.T) {
 
 }
 
+
+func TestInterpolation(t *testing.T) {
+
+	human := struct {
+		FirstName string
+		LastName string
+
+	}{
+		FirstName: "Bob",
+		LastName: "Morane",
+	}
+
+	tpl := `Hello I am {{.FirstName}} {{.LastName}}`
+
+	res, err := InterpolateString(tpl, human)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println("📙", res)
+
+}

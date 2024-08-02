@@ -17,7 +17,7 @@ use(
     examples/11-chat-conversational-bbolt/resume
     ama/embeddings-from-code
     ama/search
-    prompting/01-draft
+    //prompting/01-draft
     star-trek-tests
     examples/12-json-output
     examples/13-simple-fake-function-calling
@@ -31,6 +31,8 @@ use(
 
     examples/20-play-with-granite
     examples/21-analysis-with-granite
+    examples/22-dockerizing
+
 
     examples/90-characters
     examples/91-characters
