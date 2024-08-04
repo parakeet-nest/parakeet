@@ -99,3 +99,39 @@ func TestInterpolation(t *testing.T) {
 	fmt.Println("📙", res)
 
 }
+
+func TestSimpleChunker(t *testing.T) {
+
+	rulesContent, err := ReadTextFile("./contents-for-test/rules/chronicles.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	chunks := ChunkText(rulesContent, 100, 15)
+
+	for _, chunk := range chunks {
+		fmt.Println("------------------------------------")
+		fmt.Println(chunk)
+		fmt.Println()
+	}
+
+}
+
+func TestRegexSplitter(t *testing.T) {
+
+	rulesContent, err := ReadTextFile("./contents-for-test/rules/chronicles.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	//chunks := SplitTextWithRegex(rulesContent, `#|\d+\.`)
+	chunks := SplitTextWithRegex(rulesContent, `## *`)
+
+
+	for _, chunk := range chunks {
+		fmt.Println("=============================================")
+		fmt.Println(chunk)
+		fmt.Println()
+	}
+
+}
+
+

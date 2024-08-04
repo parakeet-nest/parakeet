@@ -107,7 +107,6 @@ func main() {
 			Temperature: 0.4,
 			RepeatLastN: 2,
 		},
-		Stream: false,
 	}
 
 	fmt.Println("")

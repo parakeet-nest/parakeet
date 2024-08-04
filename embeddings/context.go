@@ -23,3 +23,11 @@ func GenerateContextFromSimilarities(similarities []llm.VectorRecord) string {
 }
 
 // TODO: GenerateContextFromSimilaritiesWithTags
+
+func GenerateContentFromSimilarities(similarities []llm.VectorRecord) string {
+	documentsContent := ""
+	for _, similarity := range similarities {
+		documentsContent += fmt.Sprintf("%s\n", similarity.Prompt)
+	}
+	return documentsContent
+}
