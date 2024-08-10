@@ -2,7 +2,7 @@ module 18-call-functions-for-real
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.0.7
+require github.com/parakeet-nest/parakeet v0.0.8
 
 require (
 	github.com/extism/go-sdk v1.2.0 // indirect

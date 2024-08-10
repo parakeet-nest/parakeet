@@ -118,6 +118,7 @@ type VectorRecord struct {
 	Id        string    `json:"id"`
 	Prompt    string    `json:"prompt"`
 	Embedding []float64 `json:"embedding"`
+	CosineDistance float64
 }
 
 type Query4Embedding struct {

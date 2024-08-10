@@ -19,7 +19,7 @@ type Item struct {
 
 func main() {
 	ollamaUrl := "http://localhost:11434"
-	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
+	embeddingsModel := "all-minilm:33m" 
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
@@ -36,7 +36,6 @@ func main() {
 	if err != nil {
 		log.Fatal("😠 Error parsing JSON:", err)
 	}
-
 
 	// Create and save the embeddings
 	for i, item := range items {
@@ -60,8 +59,5 @@ func main() {
 				fmt.Println("😡:", err)
 			}
 		}
-
 	}
-
-
 }

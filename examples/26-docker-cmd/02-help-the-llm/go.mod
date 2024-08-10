@@ -1,12 +1,12 @@
-module 26-embeddings-create
+module 02-help-the-llm
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.0.7
+require github.com/parakeet-nest/parakeet v0.0.8
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect
-	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 )
 
 replace github.com/parakeet-nest/parakeet => ../../..

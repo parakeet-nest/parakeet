@@ -2,7 +2,7 @@ module 09-embeddings-use
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.0.7
+require github.com/parakeet-nest/parakeet v0.0.8
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect

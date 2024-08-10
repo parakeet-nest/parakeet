@@ -202,7 +202,7 @@ func main() {
 ```
 
 ✋ **To keep a conversational memory** for the next chat completion, update the list of messages with the previous question and answer.
-> I plan to add the support of [bbolt](https://github.com/etcd-io/bbolt) in the incoming v0.0.1 of Parakeet to store the conversational memory.
+
 <!-- split -->
 
 <!-- TOPIC: Chat Completion with Stream using Golang and LLaMA API SUMMARY: This Go program uses the LLaMA API to create a chat completion stream, generating responses based on user input and system content. It provides a basic "hello world" example in Golang. KEYWORDS: Golang, LLaMA API, Chat Completion, Stream, Programming -->
@@ -567,7 +567,44 @@ if err != nil {
 	log.Fatal("😡:", err)
 }
 ```
+
+### Other similarity search methods
+
+`SearchMaxSimilarity` searches for the vector record in the `BboltVectorStore` that has the maximum **cosine distance similarity** to the given `embeddingFromQuestion`:
+```golang
+similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
+```
+
+`SearchTopNSimilarities` searches for vector records in the `BboltVectorStore` that have a **cosine distance similarity** greater than or equal to the given `limit` and returns the top `n` records:
+```golang
+similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, limit, n)
+```
+
 <!-- split -->
+## Chunkers amd Splitters
+
+There are three methods in the `content` package to help you chunk and split text:
+
+- `ChunkText` takes a text string and divides it into chunks of a specified size with a given overlap. It returns a slice of strings, where each string represents a chunk of the original text.
+
+```golang
+chunks := content.ChunkText(rulesContent, 900, 400)
+```
+
+- `SplitTextWithDelimiter` splits the given text using the specified delimiter and returns a slice of strings.
+
+```golang
+chunks := content.SplitTextWithDelimiter(rulesContent, "<!-- SPLIT -->")
+```
+
+- `SplitTextWithRegex` splits the given text using the provided regular expression delimiter. It returns a slice of strings containing the split parts of the text.
+
+```golang
+chunks := content.SplitTextWithRegex(rulesContent, `## *`)
+```
+
+<!-- split -->
+
 
 <!-- TOPIC: Function Calling SUMMARY: A feature in LLMs that allows them to provide a specific output with the same format (predictable output format). KEYWORDS: function calling, predictable output format, LLMs. -->
 ## Function Calling (before tool support)

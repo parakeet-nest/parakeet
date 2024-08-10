@@ -32,7 +32,14 @@ use(
     examples/20-play-with-granite
     examples/21-analysis-with-granite
     examples/22-dockerizing
+    examples/23-rag-with-chunker
+    examples/24-rag-with-splitter
+    examples/25-rag-with-regex
 
+    examples/26-docker-cmd/01-talk-to-llm
+    examples/26-docker-cmd/02-help-the-llm
+    examples/26-docker-cmd/03-create-embeddings
+    examples/26-docker-cmd/04-use-embeddings
 
     examples/90-characters
     examples/91-characters
