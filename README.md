@@ -581,7 +581,7 @@ similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, limit, n)
 ```
 
 <!-- split -->
-## Chunkers amd Splitters
+## Chunkers and Splitters
 
 There are three methods in the `content` package to help you chunk and split text:
 
