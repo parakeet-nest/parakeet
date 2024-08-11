@@ -64,6 +64,7 @@ func (mvs *MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vecto
 	for _, v := range mvs.Records {
 		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance >= limit {
+			v.CosineDistance = distance
 			records = append(records, v)
 		}
 	}
