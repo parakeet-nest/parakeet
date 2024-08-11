@@ -2,7 +2,7 @@ module 25-rag-with-regex
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.0.8
+require github.com/parakeet-nest/parakeet v0.0.9
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect
