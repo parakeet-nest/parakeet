@@ -1,0 +1,13 @@
+I want 10 examples for every option of the docker compose command
+For every example, I want a user question related to this example
+
+do not use the `docker-compose` command, use only the `docker compose` command
+
+The output format will be a JSON array of objects, where each object has three fields: 
+- `input`, 
+- `instruction`, 
+- and `output`. 
+
+The `input` field will contain the user question, 
+the `instruction` field will contain the instruction for the language model, the value is always "translate this sentence in docker command",
+and the `output` field will contain the example of the docker build command.

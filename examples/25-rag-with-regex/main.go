@@ -21,9 +21,10 @@ func main() {
 	getCompletion(`Who are the monsters of Chronicles of Aethelgard?`,
 		ollamaUrl, embeddingsModel, smallChatModel, store, 0.3)
 
+	/*
 	getCompletion(`Tell me more about Keegorg`,
 		ollamaUrl, embeddingsModel, smallChatModel, store, 0.3)
-
+	*/
 }
 
 func createEmbeddingsFromDocument(pathDocument, ollamaUrl, embeddingsModel string) embeddings.MemoryVectorStore {

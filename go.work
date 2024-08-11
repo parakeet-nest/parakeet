@@ -41,6 +41,8 @@ use(
     examples/26-docker-cmd/03-create-embeddings
     examples/26-docker-cmd/04-use-embeddings
 
+    examples/26-docker-cmd/03-wip-create-more-embeddings
+
     examples/90-characters
     examples/91-characters
 

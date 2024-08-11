@@ -1,0 +1,403 @@
+[
+    {
+      "input": "How do I run a Docker container with a specific name mycontainer?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --name mycontainer myimage"
+    },
+    {
+      "input": "How can I start a Docker container with the name webapp?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --name webapp myimage"
+    },
+    {
+      "input": "How do I launch a Docker container named dbserver?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --name dbserver myimage"
+    },
+    {
+      "input": "How can I create a Docker container with the name testcontainer?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --name testcontainer myimage"
+    },
+    {
+      "input": "How do I run a Docker container named appcontainer?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --name appcontainer myimage"
+    },
+    {
+      "input": "How can I run a Docker container in detached mode?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -d myimage"
+    },
+    {
+      "input": "How do I start a Docker container in the background?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -d myimage"
+    },
+    {
+      "input": "How can I launch a Docker container in detached mode?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -d myimage"
+    },
+    {
+      "input": "How do I create a Docker container that runs in the background?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -d myimage"
+    },
+    {
+      "input": "How can I run a Docker container without attaching to its output?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -d myimage"
+    },
+    {
+      "input": "How do I publish a container's port 80 to the host's port 8080?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -p 8080:80 myimage"
+    },
+    {
+      "input": "How can I map the container's port 443 to the host's port 8443?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -p 8443:443 myimage"
+    },
+    {
+      "input": "How do I bind the container's port 3000 to the host's port 3000?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -p 3000:3000 myimage"
+    },
+    {
+      "input": "How can I expose the container's port 5000 to the host's port 5000?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -p 5000:5000 myimage"
+    },
+    {
+      "input": "How do I map the container's port 22 to the host's port 2222?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -p 2222:22 myimage"
+    },
+    {
+      "input": "How can I set environment variable ENV to production in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -e ENV=production myimage"
+    },
+    {
+      "input": "How do I pass environment variable DEBUG=true to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -e DEBUG=true myimage"
+    },
+    {
+      "input": "How can I set the environment variable VERSION to 1.2.3 in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -e VERSION=1.2.3 myimage"
+    },
+    {
+      "input": "How do I provide environment variable API_KEY to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -e API_KEY=12345 myimage"
+    },
+    {
+      "input": "How can I set the environment variable USER=admin in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -e USER=admin myimage"
+    },
+    {
+      "input": "How do I mount a volume /host/path to /container/path in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -v /host/path:/container/path myimage"
+    },
+    {
+      "input": "How can I bind mount /data on the host to /data in the Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -v /data:/data myimage"
+    },
+    {
+      "input": "How do I mount a local directory /app to /var/www in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -v /app:/var/www myimage"
+    },
+    {
+      "input": "How can I mount /logs on the host to /var/logs in the Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -v /logs:/var/logs myimage"
+    },
+    {
+      "input": "How do I mount a volume /mnt/data to /data in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -v /mnt/data:/data myimage"
+    },
+    {
+      "input": "How can I run a Docker container with restart policy always?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --restart always myimage"
+    },
+    {
+      "input": "How do I set the restart policy to on-failure for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --restart on-failure myimage"
+    },
+    {
+      "input": "How can I configure the Docker container to restart unless stopped?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --restart unless-stopped myimage"
+    },
+    {
+      "input": "How do I specify a maximum of 5 restart attempts for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --restart on-failure:5 myimage"
+    },
+    {
+      "input": "How can I set the restart policy to no for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --restart no myimage"
+    },
+    {
+      "input": "How do I limit the CPU usage to 2 cores for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cpus=2 myimage"
+    },
+    {
+      "input": "How can I set the CPU limit to 0.5 cores for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cpus=0.5 myimage"
+    },
+    {
+      "input": "How do I allocate 1.5 CPU cores to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cpus=1.5 myimage"
+    },
+    {
+      "input": "How can I limit the Docker container to use only 3 CPU cores?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cpus=3 myimage"
+    },
+    {
+      "input": "How do I restrict the Docker container to 0.25 CPU cores?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cpus=0.25 myimage"
+    },
+    {
+      "input": "How can I limit the memory usage to 512MB for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -m 512m myimage"
+    },
+    {
+      "input": "How do I set the memory limit to 1GB for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -m 1g myimage"
+    },
+    {
+      "input": "How can I allocate 256MB of memory to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -m 256m myimage"
+    },
+    {
+      "input": "How do I limit the memory usage to 2GB for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -m 2g myimage"
+    },
+    {
+      "input": "How can I set the memory limit to 128MB for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -m 128m myimage"
+    },
+    {
+      "input": "How do I set the working directory to /app in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -w /app myimage"
+    },
+    {
+      "input": "How can I specify /home as the working directory for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -w /home myimage"
+    },
+    {
+      "input": "How do I set the working directory to /usr/src/app in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -w /usr/src/app myimage"
+    },
+    {
+      "input": "How can I configure the Docker container to use /data as the working directory?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -w /data myimage"
+    },
+    {
+      "input": "How do I specify /var/www as the working directory for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run -w /var/www myimage"
+    },
+    {
+      "input": "How can I run a Docker container with a specific hostname myhost?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --hostname myhost myimage"
+    },
+    {
+      "input": "How do I set the hostname to webserver for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --hostname webserver myimage"
+    },
+    {
+      "input": "How can I configure the Docker container to have the hostname dbserver?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --hostname dbserver myimage"
+    },
+    {
+      "input": "How do I specify the hostname appcontainer for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --hostname appcontainer myimage"
+    },
+    {
+      "input": "How can I set the hostname to testhost for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --hostname testhost myimage"
+    },
+    {
+      "input": "How do I connect a Docker container to a specific network mynetwork?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network mynetwork myimage"
+    },
+    {
+      "input": "How can I attach a Docker container to the network bridge?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network bridge myimage"
+    },
+    {
+      "input": "How do I configure the Docker container to use the host network?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network host myimage"
+    },
+    {
+      "input": "How can I specify the none network for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network none myimage"
+    },
+    {
+      "input": "How do I connect a Docker container to a custom network called appnetwork?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network appnetwork myimage"
+    },
+    {
+      "input": "How can I run a Docker container with a specific DNS server 8.8.8.8?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --dns 8.8.8.8 myimage"
+    },
+    {
+      "input": "How do I set the DNS server to 1.1.1.1 for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --dns 1.1.1.1 myimage"
+    },
+    {
+      "input": "How can I specify multiple DNS servers for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --dns 8.8.8.8 --dns 8.8.4.4 myimage"
+    },
+    {
+      "input": "How do I configure the Docker container to use the DNS server 4.4.4.4?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --dns 4.4.4.4 myimage"
+    },
+    {
+      "input": "How can I set the DNS server to 9.9.9.9 in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --dns 9.9.9.9 myimage"
+    },
+    {
+      "input": "How do I add a custom host-to-IP mapping example.com to 127.0.0.1 for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --add-host example.com:127.0.0.1 myimage"
+    },
+    {
+      "input": "How can I map the host mysite.local to IP 192.168.1.1 in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --add-host mysite.local:192.168.1.1 myimage"
+    },
+    {
+      "input": "How do I set the host mapping for test.local to 10.0.0.1 in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --add-host test.local:10.0.0.1 myimage"
+    },
+    {
+      "input": "How can I add multiple host-to-IP mappings for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --add-host example1.com:127.0.0.1 --add-host example2.com:127.0.0.2 myimage"
+    },
+    {
+      "input": "How do I map the host myapp.local to IP 172.16.0.1 in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --add-host myapp.local:172.16.0.1 myimage"
+    },
+    {
+      "input": "How can I run a Docker container with a specific entrypoint /app/start.sh?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --entrypoint /app/start.sh myimage"
+    },
+    {
+      "input": "How do I set the entrypoint to /bin/bash for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --entrypoint /bin/bash myimage"
+    },
+    {
+      "input": "How can I configure the Docker container to use /usr/bin/python as the entrypoint?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --entrypoint /usr/bin/python myimage"
+    },
+    {
+      "input": "How do I specify /init as the entrypoint for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --entrypoint /init myimage"
+    },
+    {
+      "input": "How can I set the entrypoint to /entrypoint.sh in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --entrypoint /entrypoint.sh myimage"
+    },
+    {
+      "input": "How do I set a custom network alias web for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network-alias web myimage"
+    },
+    {
+      "input": "How can I configure the Docker container to use the network alias app?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network-alias app myimage"
+    },
+    {
+      "input": "How do I set the network alias db for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network-alias db myimage"
+    },
+    {
+      "input": "How can I assign multiple network aliases web and app to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network-alias web --network-alias app myimage"
+    },
+    {
+      "input": "How do I specify the network alias api for a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --network-alias api myimage"
+    },
+    {
+      "input": "How can I run a Docker container with specific capabilities CAP_NET_ADMIN and CAP_SYS_PTRACE?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cap-add CAP_NET_ADMIN --cap-add CAP_SYS_PTRACE myimage"
+    },
+    {
+      "input": "How do I add the capability CAP_SYS_ADMIN to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cap-add CAP_SYS_ADMIN myimage"
+    },
+    {
+      "input": "How can I drop the capability CAP_CHOWN in a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cap-drop CAP_CHOWN myimage"
+    },
+    {
+      "input": "How do I configure the Docker container to add the capability CAP_NET_RAW?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cap-add CAP_NET_RAW myimage"
+    },
+    {
+      "input": "How can I add multiple capabilities CAP_SYS_TIME and CAP_NET_BIND_SERVICE to a Docker container?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker run --cap-add CAP_SYS_TIME --cap-add CAP_NET_BIND_SERVICE myimage"
+    }
+  ]
+  

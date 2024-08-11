@@ -1,0 +1,563 @@
+[
+    {
+      "input": "How do I start services defined in a docker-compose.yml file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up"
+    },
+    {
+      "input": "How can I start services in detached mode using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up -d"
+    },
+    {
+      "input": "How do I bring up services using a specific Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f custom-compose.yml up"
+    },
+    {
+      "input": "How can I start services and force recreate containers using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --force-recreate"
+    },
+    {
+      "input": "How do I start services and remove orphans using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --remove-orphans"
+    },
+    {
+      "input": "How can I start a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up myservice"
+    },
+    {
+      "input": "How do I start multiple services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up service1 service2"
+    },
+    {
+      "input": "How can I start services with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject up"
+    },
+    {
+      "input": "How do I start services with a build option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --build"
+    },
+    {
+      "input": "How can I start services with a no-deps option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --no-deps myservice"
+    },
+    {
+      "input": "How do I stop and remove containers, networks, and volumes created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down"
+    },
+    {
+      "input": "How can I stop and remove all containers and networks created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --rmi all"
+    },
+    {
+      "input": "How do I stop and remove all containers, networks, and volumes created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --volumes"
+    },
+    {
+      "input": "How do I stop and remove containers, networks, and images created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --rmi local"
+    },
+    {
+      "input": "How can I stop and remove all resources created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down -v"
+    },
+    {
+      "input": "How do I stop and remove containers, networks, and custom images created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --rmi custom"
+    },
+    {
+      "input": "How can I stop and remove containers, networks, and anonymous volumes created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --remove-orphans"
+    },
+    {
+      "input": "How do I stop and remove all containers, networks, and named volumes created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --volumes --remove-orphans"
+    },
+    {
+      "input": "How can I stop and remove all containers, networks, and custom volumes created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --volumes --rmi custom"
+    },
+    {
+      "input": "How do I stop and remove all containers, networks, images, and volumes created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose down --rmi all --volumes --remove-orphans"
+    },
+    {
+      "input": "How can I build or rebuild services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build"
+    },
+    {
+      "input": "How do I force build services with Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build --no-cache"
+    },
+    {
+      "input": "How do I build services using a specific Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f custom-compose.yml build"
+    },
+    {
+      "input": "How can I build a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build myservice"
+    },
+    {
+      "input": "How do I build services and always remove intermediate containers using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build --force-rm"
+    },
+    {
+      "input": "How can I build services and set build arguments using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build --build-arg MYARG=1"
+    },
+    {
+      "input": "How do I build services with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject build"
+    },
+    {
+      "input": "How can I build services without using cache in Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build --no-cache"
+    },
+    {
+      "input": "How do I build services and use a specific dockerfile using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build --file custom-dockerfile"
+    },
+    {
+      "input": "How can I build services and specify the pull option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose build --pull"
+    },
+    {
+      "input": "How can I view the logs of all running services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs"
+    },
+    {
+      "input": "How do I view the logs of a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs myservice"
+    },
+    {
+      "input": "How can I follow the logs of all services in real-time using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs -f"
+    },
+    {
+      "input": "How do I view the logs of a specific service with timestamps using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs -t myservice"
+    },
+    {
+      "input": "How can I tail the last 10 lines of logs for all services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs --tail 10"
+    },
+    {
+      "input": "How do I view the logs of multiple services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs service1 service2"
+    },
+    {
+      "input": "How can I view the logs of services with color output using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs --color"
+    },
+    {
+      "input": "How do I view the logs of services with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject logs"
+    },
+    {
+      "input": "How can I view the logs of services and exclude health check output using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs --no-log-prefix"
+    },
+    {
+      "input": "How do I view the logs of services and use custom log options using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose logs --log-opt max-size=10m"
+    },
+    {
+      "input": "How do I list all services defined in the Docker Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --services"
+    },
+    {
+      "input": "How can I view the entire configuration in the Docker Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config"
+    },
+    {
+      "input": "How do I validate the Docker Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --quiet"
+    },
+    {
+      "input": "How can I view the configuration in JSON format using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --format json"
+    },
+    {
+      "input": "How do I view the configuration in YAML format using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --format yaml"
+    },
+    {
+      "input": "How can I view the configuration with interpolation enabled using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --resolve-image-digests"
+    },
+    {
+      "input": "How do I view the configuration with variables substituted using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --no-interpolate"
+    },
+    {
+      "input": "How can I view the configuration with service profiles using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --profiles"
+    },
+    {
+      "input": "How do I view the configuration with all defaults using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --all"
+    },
+    {
+      "input": "How can I view the configuration with custom env variables using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose config --env-file .env"
+    },
+    {
+      "input": "How do I view the configuration with custom compose file using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f custom-compose.yml config"
+    },
+    {
+      "input": "How can I view the configuration with multiple compose files using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f compose1.yml -f compose2.yml config"
+    },
+    {
+      "input": "How do I start a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up myservice"
+    },
+    {
+      "input": "How do I restart a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose restart myservice"
+    },
+    {
+      "input": "How can I stop a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose stop myservice"
+    },
+    {
+      "input": "How do I scale a specific service to 3 instances using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale myservice=3"
+    },
+    {
+      "input": "How can I remove a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose rm myservice"
+    },
+    {
+      "input": "How can I start a specific service with build option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --build myservice"
+    },
+    {
+      "input": "How do I stop and remove a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose rm -s -f myservice"
+    },
+    {
+      "input": "How can I start a specific service with no-deps option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --no-deps myservice"
+    },
+    {
+      "input": "How do I stop and remove a specific service and its volumes using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose rm -s -v myservice"
+    },
+    {
+      "input": "How can I restart a specific service with force recreate option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --force-recreate myservice"
+    },
+    {
+      "input": "How do I pause all running services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pause"
+    },
+    {
+      "input": "How can I resume all paused services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose unpause"
+    },
+    {
+      "input": "How do I pause a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pause myservice"
+    },
+    {
+      "input": "How can I resume a specific paused service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose unpause myservice"
+    },
+    {
+      "input": "How do I pause multiple services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pause service1 service2"
+    },
+    {
+      "input": "How can I resume multiple paused services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose unpause service1 service2"
+    },
+    {
+      "input": "How do I pause services with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject pause"
+    },
+    {
+      "input": "How can I resume services with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject unpause"
+    },
+    {
+      "input": "How do I pause services defined in multiple Compose files using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f compose1.yml -f compose2.yml pause"
+    },
+    {
+      "input": "How can I resume services defined in multiple Compose files using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f compose1.yml -f compose2.yml unpause"
+    },
+    {
+      "input": "How do I list all containers created by Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps"
+    },
+    {
+      "input": "How can I view the status of a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps myservice"
+    },
+    {
+      "input": "How do I view the status of all services in the Docker Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps -a"
+    },
+    {
+      "input": "How can I view the status of services with their ports using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps --services"
+    },
+    {
+      "input": "How do I view the status of all services in a specific Compose file?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f custom-compose.yml ps"
+    },
+    {
+      "input": "How can I view the status of services with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject ps"
+    },
+    {
+      "input": "How do I view the status of services and show only running containers using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps --filter status=running"
+    },
+    {
+      "input": "How can I view the status of services and show only stopped containers using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps --filter status=exited"
+    },
+    {
+      "input": "How do I view the status of services with detailed output using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps --verbose"
+    },
+    {
+      "input": "How can I view the status of services and show container IDs using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose ps --quiet"
+    },
+    {
+      "input": "How do I execute a command in a running service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec myservice /bin/bash"
+    },
+    {
+      "input": "How can I run a command in a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec myservice ls -l"
+    },
+    {
+      "input": "How do I open a shell in a running service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec myservice sh"
+    },
+    {
+      "input": "How can I execute a command as root in a service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec --user root myservice whoami"
+    },
+    {
+      "input": "How do I run a one-off command in a running service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec myservice echo 'Hello World'"
+    },
+    {
+      "input": "How can I run a command in a service with specific environment variables using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec -e MYVAR=value myservice env"
+    },
+    {
+      "input": "How do I run a command in a service with a specific working directory using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec -w /app myservice pwd"
+    },
+    {
+      "input": "How can I run a command in a service with interactive mode using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec -it myservice bash"
+    },
+    {
+      "input": "How do I run a command in a service with a specific user using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec --user myuser myservice whoami"
+    },
+    {
+      "input": "How can I run a command in a service with TTY using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose exec -T myservice bash"
+    },
+    {
+      "input": "How can I pull the latest images for all services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull"
+    },
+    {
+      "input": "How do I pull the latest image for a specific service using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull myservice"
+    },
+    {
+      "input": "How can I pull images for all services ignoring failures using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --ignore-pull-failures"
+    },
+    {
+      "input": "How do I pull images for all services without parallelism using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --no-parallel"
+    },
+    {
+      "input": "How can I pull images with a specified username and password using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --username myuser --password mypass"
+    },
+    {
+      "input": "How do I pull images with a specified platform using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --platform linux/amd64"
+    },
+    {
+      "input": "How can I pull images with a specific tag using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --tag mytag"
+    },
+    {
+      "input": "How do I pull images with a custom registry using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --registry myregistry"
+    },
+    {
+      "input": "How can I pull images with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject pull"
+    },
+    {
+      "input": "How do I pull images with a specified pull option using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose pull --pull"
+    },
+    {
+      "input": "How do I scale a service to 3 instances using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale myservice=3"
+    },
+    {
+      "input": "How can I scale multiple services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale web=3 --scale db=2"
+    },
+    {
+      "input": "How do I scale a service and bring up all services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale myservice=3"
+    },
+    {
+      "input": "How can I scale a service without starting other services using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --no-deps --scale myservice=3"
+    },
+    {
+      "input": "How do I scale a service and remove orphaned containers using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale myservice=3 --remove-orphans"
+    },
+    {
+      "input": "How can I scale a service with a specific project name using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --project-name myproject up --scale myservice=3"
+    },
+    {
+      "input": "How do I scale a service with a specific Compose file using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose -f custom-compose.yml up --scale myservice=3"
+    },
+    {
+      "input": "How can I scale a service and set environment variables using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale myservice=3 --env-file .env"
+    },
+    {
+      "input": "How do I scale a service with a specific log level using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose up --scale myservice=3 --log-level debug"
+    },
+    {
+      "input": "How can I scale a service with a specific profile using Docker Compose?",
+      "instruction": "translate this sentence in docker command",
+      "output": "docker compose --profile myprofile up --scale myservice=3"
+    }
+  ]
+  

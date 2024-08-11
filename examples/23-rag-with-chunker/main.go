@@ -30,7 +30,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
-	chunks := content.ChunkText(rulesContent, 900, 400)
+	chunks := content.ChunkText(rulesContent, 500, 200)
 
 	// Create embeddings from documents and save them in the store
 	for idx, doc := range chunks {
