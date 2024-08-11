@@ -1,6 +1,11 @@
 package embeddings
 
-import "math"
+import (
+	"math"
+	"sort"
+
+	"github.com/parakeet-nest/parakeet/llm"
+)
 
 func dotProduct(v1 []float64, v2 []float64) float64 {
 	// Calculate the dot product of two vectors
@@ -21,4 +26,17 @@ func CosineDistance(v1, v2 []float64) float64 {
 		return 0.0
 	}
 	return product / (norm1 * norm2)
+}
+
+func getTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
+	// Sort the records slice in descending order based on CosineDistance
+	sort.Slice(records, func(i, j int) bool {
+		return records[i].CosineDistance > records[j].CosineDistance
+	})
+
+	// Return the first max records or all if less than three
+	if len(records) < max {
+		return records
+	}
+	return records[:max]
 }

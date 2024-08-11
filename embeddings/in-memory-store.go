@@ -70,3 +70,17 @@ func (mvs *MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vecto
 
 	return records, nil
 }
+
+
+// SearchTopNSimilarities searches for the top N similar vector records based on the given embedding from a question.
+// It returns a slice of vector records and an error if any.
+// The limit parameter specifies the minimum similarity score for a record to be considered similar.
+// The max parameter specifies the maximum number of vector records to return.
+func (mvs *MemoryVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64, max int) ([]llm.VectorRecord, error) {
+	records, err := mvs.SearchSimilarities(embeddingFromQuestion, limit)
+	if err != nil {
+		return nil, err
+	}
+	return getTopNVectorRecords(records, max), nil
+}
+

@@ -2,7 +2,6 @@ package embeddings
 
 import (
 	"encoding/json"
-	"sort"
 
 	bbolt "github.com/parakeet-nest/parakeet/db"
 	"github.com/parakeet-nest/parakeet/llm"
@@ -119,6 +118,10 @@ func (bvs *BboltVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vector
 	return recordsFiltered, nil
 }
 
+// SearchTopNSimilarities searches for the top N similar vector records based on the given embedding from a question.
+// It returns a slice of vector records and an error if any.
+// The limit parameter specifies the minimum similarity score for a record to be considered similar.
+// The max parameter specifies the maximum number of vector records to return.
 func (bvs *BboltVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64, max int) ([]llm.VectorRecord, error) {
 	records, err := bvs.SearchSimilarities(embeddingFromQuestion, limit)
 	if err != nil {
@@ -126,18 +129,3 @@ func (bvs *BboltVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.Ve
 	}
 	return getTopNVectorRecords(records, max), nil
 }
-
-
-func getTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
-	// Sort the records slice in descending order based on CosineDistance
-	sort.Slice(records, func(i, j int) bool {
-		return records[i].CosineDistance > records[j].CosineDistance
-	})
-
-	// Return the first max records or all if less than three
-	if len(records) < max {
-		return records
-	}
-	return records[:max]
-}
-

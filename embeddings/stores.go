@@ -8,6 +8,7 @@ type VectorStore interface {
 	Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error)
 	SearchMaxSimilarity(embeddingFromQuestion llm.VectorRecord) (llm.VectorRecord, error)
 	SearchSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64) ([]llm.VectorRecord, error)
+	SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64, max int) ([]llm.VectorRecord, error)
 }
 // TODO: implement Delete
 
