@@ -2,7 +2,7 @@
 
 # 🦜🪺 Parakeet
 
-Parakeet is the simplest Go library to create **GenAI apps** with **[Ollma](https://ollama.com/)**.
+Parakeet is the simplest Go library to create **GenAI apps** with **[Ollama](https://ollama.com/)**.
 
 > A GenAI app is an application that uses generative AI technology. Generative AI can create new text, images, or other content based on what it's been trained on. So a GenAI app could help you write a poem, design a logo, or even compose a song! These are still under development, but they have the potential to be creative tools for many purposes. - [Gemini](https://gemini.google.com)
 
