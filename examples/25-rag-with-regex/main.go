@@ -55,6 +55,7 @@ func createEmbeddingsFromDocument(pathDocument, ollamaUrl, embeddingsModel strin
 		if err != nil {
 			fmt.Println("😡:", err)
 		} else {
+			embedding.MetaData = "📝 chunk num: " + strconv.Itoa(idx)
 			store.Save(embedding)
 		}
 	}
@@ -80,7 +81,12 @@ func getContentFromSimilarities(userContent, ollamaUrl, embeddingsModel string, 
 
 	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, limit)
 
-	fmt.Println("🎉 similarities:", len(similarities))
+	for _, similarity := range similarities {
+		// Do something with the similarity
+		fmt.Println("Similarity:", similarity.MetaData)
+	}
+
+	fmt.Println("🎉 number of similarities:", len(similarities))
 
 	documentsContent := embeddings.GenerateContentFromSimilarities(similarities)
 

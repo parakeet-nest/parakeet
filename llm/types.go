@@ -50,6 +50,20 @@ type Answer struct {
 	EvalDuration       int64     `json:"eval_duration"`
 }
 
+func (answer *Answer) ToJsonString() (string) {
+	// for the verbose mode
+	// Marshal the answer into JSON
+	jsonBytes, err := json.MarshalIndent(answer, "", "  ")
+
+	if err != nil {
+		return `{"error":"`+err.Error()+`"}`
+	}
+	// Convert JSON bytes to string
+	jsonString := string(jsonBytes)
+	return jsonString
+}
+
+
 /*
 type AnswerGenerate struct {
 	Model    string  `json:"model"`
@@ -93,6 +107,8 @@ type Options struct {
 	MirostatTau      float64 `json:"mirostat_tau,omitempty"`
 	MirostatEta      float64 `json:"mirostat_eta,omitempty"`
 	PenalizeNewline  bool    `json:"penalize_newline,omitempty"`
+
+	Verbose bool
 }
 
 // https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
@@ -110,6 +126,24 @@ type Query struct {
 	Raw       bool   `json:"raw,omitempty"`
 	System    string `json:"system,omitempty"`
 	Template  string `json:"template,omitempty"`
+
+	TokenHeaderName string
+	TokenHeaderValue string
+
+}
+
+func (query *Query) ToJsonString() (string) {
+	// for the verbose mode
+	// Marshal the answer into JSON
+	jsonBytes, err := json.MarshalIndent(query, "", "  ")
+
+	if err != nil {
+		return `{"error":"`+err.Error()+`"}`
+	}
+	// Convert JSON bytes to string
+	jsonString := string(jsonBytes)
+	return jsonString
+	
 }
 
 /* Embeddings */
@@ -119,9 +153,16 @@ type VectorRecord struct {
 	Prompt    string    `json:"prompt"`
 	Embedding []float64 `json:"embedding"`
 	CosineDistance float64
+	
+	Reference string `json:"reference"`
+	MetaData string `json:"metaData"`
+	Text string `json:"text"`
 }
 
 type Query4Embedding struct {
 	Prompt string `json:"prompt"`
 	Model  string `json:"model"`
+
+	TokenHeaderName string
+	TokenHeaderValue string
 }

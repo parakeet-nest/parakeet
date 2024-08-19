@@ -102,7 +102,6 @@ func (bvs *BboltVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vecto
 //   - []llm.VectorRecord: a slice of vector records that have a cosine distance similarity greater than or equal to the limit.
 //   - error: an error if any occurred during the search.
 func (bvs *BboltVectorStore) SearchSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64) ([]llm.VectorRecord, error) {
-
 	records, err := bvs.GetAll()
 	if err != nil {
 		return nil, err

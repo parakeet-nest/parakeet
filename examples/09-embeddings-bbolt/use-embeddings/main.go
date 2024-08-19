@@ -47,6 +47,10 @@ func main() {
 
 	similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
 
+	//similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 1)
+	//similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
+	//similarity := similarities[0]
+
 	fmt.Println("🎉 similarity", similarity)
 
 	documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`

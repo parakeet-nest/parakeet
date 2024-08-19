@@ -3,6 +3,7 @@ package embeddings
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 
@@ -26,6 +27,10 @@ func CreateEmbedding(ollamaUrl string, query llm.Query4Embedding, id string) (ll
 	}
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 
+	if query.TokenHeaderName != "" && query.TokenHeaderValue != "" {
+		req.Header.Set(query.TokenHeaderName, query.TokenHeaderValue)
+	}
+
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -35,7 +40,12 @@ func CreateEmbedding(ollamaUrl string, query llm.Query4Embedding, id string) (ll
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return llm.VectorRecord{}, err
+		//return llm.VectorRecord{}, err
+
+		// we need to create a new error because
+		// because, even if the status is not ok (ex 401 Unauthorized)
+		// the error == nil
+		return llm.VectorRecord{}, errors.New("Error: status code: " + resp.Status)
 	}
 
 	body, err := io.ReadAll(resp.Body)

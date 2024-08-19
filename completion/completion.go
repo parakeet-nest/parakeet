@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -14,6 +15,11 @@ import (
 func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answer, error) {
 
 	query.Stream = false
+
+	if query.Options.Verbose {
+		fmt.Println("[llm/query]", query.ToJsonString())
+		//fmt.Println("[llm/completion]", answer.ToJsonString())
+	}
 
 	// if tool call is not used
 	if query.Tools == nil {
@@ -31,6 +37,10 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 	}
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 
+	if query.TokenHeaderName != "" && query.TokenHeaderValue != "" {
+		req.Header.Set(query.TokenHeaderName, query.TokenHeaderValue)
+	}
+
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -39,6 +49,9 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		// we need to create a new error because
+		// because, even if the status is not ok (ex 401 Unauthorized)
+		// the error == nil
 		return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
 	}
 	body, err := io.ReadAll(resp.Body)
@@ -49,11 +62,14 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 	var answer llm.Answer
 	err = json.Unmarshal(body, &answer)
 
-	//fmt.Println("🔵🟦:", answer.Message.ToolCalls)
-	//fmt.Println("🔵🟦:", reflect.TypeOf(answer.Message.ToolCalls))
-
 	if err != nil {
 		return llm.Answer{}, err
+	}
+
+	if query.Options.Verbose {
+		//fmt.Println("[llm/query]", query.ToJsonString())
+		fmt.Println()
+		fmt.Println("[llm/completion]", answer.ToJsonString())
 	}
 
 	return answer, nil
@@ -61,29 +77,66 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 }
 
 func completionStream(url string, kindOfCompletion string, query llm.Query, onChunk func(llm.Answer) error) (llm.Answer, error) {
+	
 	query.Stream = true
+
+	if query.Options.Verbose {
+		fmt.Println("[llm/query]", query.ToJsonString())
+		//fmt.Println("[llm/completion]", answer.ToJsonString())
+	}
 
 	jsonQuery, err := json.Marshal(query)
 	if err != nil {
 		return llm.Answer{}, err
 	}
+	// -----------------------
 
+	req, err := http.NewRequest(http.MethodPost, url+"/api/"+kindOfCompletion, bytes.NewBuffer(jsonQuery))
+	if err != nil {
+		return llm.Answer{}, err
+	}
+
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+
+	if query.TokenHeaderName != "" && query.TokenHeaderValue != "" {
+		req.Header.Set(query.TokenHeaderName, query.TokenHeaderValue)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return llm.Answer{}, err
+	}
+
+	defer resp.Body.Close()
+
+	// -----------------------
+	/*
 	resp, err := http.Post(url+"/api/"+kindOfCompletion, "application/json; charset=utf-8", bytes.NewBuffer(jsonQuery))
 	if err != nil {
 		return llm.Answer{}, err
 	}
+	*/
+	// -----------------------
+
 	reader := bufio.NewReader(resp.Body)
 
 	var fullAnswer llm.Answer
 	var answer llm.Answer
+
+
 	for {
 
 		line, err := reader.ReadBytes('\n')
 		if err != nil {
+			
 			if err == io.EOF {
+				//&& resp.Status == "200"
 				break
 			}
-			return llm.Answer{}, err
+			
+			return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
+			//return llm.Answer{}, err
 		}
 
 		err = json.Unmarshal(line, &answer)
@@ -101,6 +154,18 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 		}
 	}
 	fullAnswer.Message.Role = answer.Message.Role
-	return fullAnswer, nil
+
+	if query.Options.Verbose {
+		//fmt.Println("[llm/query]", query.ToJsonString())
+		fmt.Println()
+		fmt.Println("[llm/completion]", answer.ToJsonString())
+	}
+	
+	if resp.StatusCode != http.StatusOK {
+		return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
+	} else {
+		return fullAnswer, nil
+	}
+	
 
 }

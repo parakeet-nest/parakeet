@@ -15,8 +15,10 @@ import (
 func main() {
 	ollamaUrl := "http://localhost:11434"
 
-	smallChatModel := "qwen2:0.5b"
+	//smallChatModel := "qwen2:0.5b"
+	smallChatModel := "gemma2:2b"
 	embeddingsModel := "all-minilm:33m"
+
 
 	systemContent := `instruction: 
 	translate the user question in docker command using the given context.

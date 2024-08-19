@@ -15,7 +15,7 @@ func main() {
 	//ollamaUrl := "http://host.docker.internal:11434"
 	//ollamaUrl := "http://bob.local:11434"
 	
-	embeddingsModel := "all-minilm"
+	embeddingsModel := "all-minilm:33m"
 	//embeddingsModel := "codestral"
 	//embeddingsModel := "magicoder:latest"
 	//embeddingsModel := "phi3:mini"
@@ -23,9 +23,10 @@ func main() {
 	//chatModel := "magicoder:latest"
 	//chatModel := "codestral"
 	//chatModel := "deepseek-coder:6.7b"
-	//chatModel := "phi3:mini" 
+	chatModel := "phi3:mini" 
 	//chatModel := "llama3" 
-	chatModel := "granite-code:3b"
+	//chatModel := "granite-code:3b"
+	//chatModel := "gemma2:2b"
 
 
 	store := embeddings.BboltVectorStore{}
@@ -45,7 +46,7 @@ func main() {
 	
 	//userContent := `Explain how to create a stream chat completion with Parakeet?`
 
-	userContent := `Explain, using Parakeet, how to generate a list of tools for doing function calling? And give an example.`
+	userContent := `Verbose mode`
 
 	//userContent := `Explain how can I generate JSON output`
 
@@ -61,10 +62,19 @@ func main() {
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
+	//fmt.Println(embeddingFromQuestion)
+
 	fmt.Println("🔎 searching for similarity...")
 
+	//fmt.Println(store.GetAll())
 
-	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.4)
+	similarities, err := store.SearchSimilarities(embeddingFromQuestion, 0.2)
+
+	//similarities, err := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 3)
+
+	if err != nil {
+		fmt.Println("😡", err)
+	}
 
 	documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 

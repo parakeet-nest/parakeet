@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "https://ollamak33g.eu.loclx.io"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "deepseek-coder"
@@ -42,6 +42,8 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: options,
+		TokenHeaderName: "X-TOKEN",
+		TokenHeaderValue: "paulette",
 	}
 
 	fullAnswer, err := completion.ChatStream(ollamaUrl, query,

@@ -1,21 +1,21 @@
 /*
 Topic: Parakeet
 Generate a chat completion with Ollama and parakeet
-The output is streamed
+no streaming
 */
 
 package main
 
 import (
-	"fmt"
-	"log"
-
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+
+	"fmt"
+	"log"
 )
 
 func main() {
-	ollamaUrl := "http://localhost:11434"
+	ollamaUrl := "https://ollamak33g.eu.loclx.io"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "deepseek-coder"
@@ -29,10 +29,12 @@ func main() {
 	And, please, be structured with bullet points`
 
 	options := llm.Options{
-		Temperature: 0.0, // default (0.8)
+		Temperature: 0.5, // default (0.8)
 		RepeatLastN: 2, // default (64) the default value will "freeze" deepseek-coder
-		RepeatPenalty: 3,
-		Verbose: true,
+		//Seed:        0, // default (0)
+		RepeatPenalty: 2.0, // default (1.1)
+		//Stop:        []string{},
+		Verbose: false,
 	}
 
 	query := llm.Query{
@@ -42,19 +44,17 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: options,
+		TokenHeaderName: "X-TOKEN",
+		TokenHeaderValue: "john_doe",
 	}
 
-	fullAnswer, err := completion.ChatStream(ollamaUrl, query,
-		func(answer llm.Answer) error {
-			fmt.Print(answer.Message.Content)
-			return nil
-		})
-	
-	fmt.Println("📝 Full answer:")
-	fmt.Println(fullAnswer.Message.Role)
-	fmt.Println(fullAnswer.Message.Content)
-
+	answer, err := completion.Chat(ollamaUrl, query)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
+	fmt.Println(answer.Message.Content)
+
+	//fmt.Println("[llm/query]", query.ToJsonString())
+	//fmt.Println("[llm/completion]", answer.ToJsonString())
+
 }

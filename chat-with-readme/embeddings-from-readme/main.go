@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"strings"
 
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/embeddings"
@@ -16,7 +15,7 @@ func main() {
 	//ollamaUrl := "http://host.docker.internal:11434"
 	//var embeddingsModel = "magicoder:latest"
 
-	embeddingsModel := "all-minilm"
+	embeddingsModel := "all-minilm:33m"
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
@@ -26,7 +25,8 @@ func main() {
 
 	readme, _ := content.ReadTextFile("../../README.md")
 
-	chunks := strings.Split(readme, "<!-- split -->")
+	//chunks := strings.Split(readme, "<!-- split -->")
+	chunks := content.SplitTextWithRegex(readme, `## *`)
 
 	counter := 0
 	for _, chunk := range chunks {

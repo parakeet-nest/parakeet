@@ -43,6 +43,13 @@ use(
 
     examples/26-docker-cmd/03-wip-create-more-embeddings
 
+    examples/27-generate-token
+    examples/28-generate-stream-token
+    examples/29-chat-token
+    examples/30-chat-stream-token
+    examples/31-embeddings-memory-token
+
+
     examples/90-characters
     examples/91-characters
 

@@ -34,6 +34,7 @@ func main() {
 		//Seed:        0, // default (0)
 		RepeatPenalty: 2.0, // default (1.1)
 		//Stop:        []string{},
+		Verbose: true,
 	}
 
 	query := llm.Query{
@@ -50,4 +51,8 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 	fmt.Println(answer.Message.Content)
+
+	//fmt.Println("[llm/query]", query.ToJsonString())
+	//fmt.Println("[llm/completion]", answer.ToJsonString())
+
 }
