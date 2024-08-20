@@ -3,6 +3,7 @@ package embeddings
 import (
 	"encoding/json"
 
+	"github.com/google/uuid"
 	bbolt "github.com/parakeet-nest/parakeet/db"
 	"github.com/parakeet-nest/parakeet/llm"
 	bolt "go.etcd.io/bbolt"
@@ -48,8 +49,10 @@ func (bvs *BboltVectorStore) GetAll() ([]llm.VectorRecord, error) {
 	return records, nil
 }
 
-// TODO: if vectorRecord.Id == "" create a uuid
 func (bvs *BboltVectorStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
+	if vectorRecord.Id == "" {
+		vectorRecord.Id = uuid.New().String()
+	}
 
 	jsonStr, err := json.Marshal(vectorRecord)
 	if err != nil {

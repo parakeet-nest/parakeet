@@ -1,0 +1,14 @@
+services:
+  redis-server:
+    image: redis:7.2.4
+    environment: 
+      - REDIS_ARGS=--save 30 1
+    ports:
+      - 6379:6379
+    volumes:
+      #- ./scripts:/scripts
+      #- redis-data:/data
+      - ./data:/data
+
+#volumes:
+#  redis-data:

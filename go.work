@@ -49,6 +49,8 @@ use(
     examples/30-chat-stream-token
     examples/31-embeddings-memory-token
 
+    examples/32-rag-with-redis/create-embeddings
+    examples/32-rag-with-redis/use-embeddings
 
     examples/90-characters
     examples/91-characters

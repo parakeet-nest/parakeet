@@ -531,6 +531,22 @@ store.Initialize("../embeddings.db")
 > - `examples/09-embeddings-bbolt/use-embeddings`: search similarities in the vector store
 <!-- split -->
 
+### Redis vector store
+
+**Create a store, and open an existing store**:
+```golang
+redisStore := embeddings.RedisVectorStore{}
+err := redisStore.Initialize("localhost:6379", "", "chronicles-bucket")
+
+if err != nil {
+	log.Fatalln("😡:", err)
+}
+```
+
+> 👀 you will find a complete example in `examples/32-rag-with-redis`
+> - `examples/32-rag-with-redis/create-embeddings`: create and populate the vector store
+> - `examples/32-rag-with-redis/use-embeddings`: search similarities in the vector store
+
 ### Additional data
 
 you can add additional data to a vector record (embedding):

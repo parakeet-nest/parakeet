@@ -1,4 +1,5 @@
 # RAG with the README file
+> 🚧 wip
 
 ## First: add the metadata and splitters
 

@@ -134,7 +134,9 @@ func completionStream(url string, kindOfCompletion string, query llm.Query, onCh
 				//&& resp.Status == "200"
 				break
 			}
-			
+			// we need to create a new error because
+			// because, even if the status is not ok (ex 401 Unauthorized)
+			// the error == nil
 			return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
 			//return llm.Answer{}, err
 		}

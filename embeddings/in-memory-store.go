@@ -1,6 +1,9 @@
 package embeddings
 
-import "github.com/parakeet-nest/parakeet/llm"
+import (
+	"github.com/google/uuid"
+	"github.com/parakeet-nest/parakeet/llm"
+)
 
 type MemoryVectorStore struct {
 	Records map[string]llm.VectorRecord
@@ -19,6 +22,9 @@ func (mvs *MemoryVectorStore) GetAll() ([]llm.VectorRecord, error) {
 }
 
 func (mvs *MemoryVectorStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
+	if vectorRecord.Id == "" {
+		vectorRecord.Id = uuid.New().String()
+	}
 	mvs.Records[vectorRecord.Id] = vectorRecord
 	return vectorRecord, nil
 }
@@ -41,11 +47,9 @@ func (mvs *MemoryVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vect
 			maxDistance = distance
 			selectedKeyRecord = k
 		}
-		//fmt.Println("  - ", selectedKeyRecord, v.Id, distance)
 	}
 	// Return only the nearest vector to the question
 	return mvs.Records[selectedKeyRecord], nil
-
 }
 
 // SearchSimilarities searches for vector records in the MemoryVectorStore that have a cosine distance similarity greater than or equal to the given limit.
@@ -68,10 +72,8 @@ func (mvs *MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vecto
 			records = append(records, v)
 		}
 	}
-
 	return records, nil
 }
-
 
 // SearchTopNSimilarities searches for the top N similar vector records based on the given embedding from a question.
 // It returns a slice of vector records and an error if any.
@@ -84,4 +86,3 @@ func (mvs *MemoryVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.V
 	}
 	return getTopNVectorRecords(records, max), nil
 }
-

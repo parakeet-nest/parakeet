@@ -1,4 +1,30 @@
-## v0.1.0 📘 [blue-book]
+# Parakeet Releases
+
+## Release notes
+
+### v0.1.1 📗 [green-textbook]
+
+#### What's new in v0.1.1?
+
+##### Redis vector store
+
+**Create a store, and open an existing store**:
+```golang
+redisStore := embeddings.RedisVectorStore{}
+err := redisStore.Initialize("localhost:6379", "", "chronicles-bucket")
+
+if err != nil {
+	log.Fatalln("😡:", err)
+}
+```
+
+> 👀 you will find a complete example in `examples/32-rag-with-redis`
+> - `examples/32-rag-with-redis/create-embeddings`: create and populate the vector store
+> - `examples/32-rag-with-redis/use-embeddings`: search similarities in the vector store
+
+___
+
+### v0.1.0 📘 [blue-book]
 
 #### What's new in v0.1.0?
 
