@@ -4,6 +4,10 @@
 
 ### v0.1.2 📕 [red-textbook]
 
+#### What's new in v0.1.2?
+
+##### Redis vector store
+
 **Create a store, and open an existing store**:
 ```golang
 cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
