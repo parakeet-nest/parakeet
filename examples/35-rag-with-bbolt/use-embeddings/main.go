@@ -12,7 +12,7 @@ import (
 func main() {
 	ollamaUrl := "http://localhost:11434"
 	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
-	var smallChatModel = "qwen2:0.5b"      // This model is for the chat completion
+	var smallChatModel = "llama3.1:8b"      // This model is for the chat completion
 
 	store := embeddings.BboltVectorStore{}
 	err := store.Initialize("../embeddings.db")
@@ -26,7 +26,8 @@ func main() {
 
 	systemContent := `You are a Golang expert and know very well the GenAI library Parakeet`
 
-	userContent := `What is Parakeet`
+	//userContent := `What is Parakeet`
+	userContent := `How to create a chat completion with a stream?`
 
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
