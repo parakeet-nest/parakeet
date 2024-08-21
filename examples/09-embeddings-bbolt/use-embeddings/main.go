@@ -14,8 +14,8 @@ func main() {
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	//ollamaUrl := "http://bob.local:11434"
-	var embeddingsModel = "all-minilm" // This model is for the embeddings of the documents
-	var smallChatModel = "qwen:0.5b"   // This model is for the chat completion
+	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
+	var smallChatModel = "qwen:0.5b"       // This model is for the chat completion
 
 	store := embeddings.BboltVectorStore{}
 	store.Initialize("../embeddings.db")
@@ -45,15 +45,17 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
+	//similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
 
-	//similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 1)
+	similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 2)
 	//similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
 	//similarity := similarities[0]
 
-	fmt.Println("🎉 similarity", similarity)
+	fmt.Println("🎉 similarities", len(similarities))
 
-	documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
+	//documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
+
+	documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 
 	query := llm.Query{
 		Model: smallChatModel,

@@ -547,6 +547,28 @@ if err != nil {
 > - `examples/32-rag-with-redis/create-embeddings`: create and populate the vector store
 > - `examples/32-rag-with-redis/use-embeddings`: search similarities in the vector store
 
+### Elasticsearch vector store
+
+**Create a store, and open an existing store**:
+```golang
+cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
+
+elasticStore := embeddings.ElasticSearchStore{}
+err := elasticStore.Initialize(
+	[]string{
+		os.Getenv("ELASTIC_ADDRESS"),
+	},
+	os.Getenv("ELASTIC_USERNAME"),
+	os.Getenv("ELASTIC_PASSWORD"),
+	cert,
+	"chronicles-index",
+)
+```
+
+> 👀 you will find a complete example in `examples/33-rag-with-elastic`
+> - `examples/33-rag-with-elastic/create-embeddings`: create and populate the vector store
+> - `examples/33-rag-with-elastic/use-embeddings`: search similarities in the vector store
+
 ### Additional data
 
 you can add additional data to a vector record (embedding):

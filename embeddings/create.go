@@ -65,5 +65,10 @@ func CreateEmbedding(ollamaUrl string, query llm.Query4Embedding, id string) (ll
 		Id:        id,
 	}
 
+	// Sometime vectorRecord.Embedding is empty
+	if len(vectorRecord.Embedding) == 0 {
+		return llm.VectorRecord{}, errors.New("embedding is empty")
+	}
+
 	return vectorRecord, nil
 }

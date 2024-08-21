@@ -1,60 +1,65 @@
 go 1.22.1
 
-use(
-    examples/01-generate
-    examples/02-generate-stream
-    examples/03-chat
-    examples/04-chat-stream
-    examples/05-context
-    examples/06-summary
-    examples/07-explain
-    examples/08-embeddings-memory
-    examples/09-embeddings-bbolt/create-embeddings
-    examples/09-embeddings-bbolt/use-embeddings
-    examples/09-embeddings-bbolt/embeddings-from-txt
-    examples/10-chat-conversational-memory
-    examples/11-chat-conversational-bbolt/begin
-    examples/11-chat-conversational-bbolt/resume
-    ama/embeddings-from-code
-    ama/search
-    //prompting/01-draft
-    star-trek-tests
-    examples/12-json-output
-    examples/13-simple-fake-function-calling
-    examples/14-mistral-function-calling
-    examples/15-mistral-function-calling
-    examples/16-fake-function-calling
-    examples/17-fake-function-calling
-    examples/18-call-functions-for-real
-    examples/18-call-functions-for-real/wasm
-    examples/19-mistral-function-calling-tool-support
+use (
 
-    examples/20-play-with-granite
-    examples/21-analysis-with-granite
-    examples/22-dockerizing
-    examples/23-rag-with-chunker
-    examples/24-rag-with-splitter
-    examples/25-rag-with-regex
+	examples/01-generate
+	examples/02-generate-stream
+	examples/03-chat
+	examples/04-chat-stream
+	examples/05-context
+	examples/06-summary
+	examples/07-explain
+	examples/08-embeddings-memory
+	examples/09-embeddings-bbolt/create-embeddings
+	examples/09-embeddings-bbolt/embeddings-from-txt
+	examples/09-embeddings-bbolt/use-embeddings
+	examples/10-chat-conversational-memory
+	examples/11-chat-conversational-bbolt/begin
+	examples/11-chat-conversational-bbolt/resume
+	examples/12-json-output
+	examples/13-simple-fake-function-calling
+	examples/14-mistral-function-calling
+	examples/15-mistral-function-calling
+	examples/16-fake-function-calling
+	examples/17-fake-function-calling
+	examples/18-call-functions-for-real
+	examples/18-call-functions-for-real/wasm
+	examples/19-mistral-function-calling-tool-support
 
-    examples/26-docker-cmd/01-talk-to-llm
-    examples/26-docker-cmd/02-help-the-llm
-    examples/26-docker-cmd/03-create-embeddings
-    examples/26-docker-cmd/04-use-embeddings
+	examples/20-play-with-granite
+	examples/21-analysis-with-granite
+	examples/22-dockerizing
+	examples/23-rag-with-chunker
+	examples/24-rag-with-splitter
+	examples/25-rag-with-regex
 
-    examples/26-docker-cmd/03-wip-create-more-embeddings
+	examples/26-docker-cmd/01-talk-to-llm
+	examples/26-docker-cmd/02-help-the-llm
+	examples/26-docker-cmd/03-create-embeddings
 
-    examples/27-generate-token
-    examples/28-generate-stream-token
-    examples/29-chat-token
-    examples/30-chat-stream-token
-    examples/31-embeddings-memory-token
+	examples/26-docker-cmd/03-wip-create-more-embeddings
+	examples/26-docker-cmd/04-use-embeddings
 
-    examples/32-rag-with-redis/create-embeddings
-    examples/32-rag-with-redis/use-embeddings
+	examples/27-generate-token
+	examples/28-generate-stream-token
+	examples/29-chat-token
+	examples/30-chat-stream-token
+	examples/31-embeddings-memory-token
 
-    examples/90-characters
-    examples/91-characters
+	examples/32-rag-with-redis/create-embeddings
+	examples/32-rag-with-redis/use-embeddings
 
-    chat-with-readme/embeddings-from-readme
-    chat-with-readme/search
+	./examples/33-rag-with-elastic/create-embeddings
+	./examples/33-rag-with-elastic/use-embeddings
+
+	./examples/34-rag-with-bbolt/create-embeddings
+	./examples/34-rag-with-bbolt/use-embeddings
+
+	./examples/35-rag-with-bbolt/create-embeddings
+	./examples/35-rag-with-bbolt/use-embeddings
+
+	examples/90-characters
+	examples/91-characters
+	//prompting/01-draft
+	star-trek-tests
 )

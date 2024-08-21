@@ -9,13 +9,14 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func main() {
-	ollamaUrl := "https://ollamak33g.eu.loclx.io"
+	ollamaUrl := "https://ollama.wasm.ninja"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "deepseek-coder"
@@ -43,7 +44,7 @@ func main() {
 		},
 		Options: options,
 		TokenHeaderName: "X-TOKEN",
-		TokenHeaderValue: "paulette",
+		TokenHeaderValue: os.Getenv("TOKEN"),
 	}
 
 	fullAnswer, err := completion.ChatStream(ollamaUrl, query,

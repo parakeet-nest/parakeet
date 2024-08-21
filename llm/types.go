@@ -153,6 +153,7 @@ type VectorRecord struct {
 	Prompt    string    `json:"prompt"`
 	Embedding []float64 `json:"embedding"`
 	CosineDistance float64
+	Score float64 // ElasticSearch
 	
 	Reference string `json:"reference"`
 	MetaData string `json:"metaData"`
