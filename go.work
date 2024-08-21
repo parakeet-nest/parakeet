@@ -1,11 +1,7 @@
 go 1.22.1
 
 use (
-	ama/embeddings-from-code
-	ama/search
 
-	chat-with-readme/embeddings-from-readme
-	chat-with-readme/search
 	examples/01-generate
 	examples/02-generate-stream
 	examples/03-chat
@@ -56,6 +52,11 @@ use (
 	./examples/33-rag-with-elastic/create-embeddings
 	./examples/33-rag-with-elastic/use-embeddings
 
+	./examples/34-rag-with-bbolt/create-embeddings
+	./examples/34-rag-with-bbolt/use-embeddings
+
+	./examples/35-rag-with-bbolt/create-embeddings
+	./examples/35-rag-with-bbolt/use-embeddings
 
 	examples/90-characters
 	examples/91-characters

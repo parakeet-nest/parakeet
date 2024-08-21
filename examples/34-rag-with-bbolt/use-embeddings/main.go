@@ -11,25 +11,24 @@ import (
 
 func main() {
 	ollamaUrl := "http://localhost:11434"
-	// if working from a container
-	//ollamaUrl := "http://host.docker.internal:11434"
-	//ollamaUrl := "http://bob.local:11434"
 	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
-	var smallChatModel = "qwen:0.5b"       // This model is for the chat completion
+	var smallChatModel = "qwen2:0.5b"      // This model is for the chat completion
 
 	store := embeddings.BboltVectorStore{}
-	store.Initialize("../embeddings.db")
+	err := store.Initialize("../embeddings.db")
 
-	// Question for the Chat system
-	userContent := `Who is Philippe Charrière and what spaceship does he work on?`
-	//userContent := `What is the nickname of Philippe Charrière?`
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
 
-	systemContent := `You are an AI assistant. Your name is Seven. 
-		Some people are calling you Seven of Nine.
-		You are an expert in Star Trek.
-		All questions are about Star Trek.
-		Using the provided context, answer the user's question
-		to the best of your ability using only the resources provided.`
+	systemContent := `You are the dungeon master,
+	expert at interpreting and answering questions based on provided sources.
+	Using only the provided context, answer the user's question 
+	to the best of your ability using only the resources provided. 
+	Be verbose!`
+
+	userContent := `Who are the monsters of Chronicles of Aethelgard?`
+	//userContent := `Tell me more about Keegorg`
 
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
@@ -45,15 +44,15 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	//similarity, _ := store.SearchMaxSimilarity(embeddingFromQuestion)
-
-	similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 2)
 	//similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
-	//similarity := similarities[0]
+	similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 2)
 
-	fmt.Println("🎉 similarities", len(similarities))
+	for _, similarity := range similarities {
+		// Do something with the similarity
+		fmt.Println("Similarity:", similarity.MetaData)
+	}
 
-	//documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
+	fmt.Println("🎉 number of similarities:", len(similarities))
 
 	documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 
@@ -65,13 +64,15 @@ func main() {
 			{Role: "user", Content: userContent},
 		},
 		Options: llm.Options{
-			Temperature: 0.4,
-			RepeatLastN: 2,
+			Temperature:   0.0,
+			RepeatLastN:   2,
+			RepeatPenalty: 3.0,
+			TopK:          10,
+			TopP:          0.5,
 		},
-		Stream: false,
 	}
 
-	fmt.Println("")
+	fmt.Println()
 	fmt.Println("🤖 answer:")
 
 	// Answer the question
@@ -85,4 +86,5 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
+	fmt.Println()
 }

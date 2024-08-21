@@ -5,7 +5,7 @@
 docker compose up
 ```
 
-## Create the embbedings
+## Create the embeddings
 
 ```bash
 cd create-embeddings

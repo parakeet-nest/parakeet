@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 
 	"github.com/parakeet-nest/parakeet/completion"
@@ -37,13 +38,13 @@ var docs = []string{
 }
 
 func main() {
-	ollamaUrl := "https://ollamak33g.eu.loclx.io"
+	ollamaUrl := "https://ollama.wasm.ninja"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
-	var smallChatModel = "qwen:0.5b"   // This model is for the chat completion
+	var smallChatModel = "qwen:0.5b"       // This model is for the chat completion
 
-	var token = "john_doe"
+	var token = os.Getenv("TOKEN")
 
 	store := embeddings.MemoryVectorStore{
 		Records: make(map[string]llm.VectorRecord),
@@ -55,14 +56,14 @@ func main() {
 		embedding, err := embeddings.CreateEmbedding(
 			ollamaUrl,
 			llm.Query4Embedding{
-				Model:  embeddingsModel,
-				Prompt: doc,
-				TokenHeaderName: "X-TOKEN",
+				Model:            embeddingsModel,
+				Prompt:           doc,
+				TokenHeaderName:  "X-TOKEN",
 				TokenHeaderValue: token,
 			},
 			strconv.Itoa(idx),
 		)
-		
+
 		if err != nil {
 			fmt.Println("😡:", err)
 		} else {
@@ -85,9 +86,9 @@ func main() {
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
 		ollamaUrl,
 		llm.Query4Embedding{
-			Model:  embeddingsModel,
-			Prompt: userContent,
-			TokenHeaderName: "X-TOKEN",
+			Model:            embeddingsModel,
+			Prompt:           userContent,
+			TokenHeaderName:  "X-TOKEN",
 			TokenHeaderValue: token,
 		},
 		"question",
@@ -114,7 +115,7 @@ func main() {
 			Temperature: 0.4,
 			RepeatLastN: 2,
 		},
-		TokenHeaderName: "X-TOKEN",
+		TokenHeaderName:  "X-TOKEN",
 		TokenHeaderValue: token,
 	}
 

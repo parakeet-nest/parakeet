@@ -1,4 +1,4 @@
-module 03-create-embeddings
+module 35-rag-create-embeddings
 
 go 1.22.1
 
