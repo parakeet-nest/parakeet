@@ -4,7 +4,7 @@ go 1.22.1
 
 require (
 	github.com/elastic/go-elasticsearch/v8 v8.14.0
-	github.com/parakeet-nest/parakeet v0.1.1
+	github.com/parakeet-nest/parakeet v0.1.2
 )
 
 require (

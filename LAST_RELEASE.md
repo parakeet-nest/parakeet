@@ -2,6 +2,29 @@
 
 ## Release notes
 
+### v0.1.2 📕 [red-textbook]
+
+**Create a store, and open an existing store**:
+```golang
+cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
+
+elasticStore := embeddings.ElasticSearchStore{}
+err := elasticStore.Initialize(
+	[]string{
+		os.Getenv("ELASTIC_ADDRESS"),
+	},
+	os.Getenv("ELASTIC_USERNAME"),
+	os.Getenv("ELASTIC_PASSWORD"),
+	cert,
+	"chronicles-index",
+)
+```
+
+> 👀 you will find a complete example in `examples/33-rag-with-elastic`
+> - `examples/33-rag-with-elastic/create-embeddings`: create and populate the vector store
+> - `examples/33-rag-with-elastic/use-embeddings`: search similarities in the vector store
+
+
 ### v0.1.1 📗 [green-textbook]
 
 #### What's new in v0.1.1?
