@@ -6,7 +6,7 @@
 
 #### What's new in v0.1.2?
 
-##### Redis vector store
+##### Elastic vector store
 
 **Create a store, and open an existing store**:
 ```golang
