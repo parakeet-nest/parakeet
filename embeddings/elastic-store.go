@@ -23,6 +23,7 @@ type ElasticSearchStore struct {
 }
 
 func (ess *ElasticSearchStore) Initialize(addresses []string, user, pwd string, cert []byte, indexName string) error {
+	
 	cfg := elasticsearch.Config{
 		Addresses: addresses,
 		Username:  user,

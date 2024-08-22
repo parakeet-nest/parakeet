@@ -27,7 +27,7 @@ func main() {
 		cert,
 		"chronicles-index",
 	)
-	
+
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
