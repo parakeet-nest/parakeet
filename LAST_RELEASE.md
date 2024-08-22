@@ -2,6 +2,22 @@
 
 ## Release notes
 
+### v0.1.3 📚 [books]
+
+#### What's new in v0.1.3?
+
+##### Elastic vector store
+
+The ElasticSearch and Kibana services are now started with Docker Compose. The certificates are generated and stored in the `certs` directory.
+
+**Start Elasticsearch and Kibana**
+```bash
+docker compose up -d
+```
+
+> 👀 you will find a complete example in `examples/33-rag-with-elastic`
+
+
 ### v0.1.2 📕 [red-textbook]
 
 #### What's new in v0.1.2?
