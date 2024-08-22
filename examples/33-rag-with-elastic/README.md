@@ -114,9 +114,9 @@ go run main.go
 - Go to Kibana: http://0.0.0.0:5601/app/management/data/index_management/indices
 - Open the console and run the following query:
     ```bash
-    GET /my-index/_search
+    GET /chronicles-index/_search
     ```
-You should see the embeddings stored in the index `my-index`:
+You should see the embeddings stored in the index `chronicles-index`:
 
 ![Kibana](./imgs/kibana.png)
 
@@ -125,4 +125,22 @@ You should see the embeddings stored in the index `my-index`:
 ```bash
 cd use-embeddings
 
+ELASTIC_USERNAME=elastic \
+ELASTIC_PASSWORD=6Ss3QDrIvz1P7Uukyqfq \
+ELASTIC_ADDRESS=https://localhost:9200 \
+ELASTIC_CERT_PATH=../http_ca.crt \
+go run main.go
+```
+
+[This program](use-embeddings/main.go) completes the prompt: "Tell me more about Keegorg". If everything works, you'll see it answered from embeddings derived from [chronicles.md](create-embeddings/chronicles.md).
+
+While your results may vary, here's an example output:
+```
+🔎 searching for similarity...
+📝 doc: 8 score: 1.5084158
+📝 doc: 2 score: 1.3561833
+📝 doc: 4 score: 1.1796646
+
+🤖 answer:
+Keegorg is a Senior Solution Architect at Docker, known for his expertise in Docker Compose and Kubernetes. He is a master of the art of leveraging technology to solve complex problems and build highly scalable, resilient systems. Keegorg is known for his ability to think outside the box and come up with innovative solutions to complex problems.
 ```
