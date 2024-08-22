@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
@@ -18,8 +19,8 @@ func main() {
 	}
 
 	ollamaUrl := "http://localhost:11434"
-	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
-	var smallChatModel = "qwen2:0.5b"      // This model is for the chat completion
+	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
+	smallChatModel := "qwen2:0.5b"      // This model is for the chat completion
 
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
@@ -33,12 +34,11 @@ func main() {
 		cert,
 		"chronicles-index",
 	)
-
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
 
-	//userContent := `Who are the monsters of Chronicles of Aethelgard?`
+	// userContent := `Who are the monsters of Chronicles of Aethelgard?`
 	userContent := `Tell me more about Keegorg`
 
 	// Create an embedding from the question
@@ -98,11 +98,9 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			return nil
 		})
-
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
 
 	fmt.Println()
-
 }

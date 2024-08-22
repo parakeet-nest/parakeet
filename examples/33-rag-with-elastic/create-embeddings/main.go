@@ -19,7 +19,7 @@ func main() {
 	}
 
 	ollamaUrl := "http://localhost:11434"
-	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
+	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
 	elasticStore := embeddings.ElasticSearchStore{}
@@ -32,7 +32,6 @@ func main() {
 		cert,
 		"chronicles-index",
 	)
-
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
