@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 
@@ -11,6 +12,10 @@ import (
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
 
 	ollamaUrl := "http://localhost:11434"
 	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
@@ -19,7 +24,7 @@ func main() {
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
 	elasticStore := embeddings.ElasticSearchStore{}
-	err := elasticStore.Initialize(
+	err = elasticStore.Initialize(
 		[]string{
 			os.Getenv("ELASTIC_ADDRESS"),
 		},
@@ -51,7 +56,7 @@ func main() {
 	fmt.Println("🔎 searching for similarity...")
 
 	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 3)
-	
+
 	for _, similarity := range similarities {
 		fmt.Println("📝 doc:", similarity.Id, "score:", similarity.Score)
 	}

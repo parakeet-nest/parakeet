@@ -6,19 +6,24 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
 
 	ollamaUrl := "http://localhost:11434"
 	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
 	elasticStore := embeddings.ElasticSearchStore{}
-	err := elasticStore.Initialize(
+	err = elasticStore.Initialize(
 		[]string{
 			os.Getenv("ELASTIC_ADDRESS"),
 		},
