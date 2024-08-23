@@ -58,6 +58,9 @@ use (
 	./examples/35-rag-with-bbolt/create-embeddings
 	./examples/35-rag-with-bbolt/use-embeddings
 
+	./examples/36-rag-with-asciidoc/create-embeddings
+	./examples/36-rag-with-asciidoc/use-embeddings
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft

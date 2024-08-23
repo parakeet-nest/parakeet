@@ -50,7 +50,8 @@ func SplitTextWithRegex(text string, regexDelimiter string) []string {
 
 //TODO: split before or after?
 
-func SplitMarkdownFileBySections(filePath string) ([]string, error) {
+
+func splitFileBySectionWithRegex(filePath string, regexDelimiter string) ([]string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
@@ -60,8 +61,8 @@ func SplitMarkdownFileBySections(filePath string) ([]string, error) {
 	var sections []string
 	var currentSection []string
 
-	// Regex to detect Markdown titles
-	re := regexp.MustCompile(`^(#+)\s+(.*)`)
+	// Regex to detect Markdown/AsciiDoc titles
+	re := regexp.MustCompile(regexDelimiter)
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -92,12 +93,12 @@ func SplitMarkdownFileBySections(filePath string) ([]string, error) {
 	return sections, nil
 }
 
-func SplitMarkdownBySections(content string) []string {
+func splitContentBySectionWithRegex(content string, regexDelimiter string) []string {
 	var sections []string
 	var currentSection []string
 
-	// Regex to detect Markdown titles
-	re := regexp.MustCompile(`^(#+)\s+(.*)`)
+	// Regex to detect Markdown/AsciiDoc titles
+	re := regexp.MustCompile(regexDelimiter)
 
 	// use a scanner to read the content line by line
 	scanner := bufio.NewScanner(strings.NewReader(content))
@@ -123,4 +124,21 @@ func SplitMarkdownBySections(content string) []string {
 	}
 
 	return sections
+}
+
+
+func SplitMarkdownFileBySections(filePath string) ([]string, error) {
+	return splitFileBySectionWithRegex(filePath, `^(#+)\s+(.*)`)
+}
+
+func SplitMarkdownBySections(content string) []string {
+	return splitContentBySectionWithRegex(content, `^(#+)\s+(.*)`)
+}
+
+func SplitAsciiDocBySectionsFromFile(filePath string) ([]string, error) {
+	return splitFileBySectionWithRegex(filePath, `^(=+|\#+)\s+(.*)`)
+}
+
+func SplitAsciiDocBySections(content string) []string {
+	return splitContentBySectionWithRegex(content, `^(=+|\#+)\s+(.*)`)
 }
