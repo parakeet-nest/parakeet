@@ -26,7 +26,9 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	chunks := content.SplitTextWithRegex(rulesContent, `## *`)
+	//chunks := content.SplitTextWithRegex(rulesContent, `## *`)
+	chunks := content.SplitMarkdownBySections(rulesContent)
+
 
 	// Create embeddings from documents and save them in the store
 	for idx, doc := range chunks {

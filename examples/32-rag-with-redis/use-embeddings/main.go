@@ -27,8 +27,8 @@ func main() {
 	to the best of your ability using only the resources provided. 
 	Be verbose!`
 
-	userContent := `Who are the monsters of Chronicles of Aethelgard?`
-	//userContent := `Tell me more about Keegorg`
+	//userContent := `Who are the monsters of Chronicles of Aethelgard?`
+	userContent := `Tell me more about Keegorg`
 
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
