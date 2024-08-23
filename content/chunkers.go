@@ -5,6 +5,8 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
+	"golang.org/x/net/html"
 )
 
 // ChunkText takes a text string and divides it into chunks of a specified size with a given overlap.
@@ -49,7 +51,6 @@ func SplitTextWithRegex(text string, regexDelimiter string) []string {
 }
 
 //TODO: split before or after?
-
 
 func splitFileBySectionWithRegex(filePath string, regexDelimiter string) ([]string, error) {
 	file, err := os.Open(filePath)
@@ -126,7 +127,6 @@ func splitContentBySectionWithRegex(content string, regexDelimiter string) []str
 	return sections
 }
 
-
 func SplitMarkdownFileBySections(filePath string) ([]string, error) {
 	return splitFileBySectionWithRegex(filePath, `^(#+)\s+(.*)`)
 }
@@ -141,4 +141,46 @@ func SplitAsciiDocBySectionsFromFile(filePath string) ([]string, error) {
 
 func SplitAsciiDocBySections(content string) []string {
 	return splitContentBySectionWithRegex(content, `^(=+|\#+)\s+(.*)`)
+}
+
+func SplitHTMLBySections(content string) ([]string, error) {
+	doc, err := html.Parse(strings.NewReader(content))
+	if err != nil {
+		return nil, err
+	}
+
+	var sections []string
+	var currentSection []string
+
+	var traverse func(*html.Node)
+	traverse = func(n *html.Node) {
+		if n.Type == html.ElementNode && (n.Data == "h1" || n.Data == "h2" || n.Data == "h3" || n.Data == "h4" || n.Data == "h5" || n.Data == "h6") {
+			if len(currentSection) > 0 {
+				sections = append(sections, strings.Join(currentSection, ""))
+				currentSection = []string{}
+			}
+		}
+
+		htmlContent := renderNode(n)
+		currentSection = append(currentSection, htmlContent)
+
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			traverse(c)
+		}
+	}
+
+	traverse(doc)
+
+	if len(currentSection) > 0 {
+		sections = append(sections, strings.Join(currentSection, ""))
+	}
+
+	return sections, nil
+}
+
+// renderNode convertit un noeud HTML en chaîne de caractères
+func renderNode(n *html.Node) string {
+	var sb strings.Builder
+	html.Render(&sb, n)
+	return sb.String()
 }
