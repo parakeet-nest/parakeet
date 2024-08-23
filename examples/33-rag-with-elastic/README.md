@@ -50,18 +50,13 @@ This example demonstrates how to store embeddings in Elasticsearch and perform a
 ### Create the embeddings
 
 ```bash
-cd create-embeddings
-
-ELASTIC_USERNAME=elastic \
-ELASTIC_PASSWORD=iloveparakeets \
-ELASTIC_ADDRESS=https://localhost:9200 \
-ELASTIC_CERT_PATH=../certs/ca/ca.crt \
-go run main.go
+(cd create-embeddings; go run main.go)
 ```
 
 ### Check if the embeddings are stored
 
 - Go to Kibana: http://0.0.0.0:5601/app/management/data/index_management/indices
+- Log in with the user "elastic" and password "iloveparakeets"
 - Open the console and run the following query:
     ```bash
     GET /chronicles-index/_search
@@ -73,13 +68,7 @@ You should see the embeddings stored in the index `chronicles-index`:
 ### Perform a vector similarity search
 
 ```bash
-cd use-embeddings
-
-ELASTIC_USERNAME=elastic \
-ELASTIC_PASSWORD=iloveparakeets \
-ELASTIC_ADDRESS=https://localhost:9200 \
-ELASTIC_CERT_PATH=../certs/ca/ca.crt \
-go run main.go
+(cd use-embeddings; go run main.go)
 ```
 
 [This program](use-embeddings/main.go) completes the prompt: "Tell me more about Keegorg". If everything works, you'll see it answered from embeddings derived from [chronicles.md](create-embeddings/chronicles.md).
