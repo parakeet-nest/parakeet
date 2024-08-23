@@ -38,7 +38,7 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	// userContent := `Who are the monsters of Chronicles of Aethelgard?`
+	//userContent := `Who are the monsters of Chronicles of Aethelgard?`
 	userContent := `Tell me more about Keegorg`
 
 	// Create an embedding from the question
