@@ -2,7 +2,6 @@ package content
 
 import (
 	"bufio"
-	"os"
 	"regexp"
 	"strings"
 
@@ -52,48 +51,7 @@ func SplitTextWithRegex(text string, regexDelimiter string) []string {
 
 //TODO: split before or after?
 
-func splitFileBySectionWithRegex(filePath string, regexDelimiter string) ([]string, error) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	var sections []string
-	var currentSection []string
-
-	// Regex to detect Markdown/AsciiDoc titles
-	re := regexp.MustCompile(regexDelimiter)
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		// Check if the line is a title
-		if matches := re.FindStringSubmatch(line); matches != nil {
-			// If a new title is found, ends the current section and starts a new section
-			if len(currentSection) > 0 {
-				sections = append(sections, strings.Join(currentSection, "\n"))
-			}
-			currentSection = []string{line}
-		} else {
-			// Adds the content lines to the current section
-			currentSection = append(currentSection, line)
-		}
-	}
-
-	// Add the last section if it exists
-	if len(currentSection) > 0 {
-		sections = append(sections, strings.Join(currentSection, "\n"))
-	}
-
-	if err := scanner.Err(); err != nil {
-		return nil, err
-	}
-
-	return sections, nil
-}
-
+// used by SplitMarkdownBySections and SplitAsciiDocBySections
 func splitContentBySectionWithRegex(content string, regexDelimiter string) []string {
 	var sections []string
 	var currentSection []string
@@ -127,16 +85,8 @@ func splitContentBySectionWithRegex(content string, regexDelimiter string) []str
 	return sections
 }
 
-func SplitMarkdownFileBySections(filePath string) ([]string, error) {
-	return splitFileBySectionWithRegex(filePath, `^(#+)\s+(.*)`)
-}
-
 func SplitMarkdownBySections(content string) []string {
 	return splitContentBySectionWithRegex(content, `^(#+)\s+(.*)`)
-}
-
-func SplitAsciiDocBySectionsFromFile(filePath string) ([]string, error) {
-	return splitFileBySectionWithRegex(filePath, `^(=+|\#+)\s+(.*)`)
 }
 
 func SplitAsciiDocBySections(content string) []string {

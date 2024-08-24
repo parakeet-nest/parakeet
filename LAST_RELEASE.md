@@ -2,6 +2,16 @@
 
 ## Release notes
 
+### v0.1.4 🥐 [croissant]
+
+#### What's new in v0.1.4?
+
+New split methods (to create document chunks) are available in the `content` package:
+
+- `content.SplitMarkdownBySections()`
+- `content.SplitAsciiDocBySections()`
+- `content.SplitHTMLBySections()`
+
 ### v0.1.3 📚 [books]
 
 #### What's new in v0.1.3?
