@@ -20,7 +20,8 @@ func main() {
 
 	ollamaUrl := "http://localhost:11434"
 	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
-	//smallChatModel := "qwen2:0.5b"      // This model is for the chat completion
+	//smallChatModel := "gemma2:2b"      // This model is for the chat completion
+	//smallChatModel := "phi3:mini"      // This model is for the chat completion
 	smallChatModel := "llama3.1:8b" 
 
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
@@ -33,15 +34,17 @@ func main() {
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
 		cert,
-		"golang-index",
+		"new-golang-index",
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
 
-	//userContent := `Who are the monsters of Chronicles of Aethelgard?`
-	//userContent := `Tell me more about Keegorg`
-	userContent := `What changes to the archive/tar library happened in Go 1.23`
+	userContent := `[Brief] What's new with TLS client?`
+	//userContent := `Tell me more about the new structs package`
+	//userContent := `What changes to the archive/tar library happened in Go 1.23`
+	
+
 
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
@@ -57,7 +60,7 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 3)
+	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 5)
 
 	for _, similarity := range similarities {
 		fmt.Println("📝 doc:", similarity.Id, "score:", similarity.Score)

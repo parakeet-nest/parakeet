@@ -20,6 +20,8 @@ func main() {
 
 	ollamaUrl := "http://localhost:11434"
 	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
+	//smallChatModel := "llama3.1:8b"
+
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
 	elasticStore := embeddings.ElasticSearchStore{}
@@ -30,7 +32,7 @@ func main() {
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
 		cert,
-		"golang-index",
+		"new-golang-index",
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
@@ -41,17 +43,28 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	//chunks := content.SplitTextWithRegex(rulesContent, `## *`)
-	chunks := content.SplitMarkdownBySections(documentContent)
+	chunks := content.ParseMarkdown(documentContent)
+
+	/*
+	newMarkdown := ""
+	for _, chunk := range chunks {
+		newMarkdown += fmt.Sprintf("## %s\n\n%s\n\n", chunk.Header, chunk.Content)
+	}
+	err = os.WriteFile("./newMarkdown.md", []byte(newMarkdown), 0644)
+	if err != nil {
+		log.Fatal("😡:", err)
+	}
+	*/
 
 	// Create embeddings from documents and save them in the store
 	for idx, doc := range chunks {
-		fmt.Println("Creating embedding from document ", idx)
+
+		fmt.Println("📝 Creating embedding from document ", idx)
 		embedding, err := embeddings.CreateEmbedding(
 			ollamaUrl,
 			llm.Query4Embedding{
 				Model:  embeddingsModel,
-				Prompt: doc,
+				Prompt: fmt.Sprintf("## %s\n\n%s\n\n", doc.Header, doc.Content),
 			},
 			strconv.Itoa(idx),
 		)

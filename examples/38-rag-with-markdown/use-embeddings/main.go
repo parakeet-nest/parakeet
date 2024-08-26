@@ -13,8 +13,8 @@ func main() {
 	ollamaUrl := "http://localhost:11434"
 	var embeddingsModel = "all-minilm:33m" // This model is for the embeddings of the documents
 
-	//var smallChatModel = "llama3.1:8b" 
-	var smallChatModel = "qwen2:0.5b"
+	var smallChatModel = "llama3.1:8b" 
+	//var smallChatModel = "qwen2:0.5b"
 
 	store := embeddings.BboltVectorStore{}
 	err := store.Initialize("../embeddings.db")
@@ -28,9 +28,10 @@ func main() {
 	to the best of your ability using only the resources provided.
 	`
 
-	//userContent := `What is Parakeet`
-	userContent := `What changes to the archive/tar library happened in Go 1.23`
-
+	userContent := `[Brief] What's new with TLS client?`
+	//userContent := `Tell me more about the new structs package`
+	//userContent := `What changes to the archive/tar library happened in Go 1.23`
+	
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
 		ollamaUrl,
@@ -45,8 +46,8 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.4)
-	//similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.4, 2)
+	similarities, _ := store.SearchSimilarities(embeddingFromQuestion, 0.3)
+	//similarities, _ := store.SearchTopNSimilarities(embeddingFromQuestion, 0.3, 5)
 
 	/*
 	for _, similarity := range similarities {

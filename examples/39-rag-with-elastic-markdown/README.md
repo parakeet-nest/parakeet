@@ -55,7 +55,7 @@ This example demonstrates how to store embeddings in Elasticsearch and perform a
 
 ### Check if the embeddings are stored
 
-- Go to Kibana: http://0.0.0.0:5601/app/management/data/index_management/indices
+- Go to Kibana: http://0.0.0.0:5701/app/management/data/index_management/indices
 - Log in with the user "elastic" and password "iloveparakeets"
 - Open the console and run the following query:
     ```bash
@@ -71,15 +71,21 @@ You should see the embeddings stored in the index `chronicles-index`:
 (cd use-embeddings; go run main.go)
 ```
 
-[This program](use-embeddings/main.go) completes the prompt: "Tell me more about Keegorg". If everything works, you'll see it answered from embeddings derived from [chronicles.md](create-embeddings/chronicles.md).
+[This program](use-embeddings/main.go) completes the prompt: "What's new with TLS client?". If everything works, you'll see it answered from embeddings derived from [go1.23.md](create-embeddings/go1.23.md).
 
 While your results may vary, here's an example output:
 ```
 🔎 searching for similarity...
-📝 doc: 8 score: 1.5084158
-📝 doc: 2 score: 1.3561833
-📝 doc: 4 score: 1.1796646
+📝 doc: 19 score: 1.3576632
+📝 doc: 27 score: 1.3363576
+📝 doc: 20 score: 1.2898484
+📝 doc: 1 score: 1.2662655
+📝 doc: 23 score: 1.2095306
 
 🤖 answer:
-Keegorg is a Senior Solution Architect at Docker, known for his expertise in Docker Compose and Kubernetes. He is a master of the art of leveraging technology to solve complex problems and build highly scalable, resilient systems. Keegorg is known for his ability to think outside the box and come up with innovative solutions to complex problems.
+According to the crypto/tls section, the TLS client now supports the Encrypted Client Hello (ECH) draft specification. This feature can be enabled by setting the Config.EncryptedClientHelloConfigList field to an encoded ECHConfigList for the host that is being connected to.
+
+Additionally, the QUICConn type used by QUIC implementations includes new events reporting on the state of session resumption, and provides a way for the QUIC layer to add data to session tickets and session cache entries.
+
+Also, 3DES cipher suites were removed from the default list used when Config.CipherSuites is nil, and the experimental post-quantum key exchange mechanism X25519Kyber768Draft00 is now enabled by default when Config.CurvePreferences is nil.
 ```

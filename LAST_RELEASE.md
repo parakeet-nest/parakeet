@@ -7,7 +7,8 @@
 #### What's new in the next release?
 
 - `tools.GenerateSystemInstructions() string` generates a string containing the system content instructions for using "function calling". (✋ Use it only if the LLM does not implement function calling).
-- `SplitMarkdownByLevelSections(content string, level int) []string` allows choosing the level of the section you want to split
+- `content.SplitMarkdownByLevelSections(content string, level int) []string` allows choosing the level of the section you want to split
+- `content.ParseMarkdown(content string) []*Chunk` chunka a markdown document while maintaining semantic meaning and preserving the relationship between sections.
 
 ### v0.1.4 🥐 [croissant]
 

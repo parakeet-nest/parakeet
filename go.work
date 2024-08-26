@@ -65,8 +65,6 @@ use (
 	./examples/37-rag-with-html/use-embeddings
 
 	./examples/38-rag-with-markdown/create-embeddings
-	./examples/38-rag-with-markdown/create-embeddings-2
-	./examples/38-rag-with-markdown/create-embeddings-3
 	./examples/38-rag-with-markdown/use-embeddings
 
 	./examples/39-rag-with-elastic-markdown/create-embeddings
