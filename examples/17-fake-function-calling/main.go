@@ -73,6 +73,7 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
+	/*
 	systemContentInstructions := `If the question of the user matched the description of a tool, the tool will be called.
 	To call a tool, respond with a JSON object with the following structure: 
 	{
@@ -84,6 +85,10 @@ func main() {
 	
 	search the name of the tool in the list of tools with the Name field
 	`
+	*/
+	
+	// ✋ Use it only if the LLM does not implement function calling.
+	systemContentInstructions := tools.GenerateSystemInstructions()
 
 	options := llm.Options{
 		Temperature:   0.0,

@@ -64,6 +64,13 @@ use (
 	./examples/37-rag-with-html/create-embeddings
 	./examples/37-rag-with-html/use-embeddings
 
+	./examples/38-rag-with-markdown/create-embeddings
+	./examples/38-rag-with-markdown/create-embeddings-2
+	./examples/38-rag-with-markdown/create-embeddings-3
+
+	./examples/38-rag-with-markdown/use-embeddings
+
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft

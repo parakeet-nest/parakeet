@@ -1,11 +1,8 @@
-module 33-rag-create-embeddings
+module 38-rag-use-embeddings
 
 go 1.22.1
 
-require (
-	github.com/joho/godotenv v1.5.1
-	github.com/parakeet-nest/parakeet v0.1.4
-)
+require github.com/parakeet-nest/parakeet v0.1.4
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -20,8 +17,7 @@ require (
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
-	golang.org/x/net v0.28.0 // indirect
-	golang.org/x/sys v0.23.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 )
 
 replace github.com/parakeet-nest/parakeet => ../../..

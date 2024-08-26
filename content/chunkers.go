@@ -2,6 +2,7 @@ package content
 
 import (
 	"bufio"
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -87,6 +88,25 @@ func splitContentBySectionWithRegex(content string, regexDelimiter string) []str
 
 func SplitMarkdownBySections(content string) []string {
 	return splitContentBySectionWithRegex(content, `^(#+)\s+(.*)`)
+}
+
+/*
+sections := SplitMarkdownByLevelSections(content, 1) // Split by top-level sections
+
+	for i, section := range sections {
+		fmt.Printf("Section %d:\n%s\n\n", i+1, section)
+	}
+
+subsections := SplitMarkdownByLevelSections(content, 2) // Split by second-level sections
+
+	for i, subsection := range subsections {
+		fmt.Printf("Subsection %d:\n%s\n\n", i+1, subsection)
+	}
+*/
+func SplitMarkdownByLevelSections(content string, level int) []string {
+	// Create a regex that matches the specified level of header
+	regexDelimiter := fmt.Sprintf(`^(%s)\s+(.*)`, strings.Repeat("#", level))
+	return splitContentBySectionWithRegex(content, regexDelimiter)
 }
 
 func SplitAsciiDocBySections(content string) []string {

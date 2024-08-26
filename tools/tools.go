@@ -33,3 +33,20 @@ func GenerateContent(tools []llm.Tool) (string, error) {
 func GenerateInstructions(userMessage string) string {
 	return "[INST] " + userMessage + " [/INST]"
 }
+
+// GenerateSystemInstructions generates a string containing the system content instructions for using "function calling".
+// ✋ Use it only if the LLM does not implement function calling.
+func GenerateSystemInstructions() string {
+	systemContentInstructions := `If the question of the user matched the description of a tool, the tool will be called.
+	To call a tool, respond with a JSON object with the following structure: 
+	{
+	  "name": <name of the called tool>,
+	  "arguments": {
+	    <name of the argument>: <value of the argument>
+	  }
+	}
+	
+	search the name of the tool in the list of tools with the Name field
+	`
+	return systemContentInstructions
+}

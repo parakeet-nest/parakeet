@@ -1,11 +1,8 @@
-module 33-rag-create-embeddings
+module 38-rag-create-embeddings-2
 
 go 1.22.1
 
-require (
-	github.com/joho/godotenv v1.5.1
-	github.com/parakeet-nest/parakeet v0.1.4
-)
+require github.com/parakeet-nest/parakeet v0.1.4
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
