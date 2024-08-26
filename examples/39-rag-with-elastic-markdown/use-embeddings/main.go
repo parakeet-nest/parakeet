@@ -20,7 +20,8 @@ func main() {
 
 	ollamaUrl := "http://localhost:11434"
 	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
-	smallChatModel := "qwen2:0.5b"      // This model is for the chat completion
+	//smallChatModel := "qwen2:0.5b"      // This model is for the chat completion
+	smallChatModel := "llama3.1:8b" 
 
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
