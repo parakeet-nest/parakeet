@@ -19,8 +19,9 @@ func main() {
 	}
 
 	ollamaUrl := "http://localhost:11434"
-	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
-	//smallChatModel := "llama3.1:8b"
+	//embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
+	//embeddingsModel := "nomic-embed-text"
+	embeddingsModel := "mxbai-embed-large"
 
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
@@ -32,7 +33,7 @@ func main() {
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
 		cert,
-		"new-golang-index",
+		"mxbai-golang-index",
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
