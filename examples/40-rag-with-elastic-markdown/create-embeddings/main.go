@@ -65,7 +65,7 @@ func main() {
 			)
 		} else {
 			// Add parent section information to the markdown section
-			tpl = "%s %s \n\n <!-- Parent Section: %s %s --> \n\n <!-- Parent Lineage: %s --> \n\n %s"
+			tpl = "%s %s \n\n <!-- Parent Section: %s %s --> \n\n <!-- Lineage: %s --> \n\n %s"
 
 			pieceOfMarkdown = fmt.Sprintf(
 				tpl,
