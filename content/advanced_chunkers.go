@@ -19,6 +19,8 @@ type Chunk struct {
 	ParentLevel  int
 	ParentHeader string
 	ParentPrefix string
+    Lineage      string
+
 }
 
 func ParseMarkdown(content string) []*Chunk {
@@ -174,4 +176,69 @@ func ParseMarkdownWithHierarchy(content string) []Chunk {
 	}
 
 	return chunks
+}
+
+func ParseMarkdownWithLineage(content string) []Chunk {
+    lines := strings.Split(content, "\n")
+    var chunks []Chunk
+    var stack []Chunk
+
+    headerRegex := regexp.MustCompile(`^(#+)\s+(.*)$`)
+
+    for i := 0; i < len(lines); i++ {
+        line := lines[i]
+        if matches := headerRegex.FindStringSubmatch(line); matches != nil {
+            level := len(matches[1])
+            header := matches[2]
+            prefix := matches[1]
+
+            // Find content for this header
+            contentLines := []string{}
+            for j := i + 1; j < len(lines); j++ {
+                if headerRegex.MatchString(lines[j]) {
+                    break
+                }
+                contentLines = append(contentLines, lines[j])
+            }
+            content := strings.Join(contentLines, "\n")
+
+            // Determine parent header
+            var parent Chunk
+            for len(stack) > 0 && stack[len(stack)-1].Level >= level {
+                stack = stack[:len(stack)-1]
+            }
+            if len(stack) > 0 {
+                parent = stack[len(stack)-1]
+            }
+
+            // Build lineage
+            lineage := buildLineage(stack, header)
+
+            chunk := Chunk{
+                Level:        level,
+                Prefix:       prefix,
+                Header:       header,
+                Content:      strings.TrimSpace(content),
+                ParentPrefix: parent.Prefix,
+                ParentLevel:  parent.Level,
+                ParentHeader: parent.Header,
+                Lineage:      lineage,
+            }
+
+            chunks = append(chunks, chunk)
+            stack = append(stack, chunk)
+        }
+    }
+
+    return chunks
+}
+
+
+func buildLineage(stack []Chunk, currentHeader string) string {
+    var lineage []string
+    for _, chunk := range stack {
+        lineage = append(lineage, chunk.Header)
+    }
+    lineage = append(lineage, currentHeader)
+    return strings.Join(lineage, " > ")
 }

@@ -48,8 +48,8 @@ func main() {
 	}
 
 	// Chunk the document content
-	chunks := content.ParseMarkdownWithHierarchy(documentContent)
-
+	//chunks := content.ParseMarkdownWithHierarchy(documentContent)
+	chunks := content.ParseMarkdownWithLineage(documentContent)
 	// Prepare the pieces of markdown for the embeddings
 	for idx, chunk := range chunks {
 		tpl := ""
@@ -65,7 +65,7 @@ func main() {
 			)
 		} else {
 			// Add parent section information to the markdown section
-			tpl = "%s %s \n\n <!-- Parent Section: %s %s --> \n\n %s"
+			tpl = "%s %s \n\n <!-- Parent Section: %s %s --> \n\n <!-- Parent Lineage: %s --> \n\n %s"
 
 			pieceOfMarkdown = fmt.Sprintf(
 				tpl,
@@ -73,6 +73,7 @@ func main() {
 				chunk.Header,
 				chunk.ParentPrefix,
 				chunk.ParentHeader,
+				chunk.Lineage,
 				chunk.Content,
 			)
 		}
@@ -84,7 +85,7 @@ func main() {
 		embedding, err := embeddings.CreateEmbedding(
 			ollamaUrl,
 			llm.Query4Embedding{
-				Model: embeddingsModel,
+				Model:  embeddingsModel,
 				Prompt: pieceOfMarkdown,
 			},
 			strconv.Itoa(idx),
