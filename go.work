@@ -70,6 +70,8 @@ use (
 	./examples/39-rag-with-elastic-markdown/create-embeddings
 	./examples/39-rag-with-elastic-markdown/use-embeddings
 
+	./examples/40-rag-with-elastic-markdown/create-embeddings
+	./examples/40-rag-with-elastic-markdown/use-embeddings
 
 
 	examples/90-characters

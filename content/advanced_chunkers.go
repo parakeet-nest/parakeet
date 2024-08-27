@@ -1,7 +1,10 @@
 package content
+
 // ✋ this is an experimental package, and it is subject to change in the future.
 import (
 	"bytes"
+	"regexp"
+	"strings"
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/ast"
@@ -9,8 +12,13 @@ import (
 )
 
 type Chunk struct {
-	Header  string
-	Content string
+	Header       string
+	Content      string
+	Level        int
+	Prefix       string
+	ParentLevel  int
+	ParentHeader string
+	ParentPrefix string
 }
 
 func ParseMarkdown(content string) []*Chunk {
@@ -116,3 +124,54 @@ meaning of the document. You can further customize this logic to handle differen
 include metadata, or chunk based on size constraints.
 
 */
+
+func ParseMarkdownWithHierarchy(content string) []Chunk {
+	lines := strings.Split(content, "\n")
+	var chunks []Chunk
+	var stack []Chunk
+
+	headerRegex := regexp.MustCompile(`^(#+)\s+(.*)$`)
+
+	for i := 0; i < len(lines); i++ {
+		line := lines[i]
+		if matches := headerRegex.FindStringSubmatch(line); matches != nil {
+			level := len(matches[1])
+			header := matches[2]
+			prefix := matches[1]
+
+			// Find content for this header
+			contentLines := []string{}
+			for j := i + 1; j < len(lines); j++ {
+				if headerRegex.MatchString(lines[j]) {
+					break
+				}
+				contentLines = append(contentLines, lines[j])
+			}
+			content := strings.Join(contentLines, "\n")
+
+			// Determine parent header
+			var parent Chunk
+			for len(stack) > 0 && stack[len(stack)-1].Level >= level {
+				stack = stack[:len(stack)-1]
+			}
+			if len(stack) > 0 {
+				parent = stack[len(stack)-1]
+			}
+
+			chunk := Chunk{
+				Level:        level,
+				Prefix:       prefix,
+				Header:       header,
+				Content:      strings.TrimSpace(content),
+				ParentPrefix: parent.Prefix,
+				ParentLevel:  parent.Level,
+				ParentHeader: parent.Header,
+			}
+
+			chunks = append(chunks, chunk)
+			stack = append(stack, chunk)
+		}
+	}
+
+	return chunks
+}

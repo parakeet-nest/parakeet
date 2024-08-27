@@ -19,10 +19,13 @@ func main() {
 	}
 
 	ollamaUrl := "http://localhost:11434"
+
 	//embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
 	//embeddingsModel := "nomic-embed-text"
+
 	embeddingsModel := "mxbai-embed-large"
 
+	// Create an Elasticsearch client
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
 	elasticStore := embeddings.ElasticsearchStore{}
@@ -33,7 +36,7 @@ func main() {
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
 		cert,
-		"mxbai-golang-index",
+		"hierarchy-mxbai-golang-index",
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
@@ -44,28 +47,45 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	chunks := content.ParseMarkdown(documentContent)
+	// Chunk the document content
+	chunks := content.ParseMarkdownWithHierarchy(documentContent)
 
-	/*
-	newMarkdown := ""
-	for _, chunk := range chunks {
-		newMarkdown += fmt.Sprintf("## %s\n\n%s\n\n", chunk.Header, chunk.Content)
-	}
-	err = os.WriteFile("./newMarkdown.md", []byte(newMarkdown), 0644)
-	if err != nil {
-		log.Fatal("😡:", err)
-	}
-	*/
+	// Prepare the pieces of markdown for the embeddings
+	for idx, chunk := range chunks {
+		tpl := ""
+		pieceOfMarkdown := ""
+		if chunk.ParentHeader == "" {
+			tpl = "%s %s \n\n %s"
 
-	// Create embeddings from documents and save them in the store
-	for idx, doc := range chunks {
+			pieceOfMarkdown = fmt.Sprintf(
+				tpl,
+				chunk.Prefix,
+				chunk.Header,
+				chunk.Content,
+			)
+		} else {
+			// Add parent section information to the markdown section
+			tpl = "%s %s \n\n <!-- Parent Section: %s %s --> \n\n %s"
+
+			pieceOfMarkdown = fmt.Sprintf(
+				tpl,
+				chunk.Prefix,
+				chunk.Header,
+				chunk.ParentPrefix,
+				chunk.ParentHeader,
+				chunk.Content,
+			)
+		}
+
+		fmt.Println("---------------------------------------------")
+		fmt.Println(pieceOfMarkdown)
 
 		fmt.Println("📝 Creating embedding from document ", idx)
 		embedding, err := embeddings.CreateEmbedding(
 			ollamaUrl,
 			llm.Query4Embedding{
-				Model:  embeddingsModel,
-				Prompt: fmt.Sprintf("## %s\n\n%s\n\n", doc.Header, doc.Content),
+				Model: embeddingsModel,
+				Prompt: pieceOfMarkdown,
 			},
 			strconv.Itoa(idx),
 		)
@@ -79,5 +99,7 @@ func main() {
 				fmt.Println("Document", embedding.Id, "indexed successfully")
 			}
 		}
+
 	}
+
 }

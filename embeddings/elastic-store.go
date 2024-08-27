@@ -16,13 +16,13 @@ import (
 
  */
 
-type ElasticSearchStore struct {
+type ElasticsearchStore struct {
 	//ctx                 context.Context
 	indexName           string
 	elasticsearchClient *elasticsearch.Client
 }
 
-func (ess *ElasticSearchStore) Initialize(addresses []string, user, pwd string, cert []byte, indexName string) error {
+func (ess *ElasticsearchStore) Initialize(addresses []string, user, pwd string, cert []byte, indexName string) error {
 	
 	cfg := elasticsearch.Config{
 		Addresses: addresses,
@@ -38,7 +38,7 @@ func (ess *ElasticSearchStore) Initialize(addresses []string, user, pwd string, 
 	return err
 }
 
-func (ess *ElasticSearchStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
+func (ess *ElasticsearchStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
 	// Convert the document/vectorRecord/embedding to JSON
 	docJSON, err := json.Marshal(vectorRecord)
 	if err != nil {
@@ -65,7 +65,7 @@ func (ess *ElasticSearchStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRe
 	}
 }
 
-func (ess *ElasticSearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, size int) ([]llm.VectorRecord, error) {
+func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, size int) ([]llm.VectorRecord, error) {
 	// Now search for similar embeddings in Elasticsearch
 	query := map[string]interface{}{
 		"size": size, // Adjust size based on how many results you want

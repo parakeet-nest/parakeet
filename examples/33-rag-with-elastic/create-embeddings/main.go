@@ -22,7 +22,7 @@ func main() {
 	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
-	elasticStore := embeddings.ElasticSearchStore{}
+	elasticStore := embeddings.ElasticsearchStore{}
 	err = elasticStore.Initialize(
 		[]string{
 			os.Getenv("ELASTIC_ADDRESS"),

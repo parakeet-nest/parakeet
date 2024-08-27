@@ -19,8 +19,12 @@ func main() {
 	}
 
 	ollamaUrl := "http://localhost:11434"
-	embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
-	smallChatModel := "qwen2:0.5b"      // This model is for the chat completion
+	//embeddingsModel := "all-minilm:33m" // This model is for the embeddings of the documents
+	//embeddingsModel := "nomic-embed-text"
+	embeddingsModel := "mxbai-embed-large"
+	//smallChatModel := "gemma2:2b"      // This model is for the chat completion
+	//smallChatModel := "phi3:mini"      // This model is for the chat completion
+	smallChatModel := "llama3.1:8b" 
 
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
@@ -32,15 +36,16 @@ func main() {
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
 		cert,
-		"chronicles-index",
+		"hierarchy-mxbai-golang-index",
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
 
-	//userContent := `Who are the monsters of Chronicles of Aethelgard?`
-	userContent := `Tell me more about Keegorg`
-
+	//userContent := `[Brief] What's new with TLS client?`
+	//userContent := `Tell me more about the new structs package`
+	userContent := `What changes to the archive/tar library happened in Go 1.23`
+	
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
 		ollamaUrl,
@@ -67,11 +72,10 @@ func main() {
 
 	documentsContent := embeddings.GenerateContentFromSimilarities(similarities)
 
-	systemContent := `You are the dungeon master,
-	expert at interpreting and answering questions based on provided sources.
-	Using only the provided context, answer the user's question 
-	to the best of your ability using only the resources provided. 
-	Be verbose!`
+	systemContent := `You are a Golang expert.
+	Using only the below provided context, answer the user's question
+	to the best of your ability using only the resources provided.
+	`
 
 	queryChat := llm.Query{
 		Model: smallChatModel,

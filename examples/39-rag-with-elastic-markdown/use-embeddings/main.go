@@ -28,7 +28,7 @@ func main() {
 
 	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
 
-	elasticStore := embeddings.ElasticSearchStore{}
+	elasticStore := embeddings.ElasticsearchStore{}
 	err = elasticStore.Initialize(
 		[]string{
 			os.Getenv("ELASTIC_ADDRESS"),
