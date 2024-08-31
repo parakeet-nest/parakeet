@@ -2,7 +2,7 @@ module 02-help-the-llm
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.1.4
+require github.com/parakeet-nest/parakeet v0.1.5
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect

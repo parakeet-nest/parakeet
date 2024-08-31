@@ -41,6 +41,7 @@ func (ess *ElasticsearchStore) Initialize(addresses []string, user, pwd string, 
 func (ess *ElasticsearchStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
 	// Convert the document/vectorRecord/embedding to JSON
 	docJSON, err := json.Marshal(vectorRecord)
+	
 	if err != nil {
 		// Error marshaling document to JSON
 		return llm.VectorRecord{}, err

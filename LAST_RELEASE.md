@@ -2,13 +2,16 @@
 
 ## Release notes
 
-### Next release in progress 🚧
+### ### v0.1.5 🥖 [baguette]
 
 #### What's new in the next release?
 
 - `tools.GenerateSystemInstructions() string` generates a string containing the system content instructions for using "function calling". (✋ Use it only if the LLM does not implement function calling).
 - `content.SplitMarkdownByLevelSections(content string, level int) []string` allows choosing the level of the section you want to split
-- `content.ParseMarkdown(content string) []*Chunk` chunka a markdown document while maintaining semantic meaning and preserving the relationship between sections.
+- `content.ParseMarkdown(content string) []*Chunk` chunk a markdown document. (🚧 experimental)
+- `content.ParseMarkdownWithLineage(content string) []Chunk` chunk a markdown document while maintaining semantic meaning and preserving the relationship between sections.
+- New types: `QA`, `IO` and `Card` (🚧 experimental, used to create prompt, context, datasets...)
+- Unit tests in progress
 
 ### v0.1.4 🥐 [croissant]
 

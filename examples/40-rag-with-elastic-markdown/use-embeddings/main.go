@@ -76,7 +76,7 @@ func main() {
 	Using only the below provided context, answer the user's question
 	to the best of your ability using only the resources provided.
 	`
-
+	
 	queryChat := llm.Query{
 		Model: smallChatModel,
 		Messages: []llm.Message{

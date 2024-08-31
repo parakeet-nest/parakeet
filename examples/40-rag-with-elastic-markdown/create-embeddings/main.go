@@ -48,59 +48,72 @@ func main() {
 	}
 
 	// Chunk the document content
-	//chunks := content.ParseMarkdownWithHierarchy(documentContent)
 	chunks := content.ParseMarkdownWithLineage(documentContent)
 	// Prepare the pieces of markdown for the embeddings
 	for idx, chunk := range chunks {
-		tpl := ""
+
+		// you can add meta data to the chunk: chunk.MetaData
+		// you can add keywords to the chunk: chunk.KeyWords
+		// these metadata and keywords could be added to the embedding using the templates
+
 		pieceOfMarkdown := ""
+
 		if chunk.ParentHeader == "" {
-			tpl = "%s %s \n\n %s"
+			// Create the markdown section
+			mdTemplate := `{{.Prefix}} {{.Header}}
 
-			pieceOfMarkdown = fmt.Sprintf(
-				tpl,
-				chunk.Prefix,
-				chunk.Header,
-				chunk.Content,
-			)
-		} else {
-			// Add parent section information to the markdown section
-			tpl = "%s %s \n\n <!-- Parent Section: %s %s --> \n\n <!-- Lineage: %s --> \n\n %s"
+{{.Content}}`
 
-			pieceOfMarkdown = fmt.Sprintf(
-				tpl,
-				chunk.Prefix,
-				chunk.Header,
-				chunk.ParentPrefix,
-				chunk.ParentHeader,
-				chunk.Lineage,
-				chunk.Content,
-			)
-		}
-
-		fmt.Println("---------------------------------------------")
-		fmt.Println(pieceOfMarkdown)
-
-		fmt.Println("📝 Creating embedding from document ", idx)
-		embedding, err := embeddings.CreateEmbedding(
-			ollamaUrl,
-			llm.Query4Embedding{
-				Model:  embeddingsModel,
-				Prompt: pieceOfMarkdown,
-			},
-			strconv.Itoa(idx),
-		)
-		if err != nil {
-			fmt.Println("😡:", err)
-		} else {
-			_, err := elasticStore.Save(embedding)
+			pieceOfMarkdown, err = content.InterpolateString(mdTemplate, chunk)
 			if err != nil {
-				fmt.Println("😡:", err)
-			} else {
-				fmt.Println("Document", embedding.Id, "indexed successfully")
+				log.Println("😡:", err)
+				pieceOfMarkdown = ""
+			}
+		} else {
+
+			// Add metadata to the markdown section
+			mdTemplate := `{{.Prefix}} {{.Header}}
+<!-- Parent Section: {{.ParentPrefix}} {{.ParentHeader}} -->
+<!-- Lineage: {{.Lineage}} -->
+
+{{.Content}}`
+
+			pieceOfMarkdown, err = content.InterpolateString(mdTemplate, chunk)
+			if err != nil {
+				log.Println("😡:", err)
+				pieceOfMarkdown = ""
 			}
 		}
 
-	}
+		if len(pieceOfMarkdown) > 0 {
+			fmt.Println("---------------------------------------------")
+			fmt.Println(pieceOfMarkdown)
+			fmt.Println("📝 Creating embedding from document ", idx)
 
+			embedding, err := embeddings.CreateEmbedding(
+				ollamaUrl,
+				llm.Query4Embedding{
+					Model:  embeddingsModel,
+					Prompt: pieceOfMarkdown,
+				},
+				strconv.Itoa(idx),
+			)
+			if err != nil {
+				fmt.Println("😡:", err)
+			} else {
+				// You can add metadata to the embedding
+				// It could be useful for debugging and filtering with Elasticsearch
+				// TODO: see how to use this metadata in the search
+				embedding.MetaData = "👋 hello from Parakeet 🦜🪺"
+
+
+				_, err := elasticStore.Save(embedding)
+				if err != nil {
+					fmt.Println("😡:", err)
+				} else {
+					fmt.Println("Document", embedding.Id, "indexed successfully")
+				}
+			}
+		}
+	}
 }

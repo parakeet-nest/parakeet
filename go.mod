@@ -36,6 +36,7 @@ require (
 	github.com/bytesparadise/libasciidoc v0.8.0
 	github.com/elastic/elastic-transport-go/v8 v8.6.0 // indirect
 	github.com/elastic/go-elasticsearch/v8 v8.14.0
+	github.com/go-yaml/yaml v2.1.0+incompatible
 	github.com/yuin/goldmark v1.7.4
 
 )
