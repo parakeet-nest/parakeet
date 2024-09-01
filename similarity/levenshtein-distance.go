@@ -1,36 +1,58 @@
 package similarity
 
+/*
+✋ This method is not precise for large strings.
+*/
+
 // --- Levenshtein distance ---
+// LevenshteinDistance calculates the Levenshtein distance between two strings.
+// For comparisons, the lowest distance is related to the best similarity
+func LevenshteinDistance(a, b string) int {
+	// Convert strings to slices of runes to handle multibyte characters
+	runeA := []rune(a)
+	runeB := []rune(b)
 
-func min(a, b, c int) int {
-	if a <= b && a <= c {
-		return a
-	} else if b <= a && b <= c {
-		return b
-	} else {
-		return c
+	lenA := len(runeA)
+	lenB := len(runeB)
+
+	// Initialize a 2D slice to store distances
+	dp := make([][]int, lenA+1)
+	for i := range dp {
+		dp[i] = make([]int, lenB+1)
 	}
-}
 
-func LevenshteinDistance(str1, str2 string) int {
-	m := make([][]int, len(str1)+1)
-	for i := range m {
-		m[i] = make([]int, len(str2)+1)
+	// Initialize the distance matrix
+	for i := 0; i <= lenA; i++ {
+		dp[i][0] = i
+	}
+	for j := 0; j <= lenB; j++ {
+		dp[0][j] = j
 	}
 
-	for i := 0; i <= len(str1); i++ {
-		for j := 0; j <= len(str2); j++ {
-			if i == 0 {
-				m[i][j] = j
-			} else if j == 0 {
-				m[i][j] = i
-			} else if str1[i-1] == str2[j-1] {
-				m[i][j] = m[i-1][j-1]
-			} else {
-				m[i][j] = 1 + min(m[i-1][j], m[i][j-1], m[i-1][j-1])
+	// Compute the distances
+	for i := 1; i <= lenA; i++ {
+		for j := 1; j <= lenB; j++ {
+			cost := 0
+			if runeA[i-1] != runeB[j-1] {
+				cost = 1
 			}
+			dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+cost)
 		}
 	}
 
-	return m[len(str1)][len(str2)]
+	return dp[lenA][lenB]
+}
+
+// Helper function to find the minimum of three integers
+func min(a, b, c int) int {
+	if a < b {
+		if a < c {
+			return a
+		}
+		return c
+	}
+	if b < c {
+		return b
+	}
+	return c
 }
