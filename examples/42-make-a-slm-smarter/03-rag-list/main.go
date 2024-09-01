@@ -20,8 +20,10 @@ func main() {
 
 	//smallChatModel := "qwen2:1.5b"
 	smallChatModel := "tinydolphin"
-
 	embeddingsModel := "mxbai-embed-large"
+
+	//maxSimilarities := 3
+	maxSimilarities := 1
 
 	systemContent := `**Instruction:**
 	You are an expert in botanics.
@@ -39,10 +41,11 @@ func main() {
 		Records: make(map[string]llm.VectorRecord),
 	}
 
-	// Chunk the document content
+	// Chunk the document content with the delimiter
 	chunks := content.SplitTextWithDelimiter(documentContent, "<!-- SPLIT -->")
 	for idx, chunk := range chunks {
 
+		// Display the chunk
 		fmt.Println("---------------------------------------------")
 		fmt.Println(chunk)
 		fmt.Println("---------------------------------------------")
@@ -69,7 +72,7 @@ func main() {
 
 	for {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Printf("🤖 [%s](%s) ask me something> ", embeddingsModel, smallChatModel)
+		fmt.Printf("🤖 [%s](%s)(%d) ask me something> ", embeddingsModel, smallChatModel, maxSimilarities)
 		question, _ := reader.ReadString('\n')
 		question = strings.TrimSpace(question)
 
@@ -95,7 +98,7 @@ func main() {
 			- **Question:** Give me a list of ferns of the Dryopteridaceae variety
 			- **Question:** What is the common name Dryopteris cristata?
 		*/
-		similarities, err := store.SearchTopNSimilarities(embeddingFromQuestion, 0.5, 1)
+		similarities, err := store.SearchTopNSimilarities(embeddingFromQuestion, 0.5, maxSimilarities)
 
 		if err != nil {
 			log.Fatalln("😡:", err)
@@ -103,7 +106,7 @@ func main() {
 
 		for _, similarity := range similarities {
 			fmt.Println("📝 doc:", similarity.Id, "score:", similarity.CosineDistance)
-			fmt.Println(similarity.Prompt)
+			//fmt.Println(similarity.Prompt)
 		}
 
 		contextContext := embeddings.GenerateContentFromSimilarities(similarities)
@@ -122,8 +125,6 @@ func main() {
 				TopK:          10,
 				TopP:          0.5,
 			},
-			TokenHeaderName:  "X-TOKEN",
-			TokenHeaderValue: os.Getenv("TOKEN"),
 		}
 
 		fmt.Println()
