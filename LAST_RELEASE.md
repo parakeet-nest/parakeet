@@ -2,9 +2,14 @@
 
 ## Release notes
 
-### ### v0.1.5 🥖 [baguette]
+### v0.1.6 🥨 [pretzel]
 
-#### What's new in the next release?
+- Move the cosine similarity function to the `similarity` package
+- Implement the Jaccard index calculation for text similarity
+
+### v0.1.5 🥖 [baguette]
+
+#### What's new in v0.1.5?
 
 - `tools.GenerateSystemInstructions() string` generates a string containing the system content instructions for using "function calling". (✋ Use it only if the LLM does not implement function calling).
 - `content.SplitMarkdownByLevelSections(content string, level int) []string` allows choosing the level of the section you want to split

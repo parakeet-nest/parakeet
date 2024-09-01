@@ -87,5 +87,7 @@ use (
 	// Testing
 	testing/interpolation
 	testing/data
+	testing/similarity
+	
 
 )

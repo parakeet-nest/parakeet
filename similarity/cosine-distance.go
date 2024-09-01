@@ -1,4 +1,4 @@
-package embeddings
+package similarity
 
 import (
 	"math"
@@ -29,7 +29,7 @@ func CosineDistance(v1, v2 []float64) float64 {
 	return product / (norm1 * norm2)
 }
 
-func getTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
+func GetTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
 	// Sort the records slice in descending order based on CosineDistance
 	sort.Slice(records, func(i, j int) bool {
 		return records[i].CosineDistance > records[j].CosineDistance
