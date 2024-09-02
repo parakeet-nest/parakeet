@@ -11,7 +11,7 @@
   - `tools.GenerateSystemInstructions()` to `tools.tools.GenerateSystemToolsInstructions()`
   - `tools.GenerateContent()` to `tools.GenerateAvailableToolsContent()`
   - `tools.GenerateInstructions()` to `tools.GenerateUserToolsInstructions()`
-- Add `llm.Message.FirstToolCallToJSONString()` to get a JSON string from the first item of the tool calls. (https://github.com/ollama/ollama/blob/main/docs/api.md#response-13)
+- Improve function calling in the `tools` package
 
 ### v0.1.5 🥖 [baguette]
 

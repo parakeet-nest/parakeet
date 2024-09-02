@@ -19,27 +19,11 @@ import (
 	"log"
 )
 
-/*
-This code snippet is a Go program that demonstrates the usage of a chat completion API. It defines a main function that performs the following steps:
-
-1. Sets the ollamaUrl variable to the URL of the chat completion API.
-2.Sets the model variable to the name of the model to be used for chat completion.
-3. Defines a list of toolsList that contains information about two functions: hello and addNumbers. Each function has a name, description, and parameters.
-4. Calls the tools.GenerateContent function to generate the content for the prompt based on the toolsList.
-5. Defines an options struct that contains various options for chat completion, such as temperature, repeat last N messages, and repeat penalty.
-6. Defines a query struct that specifies the model, messages, options, and format for the chat completion.
-7. Calls the completion.Chat function to perform the chat completion using the provided query.
-8. Prints the result of the chat completion.
-9. Repeats steps 7 and 8 for a different chat completion query.
-
-Overall, this code snippet demonstrates how to use a chat completion API to generate responses based on a given prompt and a list of functions.
-*/
-
 func main() {
 	ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	model := "mistral:7b"
+	model := "sam4096/qwen2tools:0.5b"
 
 	toolsList := []llm.Tool{
 		{
@@ -105,11 +89,11 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
+
 	result, err := answer.Message.ToolCalls[0].Function.ToJSONString()
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-
 	fmt.Println(result)
 
 	messages = []llm.Message{
@@ -134,4 +118,5 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 	fmt.Println(result)
+
 }

@@ -1071,7 +1071,32 @@ The result will look like this:
 [{"function":{"arguments":{"name":"Bob"},"name":"hello"}}]
 ```
 
-Look at this sample for a complete sample: [examples/19-mistral-function-calling-tool-support](19-mistral-function-calling-tool-support)
+Look here for a complete sample: [examples/19-mistral-function-calling-tool-support](examples/19-mistral-function-calling-tool-support)
+
+#### Or (better) you can use the `ToolCallsToJSONString` helper
+
+```golang
+answer, err := completion.Chat(ollamaUrl, query)
+if err != nil {
+	log.Fatal("😡:", err)
+}
+
+result, err := answer.Message.ToolCalls[0].Function.ToJSONString()
+if err != nil {
+	log.Fatal("😡:", err)
+}
+fmt.Println(result)
+```
+
+The result will look like this:
+```json
+{"name":"hello","arguments":{"name":"Bob"}}
+```
+
+Look at these samples:
+- [examples/43-function-calling/01-xlam](examples/43-function-calling/01-xlam)
+- [examples/43-function-calling/02-qwen2tools](examples/43-function-calling/02-qwen2tools)
+
 <!-- split -->
 
 <!-- TOPIC: WebAssembly plugins for Parakeet SUMMARY: The release of Parakeet's version 0.0.6 brings support for WebAssembly, allowing users to write their own wasm plugins in various languages (Rust, Go, C, etc.) and use them with the "Function Calling" feature. KEYWORDS: Parakeet, WebAssembly, Wasm plugins, Extism project, TinyGo, Function Calling -->

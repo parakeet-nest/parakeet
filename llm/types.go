@@ -10,12 +10,42 @@ type LLM struct {
 	Url  string `json:"url"`
 }
 
-type Message struct {
-	Role      string      `json:"role"`
-	Content   string      `json:"content"`
-	ToolCalls []map[string]interface{} `json:"tool_calls,omitempty"` // only if it used
-	//ToolCalls interface{} `json:"tool_calls,omitempty"` // only if it used
+// not used
+type _Message struct {
+	Role      string `json:"role"`
+	Content   string `json:"content"`
+	ToolCalls []struct {
+		Function struct {
+			Name      string `json:"name"`
+			Arguments map[string]interface{} `json:"arguments"`
+		} `json:"function"`
+	} `json:"tool_calls"`
 }
+
+type FunctionTool struct {
+	Name        string     `json:"name"`
+	Arguments map[string]interface{} `json:"arguments"` // used for the ToolCalls list
+}
+
+func (ft *FunctionTool) ToJSONString() (string, error) {
+	// Marshal the data into JSON
+	jsonBytes, err := json.Marshal(ft)
+	if err != nil {
+		return "", err
+	}
+	// Convert JSON bytes to string
+	jsonString := string(jsonBytes)
+	return jsonString, nil
+}
+
+type Message struct {
+	Role      string `json:"role"`
+	Content   string `json:"content"`
+	ToolCalls []struct {
+		Function FunctionTool `json:"function"`
+	} `json:"tool_calls"`
+}
+
 
 func (m *Message) ToolCallsToJSONString() (string, error) {
 	// Marshal the data into JSON
