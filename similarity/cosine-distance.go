@@ -1,4 +1,4 @@
-package embeddings
+package similarity
 
 import (
 	"math"
@@ -16,6 +16,7 @@ func dotProduct(v1 []float64, v2 []float64) float64 {
 	return sum
 }
 
+// CosineDistance calculates the cosine distance between two vectors
 func CosineDistance(v1, v2 []float64) float64 {
 	// Calculate the cosine distance between two vectors
 	product := dotProduct(v1, v2)
@@ -29,7 +30,7 @@ func CosineDistance(v1, v2 []float64) float64 {
 	return product / (norm1 * norm2)
 }
 
-func getTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
+func GetTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
 	// Sort the records slice in descending order based on CosineDistance
 	sort.Slice(records, func(i, j int) bool {
 		return records[i].CosineDistance > records[j].CosineDistance

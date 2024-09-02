@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	bbolt "github.com/parakeet-nest/parakeet/db"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/similarity"
 	bolt "go.etcd.io/bbolt"
 )
 
@@ -84,7 +85,7 @@ func (bvs *BboltVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vecto
 		return llm.VectorRecord{}, err
 	}
 	for _, v := range records {
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance > maxDistance {
 			maxDistance = distance
 			selectedKeyRecord = v.Id
@@ -114,7 +115,7 @@ func (bvs *BboltVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vector
 	var recordsFiltered []llm.VectorRecord
 	for _, v := range records {
 
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance >= limit {
 			v.CosineDistance = distance
 			recordsFiltered = append(recordsFiltered, v)
@@ -132,5 +133,5 @@ func (bvs *BboltVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.Ve
 	if err != nil {
 		return nil, err
 	}
-	return getTopNVectorRecords(records, max), nil
+	return similarity.GetTopNVectorRecords(records, max), nil
 }

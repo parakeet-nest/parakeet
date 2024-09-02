@@ -3,6 +3,7 @@ package embeddings
 import (
 	"github.com/google/uuid"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/similarity"
 )
 
 type MemoryVectorStore struct {
@@ -42,7 +43,7 @@ func (mvs *MemoryVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vect
 	var maxDistance float64 = -1.0
 	var selectedKeyRecord string
 	for k, v := range mvs.Records {
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance > maxDistance {
 			maxDistance = distance
 			selectedKeyRecord = k
@@ -66,7 +67,7 @@ func (mvs *MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vecto
 	var records []llm.VectorRecord
 
 	for _, v := range mvs.Records {
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance >= limit {
 			v.CosineDistance = distance
 			records = append(records, v)
@@ -84,5 +85,5 @@ func (mvs *MemoryVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.V
 	if err != nil {
 		return nil, err
 	}
-	return getTopNVectorRecords(records, max), nil
+	return similarity.GetTopNVectorRecords(records, max), nil
 }

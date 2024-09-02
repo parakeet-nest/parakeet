@@ -3,16 +3,18 @@ package embeddings
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/go-redis/redis/v8"
-	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/google/uuid"
+	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/similarity"
 )
 
 //const redisKeyPrefix string = "embeddings-store"
 
 type RedisVectorStore struct {
-	client *redis.Client
-	ctx    context.Context
+	client         *redis.Client
+	ctx            context.Context
 	redisKeyPrefix string
 }
 
@@ -24,12 +26,12 @@ client := redis.NewClient(&redis.Options{
 })
 */
 
-func (rvs *RedisVectorStore) Initialize(redisAddr string, redisPwd string,  storeName string) error {
+func (rvs *RedisVectorStore) Initialize(redisAddr string, redisPwd string, storeName string) error {
 	rvs.ctx = context.Background()
 	rvs.client = redis.NewClient(&redis.Options{
-		Addr: redisAddr,
+		Addr:     redisAddr,
 		Password: redisPwd,
-		DB:       0, 
+		DB:       0,
 	})
 	_, err := rvs.client.Ping(rvs.ctx).Result()
 	if err != nil {
@@ -107,7 +109,7 @@ func (rvs *RedisVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vecto
 		return llm.VectorRecord{}, err
 	}
 	for _, v := range records {
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance > maxDistance {
 			maxDistance = distance
 			selectedKeyRecord = v.Id
@@ -134,7 +136,7 @@ func (rvs *RedisVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vector
 	}
 	var recordsFiltered []llm.VectorRecord
 	for _, v := range records {
-		distance := CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance >= limit {
 			v.CosineDistance = distance
 			recordsFiltered = append(recordsFiltered, v)
@@ -152,5 +154,5 @@ func (rvs *RedisVectorStore) SearchTopNSimilarities(embeddingFromQuestion llm.Ve
 	if err != nil {
 		return nil, err
 	}
-	return getTopNVectorRecords(records, max), nil
+	return similarity.GetTopNVectorRecords(records, max), nil
 }
