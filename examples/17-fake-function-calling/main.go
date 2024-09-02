@@ -68,7 +68,7 @@ func main() {
 		},
 	}
 
-	toolsContent, err := tools.GenerateContent(toolsList)
+	toolsContent, err := tools.GenerateAvailableToolsContent(toolsList)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
@@ -88,7 +88,7 @@ func main() {
 	*/
 	
 	// ✋ Use it only if the LLM does not implement function calling.
-	systemContentInstructions := tools.GenerateSystemInstructions()
+	systemContentInstructions := tools.GenerateSystemToolsInstructions()
 
 	options := llm.Options{
 		Temperature:   0.0,

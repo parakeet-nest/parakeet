@@ -107,7 +107,7 @@ func IsSearchTool(ollamaUrl string, model string, question string) (bool, Search
 		Seed:          123,
 	}
 
-	question = tools.GenerateToolsInstructions(question)
+	question = tools.GenerateUserToolsInstructions(question)
 
 	query := llm.Query{
 		Model: model,

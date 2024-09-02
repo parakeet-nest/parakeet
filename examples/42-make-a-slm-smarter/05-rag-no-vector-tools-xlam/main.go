@@ -114,7 +114,7 @@ func IsSearchTool(ollamaUrl string, model string, nativeFunction bool, question 
 	query := llm.Query{}
 
 	if nativeFunction {
-		question = tools.GenerateToolsInstructions(question)
+		question = tools.GenerateUserToolsInstructions(question)
 
 		query = llm.Query{
 			Model: model,
@@ -127,13 +127,13 @@ func IsSearchTool(ollamaUrl string, model string, nativeFunction bool, question 
 			Raw:     true, // try with false
 		}
 	} else { // The LLM do not implement the tools natively
-		systemContentIntroduction := `You have access to the following tools:`
-		systemContentInstructions := tools.GenerateSystemInstructions()
+		systemContentIntroductions := `You have access to the following tools:`
+		systemContentInstructions := tools.GenerateSystemToolsInstructions()
 
 		query = llm.Query{
 			Model: model,
 			Messages: []llm.Message{
-				{Role: "system", Content: systemContentIntroduction},
+				{Role: "system", Content: systemContentIntroductions},
 				{Role: "system", Content: toolsContent},
 				{Role: "system", Content: systemContentInstructions},
 				{Role: "user", Content: question},

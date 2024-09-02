@@ -7,6 +7,11 @@
 - Move the cosine similarity function to the `similarity` package
 - Implement the Jaccard index calculation for text similarity (🚧 experimental)
 - Implement the Levenshtein Distance calculation for set similarity (🚧 experimental)
+- Renaming of methods in the `tools` package:
+  - `tools.GenerateSystemInstructions()` to `tools.tools.GenerateSystemToolsInstructions()`
+  - `tools.GenerateContent()` to `tools.GenerateAvailableToolsContent()`
+  - `tools.GenerateInstructions()` to `tools.GenerateUserToolsInstructions()`
+
 
 ### v0.1.5 🥖 [baguette]
 

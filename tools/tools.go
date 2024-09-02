@@ -25,7 +25,7 @@ func GenerateAvailableToolsContent(tools []llm.Tool) (string, error) {
 	return "[AVAILABLE_TOOLS] " + string(toolsJSON) + " [/AVAILABLE_TOOLS]", nil
 }
 
-// GenerateToolsInstructions generates a string containing the user message wrapped in [INST] and [/INST] tags.
+// GenerateUserToolsInstructions generates a string containing the user message wrapped in [INST] and [/INST] tags.
 //
 // ✋ it works for mistral:7b
 //
@@ -34,13 +34,14 @@ func GenerateAvailableToolsContent(tools []llm.Tool) (string, error) {
 //
 // Returns:
 // - string: the user message wrapped in [INST] and [/INST] tags.
-func GenerateToolsInstructions(userMessage string) string {
+func GenerateUserToolsInstructions(userMessage string) string {
 	return "[INST] " + userMessage + " [/INST]"
 }
 
-// GenerateSystemInstructions generates a string containing the system content instructions for using "function calling".
+// GenerateSystemToolsInstructions generates a string containing the system content instructions for using "function calling".
+//
 // ✋ Use it only if the LLM does not implement function calling.
-func GenerateSystemInstructions() string {
+func GenerateSystemToolsInstructions() string {
 	systemContentInstructions := `If the question of the user matched the description of a tool, the tool will be called.
 	To call a tool, respond with a JSON object with the following structure: 
 	{

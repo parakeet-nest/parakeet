@@ -86,12 +86,12 @@ func main() {
 		},
 	}
 
-	toolsContent, err := tools.GenerateContent(toolsList)
+	toolsContent, err := tools.GenerateAvailableToolsContent(toolsList)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
 
-	userContent := tools.GenerateInstructions(`say "hello" to Bob`)
+	userContent := tools.GenerateUserToolsInstructions(`say "hello" to Bob`)
 
 	messages := []llm.Message{
 		{Role: "system", Content: toolsContent},
@@ -122,7 +122,7 @@ func main() {
 	}
 	fmt.Println(strings.TrimSpace(result))
 
-	userContent = tools.GenerateInstructions(`add 2 and 40`)
+	userContent = tools.GenerateUserToolsInstructions(`add 2 and 40`)
 	messages = []llm.Message{
 		{Role: "system", Content: toolsContent},
 		{Role: "user", Content: userContent},
