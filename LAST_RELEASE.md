@@ -5,7 +5,8 @@
 ### v0.1.6 🥨 [pretzel]
 
 - Move the cosine similarity function to the `similarity` package
-- Implement the Jaccard index calculation for text similarity
+- Implement the Jaccard index calculation for text similarity (🚧 experimental)
+- Implement the Levenshtein Distance calculation for set similarity (🚧 experimental)
 
 ### v0.1.5 🥖 [baguette]
 

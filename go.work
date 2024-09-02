@@ -77,7 +77,7 @@ use (
 	./examples/42-make-a-slm-smarter/01-context
 	./examples/42-make-a-slm-smarter/02-rag
 	./examples/42-make-a-slm-smarter/03-rag-list
-
+	./examples/42-make-a-slm-smarter/04-rag-no-vector
 
 	examples/90-characters
 	examples/91-characters
@@ -88,6 +88,6 @@ use (
 	testing/interpolation
 	testing/data
 	testing/similarity
-	
+
 
 )

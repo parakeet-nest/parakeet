@@ -13,6 +13,7 @@ func contains(set []string, element string) bool {
 }
 
 // https://en.wikipedia.org/wiki/Jaccard_index
+// JaccardSimilarityCoeff calculates the Jaccard similarity coefficient between two sets.
 // For comparisons, the highest value is related to the best similarity
 func JaccardSimilarityCoeff(set1, set2 []string) float64 {
 	intersection := 0

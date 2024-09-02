@@ -16,6 +16,7 @@ func dotProduct(v1 []float64, v2 []float64) float64 {
 	return sum
 }
 
+// CosineDistance calculates the cosine distance between two vectors
 func CosineDistance(v1, v2 []float64) float64 {
 	// Calculate the cosine distance between two vectors
 	product := dotProduct(v1, v2)
