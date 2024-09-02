@@ -1,4 +1,4 @@
-module 42-mem-rag-no-vector
+module 42-mem-rag-no-vector-tools-mistral
 
 go 1.22.1
 
