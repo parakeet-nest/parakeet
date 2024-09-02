@@ -1,14 +1,3 @@
-/*
-Topic: Parakeet
-Generate a chat completion using function calling
-no streaming
-This example:
-- uses Mistral model
-- make a list of tools
-- use the list of tools to generate content for the prompt
-- retrieve the function from the list of tools
-*/
-
 package main
 
 import (
