@@ -77,10 +77,6 @@ use (
 	./examples/42-make-a-slm-smarter/01-context
 	./examples/42-make-a-slm-smarter/02-rag
 	./examples/42-make-a-slm-smarter/03-rag-list
-	./examples/42-make-a-slm-smarter/04-rag-no-vector-tools-mistral
-	./examples/42-make-a-slm-smarter/05-rag-no-vector-tools-xlam
-	./examples/42-make-a-slm-smarter/06-rag-no-vector-tools-like
-
 
 
 	examples/90-characters

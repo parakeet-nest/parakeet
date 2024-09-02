@@ -152,7 +152,15 @@ func main() {
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
+
 	result, err = answer.Message.ToolCallsToJSONString()
+	if err != nil {
+		log.Fatal("😡:", err)
+	}
+	fmt.Println(result)
+
+	// https://github.com/ollama/ollama/blob/main/docs/api.md#response-13
+	result, err = answer.Message.FirstToolCallToJSONString()
 	if err != nil {
 		log.Fatal("😡:", err)
 	}

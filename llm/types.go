@@ -28,6 +28,17 @@ func (m *Message) ToolCallsToJSONString() (string, error) {
 	return jsonString, nil
 }
 
+func (m *Message) FirstToolCallToJSONString() (string, error) {
+	// Marshal the data into JSON
+	jsonBytes, err := json.Marshal(m.ToolCalls[0])
+	if err != nil {
+		return "", err
+	}
+	// Convert JSON bytes to string
+	jsonString := string(jsonBytes)
+	return jsonString, nil
+}
+
 type MessageRecord struct {
 	Id      string `json:"id"`
 	Role    string `json:"role"`

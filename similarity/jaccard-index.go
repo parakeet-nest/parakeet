@@ -1,5 +1,5 @@
 package similarity
-
+// 🚧 experimental
 // --- Jaccard index ---
 
 // check if an item is a part of a set

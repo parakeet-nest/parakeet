@@ -1,12 +1,9 @@
 package similarity
-
-/*
-✋ This method is not precise for large strings.
-*/
-
+// 🚧 experimental
 // --- Levenshtein distance ---
 // LevenshteinDistance calculates the Levenshtein distance between two strings.
 // For comparisons, the lowest distance is related to the best similarity
+// ✋ This method is not precise for large strings.
 func LevenshteinDistance(a, b string) int {
 	// Convert strings to slices of runes to handle multibyte characters
 	runeA := []rune(a)
