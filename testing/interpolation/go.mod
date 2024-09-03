@@ -4,7 +4,7 @@ go 1.22.1
 
 replace github.com/parakeet-nest/parakeet => ../..
 
-require github.com/parakeet-nest/parakeet v0.1.5
+require github.com/parakeet-nest/parakeet v0.1.6
 
 require (
 	github.com/yuin/goldmark v1.7.4 // indirect

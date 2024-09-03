@@ -48,15 +48,16 @@ func completion(url string, kindOfCompletion string, query llm.Query) (llm.Answe
 	}
 	defer resp.Body.Close()
 
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return llm.Answer{}, err
+	}
+
 	if resp.StatusCode != http.StatusOK {
 		// we need to create a new error because
 		// because, even if the status is not ok (ex 401 Unauthorized)
 		// the error == nil
-		return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return llm.Answer{}, err
+		return llm.Answer{}, errors.New("Error: status code: " + resp.Status + "\n" + string(body))
 	}
 
 	var answer llm.Answer

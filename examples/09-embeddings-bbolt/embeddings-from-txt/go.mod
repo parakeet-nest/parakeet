@@ -2,7 +2,7 @@ module 09-embeddings-from-txt
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.1.5
+require github.com/parakeet-nest/parakeet v0.1.6
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
