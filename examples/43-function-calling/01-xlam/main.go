@@ -80,6 +80,7 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
+	// TODO: test the number of tools before
 	result, err := answer.Message.ToolCalls[0].Function.ToJSONString()
 	if err != nil {
 		log.Fatal("😡:", err)
@@ -103,6 +104,7 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
+	// TODO: test the number of tools before
 	result, err = answer.Message.ToolCalls[0].Function.ToJSONString()
 	if err != nil {
 		log.Fatal("😡:", err)
