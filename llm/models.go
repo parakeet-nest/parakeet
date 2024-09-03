@@ -129,4 +129,7 @@ func PullModel(url, model string) (PullResult, int, error) {
 	return pullResult, resp.StatusCode, nil
 
 }
-// TODO: make a stream version of pull
+// TODO: 
+// - make a stream version of pull
+// - make a version with token
+
