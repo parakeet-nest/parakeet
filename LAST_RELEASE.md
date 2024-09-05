@@ -3,7 +3,7 @@
 ## Release notes
 
 
-### v0.1.7 🥨 [pretzel]
+### v0.1.7 🥯 [bagel]
 
 #### What's new in v0.1.7?
 
