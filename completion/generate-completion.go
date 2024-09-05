@@ -22,11 +22,6 @@ func Generate(url string, query llm.GenQuery) (llm.GenAnswer, error) {
 		//fmt.Println("[llm/completion]", answer.ToJsonString())
 	}
 
-	// if tool call is not used
-	if query.Tools == nil {
-		query.Tools = []llm.Tool{}
-	}
-
 	jsonQuery, err := json.Marshal(query)
 	if err != nil {
 		return llm.GenAnswer{}, err

@@ -10,7 +10,8 @@ type GenQuery struct {
 	Stream   bool      `json:"stream"`
 	Prompt   string    `json:"prompt"`  // For "Simple" Completion
 	Context  []int     `json:"context"` // For "Simple" Completion
-	Tools    []Tool    `json:"tools"`
+	//Tools    []Tool    `json:"tools"`
+	Suffix string `json:"suffix,omitempty"`
 
 	Format    string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
 	KeepAlive bool   `json:"keep_alive,omitempty"`
