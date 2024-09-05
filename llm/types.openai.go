@@ -1,152 +1,8 @@
 package llm
-
+// OpenAI API support
 import "encoding/json"
 
 // https://platform.openai.com/docs/api-reference/chat/create
-
-// Default chat query for gpt-4o-mini
-/*
-curl https://api.openai.com/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -d '{
-    "model": "gpt-4o-mini",
-    "messages": [
-      {
-        "role": "system",
-        "content": "You are a helpful assistant."
-      },
-      {
-        "role": "user",
-        "content": "Hello!"
-      }
-    ]
-  }'
-
-### Response
-
-{
-  "id": "chatcmpl-123",
-  "object": "chat.completion",
-  "created": 1677652288,
-  "model": "gpt-4o-mini",
-  "system_fingerprint": "fp_44709d6fcb",
-  "choices": [{
-    "index": 0,
-    "message": {
-      "role": "assistant",
-      "content": "\n\nHello there, how may I assist you today?",
-    },
-    "logprobs": null,
-    "finish_reason": "stop"
-  }],
-  "usage": {
-    "prompt_tokens": 9,
-    "completion_tokens": 12,
-    "total_tokens": 21
-  }
-}
-
-*/
-
-
-// Tool chat query for gpt-4o-mini
-/*
-curl https://api.openai.com/v1/chat/completions \
--H "Content-Type: application/json" \
--H "Authorization: Bearer $OPENAI_API_KEY" \
--d '{
-  "model": "gpt-4o",
-  "messages": [
-    {
-      "role": "user",
-      "content": "What'\''s the weather like in Boston today?"
-    }
-  ],
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "get_current_weather",
-        "description": "Get the current weather in a given location",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "location": {
-              "type": "string",
-              "description": "The city and state, e.g. San Francisco, CA"
-            },
-            "unit": {
-              "type": "string",
-              "enum": ["celsius", "fahrenheit"]
-            }
-          },
-          "required": ["location"]
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}'
-
-## Response
-{
-  "id": "chatcmpl-abc123",
-  "object": "chat.completion",
-  "created": 1699896916,
-  "model": "gpt-4o-mini",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": null,
-        "tool_calls": [
-          {
-            "id": "call_abc123",
-            "type": "function",
-            "function": {
-              "name": "get_current_weather",
-              "arguments": "{\n\"location\": \"Boston, MA\"\n}"
-            }
-          }
-        ]
-      },
-      "logprobs": null,
-      "finish_reason": "tool_calls"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 82,
-    "completion_tokens": 17,
-    "total_tokens": 99
-  }
-}
-
-*/
-
-
-/*
-```bash
-curl "https://api.openai.com/v1/chat/completions" \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer $OPENAI_API_KEY" \
-    -d '{
-        "model": "gpt-4o-mini",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant."
-            },
-            {
-                "role": "user",
-                "content": "who is Jean-Luc Picard."
-            }
-        ]
-    }'
-```
-
-*/
 
 type OpenAIQuery struct {
 	Model    string    `json:"model"`
@@ -209,12 +65,19 @@ type OpenAIMessage struct {
     Content string `json:"content,omitempty"`
 }
 
+type Delta struct {
+	Content string `json:"content,omitempty"`
+}
+
 type Choice struct {
     Index        int     `json:"index,omitempty"`
     Message      OpenAIMessage `json:"message,omitempty"`
     Logprobs     *string `json:"logprobs,omitempty"` // Assuming logprobs can be null
     FinishReason string  `json:"finish_reason,omitempty"`
+	Delta Delta `json:"delta,omitempty"`
 }
+
+// "choices":[{"index":0,"delta":{"content":" redemption"}
 
 type Usage struct {
     PromptTokens     int `json:"prompt_tokens,omitempty"`
@@ -222,6 +85,15 @@ type Usage struct {
     TotalTokens      int `json:"total_tokens,omitempty"`
 }
 
+/*
+{"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
+
+{"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}]}
+
+....
+
+{"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
+*/
 
 type OpenAIAnswer struct {
     ID               string   `json:"id"`

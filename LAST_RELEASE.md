@@ -7,10 +7,12 @@
 
 #### What's new in v0.1.7?
 
-- Generate completion: replace `llm.Query` with `llm.GenQuery` and `llm.Answer` with `llm.GenAnswer` + 🐛 fix
-
-
-
+- (Ollama) Generate completion: replace `llm.Query` with `llm.GenQuery` and `llm.Answer` with `llm.GenAnswer` + 🐛 fix
+- Add `Suffix` field to `llm.GenQuery`
+- OpenAI API Chat completion support (only tested with the `gpt-4o-mini` model):
+  - `func ChatWithOpenAI(url string, query llm.OpenAIQuery) (llm.OpenAIAnswer, error) {}`
+  - `func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) error {}`
+  - Tools: planned.
 
 ### v0.1.6 🥨 [pretzel]
 
