@@ -2,9 +2,19 @@
 
 ## Release notes
 
+
+### v0.1.7 🥯 [bagel]
+
+#### What's new in v0.1.7?
+
+- Generate completion: replace `llm.Query` with `llm.GenQuery` and `llm.Answer` with `llm.GenAnswer` + 🐛 fix
+
+
+
+
 ### v0.1.6 🥨 [pretzel]
 
-#### What's new in v0.1.5?
+#### What's new in v0.1.6?
 
 - Move the cosine similarity function to the `similarity` package
 - Implement the Jaccard index calculation for text similarity (🚧 experimental)

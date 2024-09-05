@@ -24,7 +24,7 @@ func main() {
 		Temperature: 0.5, // default (0.8)
 	}
 
-	firstQuestion := llm.Query{
+	firstQuestion := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is James T Kirk?",
 		Options: options,
@@ -34,7 +34,7 @@ func main() {
 	
 	fmt.Println("✋ First Completion:")
 	answer, err := completion.GenerateStream(ollamaUrl, firstQuestion,
-		func(answer llm.Answer) error {
+		func(answer llm.GenAnswer) error {
 			fmt.Print(answer.Response)
 			return nil
 		})
@@ -43,7 +43,7 @@ func main() {
 		log.Fatal("1 😡:", err)
 	}
 
-	secondQuestion := llm.Query{
+	secondQuestion := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is his best friend?",
 		Context: answer.Context,
@@ -57,7 +57,7 @@ func main() {
 	fmt.Println("✋ Second Completion:")
 
 	_, err = completion.GenerateStream(ollamaUrl, secondQuestion,
-		func(answer llm.Answer) error {
+		func(answer llm.GenAnswer) error {
 			fmt.Print(answer.Response)
 			return nil
 		})
