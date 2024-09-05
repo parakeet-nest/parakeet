@@ -2,7 +2,6 @@ package llm
 
 import (
 	"encoding/json"
-	"time"
 )
 
 type LLM struct {
@@ -11,6 +10,7 @@ type LLM struct {
 }
 
 // not used
+/*
 type _Message struct {
 	Role      string `json:"role"`
 	Content   string `json:"content"`
@@ -21,9 +21,10 @@ type _Message struct {
 		} `json:"function"`
 	} `json:"tool_calls"`
 }
+*/
 
 type FunctionTool struct {
-	Name        string     `json:"name"`
+	Name      string                 `json:"name"`
 	Arguments map[string]interface{} `json:"arguments"` // used for the ToolCalls list
 }
 
@@ -45,7 +46,6 @@ type Message struct {
 		Function FunctionTool `json:"function"`
 	} `json:"tool_calls"`
 }
-
 
 func (m *Message) ToolCallsToJSONString() (string, error) {
 	// Marshal the data into JSON
@@ -74,36 +74,6 @@ type MessageRecord struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
 }
-
-type Answer struct {
-	Model    string  `json:"model"`
-	Message  Message `json:"message"` // For Chat Completion
-	Done     bool    `json:"done"`
-	Response string  `json:"response"` // For "Simple" Completion
-	Context  []int   `json:"context"`  // For "Simple" Completion
-
-	CreatedAt          time.Time `json:"created_at"`
-	TotalDuration      int64     `json:"total_duration"`
-	LoadDuration       int       `json:"load_duration"`
-	PromptEvalCount    int       `json:"prompt_eval_count"`
-	PromptEvalDuration int       `json:"prompt_eval_duration"`
-	EvalCount          int       `json:"eval_count"`
-	EvalDuration       int64     `json:"eval_duration"`
-}
-
-func (answer *Answer) ToJsonString() (string) {
-	// for the verbose mode
-	// Marshal the answer into JSON
-	jsonBytes, err := json.MarshalIndent(answer, "", "  ")
-
-	if err != nil {
-		return `{"error":"`+err.Error()+`"}`
-	}
-	// Convert JSON bytes to string
-	jsonString := string(jsonBytes)
-	return jsonString
-}
-
 
 /*
 type AnswerGenerate struct {
@@ -152,59 +122,24 @@ type Options struct {
 	Verbose bool
 }
 
-// https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
-type Query struct {
-	Model    string    `json:"model"`
-	Messages []Message `json:"messages"` // For Chat Completion
-	Options  Options   `json:"options"`
-	Stream   bool      `json:"stream"`
-	Prompt   string    `json:"prompt"`  // For "Simple" Completion
-	Context  []int     `json:"context"` // For "Simple" Completion
-	Tools    []Tool    `json:"tools"`
-
-	Format    string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
-	KeepAlive bool   `json:"keep_alive,omitempty"`
-	Raw       bool   `json:"raw,omitempty"`
-	System    string `json:"system,omitempty"`
-	Template  string `json:"template,omitempty"`
-
-	TokenHeaderName string
-	TokenHeaderValue string
-
-}
-
-func (query *Query) ToJsonString() (string) {
-	// for the verbose mode
-	// Marshal the answer into JSON
-	jsonBytes, err := json.MarshalIndent(query, "", "  ")
-
-	if err != nil {
-		return `{"error":"`+err.Error()+`"}`
-	}
-	// Convert JSON bytes to string
-	jsonString := string(jsonBytes)
-	return jsonString
-	
-}
-
 /* Embeddings */
 
 type VectorRecord struct {
-	Id        string    `json:"id"`
-	Prompt    string    `json:"prompt"`
-	Embedding []float64 `json:"embedding"`
+	Id             string    `json:"id"`
+	Prompt         string    `json:"prompt"`
+	Embedding      []float64 `json:"embedding"`
 	CosineDistance float64
-	Score float64 // ElasticSearch
-	
+	Score          float64 // ElasticSearch
+
 	Reference string `json:"reference"`
-	MetaData string `json:"metaData"`
-	Text string `json:"text"`
+	MetaData  string `json:"metaData"`
+	Text      string `json:"text"`
 }
 
 type Query4Embedding struct {
 	Prompt string `json:"prompt"`
 	Model  string `json:"model"`
 
-	TokenHeaderName string
+	TokenHeaderName  string
 	TokenHeaderValue string
 }

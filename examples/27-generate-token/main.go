@@ -24,7 +24,7 @@ func main() {
 		Stop:        []string{},
 	}
 
-	firstQuestion := llm.Query{
+	firstQuestion := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is James T Kirk?",
 		Options: options,
@@ -40,7 +40,7 @@ func main() {
 
 	fmt.Println()
 
-	secondQuestion := llm.Query{
+	secondQuestion := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is his best friend?",
 		Context: answer.Context,

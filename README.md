@@ -38,7 +38,7 @@ func main() {
 		Temperature: 0.5,  // default (0.8)
 	}
 
-	question := llm.Query{
+	question := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is James T Kirk?",
 		Options: options,
@@ -75,7 +75,7 @@ func main() {
 		Temperature: 0.5, // default (0.8)
 	}
 
-	question := llm.Query{
+	question := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is James T Kirk?",
 		Options: options,
@@ -119,7 +119,7 @@ func main() {
 		Temperature: 0.5, // default (0.8)
 	}
 
-	firstQuestion := llm.Query{
+	firstQuestion := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is James T Kirk?",
 		Options: options,
@@ -133,7 +133,7 @@ func main() {
 
 	fmt.Println()
 
-	secondQuestion := llm.Query{
+	secondQuestion := llm.GenQuery{
 		Model: model,
 		Prompt: "Who is his best friend?",
 		Context: answer.Context,
