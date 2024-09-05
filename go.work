@@ -81,6 +81,8 @@ use (
 	./examples/43-function-calling/01-xlam
 	./examples/43-function-calling/02-qwen2tools
 
+	./examples/44-chat-openai
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft
