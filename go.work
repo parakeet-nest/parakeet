@@ -85,6 +85,15 @@ use (
 	./examples/45-chat-stream-openai
 	./examples/46-create-an-expert
 
+	./examples/47-function-calling-xp/01-xlam
+
+	./examples/48-testing-models/01-yi-coder-completion
+	./examples/48-testing-models/02-yi-coder-insertion
+	./examples/48-testing-models/03-yi-coder-qa
+	./examples/48-testing-models/04-yi-coder-gitlab-ci
+
+
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft
