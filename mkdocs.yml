@@ -1,4 +1,5 @@
 # Generate the website: docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+
 site_name: Parakeet
 site_url: https://parakeet-nest.github.io/parakeet/
 site_author: Philippe Charrière (@k33g)
