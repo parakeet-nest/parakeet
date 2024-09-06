@@ -13,15 +13,18 @@
   - `func ChatWithOpenAI(url string, query llm.OpenAIQuery) (llm.OpenAIAnswer, error) {}`
   - `func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) error {}`
   - Tools: planned.
+
+> Ollama provides **experimental** [compatibility](https://github.com/ollama/ollama/blob/main/docs/openai.md ) with parts of the [OpenAI API](https://platform.openai.com/docs/api-reference). As it's experimental, I prefer to keep the completion methods of Ollama and OpenAI "separated."
+
 - New samples in the `examples` directory:
   - `44-chat-openai`
   - `45-chat-stream-openai`
   - `47-function-calling-xp`: call several tools in the same prompt
   - `48-testing-models`: test models with different prompts
-    - `01-yi-coder-completion`: write an algorithm
-    - `02-yi-coder-insertion`: find a problem in the code (and fix it)
-    - `03-yi-coder-qa`: ask a question about the code
-    - `04-yi-coder-gitlqb-ci`: explain a CI/CD pipeline
+    - `yi-coder/01-completion`: write an algorithm
+    - `yi-coder/02-insertion`: find a problem in the code (and fix it)
+    - `yi-coder/03-qa`: ask a question about the code
+    - `yi-coder/04-gitlab-ci`: explain a CI/CD pipeline
 
 
 ### v0.1.6 🥨 [pretzel]

@@ -87,12 +87,10 @@ use (
 
 	./examples/47-function-calling-xp/01-xlam
 
-	./examples/48-testing-models/01-yi-coder-completion
-	./examples/48-testing-models/02-yi-coder-insertion
-	./examples/48-testing-models/03-yi-coder-qa
-	./examples/48-testing-models/04-yi-coder-gitlab-ci
-
-
+	./examples/48-testing-models/yi-coder/01-completion
+	./examples/48-testing-models/yi-coder/02-insertion
+	./examples/48-testing-models/yi-coder/03-qa
+	./examples/48-testing-models/yi-coder/04-gitlab-ci
 
 	examples/90-characters
 	examples/91-characters

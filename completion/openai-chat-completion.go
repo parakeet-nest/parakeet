@@ -1,5 +1,12 @@
 package completion
 
+/*
+Ollama provides **experimental** compatibility with parts of the OpenAI API.
+- https://platform.openai.com/docs/api-reference
+- https://github.com/ollama/ollama/blob/main/docs/openai.md 
+As it's experimental, I prefer to keep the completion methods of Ollama and OpenAI "separated."
+*/
+
 // OpenAI API support
 // https://beta.openai.com/docs/api-reference/chat
 

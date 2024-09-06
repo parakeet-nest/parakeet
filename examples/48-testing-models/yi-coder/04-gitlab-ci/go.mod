@@ -1,4 +1,4 @@
-module 48-testing-models-03-yi-coder
+module 48-testing-models-04-yi-coder
 
 go 1.22.1
 
@@ -9,4 +9,5 @@ require (
 	golang.org/x/net v0.28.0 // indirect
 )
 
-replace github.com/parakeet-nest/parakeet => ../../..
+replace github.com/parakeet-nest/parakeet => ../../../..
+
