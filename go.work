@@ -81,6 +81,21 @@ use (
 	./examples/43-function-calling/01-xlam
 	./examples/43-function-calling/02-qwen2tools
 
+	./examples/44-chat-openai
+	./examples/45-chat-stream-openai
+	./examples/46-create-an-expert
+
+	./examples/47-function-calling-xp/01-xlam
+
+	./examples/48-testing-models/yi-coder/01-completion
+	./examples/48-testing-models/yi-coder/02-insertion
+	./examples/48-testing-models/yi-coder/03-qa
+	./examples/48-testing-models/yi-coder/04-gitlab-ci
+
+	./examples/48-testing-models/mathstral/01-completion
+
+	./examples/48-testing-models/qwen2-math/01-completion
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft
