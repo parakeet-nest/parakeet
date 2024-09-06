@@ -27,7 +27,6 @@
     - `yi-coder/04-gitlab-ci`: explain a CI/CD pipeline
     - `mathstral/01-completion`: solve a math problem
 
-
 ### v0.1.6 🥨 [pretzel]
 
 #### What's new in v0.1.6?
