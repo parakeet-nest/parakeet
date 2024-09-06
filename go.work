@@ -92,6 +92,10 @@ use (
 	./examples/48-testing-models/yi-coder/03-qa
 	./examples/48-testing-models/yi-coder/04-gitlab-ci
 
+	./examples/48-testing-models/mathstral/01-completion
+
+	./examples/48-testing-models/qwen2-math/01-completion
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft

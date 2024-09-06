@@ -2,7 +2,6 @@
 
 ## Release notes
 
-
 ### v0.1.7 🥯 [bagel]
 
 #### What's new in v0.1.7?
@@ -25,6 +24,7 @@
     - `yi-coder/02-insertion`: find a problem in the code (and fix it)
     - `yi-coder/03-qa`: ask a question about the code
     - `yi-coder/04-gitlab-ci`: explain a CI/CD pipeline
+    - `mathstral/01-completion`: solve a math problem
 
 
 ### v0.1.6 🥨 [pretzel]

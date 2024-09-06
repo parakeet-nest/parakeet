@@ -1,0 +1,64 @@
+# Generate the website: docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+site_name: Parakeet
+site_url: https://parakeet-nest.github.io/parakeet/
+site_author: Philippe Charrière (@k33g)
+site_description: >-
+  🦜🪺 Parakeet is a GoLang library, made to simplify the development of small generative AI applications with Ollama 🦙.
+# Repository
+repo_name: parakeet-nest/parakeet
+repo_url: https://github.com/parakeet-nest/parakeet
+
+# Copyright
+copyright: Copyright &copy; 2024 - 2025 Philippe Charrière
+
+nav:
+    - 🏠 Home: index.md
+    - Generate completion: generate-completion.md
+    - Chat completion: chat-completion.md
+    - Embeddings: embeddings.md
+    - Chunkers & Splitters: chunkers-and-splitters.md
+    - Parsing Markdown: parsing-markdown.md
+    - Function Calling (before tools support): function-calling-before-tools-support.md
+    - Function Calling (without tools support): function-calling-without-tools-support.md
+    - Function Calling with Tools: tools.md
+    - WASM Plugins: wasm-plugins.md
+    - Other Parakeet Helpers: other-helpers.md
+    - Prompt Helpers: prompt-helpers.md
+    - Protected endpoint: protected-endpoint.md
+    - Verbose mode: verbose-mode.md
+    - OpenAI API support: openaiapi-support.md
+    - 🧪 Parakeet Examples & Recipes: parakeet-examples.md
+    - 🚀 Parakeet Demos: parakeet-demos.md
+    - 📝 Parakeet Blog Posts: parakeet-blog.md
+ 
+theme:
+  name: material
+  palette:
+    primary: deep purple
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.highlight:
+      use_pygments: true
+      auto_title: false
+      linenums: true
+      anchor_linenums: true
+  - pymdownx.superfences
+
+
+
+
+#theme:
+#    name: readthedocs
+#    highlightjs: true
+#    hljs_languages:
+#        - yaml
+#        - rust
+#        - golang
+#        - bash
+#        - javascript
