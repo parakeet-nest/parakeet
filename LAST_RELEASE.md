@@ -6,6 +6,7 @@
 
 #### What's new in v0.1.7?
 
+- A website is available at [https://parakeet-nest.github.io/parakeet/](https://parakeet-nest.github.io/parakeet/)
 - (Ollama) Generate completion: replace `llm.Query` with `llm.GenQuery` and `llm.Answer` with `llm.GenAnswer` + 🐛 fix
 - Add `Suffix` field to `llm.GenQuery`
 - OpenAI API Chat completion support (only tested with the `gpt-4o-mini` model):
