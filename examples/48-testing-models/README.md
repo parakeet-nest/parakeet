@@ -1,3 +1,4 @@
-# Function Calling SLM Examples
+# Experimenting with models
 
-Call several tools in a same prompt.
+TODO:
+- Fill in the middle completion
