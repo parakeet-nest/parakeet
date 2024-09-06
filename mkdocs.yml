@@ -1,5 +1,5 @@
 # Serve the website: docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
-# Build docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build
+# Build the website: docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build
 
 site_name: Parakeet
 site_url: https://parakeet-nest.github.io/parakeet/
