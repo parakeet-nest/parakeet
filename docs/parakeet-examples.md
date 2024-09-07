@@ -1,6 +1,6 @@
 # Parakeet examples & Recipes
 
-> Of this repository
+> Of this repository: [https://github.com/parakeet-nest/parakeet/tree/main/examples](https://github.com/parakeet-nest/parakeet/tree/main/examples)
 
 | Item | Details |
 | --- | --- |

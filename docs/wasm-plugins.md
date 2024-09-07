@@ -5,6 +5,6 @@ The release `0.0.6` of Parakeet brings the support of **WebAssembly** thanks to 
 
 Or you can use the Wasm plugins with the "Function Calling" feature, which is implemented in Parakeet.
 
-You can find an example of "Wasm Function Calling" in [examples/18-call-functions-for-real](examples/18-call-functions-for-real) - the wasm plugin is located in the `wasm` folder and it is built with **[TinyGo](https://tinygo.org/)**.
+You can find an example of "Wasm Function Calling" in [examples/18-call-functions-for-real](https://github.com/parakeet-nest/parakeet/tree/main/examples/18-call-functions-for-real) - the wasm plugin is located in the `wasm` folder and it is built with **[TinyGo](https://tinygo.org/)**.
 
 🚧 more samples to come.

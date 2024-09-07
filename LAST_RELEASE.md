@@ -2,6 +2,13 @@
 
 ## Release notes
 
+### v0.1.8 🍔 [hamburger]
+
+#### What's new in v0.1.8?
+
+- `func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) (string, error) {}`
+
+
 ### v0.1.7 🥯 [bagel]
 
 #### What's new in v0.1.7?

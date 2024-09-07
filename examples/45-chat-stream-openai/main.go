@@ -35,7 +35,7 @@ func main() {
 		OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
 	}
 
-	err = completion.ChatWithOpenAIStream(openAIUrl, query,
+	_, err = completion.ChatWithOpenAIStream(openAIUrl, query,
 		func(answer llm.OpenAIAnswer) error {
 			fmt.Print(answer.Choices[0].Delta.Content)
 			return nil

@@ -95,3 +95,19 @@ func ReadTextFile(path string) (string, error) {
 	}
 	return string(data), nil
 }
+
+func WriteTextFile(path, content string) error {
+	// Create a new file
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// Write the content to the file
+	_, err = file.WriteString(content)
+	if err != nil {
+		return err
+	}
+	return nil
+}

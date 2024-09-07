@@ -94,8 +94,8 @@ func ChatWithOpenAI(url string, query llm.OpenAIQuery) (llm.OpenAIAnswer, error)
 
 }
 
-// func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) (llm.OpenAIAnswer, error) {
-func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) error {
+func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) (string, error) {
+//func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) error {
 
 	kindOfCompletion := "/chat/completions"
 
@@ -108,8 +108,8 @@ func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.Op
 
 	jsonQuery, err := json.Marshal(query)
 	if err != nil {
-		return err
-		//return llm.OpenAIAnswer{}, err
+		//return err
+		return "", err
 	}
 	// -----------------------
 
@@ -117,8 +117,8 @@ func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.Op
 	req, err := http.NewRequest(http.MethodPost, url+kindOfCompletion, strings.NewReader(string(jsonQuery)))
 	//req, err := http.NewRequest(http.MethodPost, url+kindOfCompletion, bytes.NewBuffer(jsonQuery))
 	if err != nil {
-		return err
-		//return llm.OpenAIAnswer{}, err
+		//return err
+		return "", err
 	}
 
 	// Set headers
@@ -129,13 +129,14 @@ func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.Op
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		//return llm.OpenAIAnswer{}, err
-		return err
+		return "", err
+		//return err
 	}
 
 	defer resp.Body.Close()
 
-	var fullAnswer llm.OpenAIAnswer
+	fullAnswer := ""
+	fullResponse := llm.OpenAIAnswer{}
 	// Read and stream the response
 	scanner := bufio.NewScanner(resp.Body)
 	for scanner.Scan() {
@@ -150,16 +151,20 @@ func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.Op
 			var response llm.OpenAIAnswer
 			err := json.Unmarshal([]byte(data), &response)
 			if err != nil {
-				return err
-				//return llm.OpenAIAnswer{}, err
+				//return err
+				return "", err
 				//fmt.Println("Error parsing JSON:", err)
 				//continue
 			}
-			fullAnswer = response // for the verbose mode
+
+			//fullAnswer = response // for the verbose mode, this will be the last chunk
+
 			//fullAnswer.Choices[0].Delta.Content += response.Choices[0].Delta.Content
+			fullAnswer += response.Choices[0].Delta.Content
+			fullResponse = response
 			err = onChunk(response)
 			if err != nil {
-				return err
+				return "", err
 			}
 			// Print the streamed text
 			//fmt.Print("", response.Choices[0].Text)
@@ -167,23 +172,23 @@ func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.Op
 	}
 
 	if err := scanner.Err(); err != nil {
-		return err
-		//return llm.OpenAIAnswer{}, err
+		//return err
+		return "", err
 		//fmt.Println("Error reading response:", err)
 	}
 
 	if query.Verbose {
 		//fmt.Println("[llm/query]", query.ToJsonString())
 		fmt.Println()
-		fmt.Println("[llm/completion]", fullAnswer.ToJsonString())
+		fmt.Println("[llm/completion]", fullResponse.ToJsonString())
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return errors.New("Error: status code: " + resp.Status)
-		//return llm.OpenAIAnswer{}, errors.New("Error: status code: " + resp.Status)
+		//return errors.New("Error: status code: " + resp.Status)
+		return "", errors.New("Error: status code: " + resp.Status)
 	} else {
-		return nil
-		//return fullAnswer, nil
+		//return nil
+		return fullAnswer, nil
 	}
 
 }

@@ -54,7 +54,7 @@ query := llm.OpenAIQuery{
 	OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
 }
 
-err = completion.ChatWithOpenAIStream(openAIUrl, query,
+textResult, err = completion.ChatWithOpenAIStream(openAIUrl, query,
 	func(answer llm.OpenAIAnswer) error {
 		fmt.Print(answer.Choices[0].Delta.Content)
 		return nil

@@ -35,5 +35,5 @@ messages := []llm.Message{
 }
 ```
 
-Look at this sample for a complete sample: [examples/17-fake-function-calling](examples/17-fake-function-calling)
+Look at this sample for a complete sample: [examples/17-fake-function-calling](https://github.com/parakeet-nest/parakeet/tree/main/examples/17-fake-function-calling)
 <!-- split -->

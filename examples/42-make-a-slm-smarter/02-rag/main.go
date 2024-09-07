@@ -41,6 +41,7 @@ func main() {
 	store := embeddings.MemoryVectorStore{
 		Records: make(map[string]llm.VectorRecord),
 	}
+	// Chunk the document content
 
 	chunks := content.SplitTextWithDelimiter(documentContent, "<!-- SPLIT -->")
 	for idx, chunk := range chunks {
@@ -69,7 +70,6 @@ func main() {
 		}
 	}
 
-	// Chunk the document content
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Printf("🤖 [%s](%s) ask me something> ", embeddingsModel, smallChatModel)
