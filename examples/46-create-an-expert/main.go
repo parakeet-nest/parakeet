@@ -48,7 +48,7 @@ Here's an example structure:
 **common name:** [common name of the {{.Expertise}}]  
 **description:** [description of the {{.Expertise}}]
 
-(Continue for other ferns in this variety...)
+(Continue for other {{.Expertise}}s in this variety...)
 
 <!-- SPLIT -->
 
