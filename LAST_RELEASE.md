@@ -6,7 +6,8 @@
 
 #### What's new in v0.1.8?
 
-- `func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) (string, error) {}`
+- Return a string of the answer at the end of the stream: `func ChatWithOpenAIStream(url string, query llm.OpenAIQuery, onChunk func(llm.OpenAIAnswer) error) (string, error) {}`
+- Helper to create Embedding objects with the OpenAI API: `CreateEmbeddingWithOpenAI(url string, query llm.OpenAIQuery4Embedding, id string) (llm.VectorRecord, error) {}`
 
 
 ### v0.1.7 🥯 [bagel]

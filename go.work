@@ -96,6 +96,9 @@ use (
 
 	./examples/48-testing-models/qwen2-math/01-completion
 
+	./examples/49-embeddings-memory-openai
+
+
 	examples/90-characters
 	examples/91-characters
 	//prompting/01-draft
