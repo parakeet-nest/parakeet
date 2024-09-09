@@ -52,3 +52,4 @@
 | 46-create-an-expert | 🚧 |
 | 47-function-calling-xp | call tools several times with the same prompt |
 | 48-testing-models | testing various models |
+| 49-embeddings-memory-openai | create embeddings with OpenAI |
