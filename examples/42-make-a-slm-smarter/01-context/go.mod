@@ -2,7 +2,7 @@ module 42-context
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.1.6
+require github.com/parakeet-nest/parakeet v0.1.8
 
 require (
 	github.com/yuin/goldmark v1.7.4 // indirect
