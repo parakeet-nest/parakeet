@@ -67,3 +67,21 @@ if err != nil {
 
 ## Chat completion with tools
 > 🚧 in progress
+
+
+## Create embeddings
+
+```golang
+// Create an embedding from the question
+embeddingFromQuestion, err := embeddings.CreateEmbeddingWithOpenAI(
+	openAIUrl,
+	llm.OpenAIQuery4Embedding{
+		Model:        embeddingsModel,
+		Input:       userContent,
+		OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
+	},
+	"unique-id",
+)
+```
+
+You can find an example in [examples/49-embeddings-memory-openai](https://github.com/parakeet-nest/parakeet/tree/main/examples/49-embeddings-memory-openai)
