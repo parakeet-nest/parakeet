@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
@@ -38,6 +39,13 @@ var docs = []string{
 }
 
 func main() {
+	// create a `.env` file with the following content:
+	// TOKEN=your_token
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
+
 	ollamaUrl := "https://ollama.wasm.ninja"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"

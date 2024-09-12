@@ -7,5 +7,5 @@
 !!! info
     This is a collection of Parakeet demos showcasing the ease of creating GenAI applications with Ollama, Golang, and other tools.
 
-- https://github.com/parakeet-nest/parakeet-demo
-- https://github.com/parakeet-nest/tiny-genai-stack
+- [https://github.com/parakeet-nest/parakeet-demo](https://github.com/parakeet-nest/parakeet-demo)
+- [https://github.com/parakeet-nest/tiny-genai-stack](https://github.com/parakeet-nest/tiny-genai-stack)

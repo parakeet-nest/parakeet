@@ -84,4 +84,6 @@ embeddingFromQuestion, err := embeddings.CreateEmbeddingWithOpenAI(
 )
 ```
 
-You can find an example in [examples/49-embeddings-memory-openai](https://github.com/parakeet-nest/parakeet/tree/main/examples/49-embeddings-memory-openai)
+!!! note
+	You can find an example in [examples/49-embeddings-memory-openai](https://github.com/parakeet-nest/parakeet/tree/main/examples/49-embeddings-memory-openai)
+

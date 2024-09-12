@@ -11,11 +11,19 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func main() {
+	// create a `.env` file with the following content:
+	// TOKEN=your_token
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
+
 	ollamaUrl := "https://ollama.wasm.ninja"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
@@ -30,10 +38,10 @@ func main() {
 	And, please, be structured with bullet points`
 
 	options := llm.Options{
-		Temperature: 0.0, // default (0.8)
-		RepeatLastN: 2, // default (64) the default value will "freeze" deepseek-coder
+		Temperature:   0.0, // default (0.8)
+		RepeatLastN:   2,   // default (64) the default value will "freeze" deepseek-coder
 		RepeatPenalty: 3,
-		Verbose: true,
+		Verbose:       true,
 	}
 
 	query := llm.Query{
@@ -42,8 +50,8 @@ func main() {
 			{Role: "system", Content: systemContent},
 			{Role: "user", Content: userContent},
 		},
-		Options: options,
-		TokenHeaderName: "X-TOKEN",
+		Options:          options,
+		TokenHeaderName:  "X-TOKEN",
 		TokenHeaderValue: os.Getenv("TOKEN"),
 	}
 
@@ -52,7 +60,7 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			return nil
 		})
-	
+
 	fmt.Println("📝 Full answer:")
 	fmt.Println(fullAnswer.Message.Role)
 	fmt.Println(fullAnswer.Message.Content)

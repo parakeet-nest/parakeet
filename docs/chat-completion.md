@@ -230,6 +230,10 @@ conversation := history.BboltMessages{}
 conversation.Initialize("../conversation.db")
 ```
 
-> 👀 you will find a complete example in `examples/11-chat-conversational-bbolt`
-> - `examples/11-chat-conversational-bbolt/begin`: start a conversation and save the history
-> - `examples/11-chat-conversational-bbolt/resume`: load the messages from the history bucket and resue the conversation
+!!! note
+	👀 you will find a complete example in:
+
+    - [examples/11-chat-conversational-bbolt](https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt)
+    - [examples/11-chat-conversational-bbolt/begin](https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt/begin): start a conversation and save the history
+    - [examples/11-chat-conversational-bbolt/resume](https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt/resume): load the messages from the history bucket and resue the conversation
+

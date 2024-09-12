@@ -97,6 +97,7 @@ use (
 	./examples/48-testing-models/qwen2-math/01-completion
 
 	./examples/49-embeddings-memory-openai
+	./examples/50-llm-information
 
 
 	examples/90-characters

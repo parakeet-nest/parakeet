@@ -7,31 +7,40 @@ The output is streamed
 package main
 
 import (
-	"github.com/parakeet-nest/parakeet/completion"
-	"github.com/parakeet-nest/parakeet/llm"
 	"fmt"
 	"log"
+	"os"
+
+	"github.com/joho/godotenv"
+	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func main() {
-	ollamaUrl := "https://ollamak33g.eu.loclx.io"
+	// create a `.env` file with the following content:
+	// TOKEN=your_token
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
+
+	ollamaUrl := "https://ollama.wasm.ninja"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "tinydolphin"
-
 
 	options := llm.Options{
 		Temperature: 0.5, // default (0.8)
 	}
 
 	firstQuestion := llm.GenQuery{
-		Model: model,
-		Prompt: "Who is James T Kirk?",
-		Options: options,
-		TokenHeaderName: "X-TOKEN",
-		TokenHeaderValue: "john_doe",
+		Model:            model,
+		Prompt:           "Who is James T Kirk?",
+		Options:          options,
+		TokenHeaderName:  "X-TOKEN",
+		TokenHeaderValue: os.Getenv("TOKEN"),
 	}
-	
+
 	fmt.Println("✋ First Completion:")
 	answer, err := completion.GenerateStream(ollamaUrl, firstQuestion,
 		func(answer llm.GenAnswer) error {
@@ -44,12 +53,12 @@ func main() {
 	}
 
 	secondQuestion := llm.GenQuery{
-		Model: model,
-		Prompt: "Who is his best friend?",
-		Context: answer.Context,
-		Options: options,
-		TokenHeaderName: "X-TOKEN",
-		TokenHeaderValue: "john_doe",
+		Model:            model,
+		Prompt:           "Who is his best friend?",
+		Context:          answer.Context,
+		Options:          options,
+		TokenHeaderName:  "X-TOKEN",
+		TokenHeaderValue: os.Getenv("TOKEN"),
 	}
 
 	fmt.Println()

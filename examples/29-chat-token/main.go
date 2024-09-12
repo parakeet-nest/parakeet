@@ -7,6 +7,9 @@ no streaming
 package main
 
 import (
+	"os"
+
+	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
 
@@ -15,7 +18,14 @@ import (
 )
 
 func main() {
-	ollamaUrl := "https://ollamak33g.eu.loclx.io"
+	// create a `.env` file with the following content:
+	// TOKEN=your_token
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
+
+	ollamaUrl := "https://ollama.wasm.ninja"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "deepseek-coder"
@@ -30,7 +40,7 @@ func main() {
 
 	options := llm.Options{
 		Temperature: 0.5, // default (0.8)
-		RepeatLastN: 2, // default (64) the default value will "freeze" deepseek-coder
+		RepeatLastN: 2,   // default (64) the default value will "freeze" deepseek-coder
 		//Seed:        0, // default (0)
 		RepeatPenalty: 2.0, // default (1.1)
 		//Stop:        []string{},
@@ -43,9 +53,9 @@ func main() {
 			{Role: "system", Content: systemContent},
 			{Role: "user", Content: userContent},
 		},
-		Options: options,
-		TokenHeaderName: "X-TOKEN",
-		TokenHeaderValue: "john_doe",
+		Options:          options,
+		TokenHeaderName:  "X-TOKEN",
+		TokenHeaderValue: os.Getenv("TOKEN"),
 	}
 
 	answer, err := completion.Chat(ollamaUrl, query)
