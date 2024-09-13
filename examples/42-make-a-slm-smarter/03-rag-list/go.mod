@@ -2,7 +2,7 @@ module 42-mem-rag-list
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.1.8
+require github.com/parakeet-nest/parakeet v0.1.9
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect

@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/other-helpers/">
       
       
-        <link rel="prev" href="../wasm-plugins/">
+        <link rel="prev" href="../protected-endpoint/">
       
       
         <link rel="next" href="../prompt-helpers/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Other Parakeet Helpers - Parakeet</title>
+        <title>🛠️ Other Parakeet Helpers - Parakeet</title>
       
     
     
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Other Parakeet Helpers
+              🛠️ Other Parakeet Helpers
             
           </span>
         </div>
@@ -426,6 +426,26 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Protected endpoint
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -442,7 +462,7 @@
           
   
   <span class="md-ellipsis">
-    Other Parakeet Helpers
+    🛠️ Other Parakeet Helpers
   </span>
   
 
@@ -453,7 +473,7 @@
         
   
   <span class="md-ellipsis">
-    Other Parakeet Helpers
+    🛠️ Other Parakeet Helpers
   </span>
   
 
@@ -492,6 +512,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#get-the-list-of-the-installed-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the list of the installed models
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -511,27 +540,7 @@
         
   
   <span class="md-ellipsis">
-    Prompt Helpers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../protected-endpoint/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Protected endpoint
+    🔨 Prompt Helpers
   </span>
   
 
@@ -684,6 +693,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#get-the-list-of-the-installed-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the list of the installed models
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -707,26 +725,75 @@
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">ShowModelInformation</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">ModelInformation</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p><code>ShowModelInformation</code> retrieves information about a model from the specified URL.</p>
-<p><strong>Parameters</strong>:
-  - url: the base URL of the API.
-  - model: the name of the model to retrieve information for.</p>
-<p><strong>Returns</strong>:
-  - ModelInformation: the information about the model.
-  - int: the HTTP status code of the response.
-  - error: an error if the request fails.</p>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><code>url</code>: the base URL of the API.</li>
+<li><code>model</code>: the name of the model to retrieve information for.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><code>ModelInformation</code>: the information about the model.</li>
+<li><code>int</code>: the HTTP status code of the response.</li>
+<li><code>error</code>: an error if the request fails.</li>
+</ul>
 <p><strong>✋ Remark</strong>: if the model does not exist, it will return an error with a status code of 404.</p>
+<blockquote>
+<p>If you use a protected Ollama endpoint, use this function:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">ShowModelInformationWithToken</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">tokenHeaderName</span><span class="p">,</span><span class="w"> </span><span class="nx">tokenHeaderValue</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">ModelInformation</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</blockquote>
+<!-- split -->
+
 <h2 id="pull-a-model">Pull a model</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">PullModel</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">PullResult</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">PullModel</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">PullResult</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p><code>PullModel</code> sends a POST request to the specified URL to pull a model with the given name.</p>
-<p><strong>Parameters</strong>:
-  - url: The URL to send the request to.
-  - model: The name of the model to pull.</p>
-<p><strong>Returns</strong>:
-  - PullResult: The result of the pull operation.
-  - int: The HTTP status code of the response.
-  - error: An error if the request fails.</p>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><code>url</code>: The URL to send the request to.</li>
+<li><code>model</code>: The name of the model to pull.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><code>PullResult</code>: The result of the pull operation.</li>
+<li><code>int</code>: The HTTP status code of the response.</li>
+<li><code>error</code>: An error if the request fails.</li>
+</ul>
+<blockquote>
+<p>If you use a protected Ollama endpoint, use this function:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">PullModelWithToken</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">tokenHeaderName</span><span class="p">,</span><span class="w"> </span><span class="nx">tokenHeaderValue</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">PullResult</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</blockquote>
 <!-- split -->
+
+<h2 id="get-the-list-of-the-installed-models">Get the list of the installed models</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">GetModelsList</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">ModelList</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p><code>GetModelsList</code> sends a GET request to the specified URL to fetch the list of the installed models.</p>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><code>url</code>: The URL to send the request to.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><code>ModelList</code>: The result of the reques, use the <code>models</code> property to get the list.</li>
+<li><code>int</code>: The HTTP status code of the response.</li>
+<li><code>error</code>: An error if the request fails.</li>
+</ul>
+<blockquote>
+<p>If you use a protected Ollama endpoint, use this function:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nx">llm</span><span class="p">.</span><span class="nx">GetModelsList</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">tokenHeaderName</span><span class="p">,</span><span class="w"> </span><span class="nx">tokenHeaderValue</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">ModelList</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</blockquote>
+<!-- split -->
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find a complete example in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/50-llm-information">examples/50-llm-information</a></li>
+</ul>
+</div>
 
 
 

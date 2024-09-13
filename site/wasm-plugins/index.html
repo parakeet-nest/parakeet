@@ -18,7 +18,7 @@
         <link rel="prev" href="../tools/">
       
       
-        <link rel="next" href="../other-helpers/">
+        <link rel="next" href="../protected-endpoint/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -439,11 +439,31 @@
   
   
     <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Protected endpoint
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../other-helpers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Other Parakeet Helpers
+    🛠️ Other Parakeet Helpers
   </span>
   
 
@@ -463,27 +483,7 @@
         
   
   <span class="md-ellipsis">
-    Prompt Helpers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../protected-endpoint/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Protected endpoint
+    🔨 Prompt Helpers
   </span>
   
 
@@ -632,7 +632,10 @@
 <h1 id="wasm-plugins">Wasm plugins</h1>
 <p>The release <code>0.0.6</code> of Parakeet brings the support of <strong>WebAssembly</strong> thanks to the <strong><a href="https://extism.org/">Extism project</a></strong>. That means you can write your own wasm plugins for Parakeet to add new features (for example, a chunking helper for doing RAG) with various languages (Rust, Go, C, ...).</p>
 <p>Or you can use the Wasm plugins with the "Function Calling" feature, which is implemented in Parakeet.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>You can find an example of "Wasm Function Calling" in <a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/18-call-functions-for-real">examples/18-call-functions-for-real</a> - the wasm plugin is located in the <code>wasm</code> folder and it is built with <strong><a href="https://tinygo.org/">TinyGo</a></strong>.</p>
+</div>
 <p>🚧 more samples to come.</p>
 
 

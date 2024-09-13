@@ -580,11 +580,31 @@
   
   
     <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Protected endpoint
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../other-helpers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Other Parakeet Helpers
+    🛠️ Other Parakeet Helpers
   </span>
   
 
@@ -604,27 +624,7 @@
         
   
   <span class="md-ellipsis">
-    Prompt Helpers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../protected-endpoint/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Protected endpoint
+    🔨 Prompt Helpers
   </span>
   
 
@@ -955,11 +955,15 @@
 <span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nx">store</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">embeddings</span><span class="p">.</span><span class="nx">BboltVectorStore</span><span class="p">{}</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nx">store</span><span class="p">.</span><span class="nx">Initialize</span><span class="p">(</span><span class="s">&quot;../embeddings.db&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div></p>
-<blockquote>
-<p>👀 you will find a complete example in <code>examples/09-embeddings-bbolt</code>
-- <code>examples/09-embeddings-bbolt/create-embeddings</code>: create and populate the vector store
-- <code>examples/09-embeddings-bbolt/use-embeddings</code>: search similarities in the vector store</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find a complete example in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/09-embeddings-bbolt">examples/09-embeddings-bbolt</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/09-embeddings-bbolt/create-embeddings">examples/09-embeddings-bbolt/create-embeddings</a>: create and populate the vector store</li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/09-embeddings-bbolt/use-embeddings">examples/09-embeddings-bbolt/use-embeddings</a>: search similarities in the vector store</li>
+</ul>
+</div>
 <!-- split -->
 
 <h3 id="redis-vector-store">Redis vector store</h3>
@@ -976,11 +980,15 @@
 <a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatalln</span><span class="p">(</span><span class="s">&quot;😡:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
 <a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div></p>
-<blockquote>
-<p>👀 you will find a complete example in <code>examples/32-rag-with-redis</code>
-- <code>examples/32-rag-with-redis/create-embeddings</code>: create and populate the vector store
-- <code>examples/32-rag-with-redis/use-embeddings</code>: search similarities in the vector store</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find a complete example in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/32-rag-with-redis">examples/32-rag-with-redis</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/32-rag-with-redis/create-embeddings">examples/32-rag-with-redis/create-embeddings</a>: create and populate the vector store</li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/32-rag-with-redis/use-embeddings">examples/32-rag-with-redis/use-embeddings</a>: search similarities in the vector store</li>
+</ul>
+</div>
 <h3 id="elasticsearch-vector-store">Elasticsearch vector store</h3>
 <p><strong>Create a store, and open an existing store</strong>:
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
@@ -1007,11 +1015,15 @@
 <a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="s">&quot;chronicles-index&quot;</span><span class="p">,</span>
 <a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="p">)</span>
 </code></pre></div></td></tr></table></div></p>
-<blockquote>
-<p>👀 you will find a complete example in <code>examples/33-rag-with-elastic</code>
-- <code>examples/33-rag-with-elastic/create-embeddings</code>: create and populate the vector store
-- <code>examples/33-rag-with-elastic/use-embeddings</code>: search similarities in the vector store</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find a complete example in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/33-rag-with-elastic">examples/33-rag-with-elastic</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/33-rag-with-elastic/create-embeddings">examples/33-rag-with-elastic/create-embeddings</a>: create and populate the vector store</li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/33-rag-with-elastic/use-embeddings">examples/33-rag-with-elastic/use-embeddings</a>: search similarities in the vector store</li>
+</ul>
+</div>
 <h3 id="additional-data">Additional data</h3>
 <p>you can add additional data to a vector record (embedding):</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>

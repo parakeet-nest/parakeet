@@ -520,11 +520,31 @@
   
   
     <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Protected endpoint
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../other-helpers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Other Parakeet Helpers
+    🛠️ Other Parakeet Helpers
   </span>
   
 
@@ -544,27 +564,7 @@
         
   
   <span class="md-ellipsis">
-    Prompt Helpers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../protected-endpoint/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Protected endpoint
+    🔨 Prompt Helpers
   </span>
   
 
@@ -1169,11 +1169,15 @@
 <span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nx">conversation</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">history</span><span class="p">.</span><span class="nx">BboltMessages</span><span class="p">{}</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nx">conversation</span><span class="p">.</span><span class="nx">Initialize</span><span class="p">(</span><span class="s">&quot;../conversation.db&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<blockquote>
-<p>👀 you will find a complete example in <code>examples/11-chat-conversational-bbolt</code>
-- <code>examples/11-chat-conversational-bbolt/begin</code>: start a conversation and save the history
-- <code>examples/11-chat-conversational-bbolt/resume</code>: load the messages from the history bucket and resue the conversation</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find a complete example in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt">examples/11-chat-conversational-bbolt</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt/begin">examples/11-chat-conversational-bbolt/begin</a>: start a conversation and save the history</li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt/resume">examples/11-chat-conversational-bbolt/resume</a>: load the messages from the history bucket and resue the conversation</li>
+</ul>
+</div>
 
 
 
