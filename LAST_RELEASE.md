@@ -2,6 +2,16 @@
 
 ## Release notes
 
+### v0.1.9 🌭 [hot dog]
+
+#### What's new in v0.1.9?
+
+- `llm.GetModelsList(url string) (ModelList, int, error)`
+- `llm.GetModelsListWithToken(url, tokenHeaderName, tokenHeaderValue string) (ModelList, int, error)`
+- `llm.ShowModelInformationWithToken(url, model , tokenHeaderName, tokenHeaderValue string) (ModelInformation, int, error)`
+- `llm.PullModelWithToken(url, model, tokenHeaderName, tokenHeaderValue string) (PullResult, int, error)`
+
+
 ### v0.1.8 🍔 [hamburger]
 
 #### What's new in v0.1.8?

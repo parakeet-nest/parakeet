@@ -24,9 +24,9 @@ nav:
     - Function Calling (without tools support): function-calling-without-tools-support.md
     - Function Calling with Tools: tools.md
     - WASM Plugins: wasm-plugins.md
-    - Other Parakeet Helpers: other-helpers.md
-    - Prompt Helpers: prompt-helpers.md
     - Protected endpoint: protected-endpoint.md
+    - 🛠️ Other Parakeet Helpers: other-helpers.md
+    - 🔨 Prompt Helpers: prompt-helpers.md
     - Verbose mode: verbose-mode.md
     - OpenAI API support: openaiapi-support.md
     - 🧪 Parakeet Examples & Recipes: parakeet-examples.md

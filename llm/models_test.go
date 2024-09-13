@@ -18,6 +18,7 @@ func TestGetInformationModel(t *testing.T) {
 
 }
 
+
 func TestGetInformationUnknownModel(t *testing.T) {
 	ollamaUrl := "http://localhost:11434"
 

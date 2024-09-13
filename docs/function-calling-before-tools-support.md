@@ -149,4 +149,5 @@ You should get this answer:
 
 > **Remark**: always test the format of the output, even if Mistral is trained for "function calling", the result are not entirely predictable.
 
-Look at this sample for a complete sample: [examples/15-mistral-function-calling](https://github.com/parakeet-nest/parakeet/tree/main/examples/15-mistral-function-calling)
+!!! note
+	Look at this sample for a complete sample: [examples/15-mistral-function-calling](https://github.com/parakeet-nest/parakeet/tree/main/examples/15-mistral-function-calling)
