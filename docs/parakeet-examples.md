@@ -54,4 +54,6 @@
 | 48-testing-models | testing various models |
 | 49-embeddings-memory-openai | create embeddings with OpenAI |
 | 50-llm-information | get information about LLMs |
+| 51-genai-webapp | GenAI web application demo |
+
 
