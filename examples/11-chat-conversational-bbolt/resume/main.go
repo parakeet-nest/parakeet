@@ -13,6 +13,8 @@ import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/history"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 func main() {
@@ -28,11 +30,11 @@ func main() {
 
 	systemContent := `You are an expert with the Star Trek series. use the history of the conversation to answer the question`
 
-
-	options := llm.Options{
-		Temperature: 0.5, // default (0.8)
-		RepeatLastN: 2,   // default (64) the default value will "freeze" deepseek-coder
-	}
+	// Define the options
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.5,
+		option.RepeatLastN: 2,
+	})
 
 	// New question
 	userContent := `Who is his best friend ?`

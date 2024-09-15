@@ -45,6 +45,14 @@ func main() {
     // 1️⃣ Prepare the system content
 	systemContent := `instruction: translate this sentence in docker command - stay brief`
 
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 3.0,
+		option.TopK: 10,
+		option.TopP: 0.5,
+	})
+
     // 2️⃣ Start the conversation
 	for {
 		question := input(smallChatModel)
@@ -59,13 +67,7 @@ func main() {
 				{Role: "system", Content: systemContent},
 				{Role: "user", Content: question},
 			},
-			Options: llm.Options{
-				Temperature:   0.0,
-				RepeatLastN:   64,
-				RepeatPenalty: 2.0,
-				TopK:          10,
-				TopP:          0.5,
-			},
+			Options: options,
 		}
 
 		// 4️⃣ Answer the question (stream mode)

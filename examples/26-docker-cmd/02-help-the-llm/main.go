@@ -9,6 +9,8 @@ import (
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 func main() {
@@ -54,6 +56,14 @@ func main() {
 	</context>
 	`
 
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 3.0,
+		option.TopK: 10,
+		option.TopP: 0.5,
+	})
+
 	for {
 		question := input(smallChatModel)
 		if question == "bye" {
@@ -68,13 +78,7 @@ func main() {
 				{Role: "system", Content: contextContent},
 				{Role: "user", Content: question},
 			},
-			Options: llm.Options{
-				Temperature:   0.0,
-				RepeatLastN:   2,
-				RepeatPenalty: 3.0,
-				TopK:          10,
-				TopP:          0.5,
-			},
+			Options: options,
 		}
 
 		// Answer the question

@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 
 	"fmt"
 	"log"
@@ -22,9 +24,9 @@ func main() {
 
 	userContent := `Write a quick sort algorithm in golang.`
 
-	options := llm.Options{
-		Temperature: 0.0,
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+	})
 
 	query := llm.Query{
 		Model: model,

@@ -17,6 +17,7 @@ nav:
     - 🏠 Home: index.md
     - Generate completion: generate-completion.md
     - Chat completion: chat-completion.md
+    - How to set the Options: set-options.md
     - Embeddings: embeddings.md
     - Chunkers & Splitters: chunkers-and-splitters.md
     - Parsing Markdown: parsing-markdown.md

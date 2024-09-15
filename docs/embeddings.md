@@ -211,6 +211,11 @@ documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 
 fmt.Println("🎉 similarities", len(similarities))
 
+options := llm.SetOptions(map[string]interface{}{
+	option.Temperature: 0.4,
+	option.RepeatLastN: 2,
+})
+
 query := llm.Query{
 	Model: chatModel,
 	Messages: []llm.Message{
@@ -218,10 +223,7 @@ query := llm.Query{
 		{Role: "system", Content: documentsContent},
 		{Role: "user", Content: userContent},
 	},
-	Options: llm.Options{
-		Temperature: 0.4,
-		RepeatLastN: 2,
-	},
+	Options: options,
 	Stream: false,
 }
 

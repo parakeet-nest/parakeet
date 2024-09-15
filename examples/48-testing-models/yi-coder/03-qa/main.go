@@ -4,6 +4,7 @@ import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
 
 	"fmt"
 	"log"
@@ -24,7 +25,7 @@ func main() {
 	You are Yi-Coder, you are exceptionally skilled in programming, coding, and any computer-related issues.
 	`
 
-	allSourceCode, err := content.GetMapOfContentFiles("../../../completion", ".go")
+	allSourceCode, err := content.GetMapOfContentFiles("../../../../completion", ".go")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,9 +38,9 @@ func main() {
 
 	userContent := `Using the above codebase, explain first the ChatWithOpenAIStream function.`
 
-	options := llm.Options{
-		Temperature: 0.0,
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+	})
 
 	query := llm.GenQuery{
 		Model: model,

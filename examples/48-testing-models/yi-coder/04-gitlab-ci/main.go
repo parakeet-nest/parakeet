@@ -4,6 +4,7 @@ import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
 
 	"fmt"
 	"log"
@@ -51,9 +52,9 @@ func main() {
 
     Please provide the explanation in a clear, concise manner, with examples where applicable.`
 
-	options := llm.Options{
-		Temperature: 0.0,
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+	})
 
 	query := llm.GenQuery{
 		Model:   model,

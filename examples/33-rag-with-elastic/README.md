@@ -50,7 +50,8 @@ This example demonstrates how to store embeddings in Elasticsearch and perform a
 ### Create the embeddings
 
 ```bash
-(cd create-embeddings; go run main.go)
+cd create-embeddings
+go run main.go
 ```
 
 ### Check if the embeddings are stored
@@ -68,7 +69,8 @@ You should see the embeddings stored in the index `chronicles-index`:
 ### Perform a vector similarity search
 
 ```bash
-(cd use-embeddings; go run main.go)
+cd use-embeddings
+go run main.go
 ```
 
 [This program](use-embeddings/main.go) completes the prompt: "Tell me more about Keegorg". If everything works, you'll see it answered from embeddings derived from [chronicles.md](create-embeddings/chronicles.md).

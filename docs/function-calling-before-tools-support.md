@@ -96,7 +96,7 @@ options := llm.Options{
     RepeatPenalty: 2.0,
 }
 
-You must set the `Format` to `json` and `Raw` to `true`:
+//You must set the `Format` to `json` and `Raw` to `true`:
 query := llm.Query{
     Model: model,
     Messages: messages,

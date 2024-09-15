@@ -9,6 +9,8 @@ package main
 import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 
 	"fmt"
 	"log"
@@ -28,14 +30,13 @@ func main() {
 	Can you create a "hello world" program in Golang?
 	And, please, be structured with bullet points`
 
-	options := llm.Options{
-		Temperature: 0.5, // default (0.8)
-		RepeatLastN: 2, // default (64) the default value will "freeze" deepseek-coder
-		//Seed:        0, // default (0)
-		RepeatPenalty: 2.0, // default (1.1)
-		//Stop:        []string{},
-		Verbose: true,
-	}
+
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.5,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 2.0,
+		option.Verbose: true,
+	})
 
 	query := llm.Query{
 		Model: model,

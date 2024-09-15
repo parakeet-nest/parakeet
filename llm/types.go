@@ -100,26 +100,97 @@ type AnswerChat struct {
 */
 
 type Options struct {
-	RepeatLastN   int      `json:"repeat_last_n,omitempty"`
-	Temperature   float64  `json:"temperature,omitempty"`
-	Seed          int      `json:"seed,omitempty"`
-	RepeatPenalty float64  `json:"repeat_penalty,omitempty"`
+	RepeatLastN   int      `json:"repeat_last_n"`
+	Temperature   float64  `json:"temperature"`
+	Seed          int      `json:"seed"`
+	RepeatPenalty float64  `json:"repeat_penalty"`
 	Stop          []string `json:"stop,omitempty"`
 
-	NumKeep          int     `json:"num_keep,omitempty"`
-	NumPredict       int     `json:"num_predict,omitempty"`
-	TopK             int     `json:"top_k,omitempty"`
-	TopP             float64 `json:"top_p,omitempty"`
-	TFSZ             float64 `json:"tfs_z,omitempty"`
-	TypicalP         float64 `json:"typical_p,omitempty"`
-	PresencePenalty  float64 `json:"presence_penalty,omitempty"`
-	FrequencyPenalty float64 `json:"frequency_penalty,omitempty"`
-	Mirostat         int     `json:"mirostat,omitempty"`
-	MirostatTau      float64 `json:"mirostat_tau,omitempty"`
-	MirostatEta      float64 `json:"mirostat_eta,omitempty"`
-	PenalizeNewline  bool    `json:"penalize_newline,omitempty"`
+	NumKeep          int     `json:"num_keep"`
+	NumPredict       int     `json:"num_predict"`
+	TopK             int     `json:"top_k"`
+	TopP             float64 `json:"top_p"`
+	TFSZ             float64 `json:"tfs_z"`
+	TypicalP         float64 `json:"typical_p"`
+	PresencePenalty  float64 `json:"presence_penalty"`
+	FrequencyPenalty float64 `json:"frequency_penalty"`
+	Mirostat         int     `json:"mirostat"`
+	MirostatTau      float64 `json:"mirostat_tau"`
+	MirostatEta      float64 `json:"mirostat_eta"`
+	PenalizeNewline  bool    `json:"penalize_newline"`
 
 	Verbose bool
+}
+
+
+
+/* Default Ollama Options
+https://github.com/ollama/ollama/blob/main/api/types.go
+*/
+
+func DefaultOptions() Options {
+	return Options{
+		NumPredict: -1,
+
+		NumKeep:          4,
+		Temperature:      0.8,
+		TopK:             40,
+		TopP:             0.9,
+		TFSZ:             1.0,
+		TypicalP:         1.0,
+		RepeatLastN:      64,
+		RepeatPenalty:    1.1,
+		PresencePenalty:  0.0,
+		FrequencyPenalty: 0.0,
+		Mirostat:         0,
+		MirostatTau:      5.0,
+		MirostatEta:      0.1,
+		PenalizeNewline:  true,
+		Seed:             -1,
+	}
+}
+
+func SetOptions(options map[string]interface{}) Options {
+	defaultOptions := DefaultOptions()
+	for key, value := range options {
+		switch key {
+		case "NumPredict":
+			defaultOptions.NumPredict = value.(int)
+		case "NumKeep":
+			defaultOptions.NumKeep = value.(int)
+		case "Temperature":
+			defaultOptions.Temperature = value.(float64)
+		case "TopK":
+			defaultOptions.TopK = value.(int)
+		case "TopP":
+			defaultOptions.TopP = value.(float64)
+		case "TFSZ":
+			defaultOptions.TFSZ = value.(float64)
+		case "TypicalP":
+			defaultOptions.TypicalP = value.(float64)
+		case "RepeatLastN":
+			defaultOptions.RepeatLastN = value.(int)
+		case "RepeatPenalty":
+			defaultOptions.RepeatPenalty = value.(float64)
+		case "PresencePenalty":
+			defaultOptions.PresencePenalty = value.(float64)
+		case "FrequencyPenalty":
+			defaultOptions.FrequencyPenalty = value.(float64)
+		case "Mirostat":
+			defaultOptions.Mirostat = value.(int)
+		case "MirostatTau":
+			defaultOptions.MirostatTau = value.(float64)
+		case "MirostatEta":
+			defaultOptions.MirostatEta = value.(float64)
+		case "PenalizeNewline":
+			defaultOptions.PenalizeNewline = value.(bool)
+		case "Seed":
+			defaultOptions.Seed = value.(int)
+		case "Verbose":
+			defaultOptions.Verbose = value.(bool)
+		}
+	}
+	return defaultOptions
 }
 
 /* Embeddings */
