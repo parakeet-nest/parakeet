@@ -4,12 +4,12 @@ You can activate the "verbose mode" with all kinds of completions.
 
 
 ```golang
-options := llm.Options{
-    Temperature: 0.5,
-    RepeatLastN: 2,
-    RepeatPenalty: 2.0,
-    Verbose: true,
-}
+options := llm.SetOptions(map[string]interface{}{
+  option.Temperature: 0.5,
+  option.RepeatLastN: 2,
+  option.RepeatPenalty: 2.0,
+  option.Verbose: true,
+})
 ```
 You will get an output like this (with the query and the completion):
 

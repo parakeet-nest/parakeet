@@ -102,6 +102,9 @@ use (
 
 	examples/90-characters
 	examples/91-characters
+
+	examples/99-testing
+	
 	//prompting/01-draft
 	star-trek-tests
 

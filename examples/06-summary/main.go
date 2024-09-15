@@ -6,6 +6,8 @@ import (
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 func main() {
@@ -49,11 +51,12 @@ func main() {
 
 	userContent := `[Brief]`
 
-	options := llm.Options{
-		Temperature:   1.0, // default (0.8)
-		RepeatLastN:   2,   // default (64) the default value will "freeze" deepseek-coder
-		RepeatPenalty: 2.0, // default (1.1)
-	}
+
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 1.0,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 2.0,
+	})
 
 	//fmt.Println(options)
 

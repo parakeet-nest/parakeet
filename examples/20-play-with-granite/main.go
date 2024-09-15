@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/prompt"
 )
@@ -34,10 +35,10 @@ func main() {
 
 	userContent := prompt.Brief(`can you generate an "hello world" program in Golang`)
 
-	options := llm.Options{
-		Temperature: 0.0, // default (0.8)
-		RepeatLastN: 2,   // default (64) the default value will "freeze" deepseek-coder
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.5,
+		option.RepeatLastN: 2,
+	})
 
 	query := llm.Query{
 		Model: model,

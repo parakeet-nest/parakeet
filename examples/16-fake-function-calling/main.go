@@ -8,6 +8,7 @@ package main
 
 import (
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/llm"
 
 	"fmt"
@@ -77,13 +78,12 @@ func main() {
 	search the name of the tool in the list of tools with the Name field
 	`
 	
-	options := llm.Options{
-		Temperature: 0.0,
-		RepeatLastN: 2, 
-		RepeatPenalty: 2.0, 
-		Seed: 123,
-		//Stop:        []string{},
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 2.0,
+		option.Seed: 123,
+	})
 
 	query := llm.Query{
 		Model: model,

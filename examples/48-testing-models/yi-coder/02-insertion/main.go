@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
 
 	"fmt"
 	"log"
@@ -38,9 +39,9 @@ func main() {
 	Is there a problem with this code?
 	`
 
-	options := llm.Options{
-		Temperature: 0.0,
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+	})
 
 	query := llm.Query{
 		Model: model,

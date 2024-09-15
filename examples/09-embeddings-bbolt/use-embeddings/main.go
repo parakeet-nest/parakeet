@@ -7,6 +7,8 @@ import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 func main() {
@@ -64,10 +66,10 @@ func main() {
 			{Role: "system", Content: documentsContent},
 			{Role: "user", Content: userContent},
 		},
-		Options: llm.Options{
-			Temperature: 0.4,
-			RepeatLastN: 2,
-		},
+		Options: llm.SetOptions(map[string]interface{}{
+			option.Temperature: 0.4,
+			option.RepeatLastN: 2,
+		}),
 		Stream: false,
 	}
 

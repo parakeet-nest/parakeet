@@ -10,6 +10,8 @@ import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 var docs = []string{
@@ -112,6 +114,11 @@ func main() {
 
 	documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.4,
+		option.RepeatLastN: 2,
+	})
+
 	query := llm.Query{
 		Model: smallChatModel,
 		Messages: []llm.Message{
@@ -119,10 +126,7 @@ func main() {
 			{Role: "system", Content: documentsContent},
 			{Role: "user", Content: userContent},
 		},
-		Options: llm.Options{
-			Temperature: 0.4,
-			RepeatLastN: 2,
-		},
+		Options: options,
 		TokenHeaderName:  "X-TOKEN",
 		TokenHeaderValue: token,
 	}

@@ -9,6 +9,8 @@ import (
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/content"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 
 )
 
@@ -81,8 +83,13 @@ func main() {
 
 	documentsContent := embeddings.GenerateContentFromSimilarities(similarities)
 
-	//fmt.Println("📙", documentsContent)
-
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 2.0,
+		option.TopK: 10,
+		option.TopP: 0.5,
+	})
 
 	query := llm.Query{
 		Model: smallChatModel,
@@ -91,13 +98,7 @@ func main() {
 			{Role: "system", Content: documentsContent},
 			{Role: "user", Content: userContent},
 		},
-		Options: llm.Options{
-			Temperature: 0.0,
-			RepeatLastN: 2,
-			RepeatPenalty: 2.0,
-			TopK: 10,
-			TopP: 0.5,
-		},
+		Options: options,
 	}
 
 	fmt.Println("")

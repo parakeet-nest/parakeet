@@ -2,6 +2,76 @@
 
 ## Release notes
 
+### v0.2.0 🍕 [pizza]
+
+#### What's new in v0.2.0?
+
+##### New way to set the options
+
+**Problem**: 
+The `omitempty` tag prevents a field from being serialised if its value is the zero value for the field's type (e.g., 0.0 for float64).
+
+That means when `Temperature` equals `0.0`, the field is not serialised (then Ollama will use the `Temperature` default value, which equals `0.8`).
+
+The problem will happen for every value equal to `0` or `0.0`
+
+**Solution(s)**:
+
+###### Set all the fields:
+
+```golang
+options := Options{
+		NumPredict: -1,
+
+		NumKeep:          4,
+		Temperature:      0.8,
+		TopK:             40,
+		TopP:             0.9,
+		TFSZ:             1.0,
+		TypicalP:         1.0,
+		RepeatLastN:      64,
+		RepeatPenalty:    1.1,
+		PresencePenalty:  0.0,
+		FrequencyPenalty: 0.0,
+		Mirostat:         0,
+		MirostatTau:      5.0,
+		MirostatEta:      0.1,
+		PenalizeNewline:  true,
+		Seed:             -1,
+}
+```
+
+
+###### Default Options + overriding:
+
+```golang
+options := llm.DefaultOptions()
+// override the default value
+options.Temperature = 0.5
+```
+
+###### Use the `SetOptions` helper:
+
+Define only the fields you want to override:
+```golang
+options := llm.SetOptions(map[string]interface{}{
+  "Temperature": 0.5,
+})
+```
+The `SetOptions` helper will set the default values for the fields not defined in the map.
+
+
+Or use the `SetOptions` helper with the `option` enums:
+```golang
+options := llm.SetOptions(map[string]interface{}{
+  option.Temperature: 0.5,
+  option.RepeatLastN: 2,
+})
+```
+
+**Note**: the results should be more accurate.
+
+
 ### v0.1.9 🌭 [hot dog]
 
 #### What's new in v0.1.9?

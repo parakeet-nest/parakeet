@@ -12,6 +12,8 @@ import (
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 func main() {
@@ -63,11 +65,12 @@ func main() {
 
 	userContent := `[In Layman’s Terms] Who is Philippe Charrière and who is his best friend?`
 
-	options := llm.Options{
-		Temperature: 0.5, // default (0.8)
-		RepeatLastN: 2, // default (64) the default value will "freeze" deepseek-coder
-		RepeatPenalty: 2.0, // default (1.1)
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.5,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 2.0,
+		//option.Verbose: true,
+	})
 
 	//fmt.Println(options)
 

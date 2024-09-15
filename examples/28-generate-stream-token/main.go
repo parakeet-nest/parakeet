@@ -14,6 +14,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 )
 
 func main() {
@@ -29,9 +32,9 @@ func main() {
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "tinydolphin"
 
-	options := llm.Options{
-		Temperature: 0.5, // default (0.8)
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.5,
+	})
 
 	firstQuestion := llm.GenQuery{
 		Model:            model,

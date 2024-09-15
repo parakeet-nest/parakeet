@@ -8,6 +8,7 @@ package main
 import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
 
 	"fmt"
 	"log"
@@ -19,10 +20,17 @@ func main() {
 	//ollamaUrl := "http://host.docker.internal:11434"
 	model := "tinydolphin"
 
-	options := llm.Options{
-		Temperature: 0.5, // default (0.8)
-		Stop:        []string{},
-	}
+
+
+	// Define the options
+	//options := llm.DefaultOptions()
+	//options.Temperature = 0.5
+	// or:
+
+	options := llm.SetOptions(map[string]interface{}{
+	  	option.Temperature: 0.5,
+	})
+
 
 	firstQuestion := llm.GenQuery{
 		Model: model,

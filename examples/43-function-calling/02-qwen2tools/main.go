@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
 
 	"fmt"
 	"log"
@@ -60,11 +61,11 @@ func main() {
 		{Role: "user", Content: `say "hello" to Bob`},
 	}
 
-	options := llm.Options{
-		Temperature:   0.0,
-		RepeatLastN:   2,
-		RepeatPenalty: 2.0,
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.0,
+		option.RepeatLastN: 2,
+		option.RepeatPenalty: 2.0,
+	})
 
 	query := llm.Query{
 		Model:    model,

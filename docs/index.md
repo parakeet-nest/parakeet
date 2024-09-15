@@ -29,6 +29,8 @@ package main
 import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
+	"github.com/parakeet-nest/parakeet/enums/option"
+
 	"fmt"
 	"log"
 )
@@ -37,9 +39,9 @@ func main() {
 	ollamaUrl := "http://localhost:11434"
 	model := "tinydolphin"
 
-	options := llm.Options{
-		Temperature: 0.5,
-	}
+	options := llm.SetOptions(map[string]interface{}{
+		option.Temperature: 0.5,
+	})
 
 	question := llm.GenQuery{
 		Model: model,
@@ -55,3 +57,4 @@ func main() {
 }
 ```
 <!-- split -->
+
