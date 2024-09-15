@@ -71,6 +71,10 @@ options := llm.SetOptions(map[string]interface{}{
 
 **Note**: the results should be more accurate.
 
+##### New sample.
+
+- `51-genai-webapp`: GenAI web application demo
+
 
 ### v0.1.9 🌭 [hot dog]
 

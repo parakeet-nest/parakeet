@@ -18,7 +18,7 @@
         <link rel="prev" href="../generate-completion/">
       
       
-        <link rel="next" href="../embeddings/">
+        <link rel="next" href="../set-options/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -369,6 +369,26 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-options/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to set the Options
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -815,50 +835,54 @@
 <span class="normal"><a href="#__codelineno-0-41">41</a></span>
 <span class="normal"><a href="#__codelineno-0-42">42</a></span>
 <span class="normal"><a href="#__codelineno-0-43">43</a></span>
-<span class="normal"><a href="#__codelineno-0-44">44</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="s">&quot;github.com/parakeet-nest/parakeet/completion&quot;</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="s">&quot;github.com/parakeet-nest/parakeet/llm&quot;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="s">&quot;fmt&quot;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="s">&quot;log&quot;</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="p">)</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="nx">ollamaUrl</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;http://localhost:11434&quot;</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="nx">model</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;deepseek-coder&quot;</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="nx">systemContent</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`You are an expert in computer programming.</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="s">    Please make friendly answer for the noobs.</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="s">    Add source code examples if you can.`</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="nx">userContent</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`I need a clear explanation regarding the following question:</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="s">    Can you create a &quot;hello world&quot; program in Golang?</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="s">    And, please, be structured with bullet points`</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="nx">options</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">        </span><span class="nx">Temperature</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">        </span><span class="nx">RepeatLastN</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">        </span><span class="nx">RepeatPenalty</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="nx">query</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Query</span><span class="p">{</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">        </span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">        </span><span class="nx">Messages</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Message</span><span class="p">{</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">            </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">systemContent</span><span class="p">},</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">            </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">userContent</span><span class="p">},</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">        </span><span class="p">},</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="w">        </span><span class="nx">Options</span><span class="p">:</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">        </span><span class="nx">Stream</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38"></a>
-<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="w">    </span><span class="nx">answer</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">completion</span><span class="p">.</span><span class="nx">Chat</span><span class="p">(</span><span class="nx">ollamaUrl</span><span class="p">,</span><span class="w"> </span><span class="nx">query</span><span class="p">)</span>
-<a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;😡:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-43" name="__codelineno-0-43"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
-<a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="s">&quot;github.com/parakeet-nest/parakeet/enums/option&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="s">&quot;log&quot;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="nx">ollamaUrl</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;http://localhost:11434&quot;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="nx">model</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;deepseek-coder&quot;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="nx">systemContent</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`You are an expert in computer programming.</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="s">    Please make friendly answer for the noobs.</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="s">    Add source code examples if you can.`</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">    </span><span class="nx">userContent</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`I need a clear explanation regarding the following question:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="s">    Can you create a &quot;hello world&quot; program in Golang?</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="s">    And, please, be structured with bullet points`</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">    </span><span class="nx">options</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">SetOptions</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">        </span><span class="nx">option</span><span class="p">.</span><span class="nx">Temperature</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">        </span><span class="nx">option</span><span class="p">.</span><span class="nx">RepeatLastN</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">        </span><span class="nx">option</span><span class="p">.</span><span class="nx">RepeatPenalty</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="p">})</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">    </span><span class="nx">query</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Query</span><span class="p">{</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">        </span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">        </span><span class="nx">Messages</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Message</span><span class="p">{</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">            </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">systemContent</span><span class="p">},</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="w">            </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">userContent</span><span class="p">},</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="w">        </span><span class="nx">Options</span><span class="p">:</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">        </span><span class="nx">Stream</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">    </span><span class="nx">answer</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">completion</span><span class="p">.</span><span class="nx">Chat</span><span class="p">(</span><span class="nx">ollamaUrl</span><span class="p">,</span><span class="w"> </span><span class="nx">query</span><span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a><span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;😡:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <p>✋ <strong>To keep a conversational memory</strong> for the next chat completion, update the list of messages with the previous question and answer.</p>
 <!-- split -->

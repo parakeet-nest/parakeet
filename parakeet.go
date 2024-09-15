@@ -1,4 +1,4 @@
 package parakeet
 
-var Version = "v0.1.9"
-var About = "🦜 Parakeet v0.1.9 🌭 [hot dog]"
+var Version = "v0.2.0"
+var About = "🦜 Parakeet v0.2.0 🍕 [pizza]"

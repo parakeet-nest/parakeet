@@ -12,13 +12,13 @@
         <meta name="author" content="Philippe Charrière (@k33g)">
       
       
-        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/prompt-helpers/">
+        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/set-options/">
       
       
-        <link rel="prev" href="../other-helpers/">
+        <link rel="prev" href="../chat-completion/">
       
       
-        <link rel="next" href="../verbose-mode/">
+        <link rel="next" href="../embeddings/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>🔨 Prompt Helpers - Parakeet</title>
+        <title>How to set the Options - Parakeet</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#prompt-helpers" class="md-skip">
+        <a href="#how-to-set-the-options-of-the-query" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🔨 Prompt Helpers
+              How to set the Options
             
           </span>
         </div>
@@ -286,10 +286,19 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../set-options/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -298,6 +307,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -486,30 +496,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    🔨 Prompt Helpers
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../prompt-helpers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -518,44 +508,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#meta-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Meta prompts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#meta-prompts-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Meta prompts methods
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -680,32 +632,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#meta-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Meta prompts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#meta-prompts-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Meta prompts methods
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -722,91 +648,39 @@
   
 
 
-<!-- TOPIC: Prompt helpers and meta prompts SUMMARY: A collection of special instructions, known as meta-prompts, to guide language models in generating specific kinds of responses. KEYWORDS: Meta prompts, prompt helpers, AI, LLM, natural language processing, NLP -->
-<h1 id="prompt-helpers">Prompt helpers</h1>
-<h2 id="meta-prompts">Meta prompts</h2>
-<blockquote>
-<p>package: <code>prompt</code></p>
-</blockquote>
-<p>Meta-prompts are special instructions embedded within a prompt to guide a language model in generating a specific kind of response.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Meta-Prompt</th>
-<th style="text-align: left;">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">[Brief] What is AI?</td>
-<td style="text-align: left;">For a concise answer</td>
-</tr>
-<tr>
-<td style="text-align: left;">[In Layman’s Terms] Explain LLM</td>
-<td style="text-align: left;">For a simplified explanation</td>
-</tr>
-<tr>
-<td style="text-align: left;">[As a Story] Describe the evolution of cars</td>
-<td style="text-align: left;">To get the information in story form</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Pros and Cons] Is AI useful?</td>
-<td style="text-align: left;">For a balanced view with advantages and disadvantages</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Step-by-Step] How to do a smart prompt?</td>
-<td style="text-align: left;">For a detailed, step-by-step guide</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Factual] What is the best pizza of the world?</td>
-<td style="text-align: left;">For a straightforward, factual answer</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Opinion] What is the best pizza of the world?</td>
-<td style="text-align: left;">To get an opinion-based answer</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Comparison] Compare pineapple pizza to pepperoni pizza</td>
-<td style="text-align: left;">For a comparative analysis</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Timeline] What are the key milestones to develop a WebApp?</td>
-<td style="text-align: left;">For a chronological account of key events</td>
-</tr>
-<tr>
-<td style="text-align: left;">[As a Poem] How to cook a cake?</td>
-<td style="text-align: left;">For a poetic description</td>
-</tr>
-<tr>
-<td style="text-align: left;">[For Kids] How to cook a cake?</td>
-<td style="text-align: left;">For a child-friendly explanation</td>
-</tr>
-<tr>
-<td style="text-align: left;">[Advantages Only] What are the benefits of AI?</td>
-<td style="text-align: left;">To get a list of only the advantages</td>
-</tr>
-<tr>
-<td style="text-align: left;">[As a Recipe] How to cook a cake?</td>
-<td style="text-align: left;">To receive the information in the form of a recipe</td>
-</tr>
-</tbody>
-</table>
-<h2 id="meta-prompts-methods">Meta prompts methods</h2>
-<ul>
-<li><code>prompt.Brief(s string) string</code></li>
-<li><code>prompt.InLaymansTerms(s string) string</code></li>
-<li><code>prompt.AsAStory(s string) string</code></li>
-<li><code>prompt.ProsAndCons(s string) string</code></li>
-<li><code>prompt.StepByStep(s string) string</code></li>
-<li><code>prompt.Factual(s string) string</code></li>
-<li><code>prompt.Opinion(s string) string</code></li>
-<li><code>prompt.Comparison(s string) string</code></li>
-<li><code>prompt.Timeline(s string) string</code></li>
-<li><code>prompt.AsAPoem(s string) string</code></li>
-<li><code>prompt.ForKids(s string) string</code></li>
-<li><code>prompt.AdvantagesOnly(s string) string</code></li>
-<li><code>prompt.AsARecipe(s string) string</code></li>
-</ul>
+<h1 id="how-to-set-the-options-of-the-query">How to set the Options of the query</h1>
+<p>The best way to set the options of the query is to start from the default Ollama options and override the fields you want to change.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nx">options</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">()</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1">// override the default value</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nx">options</span><span class="p">.</span><span class="nx">Temperature</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span>
+</code></pre></div></td></tr></table></div>
+<p>Or you can use the <code>SetOptions</code> helper. This helper will set the default values for the fields not defined in the map:</p>
+<p>Define only the fields you want to override:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nx">options</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">SetOptions</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="s">&quot;Temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="p">})</span>
+</code></pre></div></td></tr></table></div></p>
+<p>Or use the <code>SetOptions</code> helper with the <code>option</code> enums:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nx">options</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">SetOptions</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nx">option</span><span class="p">.</span><span class="nx">Temperature</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nx">option</span><span class="p">.</span><span class="nx">RepeatLastN</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="p">})</span>
+</code></pre></div></td></tr></table></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before, the JSON serialization of the <code>Options</code> used the <code>omitempty</code> tag.</p>
+<p>The <code>omitempty</code> tag prevents a field from being serialised if its value is the zero value for the field's type (e.g., 0.0 for float64).</p>
+<p>That means when <code>Temperature</code> equals <code>0.0</code>, the field is not serialised (then Ollama will use the <code>Temperature</code> default value, which equals <code>0.8</code>).</p>
+<p>The problem will happen for every value equal to <code>0</code> or <code>0.0</code></p>
+<p>Since now, the <code>omitempty</code> tag is removed from the <code>Options</code> struct.</p>
+</div>
 
 
 

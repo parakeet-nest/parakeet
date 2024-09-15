@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/embeddings/">
       
       
-        <link rel="prev" href="../chat-completion/">
+        <link rel="prev" href="../set-options/">
       
       
         <link rel="next" href="../chunkers-and-splitters/">
@@ -274,6 +274,26 @@
   
   <span class="md-ellipsis">
     Chat completion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-options/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to set the Options
   </span>
   
 
@@ -1179,7 +1199,9 @@
 <span class="normal"><a href="#__codelineno-9-61">61</a></span>
 <span class="normal"><a href="#__codelineno-9-62">62</a></span>
 <span class="normal"><a href="#__codelineno-9-63">63</a></span>
-<span class="normal"><a href="#__codelineno-9-64">64</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nx">ollamaUrl</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;http://localhost:11434&quot;</span>
+<span class="normal"><a href="#__codelineno-9-64">64</a></span>
+<span class="normal"><a href="#__codelineno-9-65">65</a></span>
+<span class="normal"><a href="#__codelineno-9-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nx">ollamaUrl</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;http://localhost:11434&quot;</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nx">embeddingsModel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;all-minilm&quot;</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="nx">chatModel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;magicoder:latest&quot;</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4"></a>
@@ -1216,33 +1238,35 @@
 <a id="__codelineno-9-35" name="__codelineno-9-35"></a>
 <a id="__codelineno-9-36" name="__codelineno-9-36"></a><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;🎉 similarities&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">similarities</span><span class="p">))</span>
 <a id="__codelineno-9-37" name="__codelineno-9-37"></a>
-<a id="__codelineno-9-38" name="__codelineno-9-38"></a><span class="nx">query</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Query</span><span class="p">{</span>
-<a id="__codelineno-9-39" name="__codelineno-9-39"></a><span class="w">    </span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">chatModel</span><span class="p">,</span>
-<a id="__codelineno-9-40" name="__codelineno-9-40"></a><span class="w">    </span><span class="nx">Messages</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Message</span><span class="p">{</span>
-<a id="__codelineno-9-41" name="__codelineno-9-41"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">systemContent</span><span class="p">},</span>
-<a id="__codelineno-9-42" name="__codelineno-9-42"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">documentsContent</span><span class="p">},</span>
-<a id="__codelineno-9-43" name="__codelineno-9-43"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">userContent</span><span class="p">},</span>
-<a id="__codelineno-9-44" name="__codelineno-9-44"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-9-45" name="__codelineno-9-45"></a><span class="w">    </span><span class="nx">Options</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
-<a id="__codelineno-9-46" name="__codelineno-9-46"></a><span class="w">        </span><span class="nx">Temperature</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
-<a id="__codelineno-9-47" name="__codelineno-9-47"></a><span class="w">        </span><span class="nx">RepeatLastN</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<a id="__codelineno-9-48" name="__codelineno-9-48"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-9-49" name="__codelineno-9-49"></a><span class="w">    </span><span class="nx">Stream</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-9-50" name="__codelineno-9-50"></a><span class="p">}</span>
-<a id="__codelineno-9-51" name="__codelineno-9-51"></a>
-<a id="__codelineno-9-52" name="__codelineno-9-52"></a><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-53" name="__codelineno-9-53"></a><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;🤖 answer:&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-54" name="__codelineno-9-54"></a>
-<a id="__codelineno-9-55" name="__codelineno-9-55"></a><span class="c1">// Answer the question</span>
-<a id="__codelineno-9-56" name="__codelineno-9-56"></a><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">completion</span><span class="p">.</span><span class="nx">ChatStream</span><span class="p">(</span><span class="nx">ollamaUrl</span><span class="p">,</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span>
-<a id="__codelineno-9-57" name="__codelineno-9-57"></a><span class="w">    </span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-58" name="__codelineno-9-58"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
-<a id="__codelineno-9-59" name="__codelineno-9-59"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
-<a id="__codelineno-9-60" name="__codelineno-9-60"></a><span class="w">    </span><span class="p">})</span>
-<a id="__codelineno-9-61" name="__codelineno-9-61"></a>
-<a id="__codelineno-9-62" name="__codelineno-9-62"></a><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-63" name="__codelineno-9-63"></a><span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;😡:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
-<a id="__codelineno-9-64" name="__codelineno-9-64"></a><span class="p">}</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38"></a><span class="nx">options</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">SetOptions</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">Temperature</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">RepeatLastN</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41"></a><span class="p">})</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42"></a>
+<a id="__codelineno-9-43" name="__codelineno-9-43"></a><span class="nx">query</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Query</span><span class="p">{</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44"></a><span class="w">    </span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">chatModel</span><span class="p">,</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45"></a><span class="w">    </span><span class="nx">Messages</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Message</span><span class="p">{</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">systemContent</span><span class="p">},</span>
+<a id="__codelineno-9-47" name="__codelineno-9-47"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">documentsContent</span><span class="p">},</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">userContent</span><span class="p">},</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50"></a><span class="w">    </span><span class="nx">Options</span><span class="p">:</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51"></a><span class="w">    </span><span class="nx">Stream</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-9-52" name="__codelineno-9-52"></a><span class="p">}</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53"></a>
+<a id="__codelineno-9-54" name="__codelineno-9-54"></a><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55"></a><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;🤖 answer:&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56"></a>
+<a id="__codelineno-9-57" name="__codelineno-9-57"></a><span class="c1">// Answer the question</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58"></a><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">completion</span><span class="p">.</span><span class="nx">ChatStream</span><span class="p">(</span><span class="nx">ollamaUrl</span><span class="p">,</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59"></a><span class="w">    </span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-60" name="__codelineno-9-60"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-9-61" name="__codelineno-9-61"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-9-62" name="__codelineno-9-62"></a><span class="w">    </span><span class="p">})</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63"></a>
+<a id="__codelineno-9-64" name="__codelineno-9-64"></a><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65"></a><span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;😡:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-9-66" name="__codelineno-9-66"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="other-similarity-search-methods">Other similarity search methods</h3>
 <p><code>SearchMaxSimilarity</code> searches for the vector record in the <code>BboltVectorStore</code> that has the maximum <strong>cosine distance similarity</strong> to the given <code>embeddingFromQuestion</code>:
