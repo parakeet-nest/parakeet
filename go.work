@@ -101,6 +101,9 @@ use (
 
 	./examples/51-genai-webapp
 
+	./examples/52-constraints
+	./examples/53-constraints
+
 
 	examples/90-characters
 	examples/91-characters
