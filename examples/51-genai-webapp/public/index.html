@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>GoLang GenAI Stack</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="utf-8">
+  
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script type="module" src="js/beer.min.js"></script>
+    <script type="module" src="js/material-dynamic-colors.min.js"></script>
+
+    <script src="./js/markdown-it.min.js"></script>
+
+    <link rel="stylesheet" href="css/beer.min.css">
+
+    <script src="js/htmx.min.js"></script>
+    <script src="js/client-side-templates.js"></script>
+    <script src="js/mustache.js"></script>
+
+    <style>
+        :root,
+        body.light {
+            --primary:#006493;
+            --on-primary:#ffffff;
+            --primary-container:#cae6ff;
+            --on-primary-container:#001e30;
+            --secondary:#50606e;
+            --on-secondary:#ffffff;
+            --secondary-container:#d3e5f5;
+            --on-secondary-container:#0c1d29;
+            --tertiary:#65587b;
+            --on-tertiary:#ffffff;
+            --tertiary-container:#ebddff;
+            --on-tertiary-container:#201634;
+            --error:#ba1a1a;
+            --on-error:#ffffff;
+            --error-container:#ffdad6;
+            --on-error-container:#410002;
+            --background:#fcfcff;
+            --on-background:#1a1c1e;
+            --surface:#f9f9fc;
+            --on-surface:#1a1c1e;
+            --surface-variant:#dde3ea;
+            --on-surface-variant:#41474d;
+            --outline:#72787e;
+            --outline-variant:#c1c7ce;
+            --shadow:#000000;
+            --scrim:#000000;
+            --inverse-surface:#2e3133;
+            --inverse-on-surface:#f0f0f3;
+            --inverse-primary:#8dcdff;
+            --surface-dim:#d9dadd;
+            --surface-bright:#f9f9fc;
+            --surface-container-lowest:#ffffff;
+            --surface-container-low:#f3f3f6;
+            --surface-container:#edeef1;
+            --surface-container-high:#e8e8eb;
+            --surface-container-highest:#e2e2e5;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- content -->
+    <main class="responsive" id="content">
+
+        <h6>Model Prompt Chat Completion + Settings</h6>
+
+
+        <fieldset>
+            <!-- Display the current running model -->
+            <legend>
+                Demo
+            </legend>
+        
+            <!--
+            <legend 
+                hx-get="/model" 
+                hx-trigger="load"
+                hx-target="#model">
+                Demo with <span id="model"></span>
+            </legend>
+            -->
+            <!--
+            <div class="field border label">
+                <input type="text" id="model"/>
+                <label>model</label>
+            </div>
+            -->
+            <!-- -->
+            <div hx-ext="client-side-templates">
+                <div class="field border label" hx-get="/api/models" hx-swap="innerHTML" hx-target="#simple-models-list" hx-trigger="load" mustache-array-template="simple-models-list-tpl">
+                    <select id="simple-models-list">
+                    </select>
+                    <label>Select a model</label>
+                    <i>arrow_drop_down</i>
+                </div>
+        
+                <template id="simple-models-list-tpl">
+                    {{#data}}
+                    <option value="{{ name }}">{{ name }}</option>
+                    {{/data}}
+                </template>
+            </div>
+        
+            <div class="field border label textarea">
+                <textarea id="system-content">
+                </textarea>
+                <label>System</label>
+                <span class="helper">Type your instructions above ☝️</span>
+            </div>
+        
+        
+            <div class="field border label textarea extra">
+              <textarea id="user-content">
+              </textarea>
+              <label>User Prompt</label>
+              <span class="helper">Type your question above ☝️</span>
+            </div>
+        
+            <!-- 
+                  <input type="number" id="quantity" name="quantity" min="0" max="100" step="0.1" value="30">
+        class="no-border"
+            -->
+        
+            <fieldset >
+                <div>
+                    <nav>
+                        <div class="max">
+                            <div class="field border label max">
+                              <input type="number" name="temperature" min="0.0" max="2.0" step="0.1" value="0.0">
+                              <label>Temperature</label>
+                            </div>
+                          </div>
+        
+                          <div class="max">
+                            <div class="field border label max">
+                                <input type="number" name="repeatLastN" min="0" max="80" step="1" value="2">
+                                <label>RepeatLastN</label>
+                            </div>
+                          </div>
+        
+                          <div class="max">
+                            <div class="field border label max">
+                                <input type="number" name="repeatPenalty" min="0" max="80" step="1" value="3">
+                              <label>RepeatPenalty</label>
+                            </div>
+                          </div>
+        
+                    </nav>
+                </div>
+            </fieldset>
+        
+            <!-- ***** -->
+            
+            <!--Prompt Form -->
+            <div class="field border label">
+                <button class="small-round" hx-trigger="click[prompt()]">
+                    <i>home</i>
+                    <span>Send Prompt</span>
+                </button>
+        
+                <button class="small-round" hx-trigger="click[stop()]">
+                    <i>stop</i>
+                    <span>Stop</span>
+                </button>
+        
+                <button class="small-round" hx-trigger="click[clear()]">
+                    <i>clear</i>
+                    <span>Clear the answer</span>
+                </button>
+            </div>
+            <!-- ***** -->
+        </fieldset>
+        
+        <!-- Generation completion result -->
+        <div class="field border label">
+            <div id="txt-response"></div>
+        </div>
+        <!-- ***** -->
+
+    </main>
+    
+    <script>
+
+        document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+            if (evt.detail.target.id === "content") {
+                console.log("👋 content loaded:", evt.srcElement.baseURI)
+            }
+        })
+
+        window.aborter = new AbortController()
+
+        document.getElementById('system-content').value = 'You are an expert in Golang.'
+
+        document.getElementById('user-content').value = `Create a tutorial for the noobs.
+        - I want an hello world program.
+        - Add a Human structure with a name an an age fields.
+        - Add a Greeting method to the Human structure.
+        - Use it in the main method. 
+        `
+
+        async function prompt() {
+            let responseText=""
+
+            try {
+                const systemContent = document.getElementById('system-content').value;
+                const userContent = document.getElementById('user-content').value
+                const selectedModel = document.getElementById('simple-models-list').value
+
+                let temperature = document.getElementsByName("temperature")[0].value
+                let repeatLastN = document.getElementsByName("repeatLastN")[0].value
+                let repeatPenalty = document.getElementsByName("repeatPenalty")[0].value
+                
+                //console.log('Model:', model);
+                console.log('SelectedModel:', selectedModel)
+                console.log('SystemContent:', systemContent)
+                console.log('UserContent:', userContent);
+
+                const response = await fetch("/api/settings/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json;charset=utf-8",
+                    },
+                    body: JSON.stringify({
+                        system: systemContent,
+                        user: userContent,
+                        model: selectedModel,
+                        temperature: temperature,
+                        repeatLastN: repeatLastN,
+                        repeatPenalty: repeatPenalty
+                    }),
+                    signal: window.aborter.signal
+                })
+
+                const reader = response.body.getReader()
+
+                while (true) {
+                    const { done, value } = await reader.read()
+                        
+                    if (done) {
+                        responseText = responseText + "\n"
+                        changeResponseContent(markdownit().render(responseText))
+                        return
+                    }
+                    // Otherwise do something here to process current chunk
+                    const decodedValue = new TextDecoder().decode(value)
+                    console.log(decodedValue)
+                    responseText = responseText + decodedValue
+                    changeResponseContent(markdownit().render(responseText))
+
+                }
+
+            } catch(error) {
+                if (error.name === 'AbortError') {
+                    console.log("✋", "Fetch request aborted")
+                    //txtPrompt.value = ""
+                    window.aborter = new AbortController()
+
+                    try {
+                        const response = await fetch("/api/completion/cancel", {
+                            method: "DELETE",
+                        })
+                        console.log(response)
+                    } catch(error) {
+                        console.log("😡", error)
+                    }
+
+                } else {
+                    console.log("😡", error)
+                }
+            }            
+        }
+
+        function stop() {
+            window.aborter.abort()
+        }
+        function clear() {
+            changeResponseContent("")
+        }
+
+        function changeResponseContent(message) {
+            const responseDiv = document.getElementById('txt-response');
+            responseDiv.innerHTML = message;
+        }
+
+
+    </script>
+</body>
+</html>
