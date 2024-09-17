@@ -103,6 +103,7 @@ use (
 
 	./examples/52-constraints
 	./examples/53-constraints
+	./examples/54-constraints-webapp
 
 
 	examples/90-characters

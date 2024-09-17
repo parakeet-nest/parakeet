@@ -94,7 +94,7 @@ func canISpeakAboutThis(ollamaUrl, model, question string) bool {
 
 }
 
- func askMeAnything(ollamaUrl, model, question string) {
+func askMeAnything(ollamaUrl, model, question string) {
 
 	systemContent := `You are an expert in computer programming and container orchestrators. 
 		Here are some important instructions and constraints for your responses:

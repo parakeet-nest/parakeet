@@ -1,8 +1,3 @@
-/*
-Topic: Parakeet
-Generate a chat completion with Ollama and parakeet
-The output is streamed
-*/
 
 package main
 
@@ -187,6 +182,5 @@ func main() {
 	if canISpeakAboutThis(question) {
 		askMeAnything(question)
 	}
-
 
 }

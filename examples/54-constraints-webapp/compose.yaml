@@ -1,0 +1,56 @@
+services:
+
+  ollama:
+    profiles: [container]
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - 11434:11434
+
+  download-llm-qwen2-1-5b:
+    profiles: [container]
+    image: curlimages/curl:8.6.0
+    entrypoint: ["curl", "ollama:11434/api/pull", "-d", "{\"name\": \"qwen2:1.5b\"}"]
+    depends_on:
+      ollama:
+        condition: service_started        
+
+  download-llm-tinydolphin:
+    profiles: [container]
+    image: curlimages/curl:8.6.0
+    entrypoint: ["curl", "ollama:11434/api/pull", "-d", "{\"name\": \"tinydolphin\"}"]
+    depends_on:
+      ollama:
+        condition: service_started
+
+  download-llm-phi3-mini:
+    profiles: [container]
+    image: curlimages/curl:8.6.0
+    entrypoint: ["curl", "ollama:11434/api/pull", "-d", "{\"name\": \"phi3:mini\"}"]
+    depends_on:
+      ollama:
+        condition: service_started
+
+  download-llm-gemma2-2b:
+    profiles: [container]
+    image: curlimages/curl:8.6.0
+    entrypoint: ["curl", "ollama:11434/api/pull", "-d", "{\"name\": \"gemma2:2b\"}"]
+    depends_on:
+      ollama:
+        condition: service_started
+
+  web-app:
+    profiles: [container, webapp]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - HTTP_PORT=${HTTP_PORT}
+      # host.docker.internal: listening the host from the container
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+
+volumes:
+  ollama-data:
