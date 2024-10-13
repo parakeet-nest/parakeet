@@ -12,13 +12,13 @@
         <meta name="author" content="Philippe Charrière (@k33g)">
       
       
-        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/protected-endpoint/">
+        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/contextual-retrieval/">
       
       
-        <link rel="prev" href="../wasm-plugins/">
+        <link rel="prev" href="../chunkers-and-splitters/">
       
       
-        <link rel="next" href="../other-helpers/">
+        <link rel="next" href="../parsing-markdown/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Protected endpoint - Parakeet</title>
+        <title>📝🔎 Contextual Retrieval - Parakeet</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#protected-endpoint" class="md-skip">
+        <a href="#contextual-retrieval" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Protected endpoint
+              📝🔎 Contextual Retrieval
             
           </span>
         </div>
@@ -346,10 +346,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../contextual-retrieval/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    📝🔎 Contextual Retrieval
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -358,6 +378,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#createchunkcontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      CreateChunkContext
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#createchunkcontextwithprompttemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      CreateChunkContextWithPromptTemplate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CreateChunkContextWithPromptTemplate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -466,19 +539,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -487,7 +551,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -692,6 +755,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#createchunkcontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      CreateChunkContext
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#createchunkcontextwithprompttemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      CreateChunkContextWithPromptTemplate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CreateChunkContextWithPromptTemplate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -708,28 +812,67 @@
   
 
 
-<h1 id="protected-endpoint">Protected endpoint</h1>
-<p>If your Ollama endpoint is protected with a header token, you can specify the token like this:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nx">query</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Query</span><span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nx">Messages</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Message</span><span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">systemContent</span><span class="p">},</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">userContent</span><span class="p">},</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nx">Options</span><span class="p">:</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="nx">TokenHeaderName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;X-TOKEN&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nx">TokenHeaderValue</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;john_doe&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p">}</span>
+<h1 id="contextual-retrieval">Contextual Retrieval</h1>
+<div class="admonition info">
+<p class="admonition-title">📦 <code>content</code> package</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Inspired by: <a href="https://www.anthropic.com/news/contextual-retrieval">Introducing Contextual Retrieval</a></p>
+</div>
+<h2 id="createchunkcontext"><code>CreateChunkContext</code></h2>
+<p><code>CreateChunkContext</code> generates a succinct context for a given chunk within the whole document content.
+This context is intended to improve search retrieval of the chunk.</p>
+<p><strong>Parameters</strong>:
+  - wholeDocumentContent: The entire content of the document as a string.
+  - chunk: The specific chunk of the document for which context is to be generated.
+  - ollamaUrl: The URL for the Ollama service.
+  - contextualModel: The model used for generating the context.
+  - options: Additional options for the LLM (Language Model).</p>
+<p><strong>Returns</strong>:
+  - A string containing the succinct context for the chunk.
+  - An error if the context generation fails.</p>
+<blockquote>
+<p><code>CreateChunkContext</code> use a default template for the prompt. If you want to use a custom template, you can use <code>CreateChunkContextWithPromptTemplate</code>.</p>
+</blockquote>
+<h2 id="createchunkcontextwithprompttemplate"><code>CreateChunkContextWithPromptTemplate</code></h2>
+<p><code>CreateChunkContextWithPromptTemplate</code> generates a contextual response based on a given prompt template and document content.
+It interpolates the template with the provided document and chunk content, then uses an LLM to generate a response.</p>
+<p><strong>Parameters</strong>:
+  - promptTpl: A string template for the prompt.
+  - wholeDocumentContent: The content of the entire document.
+  - chunk: A Chunk struct containing a portion of the document content.
+  - ollamaUrl: The URL of the LLM service.
+  - contextualModel: The model to be used for generating the response.
+  - options: Options for the LLM query.</p>
+<p><strong>Returns</strong>:
+  - A string containing the generated response.
+  - An error if the process fails at any step.</p>
+<h3 id="template-example">Template example</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nx">promptTemplateForContext</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="s">&lt;chunk&gt; </span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="s">{{.chunkContent}} </span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="s">&lt;/chunk&gt; </span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="s">Generate a brief context of the above chunk to situate this chunk within the below document. </span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="s">&lt;document&gt; </span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="s">{{.wholeDocument}} </span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="s">&lt;/document&gt; </span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="s">`</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find a complete example in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/59-jean-luc-picard-contextual-retrieval">examples/59-jean-luc-picard-contextual-retrieval</a></li>
+</ul>
+</div>
 
 
 

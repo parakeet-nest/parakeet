@@ -12,13 +12,13 @@
         <meta name="author" content="Philippe Charrière (@k33g)">
       
       
-        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/protected-endpoint/">
+        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/cli-helpers/">
       
       
-        <link rel="prev" href="../wasm-plugins/">
+        <link rel="prev" href="../ui-helpers/">
       
       
-        <link rel="next" href="../other-helpers/">
+        <link rel="next" href="../verbose-mode/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Protected endpoint - Parakeet</title>
+        <title>📺 CLI Helpers - Parakeet</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#protected-endpoint" class="md-skip">
+        <a href="#cli-helpers" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Protected endpoint
+              📺 CLI Helpers
             
           </span>
         </div>
@@ -466,19 +466,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -487,7 +478,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -556,10 +546,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../cli-helpers/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    📺 CLI Helpers
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -568,6 +578,98 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flagvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      FlagValue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hasarg" class="md-nav__link">
+    <span class="md-ellipsis">
+      HasArg
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hasflag" class="md-nav__link">
+    <span class="md-ellipsis">
+      HasFlag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#argstail" class="md-nav__link">
+    <span class="md-ellipsis">
+      ArgsTail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flagstail" class="md-nav__link">
+    <span class="md-ellipsis">
+      FlagsTail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flagswithnamestail" class="md-nav__link">
+    <span class="md-ellipsis">
+      FlagsWithNamesTail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hassubsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      HasSubsequence
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -692,6 +794,86 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flagvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      FlagValue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hasarg" class="md-nav__link">
+    <span class="md-ellipsis">
+      HasArg
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hasflag" class="md-nav__link">
+    <span class="md-ellipsis">
+      HasFlag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#argstail" class="md-nav__link">
+    <span class="md-ellipsis">
+      ArgsTail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flagstail" class="md-nav__link">
+    <span class="md-ellipsis">
+      FlagsTail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flagswithnamestail" class="md-nav__link">
+    <span class="md-ellipsis">
+      FlagsWithNamesTail
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hassubsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      HasSubsequence
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -708,8 +890,21 @@
   
 
 
-<h1 id="protected-endpoint">Protected endpoint</h1>
-<p>If your Ollama endpoint is protected with a header token, you can specify the token like this:</p>
+<h1 id="cli-helpers">CLI Helpers</h1>
+<div class="admonition info">
+<p class="admonition-title">📦 <code>content</code> package</p>
+</div>
+<p>These helpers provide methods to parse and use command-line arguments and flags.</p>
+<h2 id="settings"><code>Settings</code></h2>
+<p><code>Settings</code> parses command-line arguments and flags.</p>
+<p>It skips the program name and processes the remaining arguments.
+Arguments that start with "--" are considered flags, and the function
+checks if the next argument is a value for the flag. If so, it pairs
+the flag with its value; otherwise, it pairs the flag with an empty string.
+Arguments that do not start with "--" are considered positional arguments.</p>
+<p><strong>Returns</strong> two slices: one containing the positional arguments and the other
+containing the flags with their respective values.</p>
+<p><strong>Example</strong>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -719,17 +914,105 @@
 <span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nx">query</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Query</span><span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nx">Messages</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Message</span><span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">systemContent</span><span class="p">},</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">        </span><span class="p">{</span><span class="nx">Role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Content</span><span class="p">:</span><span class="w"> </span><span class="nx">userContent</span><span class="p">},</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nx">Options</span><span class="p">:</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="nx">TokenHeaderName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;X-TOKEN&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nx">TokenHeaderValue</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;john_doe&quot;</span><span class="p">,</span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1">// default values</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nx">ollamaUrl</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;http://localhost:11434&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nx">chatModel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;llama3.1:8b&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="nx">embeddingsModel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;bge-m3:latest&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="nx">args</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">Settings</span><span class="p">()</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="k">if</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">HasFlag</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nx">ollamaUrl</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">FlagValue</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="p">)</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">if</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">HasFlag</span><span class="p">(</span><span class="s">&quot;chat-model&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="nx">chatModel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">FlagValue</span><span class="p">(</span><span class="s">&quot;chat-model&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="p">}</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="k">if</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">HasFlag</span><span class="p">(</span><span class="s">&quot;embeddings-model&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="nx">embeddingsModel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">FlagValue</span><span class="p">(</span><span class="s">&quot;embeddings-model&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flags</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="p">}</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="k">switch</span><span class="w"> </span><span class="nx">cmd</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">cli</span><span class="p">.</span><span class="nx">ArgsTail</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span><span class="w"> </span><span class="nx">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="k">case</span><span class="w"> </span><span class="s">&quot;create-embeddings&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">embeddingsModel</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="k">case</span><span class="w"> </span><span class="s">&quot;chat&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">chatModel</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="k">default</span><span class="p">:</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Unknown command:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
+<h2 id="flagvalue"><code>FlagValue</code></h2>
+<p><code>FlagValue</code> retrieves the value of a flag by its name from a slice of Flag structs.
+If the flag is not found, it returns an empty string.</p>
+<p><strong>Parameters</strong>:
+  - <code>name</code>: The name of the flag to search for.
+  - <code>flags</code>: A slice of Flag structs to search within.</p>
+<p><strong>Returns</strong>:
+  The value of the flag if found, otherwise an empty string.</p>
+<h2 id="hasarg"><code>HasArg</code></h2>
+<p><code>HasArg</code> checks if an argument with the specified name exists in the provided slice of arguments.</p>
+<p><strong>Parameters</strong>:
+- <code>name</code>: The name of the argument to search for.
+- <code>args</code>: A slice of Arg structures to search within.</p>
+<p><strong>Returns</strong>:
+- <code>bool</code>: True if an argument with the specified name is found, otherwise false.</p>
+<h2 id="hasflag"><code>HasFlag</code></h2>
+<p><code>HasFlag</code> checks if a flag with the specified name exists in the provided slice of flags.</p>
+<p><strong>Parameters</strong>:
+- <code>name</code>: The name of the flag to search for.
+- <code>flags</code>: A slice of Flag objects to search within.</p>
+<p><strong>Returns</strong>:
+- <code>bool</code>: True if a flag with the specified name is found, otherwise false.</p>
+<h2 id="argstail"><code>ArgsTail</code></h2>
+<p><code>ArgsTail</code> extracts the names from a slice of Arg structs and returns them as a slice of strings.</p>
+<p><strong>Parameters</strong>:
+- <code>args</code>: A slice of Arg structs from which the names will be extracted.</p>
+<p><strong>Returns</strong>:
+- A slice of strings containing the names of the provided Arg structs.</p>
+<h2 id="flagstail"><code>FlagsTail</code></h2>
+<p><code>FlagsTail</code> takes a slice of Flag structs and returns a slice of strings containing the names of those flags.</p>
+<p><strong>Parameters</strong>:
+  <code>flags []Flag</code>: A slice of Flag structs.</p>
+<p><strong>Returns</strong>:
+  <code>[]string</code>: A slice of strings containing the names of the flags.</p>
+<h2 id="flagswithnamestail"><code>FlagsWithNamesTail</code></h2>
+<p><code>FlagsWithNamesTail</code> takes a slice of Flag structs and returns a slice of strings, where each string is a formatted pair of the flag's name and value in the form "name=value".</p>
+<p><strong>Parameters</strong>:
+  <code>flags []Flag</code> - A slice of Flag structs, each containing a Name and a Value.</p>
+<p><strong>Returns</strong>:
+  <code>[]string</code> - A slice of strings, each representing a flag's name and value pair.</p>
+<h2 id="hassubsequence"><code>HasSubsequence</code></h2>
+<p><code>HasSubsequence</code> checks if the given subsequence of strings (subSeq) is present in the tail of the provided arguments (args).</p>
+<p>Parameters:
+  - <code>args</code>: A slice of Arg representing the arguments to be checked.
+  - <code>subSeq</code>: A slice of strings representing the subsequence to look for.</p>
+<p>Returns:
+  - <code>bool</code>: True if the subsequence is found in the tail of the arguments, false otherwise.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find complete examples in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/59-jean-luc-picard-contextual-retrieval">examples/59-jean-luc-picard-contextual-retrieval</a></li>
+</ul>
+</div>
 
 
 
