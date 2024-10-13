@@ -104,7 +104,14 @@ use (
 	./examples/52-constraints
 	./examples/53-constraints
 	./examples/54-constraints-webapp
+	
+	./examples/55-create-npc
+	./examples/56-jean-luc-picard
+	./examples/57-jean-luc-picard-rag
+	./examples/58-michael-burnham
 
+	./examples/59-jean-luc-picard-contextual-retrieval
+	./examples/60-safety-models
 
 	examples/90-characters
 	examples/91-characters

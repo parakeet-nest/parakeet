@@ -1,0 +1,1 @@
+generate a random name for a role-playing game character for a %s. The output should be in JSON format, with the keys 'name' and 'kind'. Ensure the name is fantasy-themed.

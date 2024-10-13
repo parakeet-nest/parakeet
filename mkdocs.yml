@@ -20,6 +20,7 @@ nav:
     - How to set the Options: set-options.md
     - Embeddings: embeddings.md
     - Chunkers & Splitters: chunkers-and-splitters.md
+    - 📝🔎 Contextual Retrieval: contextual-retrieval.md
     - Parsing Markdown: parsing-markdown.md
     - Function Calling (before tools support): function-calling-before-tools-support.md
     - Function Calling (without tools support): function-calling-without-tools-support.md
@@ -28,6 +29,8 @@ nav:
     - Protected endpoint: protected-endpoint.md
     - 🛠️ Other Parakeet Helpers: other-helpers.md
     - 🔨 Prompt Helpers: prompt-helpers.md
+    - 📺 UI (Input/Print) Helpers: ui-helpers.md
+    - 📺 CLI Helpers: cli-helpers.md
     - Verbose mode: verbose-mode.md
     - OpenAI API support: openaiapi-support.md
     - 🧪 Parakeet Examples & Recipes: parakeet-examples.md

@@ -2,6 +2,99 @@
 
 ## Release notes
 
+## v0.2.1 🧇 [waffle]
+
+#### What's new in v0.2.1?
+
+##### Contextual Retrieval
+
+> Inspired by: [Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval)
+
+2 new methods are available in the `content` package:
+
+- `CreateChunkContext`
+- `CreateChunkContextWithPromptTemplate`
+
+`CreateChunkContext` generates a succinct context for a given chunk within the whole document content.
+This context is intended to improve search retrieval of the chunk.
+
+
+`CreateChunkContextWithPromptTemplate` generates a contextual response based on a given prompt template and document content.
+It interpolates the template with the provided document and chunk content, then uses an LLM to generate a response.
+
+
+##### UI Helpers
+
+2 new methods are available in the `ui` package:
+
+
+If you use Parakeet to create CLI applications, you can use the `ui` package to create a (very) simple UI.
+
+- `Input`
+- `Println`
+
+`Input` displays a prompt with the specified color and waits for user input.
+
+`Println` prints the provided strings with the specified color using the lipgloss styling library.
+
+
+##### CLI Helpers
+
+8 new methods are available in the `cli` package:
+
+- `Settings` parses command-line arguments and flags.
+- `FlagValue` retrieves the value of a flag by its name from a slice of Flag structs.
+- `HasArg` checks if an argument with the specified name exists in the provided slice of arguments.
+- `HasFlag` checks if a flag with the specified name exists in the provided slice of flags.
+- `ArgsTail` extracts the names from a slice of Arg structs and returns them as a slice of strings.
+- `FlagsTail` takes a slice of Flag structs and returns a slice of strings containing the names of those flags.
+- `FlagsWithNamesTail` takes a slice of Flag structs and returns a slice of strings, where each string is a formatted pair of the flag's name and value in the form "name=value".
+- `HasSubsequence` checks if the given subsequence of strings (subSeq) is present in the tail of the provided arguments (args).
+
+**Example**:
+
+```go
+// default values
+ollamaUrl := "http://localhost:11434"
+chatModel := "llama3.1:8b"
+embeddingsModel := "bge-m3:latest"
+
+args, flags := cli.Settings()
+
+if cli.HasFlag("url", flags) {
+    ollamaUrl = cli.FlagValue("url", flags)
+}
+
+if cli.HasFlag("chat-model", flags) {
+    chatModel = cli.FlagValue("chat-model", flags)
+}
+
+if cli.HasFlag("embeddings-model", flags) {
+    embeddingsModel = cli.FlagValue("embeddings-model", flags)
+}
+
+switch cmd := cli.ArgsTail(args); cmd[0] {
+case "create-embeddings":
+    fmt.Println(embeddingsModel)
+case "chat":
+    fmt.Println(chatModel)
+default:
+    fmt.Println("Unknown command:", cmd[0])
+}
+```
+
+##### New samples
+
+- 52-constraints: Preventing an LLM from talking about certain things
+- 53-constraints: Preventing an LLM from talking about certain things
+- 54-constraints-webapp: Preventing an LLM from talking about certain things
+- 55-create-npc: Create a NPC with `nemotron-mini` and chat with him
+- 56-jean-luc-picard: Chat with Jean-Luc Picard
+- 57-jean-luc-picard-rag: Chat with Jean-Luc Picard + RAG
+- 58-michael-burnham: Chat with Michael Burnham
+- 59-jean-luc-picard-contextual-retrieval: Chat with Jean-Luc Picard + Contextual Retrieval
+- 60-safety-models: Safety Models fine-tuned for content safety classification of LLM inputs and responses
+
 ### v0.2.0 🍕 [pizza]
 
 #### What's new in v0.2.0?

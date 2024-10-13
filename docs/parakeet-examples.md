@@ -55,5 +55,14 @@
 | 49-embeddings-memory-openai | create embeddings with OpenAI |
 | 50-llm-information | get information about LLMs |
 | 51-genai-webapp | GenAI web application demo |
+| 52-constraints | Preventing an LLM from talking about certain things |
+| 53-constraints | Preventing an LLM from talking about certain things |
+| 54-constraints-webapp | Preventing an LLM from talking about certain things |
+| 55-create-npc | Create a NPC with `nemotron-mini` and chat with him |
+| 56-jean-luc-picard | Chat with Jean-Luc Picard |
+| 57-jean-luc-picard-rag | Chat with Jean-Luc Picard + RAG |
+| 58-michael-burnham | Chat with Michael Burnham |
+| 59-jean-luc-picard-contextual-retrieval | Chat with Jean-Luc Picard + Contextual Retrieval |
+| 60-safety-models | Safety Models fine-tuned for content safety classification of LLM inputs and responses|
 
 

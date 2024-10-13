@@ -1,6 +1,8 @@
 <!-- TOPIC: Embeddings and Vector Stores SUMMARY: This document discusses creating embeddings, storing them in an efficient way using a vector store, and searching for similar embeddings. KEYWORDS: Embeddings, Vector Store, MemoryVectorStore, BBolt -->
 # Embeddings
 
+!!! info "📦 `embeddings` package"
+
 ## Create embeddings
 
 ```golang

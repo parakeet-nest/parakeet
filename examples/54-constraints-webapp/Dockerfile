@@ -13,5 +13,5 @@ FROM scratch
 WORKDIR /app
 COPY public ./public
 #COPY parakeet-webapp .
-COPY --from=builder /app/parakeet-webapp .
-CMD ["./parakeet-webapp"]
+COPY --from=builder /app/constraints-webapp .
+CMD ["./constraints-webapp"]
