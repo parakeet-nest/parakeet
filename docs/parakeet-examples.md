@@ -64,5 +64,7 @@
 | 58-michael-burnham | Chat with Michael Burnham |
 | 59-jean-luc-picard-contextual-retrieval | Chat with Jean-Luc Picard + Contextual Retrieval |
 | 60-safety-models | Safety Models fine-tuned for content safety classification of LLM inputs and responses|
-
-
+| 61-agents | Basic Flock Agent |
+| 62-agents-chat | Conversational Flock Agents |
+| 63-agents-chat-stream | Conversational Flock Agents |
+| 64-agents-with-tools | Function Calling Flock Agent example |

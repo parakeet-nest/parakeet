@@ -1,8 +1,11 @@
-module 99-testing
+module 62-agents-chat
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.2.1
+require (
+	github.com/joho/godotenv v1.5.1
+	github.com/parakeet-nest/parakeet v0.2.1
+)
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect

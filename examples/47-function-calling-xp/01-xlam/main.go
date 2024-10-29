@@ -64,7 +64,6 @@ func main() {
 	messages := []llm.Message{
 		{Role: "user", Content: `add 2 and 40`},
 		{Role: "user", Content: `multiply 2 and 21`},
-
 	}
 
 	options := llm.SetOptions(map[string]interface{}{
