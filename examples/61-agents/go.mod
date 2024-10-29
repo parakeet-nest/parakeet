@@ -1,4 +1,4 @@
-module 99-testing
+module 61-agents
 
 go 1.22.1
 

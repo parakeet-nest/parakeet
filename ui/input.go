@@ -129,3 +129,19 @@ func Println(color string, strs ...interface{}) {
 	// Print the rendered string with a newline
 	fmt.Println(renderedString)
 }
+
+func Print(color string, strs ...interface{}) {
+	textStyle := lipgloss.NewStyle().Foreground(lipgloss.Color(color))
+	
+	// Convert all arguments to strings
+	strSlice := make([]string, len(strs))
+	for i, v := range strs {
+		strSlice[i] = fmt.Sprint(v)
+	}
+	
+	// Join all strings and render with the style
+	renderedString := textStyle.Render(strings.Join(strSlice, " "))
+	
+	// Print the rendered string with a newline
+	fmt.Print(renderedString)
+}

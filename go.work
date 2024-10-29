@@ -113,6 +113,11 @@ use (
 	./examples/59-jean-luc-picard-contextual-retrieval
 	./examples/60-safety-models
 
+	./examples/61-agents
+	./examples/62-agents-chat
+	./examples/63-agents-chat-stream
+	./examples/64-agents-with-tools
+
 	examples/90-characters
 	examples/91-characters
 

@@ -1,4 +1,4 @@
-module 99-testing
+module 63-agents-chat-stream
 
 go 1.22.1
 

@@ -43,7 +43,9 @@ type Message struct {
 	Role      string `json:"role"`
 	Content   string `json:"content"`
 	ToolCalls []struct {
-		Function FunctionTool `json:"function"`
+		Function FunctionTool //`json:"function"`
+		Result interface{} 
+		Error error
 	} `json:"tool_calls"`
 }
 
