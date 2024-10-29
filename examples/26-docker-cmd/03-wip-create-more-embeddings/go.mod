@@ -4,7 +4,7 @@ go 1.22.1
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/parakeet-nest/parakeet v0.2.1
+	github.com/parakeet-nest/parakeet v0.2.2
 )
 
 require (

@@ -2,7 +2,7 @@ module 99-testing
 
 go 1.22.1
 
-require github.com/parakeet-nest/parakeet v0.2.1
+require github.com/parakeet-nest/parakeet v0.2.2
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect

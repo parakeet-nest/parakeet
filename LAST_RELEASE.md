@@ -2,6 +2,18 @@
 
 ## Release notes
 
+## v0.2.2 🧁 [cupcake]
+
+#### What's new in v0.2.2?
+
+##### Flock Agents
+
+> Inspired by: [Swarm by OpenAI](https://github.com/openai/swarm)
+
+Flock is a Parakeet package for creating and managing AI agents using the Ollama backend. It provides a simple way to create conversational agents, orchestrate interactions between them, and implement function calling capabilities.
+
+📝 [Documentation](https://github.com/parakeet-nest/parakeet/blob/main/docs/flock-agents.md)
+
 ## v0.2.1 🧇 [waffle]
 
 #### What's new in v0.2.1?
