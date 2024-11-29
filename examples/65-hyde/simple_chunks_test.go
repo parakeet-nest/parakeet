@@ -10,7 +10,6 @@ import (
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
-	"github.com/sea-monkeys/daphnia"
 )
 
 func TestGenerateSimpleChunks(t *testing.T) {
@@ -27,7 +26,7 @@ func TestGenerateSimpleChunks(t *testing.T) {
 	*/
 
 	// Initialize the vector store
-	vectorStore := daphnia.VectorStore{}
+	vectorStore := embeddings.DaphniaVectoreStore{}
 	vectorStore.Initialize("no-context.gob")
 
 	content.ForEachFile("./docs", ".md", func(documentPath string) error {
@@ -69,7 +68,7 @@ func TestGenerateSimpleChunks(t *testing.T) {
 				fmt.Println("😡:", err)
 			} else {
 
-				_, err := vectorStore.Save(daphnia.VectorRecord{
+				_, err := vectorStore.Save(llm.VectorRecord{
 					Prompt:    embedding.Prompt,
 					Embedding: embedding.Embedding,
 					Id:        embedding.Id,

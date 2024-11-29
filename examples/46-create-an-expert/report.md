@@ -2,128 +2,113 @@
 
 ## Variety: Theropoda
 *Description:*  
-Theropoda is a diverse group of bipedal carnivorous dinosaurs characterized by hollow bones, three-toed limbs, and sharp teeth. They are known for their agility and varying sizes, ranging from small bird-like dinosaurs to large predators. Most theropods are believed to have been active hunters and are thought to have lived in a variety of habitats, from forests to open plains.
+Theropoda is a diverse group of bipedal carnivorous dinosaurs. They are characterized by their hollow bones and three-toed limbs. Most theropods were active predators, although some, like birds, evolved from smaller theropods and took to the skies.
 
 ### Dinosaurs:
 
 #### Tyrannosaurus rex
-
 **name:** **Tyrannosaurus rex**  
-**common name:** Tyrannosaurus  
-**description:** A massive predator, Tyrannosaurus rex was characterized by its large skull, powerful jaws, and tiny arms. It stood about 12 feet tall and measured up to 40 feet in length, residing in North America during the Late Cretaceous period.
+**common name:** T. rex  
+**description:** T. rex is one of the largest terrestrial carnivores, measuring up to 40 feet long and standing around 12 feet tall at the hip. It had powerful jaws filled with large teeth and lived in North America during the Late Cretaceous period.
 
 #### Velociraptor mongoliensis
-
 **name:** **Velociraptor mongoliensis**  
 **common name:** Velociraptor  
-**description:** This small, feathered dinosaur was about the size of a turkey, featuring sharp claws and a keen sense of hunting. Velociraptor lived in the Late Cretaceous of Mongolia and is known for its pack hunting behavior.
+**description:** A small but agile carnivorous dinosaur that lived in the Late Cretaceous period, Velociraptor had a long, slender body, sharp claws, and was likely covered in feathers. It is famous for its intelligence and pack hunting behavior.
 
-#### Allosaurus fragile
-
-**name:** **Allosaurus fragile**  
+#### Allosaurus fragilis
+**name:** **Allosaurus fragilis**  
 **common name:** Allosaurus  
-**description:** A large carnivorous dinosaur, Allosaurus was a top predator in the Late Jurassic period. It featured a large head with sharp teeth and could grow up to 28 feet long. It inhabited what is now North America and was known for its agility and hunting skills.
+**description:** Allosaurus was one of the top predators of the Late Jurassic period, known for its distinctive skull with large brow ridges and sharp teeth. It measured about 28 feet long and was a swift and powerful hunter.
 
 <!-- SPLIT -->
 
-## Variety: Sauropoda
+## Variety: Sauropodomorpha
 *Description:*  
-Sauropoda is a group of large herbivorous dinosaurs known for their long necks, massive bodies, and thick legs. They were among the largest land animals to ever exist, feeding primarily on vegetation. They lived in various environments, including lush forests and open plains, during the Jurassic and Cretaceous periods.
+Sauropodomorpha includes the largest land animals to have ever existed, primarily characterized by their long necks, massive bodies, and herbivorous diets. They possessed column-like legs and relatively small heads compared to their body size.
 
 ### Dinosaurs:
 
 #### Brachiosaurus altithorax
-
 **name:** **Brachiosaurus altithorax**  
 **common name:** Brachiosaurus  
-**description:** One of the tallest dinosaurs, Brachiosaurus is known for its long neck and large front legs that allowed it to reach high vegetation. It could grow up to 85 feet long and lived during the Late Jurassic period in North America.
+**description:** This massive dinosaur could reach heights up to 40 feet and lengths of over 80 feet. Its unique body structure allowed it to feed on tall vegetation in the Late Jurassic period, giving it an advantage over other herbivores.
 
 #### Apatosaurus ajax
-
 **name:** **Apatosaurus ajax**  
 **common name:** Apatosaurus  
-**description:** Apatosaurus was a long-necked giant that could reach lengths of over 70 feet. It had a long tail used for communication and lived in North America during the Late Jurassic period, primarily feeding on low-lying vegetation.
+**description:** Also known as Brontosaurus, Apatosaurus was a long-necked sauropod from the Late Jurassic period. It could reach lengths of up to 75 feet and primarily fed on low-lying vegetation due to its long neck.
 
 #### Diplodocus longus
-
 **name:** **Diplodocus longus**  
 **common name:** Diplodocus  
-**description:** Known for its extremely long neck and tail, Diplodocus could reach up to 85 feet in length. It was a herbivore that thrived in the Late Jurassic period, using its long neck to access foliage high in trees.
+**description:** This dinosaur was known for its incredibly long neck and tail, reaching lengths of up to 85 feet. It lived during the Late Jurassic period, primarily in North America, and fed on ferns and other low vegetation.
 
 <!-- SPLIT -->
 
 ## Variety: Ornithischia
 *Description:*  
-Ornithischia is a diverse group of herbivorous dinosaurs characterized by their beaked mouths, pelvic structures, and varied body shapes. They occupied a range of ecological niches and demonstrated a wide array of adaptations for herbivory. This group includes both bipedal and quadrupedal dinosaurs.
+Ornithischians are characterized by their bird-like hip structures and mostly herbivorous diets. This group includes various subcategories such as armored dinosaurs, horned dinosaurs, and duck-billed dinosaurs, showcasing a wide range of body shapes and sizes.
 
 ### Dinosaurs:
 
-#### Stegosaurus ungulatus
-
-**name:** **Stegosaurus ungulatus**  
+#### Stegosaurus ungulates
+**name:** **Stegosaurus ungulates**  
 **common name:** Stegosaurus  
-**description:** Stegosaurus is known for its distinctive row of bony plates along its back and spiked tail. It was a large herbivore that lived during the Late Jurassic period and typically measured about 30 feet long, primarily inhabiting forested regions.
+**description:** Renowned for its distinctive plates and spikes along the back, Stegosaurus lived in the Late Jurassic period. It measured about 30 feet long and primarily fed on low-growing plants.
 
 #### Triceratops horridus
-
 **name:** **Triceratops horridus**  
 **common name:** Triceratops  
-**description:** A prominent ceratopsian dinosaur, Triceratops is famous for its three facial horns and large frill at the back of its head. It could grow to about 30 feet long and lived during the Late Cretaceous period in North America.
+**description:** This large ceratopsian dinosaur is noted for its three distinctive facial horns and large frill. Measuring up to 30 feet long, Triceratops lived during the Late Cretaceous period and likely used its horns for defense against predators.
 
-#### Iguanodon bernissartensis
-
-**name:** **Iguanodon bernissartensis**  
-**common name:** Iguanodon  
-**description:** Iguanodon was one of the first dinosaurs to be named and is recognized by its large thumb spikes. It was a herbivorous dinosaur that lived during the Early Cretaceous period and could reach lengths of up to 33 feet.
+#### Ankylosaurus magniventris
+**name:** **Ankylosaurus magniventris**  
+**common name:** Ankylosaurus  
+**description:** Ankylosaurus was heavily armored and equipped with a club-like tail, making it a formidable foe against predators. It lived during the Late Cretaceous period and measured around 20 feet in length.
 
 <!-- SPLIT -->
 
 ## Variety: Pterosauria
 *Description:*  
-Pterosauria includes flying reptiles that lived alongside dinosaurs, known for their wings formed by a membrane of skin stretched over an elongated fourth finger. Though not technically dinosaurs, they are often associated with them due to their contemporaneous existence and ecological roles in prehistoric ecosystems.
+Although not technically dinosaurs, Pterosaurs were flying reptiles that coexisted with dinosaurs during the Mesozoic era. They are distinguished by a wingspan that could reach over 30 feet and a lightweight skeletal structure.
 
 ### Dinosaurs:
 
 #### Pteranodon longiceps
-
 **name:** **Pteranodon longiceps**  
 **common name:** Pteranodon  
-**description:** Pteranodon had a wingspan that could exceed 20 feet and is known for its distinctive cranial crests. It lived in North America during the Late Cretaceous and primarily fed on fish, gliding over coastal waters.
+**description:** With a wingspan of up to 33 feet, Pteranodon is one of the largest known pterosaurs. It had a long cranial crest and lived during the Late Cretaceous period, swimming in the oceans to hunt for fish.
 
 #### Quetzalcoatlus northropi
-
 **name:** **Quetzalcoatlus northropi**  
 **common name:** Quetzalcoatlus  
-**description:** One of the largest known flying animals, Quetzalcoatlus had an estimated wingspan of up to 33 feet. It lived during the Late Cretaceous in North America and is believed to have soared over land and water, feeding on a varied diet.
+**description:** This giant pterosaur is believed to have had a wingspan of up to 36 feet, making it one of the largest flying animals of all time. It lived during the Late Cretaceous and likely scavenged for food on land and in the water.
 
-#### Rhamphorhynchus muensteri
-
-**name:** **Rhamphorhynchus muensteri**  
-**common name:** Rhamphorhynchus  
-**description:** A smaller pterosaur with a wingspan of about 3.5 feet, Rhamphorhynchus had a long tail and a toothy beak. It lived during the Late Jurassic period in Europe and is thought to have fed on fish and small reptiles.
+#### Pterodaustro guinazui
+**name:** **Pterodaustro guinazui**  
+**common name:** Pterodaustro  
+**description:** Known for its specialized filter-feeding beak, Pterodaustro lived in the Cretaceous period and had a wingspan of about 13 feet. It likely fed on small aquatic organisms.
 
 <!-- SPLIT -->
 
-## Variety: Ankylosauria
+## Variety: Marginocephalia
 *Description:*  
-Ankylosauria is a group of armored dinosaurs characterized by their bony plates, club-like tails, and low, heavy bodies. They were primarily herbivorous and used their formidable defenses to deter predators. Living from the Late Jurassic to the Late Cretaceous, these dinosaurs thrived in a variety of terrestrial environments.
+Marginocephalia is a group of herbivorous dinosaurs characterized by distinctive frills or dome-shaped skull structures. This variety includes various forms of ceratopsians and pachycephalosaurs, which evolved unique body shapes and behaviors.
 
 ### Dinosaurs:
 
-#### Ankylosaurus magniventris
+#### Pachycephalosaurus wyomingensis
+**name:** **Pachycephalosaurus wyomingensis**  
+**common name:** Pachycephalosaurus  
+**description:** Known for its thick, domed skull, Pachycephalosaurus lived during the Late Cretaceous period. Its peculiar head shape suggests that it may have been used for head-butting in social interactions.
 
-**name:** **Ankylosaurus magniventris**  
-**common name:** Ankylosaurus  
-**description:** Known for its extensive body armor and a large club at the end of its tail, Ankylosaurus could grow up to 30 feet long. It lived during the Late Cretaceous period in North America, primarily feeding on low-lying plants.
+#### Ceratosaurus nasicornis
+**name:** **Ceratosaurus nasicornis**  
+**common name:** Ceratosaurus  
+**description:** This dinosaur exhibited a distinctive nasal horn and a robust body. Ceratosaurus lived during the Late Jurassic period and was both a predator and scavenger.
 
-#### Euoplocephalus tutus
-
-**name:** **Euoplocephalus tutus**  
-**common name:** Euoplocephalus  
-**description:** Euoplocephalus was heavily armored with a broad, flat body and a distinctive tail club. It lived during the Late Cretaceous period in North America and is known for its strong defensive adaptations against predators.
-
-#### Minmi paravertebra
-
-**name:** **Minmi paravertebra**  
-**common name:** Minmi  
-**description:** This smaller ankylosaur was characterized by its unique armor and relatively lightweight body. Minmi lived during the Early Cretaceous in Australia, feeding on low vegetation and using its armor for protection.
+#### Styracosaurus albertensis
+**name:** **Styracosaurus albertensis**  
+**common name:** Styracosaurus  
+**description:** An impressive ceratopsian dinosaur with the characteristic frill adorned with long horns, Styracosaurus lived during the Late Cretaceous period. It was a herbivore that likely used its horns for display and defense.

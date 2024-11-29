@@ -11,7 +11,6 @@ import (
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/llm"
-	"github.com/sea-monkeys/daphnia"
 )
 
 // Contextual retrieval
@@ -35,7 +34,7 @@ func TestGenerateChunksWithContext(t *testing.T) {
 	})
 
 	// Initialize the vector store
-	vectorStore := daphnia.VectorStore{}
+	vectorStore := embeddings.DaphniaVectoreStore{}
 	vectorStore.Initialize("with-context.gob")
 
 	content.ForEachFile("./docs", ".md", func(documentPath string) error {
@@ -77,12 +76,12 @@ func TestGenerateChunksWithContext(t *testing.T) {
 			embedding, err := embeddings.CreateEmbedding(
 				ollamaUrl,
 				llm.Query4Embedding{
-					Model:  embeddingsModel,
-					Prompt:fmt.Sprintf(
-						"METADATA: %s\n\n CONTEXT: %s\n\n ## %s\n\n%s\n\n", 
-						doc.Lineage, 
+					Model: embeddingsModel,
+					Prompt: fmt.Sprintf(
+						"METADATA: %s\n\n CONTEXT: %s\n\n ## %s\n\n%s\n\n",
+						doc.Lineage,
 						context,
-						doc.Header, 
+						doc.Header,
 						doc.Content,
 					),
 				},
@@ -92,7 +91,7 @@ func TestGenerateChunksWithContext(t *testing.T) {
 				fmt.Println("😡:", err)
 			} else {
 
-				_, err := vectorStore.Save(daphnia.VectorRecord{
+				_, err := vectorStore.Save(llm.VectorRecord{
 					Prompt:    embedding.Prompt,
 					Embedding: embedding.Embedding,
 					Id:        embedding.Id,

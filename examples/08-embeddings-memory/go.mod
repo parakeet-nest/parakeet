@@ -13,11 +13,13 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/sea-monkeys/artemia v0.0.0 // indirect
+	github.com/sea-monkeys/daphnia v0.0.2 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/sys v0.24.0 // indirect
 )
 
 replace github.com/parakeet-nest/parakeet => ../..

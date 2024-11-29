@@ -10,20 +10,9 @@ import (
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/llm"
-	"github.com/sea-monkeys/daphnia"
 )
 
 func TestQuestionContextChunks(t *testing.T) {
-
-	generateContextFromSimilarities := func (similarities []daphnia.VectorRecord) string {
-		documentsContent := "<context>\n"
-		for _, similarity := range similarities {
-			documentsContent += fmt.Sprintf("<doc>%s</doc>\n", similarity.Prompt)
-		}
-		documentsContent += "</context>"
-		return documentsContent
-	}
-
 
 	ollamaUrl := os.Getenv("OLLAMA_URL")
 	if ollamaUrl == "" {
@@ -46,7 +35,7 @@ func TestQuestionContextChunks(t *testing.T) {
 	})
 
 	// Initialize the vector store
-	vectorStore := daphnia.VectorStore{}
+	vectorStore := embeddings.DaphniaVectoreStore{}
 	vectorStore.Initialize("with-context.gob")
 
 	question := "Explain the biological compatibility of the Human species?"
@@ -66,12 +55,7 @@ func TestQuestionContextChunks(t *testing.T) {
 
 	fmt.Println("🔎 searching for similarity...")
 
-	embeddingForDaphnia := daphnia.VectorRecord{
-		Prompt:    embeddingFromQuestion.Prompt,
-		Embedding: embeddingFromQuestion.Embedding,
-	}
-
-	similarities, _ := vectorStore.SearchTopNSimilarities(embeddingForDaphnia, 0.65, 10)
+	similarities, _ := vectorStore.SearchTopNSimilarities(embeddingFromQuestion, 0.65, 10)
 
 	for _, similarity := range similarities {
 		fmt.Println()
@@ -86,7 +70,7 @@ func TestQuestionContextChunks(t *testing.T) {
 		fmt.Println("🎉 number of similarities:", len(similarities))
 	}
 
-	documentsContent := generateContextFromSimilarities(similarities)
+	documentsContent := embeddings.GenerateContextFromSimilarities(similarities)
 
 	messages := []llm.Message{
 		{Role: "system", Content: "You are a usefull AI agent, expert with Heroic Fantasy and Science Fiction. Use only the provides content to answer."},
@@ -116,5 +100,3 @@ func TestQuestionContextChunks(t *testing.T) {
 	fmt.Println()
 
 }
-
-

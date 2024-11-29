@@ -44,8 +44,8 @@ type Message struct {
 	Content   string `json:"content"`
 	ToolCalls []struct {
 		Function FunctionTool //`json:"function"`
-		Result interface{} 
-		Error error
+		Result   interface{}
+		Error    error
 	} `json:"tool_calls"`
 }
 
@@ -123,8 +123,6 @@ type Options struct {
 
 	Verbose bool
 }
-
-
 
 /* Default Ollama Options
 https://github.com/ollama/ollama/blob/main/api/types.go
@@ -206,7 +204,8 @@ type VectorRecord struct {
 
 	Reference string `json:"reference"`
 	MetaData  string `json:"metaData"`
-	Text      string `json:"text"`
+	ComplexMetadata map[string]interface{} `json:"metadata"` // additional metadata
+	Text     string                 `json:"text"`
 }
 
 type Query4Embedding struct {
