@@ -1,6 +1,6 @@
 module 48-testing-models-03-yi-coder
 
-go 1.22.1
+go 1.23.1
 
 require github.com/parakeet-nest/parakeet v0.2.2
 

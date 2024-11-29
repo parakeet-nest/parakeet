@@ -1,6 +1,6 @@
 module testing_interpolation
 
-go 1.22.1
+go 1.23.1
 
 replace github.com/parakeet-nest/parakeet => ../..
 
