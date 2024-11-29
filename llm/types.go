@@ -202,10 +202,10 @@ type VectorRecord struct {
 	CosineDistance float64
 	Score          float64 // ElasticSearch
 
-	Reference string `json:"reference"`
-	MetaData  string `json:"metaData"`
-	ComplexMetadata map[string]interface{} `json:"metadata"` // additional metadata
-	Text     string                 `json:"text"`
+	Reference      string                 `json:"reference"`
+	SimpleMetaData string                 `json:"metaData"`
+	Metadata       map[string]interface{} `json:"metadata"` // additional metadata
+	Text           string                 `json:"text"`
 }
 
 type Query4Embedding struct {

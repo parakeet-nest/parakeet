@@ -44,7 +44,7 @@ func main() {
 		if err != nil {
 			fmt.Println("😡:", err)
 		} else {
-			embedding.MetaData = "📝 chunk num: " + strconv.Itoa(idx)
+			embedding.SimpleMetaData = "📝 chunk num: " + strconv.Itoa(idx)
 			redisStore.Save(embedding)
 		}
 	}

@@ -20,6 +20,8 @@ require (
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	golang.org/x/net v0.28.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect
+	github.com/sea-monkeys/artemia v0.0.0 // indirect
+	github.com/sea-monkeys/daphnia v0.0.0 // indirect
 )
 
 replace github.com/parakeet-nest/parakeet => ../../..

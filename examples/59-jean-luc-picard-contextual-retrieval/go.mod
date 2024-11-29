@@ -30,6 +30,7 @@ require (
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sea-monkeys/artemia v0.0.0 // indirect
+	github.com/sea-monkeys/daphnia v0.0.2 // indirect
 	github.com/yuin/goldmark v1.7.4 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect

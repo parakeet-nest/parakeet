@@ -49,7 +49,7 @@ func main() {
 
 	for _, similarity := range similarities {
 		// Do something with the similarity
-		fmt.Println("Similarity:", similarity.MetaData)
+		fmt.Println("Similarity:", similarity.SimpleMetaData)
 	}
 
 	fmt.Println("🎉 number of similarities:", len(similarities))

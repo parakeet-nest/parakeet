@@ -104,7 +104,7 @@ func main() {
 				// You can add metadata to the embedding
 				// It could be useful for debugging and filtering with Elasticsearch
 				// TODO: see how to use this metadata in the search
-				embedding.MetaData = "👋 hello from Parakeet 🦜🪺"
+				embedding.SimpleMetaData = "👋 hello from Parakeet 🦜🪺"
 
 
 				_, err := elasticStore.Save(embedding)
