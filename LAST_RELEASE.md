@@ -2,6 +2,12 @@
 
 ## Release notes
 
+## v0.2.3 🥧 [pie]
+
+#### What's new in v0.2.3?
+
+Update of the Extism dependency.
+
 ## v0.2.2 🧁 [cupcake]
 
 #### What's new in v0.2.2?
