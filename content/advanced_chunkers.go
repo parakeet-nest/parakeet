@@ -12,16 +12,17 @@ import (
 )
 
 type Chunk struct {
-	Header       string
-	Content      string
-	Level        int
-	Prefix       string
-	ParentLevel  int
-	ParentHeader string
-	ParentPrefix string
-	Lineage      string
-	MetaData     string // Additional metadata if needed
-	KeyWords	 []string // Keywords that could be extracted from the content
+	Header         string
+	Content        string
+	Level          int
+	Prefix         string
+	ParentLevel    int
+	ParentHeader   string
+	ParentPrefix   string
+	Lineage        string
+	SimpleMetaData string                 // Additional metadata if needed
+	Metadata       map[string]interface{} // additional metadata
+	KeyWords       []string               // Keywords that could be extracted from the content
 }
 
 func ParseMarkdown(content string) []*Chunk {
@@ -225,9 +226,10 @@ func ParseMarkdownWithLineage(content string) []Chunk {
 				ParentHeader: parent.Header,
 				Lineage:      lineage,
 			}
-
-			chunks = append(chunks, chunk)
-			stack = append(stack, chunk)
+			//if chunk.Content != "" {
+				chunks = append(chunks, chunk)
+				stack = append(stack, chunk)
+			//}
 		}
 	}
 

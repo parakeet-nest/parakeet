@@ -1,0 +1,20 @@
+services:
+
+  wasm-workspace:
+    build:
+      context: .
+      platforms:
+        #- "linux/amd64"
+        - "linux/arm64"
+      dockerfile: wasm.Dockerfile
+      args:
+        - GO_VERSION=1.23.1
+        - TINYGO_VERSION=0.34.0
+        - NODE_MAJOR=22
+        - EXTISM_VERSION=1.6.1      # Extism CLI
+        - USER_NAME=${USER}
+    #network_mode: "host"   
+    volumes:
+      - ../..:/workspaces:cached      
+    command: sleep infinity
+

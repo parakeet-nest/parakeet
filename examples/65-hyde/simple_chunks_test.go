@@ -68,11 +68,13 @@ func TestGenerateSimpleChunks(t *testing.T) {
 				fmt.Println("😡:", err)
 			} else {
 
-				_, err := vectorStore.Save(llm.VectorRecord{
+				record, err := vectorStore.Save(llm.VectorRecord{
 					Prompt:    embedding.Prompt,
 					Embedding: embedding.Embedding,
 					Id:        embedding.Id,
 				})
+				fmt.Println("📝 Embedding:", record.Embedding)
+
 
 				if err != nil {
 					fmt.Println("😡:", err)

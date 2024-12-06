@@ -23,7 +23,7 @@ func NewPlugin(path string, allowedPath map[string]string) (*Plugin, error) {
 	config := extism.PluginConfig{
 		ModuleConfig: wazero.NewModuleConfig().WithSysWalltime(),
 		EnableWasi:   true,
-		LogLevel:     extism.LogLevelInfo,
+		// LogLevel:     extism.LogLevelInfo, // Removed as it does not exist in extism.PluginConfig
 	}
 	manifest := extism.Manifest{
 		Wasm: []extism.Wasm{
