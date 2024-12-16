@@ -102,6 +102,8 @@ type AnswerChat struct {
 */
 
 type Options struct {
+	NumCtx int `json:"num_ctx,omitempty"`
+
 	RepeatLastN   int      `json:"repeat_last_n"`
 	Temperature   float64  `json:"temperature"`
 	Seed          int      `json:"seed"`
@@ -154,6 +156,8 @@ func SetOptions(options map[string]interface{}) Options {
 	defaultOptions := DefaultOptions()
 	for key, value := range options {
 		switch key {
+		case "NumCtx":
+			defaultOptions.NumCtx = value.(int)
 		case "NumPredict":
 			defaultOptions.NumPredict = value.(int)
 		case "NumKeep":
