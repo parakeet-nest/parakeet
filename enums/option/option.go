@@ -1,7 +1,7 @@
-package option 
+package option
 
 const (
-	RepeatLastN    = "RepeatLastN"
+	RepeatLastN   = "RepeatLastN"
 	Temperature   = "Temperature"
 	Seed          = "Seed"
 	RepeatPenalty = "RepeatPenalty"
@@ -9,6 +9,7 @@ const (
 
 	NumKeep          = "NumKeep"
 	NumPredict       = "NumPredict"
+	NumCtx           = "NumCtx"
 	TopK             = "TopK"
 	TopP             = "TopP"
 	TFSZ             = "TFSZ"
