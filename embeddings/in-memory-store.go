@@ -43,7 +43,7 @@ func (mvs *MemoryVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vect
 	var maxDistance float64 = -1.0
 	var selectedKeyRecord string
 	for k, v := range mvs.Records {
-		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineSimilarity(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance > maxDistance {
 			maxDistance = distance
 			selectedKeyRecord = k
@@ -67,9 +67,9 @@ func (mvs *MemoryVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vecto
 	var records []llm.VectorRecord
 
 	for _, v := range mvs.Records {
-		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineSimilarity(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance >= limit {
-			v.CosineDistance = distance
+			v.CosineSimilarity = distance
 			records = append(records, v)
 		}
 	}

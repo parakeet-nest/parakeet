@@ -85,7 +85,7 @@ func (bvs *BboltVectorStore) SearchMaxSimilarity(embeddingFromQuestion llm.Vecto
 		return llm.VectorRecord{}, err
 	}
 	for _, v := range records {
-		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineSimilarity(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance > maxDistance {
 			maxDistance = distance
 			selectedKeyRecord = v.Id
@@ -115,9 +115,9 @@ func (bvs *BboltVectorStore) SearchSimilarities(embeddingFromQuestion llm.Vector
 	var recordsFiltered []llm.VectorRecord
 	for _, v := range records {
 
-		distance := similarity.CosineDistance(embeddingFromQuestion.Embedding, v.Embedding)
+		distance := similarity.CosineSimilarity(embeddingFromQuestion.Embedding, v.Embedding)
 		if distance >= limit {
-			v.CosineDistance = distance
+			v.CosineSimilarity = distance
 			recordsFiltered = append(recordsFiltered, v)
 		}
 	}

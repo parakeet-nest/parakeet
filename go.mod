@@ -10,7 +10,7 @@ require (
 	github.com/extism/go-sdk v1.6.1
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/uuid v1.6.0
-	github.com/sea-monkeys/daphnia v0.0.2
+	github.com/sea-monkeys/daphnia v0.0.3
 	github.com/tetratelabs/wazero v1.8.2
 	github.com/yuin/goldmark v1.7.8
 	go.etcd.io/bbolt v1.3.11

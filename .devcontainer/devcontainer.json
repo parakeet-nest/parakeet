@@ -2,7 +2,7 @@
 	"name": "Parakeet 🦜🪺",
 
 	"dockerComposeFile": "compose.yml",
-	"service": "wasm-workspace",
+	"service": "ai-workspace",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {

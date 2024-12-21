@@ -119,6 +119,7 @@ use (
 	./examples/64-agents-with-tools
 
 	./examples/65-hyde
+	./examples/66-structured-outputs
 
 	examples/90-characters
 	examples/91-characters

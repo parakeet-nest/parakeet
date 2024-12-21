@@ -59,7 +59,7 @@ func TestQuestionContextChunks(t *testing.T) {
 
 	for _, similarity := range similarities {
 		fmt.Println()
-		fmt.Println("Cosine distance:", similarity.CosineDistance)
+		fmt.Println("Cosine distance:", similarity.CosineSimilarity)
 
 		fmt.Println(similarity.Prompt)
 	}

@@ -116,7 +116,7 @@ func main() {
 		}
 
 		for _, similarity := range similarities {
-			fmt.Println("📝 doc:", similarity.Id, "score:", similarity.CosineDistance)
+			fmt.Println("📝 doc:", similarity.Id, "score:", similarity.CosineSimilarity)
 			//fmt.Println(similarity.Prompt)
 		}
 

@@ -1,12 +1,12 @@
 services:
 
-  wasm-workspace:
+  ai-workspace:
     build:
       context: .
       platforms:
         #- "linux/amd64"
         - "linux/arm64"
-      dockerfile: wasm.Dockerfile
+      dockerfile: Dockerfile
       args:
         - GO_VERSION=1.23.1
         - TINYGO_VERSION=0.34.0

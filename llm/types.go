@@ -196,11 +196,11 @@ func SetOptions(options map[string]interface{}) Options {
 /* Embeddings */
 
 type VectorRecord struct {
-	Id             string    `json:"id"`
-	Prompt         string    `json:"prompt"`
-	Embedding      []float64 `json:"embedding"`
-	CosineDistance float64
-	Score          float64 // ElasticSearch
+	Id               string    `json:"id"`
+	Prompt           string    `json:"prompt"`
+	Embedding        []float64 `json:"embedding"`
+	CosineSimilarity float64
+	Score            float64 // ElasticSearch
 
 	Reference      string                 `json:"reference"`
 	SimpleMetaData string                 `json:"metaData"`

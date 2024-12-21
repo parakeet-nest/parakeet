@@ -89,11 +89,11 @@ func (dvs *DaphniaVectoreStore) SearchTopNSimilarities(vectorRecord llm.VectorRe
 	var vectorRecords []llm.VectorRecord
 	for _, daphniaRecord := range daphniaRecords {
 		vectorRecord := llm.VectorRecord{
-			Id:             daphniaRecord.Id,
-			Embedding:      daphniaRecord.Embedding,
-			Prompt:         daphniaRecord.Prompt,
-			Metadata:       daphniaRecord.Metadata,
-			CosineDistance: daphniaRecord.CosineDistance,
+			Id:               daphniaRecord.Id,
+			Embedding:        daphniaRecord.Embedding,
+			Prompt:           daphniaRecord.Prompt,
+			Metadata:         daphniaRecord.Metadata,
+			CosineSimilarity: daphniaRecord.CosineSimilarity,
 		}
 		vectorRecords = append(vectorRecords, vectorRecord)
 	}
@@ -114,11 +114,11 @@ func (dvs *DaphniaVectoreStore) SearchSimilarities(embeddingFromQuestion llm.Vec
 	var vectorRecords []llm.VectorRecord
 	for _, daphniaRecord := range daphniaRecords {
 		vectorRecord := llm.VectorRecord{
-			Id:             daphniaRecord.Id,
-			Embedding:      daphniaRecord.Embedding,
-			Prompt:         daphniaRecord.Prompt,
-			Metadata:       daphniaRecord.Metadata,
-			CosineDistance: daphniaRecord.CosineDistance,
+			Id:               daphniaRecord.Id,
+			Embedding:        daphniaRecord.Embedding,
+			Prompt:           daphniaRecord.Prompt,
+			Metadata:         daphniaRecord.Metadata,
+			CosineSimilarity: daphniaRecord.CosineSimilarity,
 		}
 		vectorRecords = append(vectorRecords, vectorRecord)
 	}

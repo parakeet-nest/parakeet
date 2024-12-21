@@ -15,6 +15,13 @@ import (
 func Chat(url string, query llm.Query) (llm.Answer, error) {
 	kindOfCompletion := "chat"
 
+	/*
+	var outputSchema = "" 
+	if query.Format != "" && query.Format != "json" {
+		outputSchema = query.Format
+	}
+	*/
+
 	query.Stream = false
 
 	if query.Options.Verbose {
@@ -31,6 +38,8 @@ func Chat(url string, query llm.Query) (llm.Answer, error) {
 	if err != nil {
 		return llm.Answer{}, err
 	}
+
+	//fmt.Println("🔴 jsonQuery", string(jsonQuery))
 
 	req, err := http.NewRequest(http.MethodPost, url+"/api/"+kindOfCompletion, bytes.NewBuffer(jsonQuery))
 	if err != nil {

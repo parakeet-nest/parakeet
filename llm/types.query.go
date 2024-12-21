@@ -46,7 +46,10 @@ type Query struct {
 	Stream   bool      `json:"stream"`
 	Tools    []Tool    `json:"tools"`
 
-	Format    string `json:"format,omitempty"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
+	//Format    string `json:"format"` // https://github.com/ollama/ollama/blob/main/docs/api.md#request-json-mode
+	// change the type string to any to accept any type of format in case of structured outputs
+	// https://ollama.com/blog/structured-outputs
+	Format    any `json:"format,omitempty"` 
 	KeepAlive bool   `json:"keep_alive,omitempty"`
 	Raw       bool   `json:"raw,omitempty"`
 	System    string `json:"system,omitempty"`

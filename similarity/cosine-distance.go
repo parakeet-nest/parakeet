@@ -16,8 +16,8 @@ func dotProduct(v1 []float64, v2 []float64) float64 {
 	return sum
 }
 
-// CosineDistance calculates the cosine distance between two vectors
-func CosineDistance(v1, v2 []float64) float64 {
+// CosineSimilarity calculates the cosine distance between two vectors
+func CosineSimilarity(v1, v2 []float64) float64 {
 	// Calculate the cosine distance between two vectors
 	product := dotProduct(v1, v2)
 
@@ -31,9 +31,9 @@ func CosineDistance(v1, v2 []float64) float64 {
 }
 
 func GetTopNVectorRecords(records []llm.VectorRecord, max int) []llm.VectorRecord {
-	// Sort the records slice in descending order based on CosineDistance
+	// Sort the records slice in descending order based on CosineSimilarity
 	sort.Slice(records, func(i, j int) bool {
-		return records[i].CosineDistance > records[j].CosineDistance
+		return records[i].CosineSimilarity > records[j].CosineSimilarity
 	})
 
 	// Return the first max records or all if less than three
