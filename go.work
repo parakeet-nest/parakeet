@@ -70,8 +70,7 @@ use (
 	./examples/39-rag-with-elastic-markdown/create-embeddings
 	./examples/39-rag-with-elastic-markdown/use-embeddings
 
-	./examples/40-rag-with-elastic-markdown/create-embeddings
-	./examples/40-rag-with-elastic-markdown/use-embeddings
+	./examples/40-rag-with-elastic-markdown
 
 
 	./examples/42-make-a-slm-smarter/01-context

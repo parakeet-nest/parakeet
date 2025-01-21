@@ -9,9 +9,8 @@ import (
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
-	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/enums/option"
-
+	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func main() {
@@ -26,9 +25,7 @@ func main() {
 	embeddingsModel := "mxbai-embed-large"
 	//smallChatModel := "gemma2:2b"      // This model is for the chat completion
 	//smallChatModel := "phi3:mini"      // This model is for the chat completion
-	smallChatModel := "llama3.1:8b" 
-
-	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
+	smallChatModel := "llama3.1:8b"
 
 	elasticStore := embeddings.ElasticsearchStore{}
 	err = elasticStore.Initialize(
@@ -37,7 +34,7 @@ func main() {
 		},
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
-		cert,
+		nil,
 		"hierarchy-mxbai-golang-index",
 	)
 	if err != nil {
@@ -46,8 +43,8 @@ func main() {
 
 	//userContent := `[Brief] What's new with TLS client?`
 	//userContent := `Tell me more about the new structs package`
-	userContent := `What changes to the archive/tar library happened in Go 1.23`
-	
+	userContent := `Summarize what's new with benchmarks in 3 bullet points. Be succinct`
+
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
 		ollamaUrl,
@@ -78,13 +75,13 @@ func main() {
 	Using only the below provided context, answer the user's question
 	to the best of your ability using only the resources provided.
 	`
-	
+
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 0.0,
-		option.RepeatLastN: 2,
+		option.Temperature:   0.0,
+		option.RepeatLastN:   2,
 		option.RepeatPenalty: 3.0,
-		option.TopK: 10,
-		option.TopP: 0.5,
+		option.TopK:          10,
+		option.TopP:          0.5,
 	})
 
 	queryChat := llm.Query{
