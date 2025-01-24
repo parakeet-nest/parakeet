@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"log"
 	"os"
@@ -11,6 +12,9 @@ import (
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/llm"
 )
+
+//go:embed go1.24.md
+var documentContent string
 
 func main() {
 	err := godotenv.Load()
@@ -25,9 +29,6 @@ func main() {
 
 	embeddingsModel := "mxbai-embed-large"
 
-	// Create an Elasticsearch client
-	cert, _ := os.ReadFile(os.Getenv("ELASTIC_CERT_PATH"))
-
 	elasticStore := embeddings.ElasticsearchStore{}
 	err = elasticStore.Initialize(
 		[]string{
@@ -35,14 +36,9 @@ func main() {
 		},
 		os.Getenv("ELASTIC_USERNAME"),
 		os.Getenv("ELASTIC_PASSWORD"),
-		cert,
+		nil,
 		"hierarchy-mxbai-golang-index",
 	)
-	if err != nil {
-		log.Fatalln("😡:", err)
-	}
-
-	documentContent, err := content.ReadTextFile("./go1.23.md")
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
@@ -99,21 +95,17 @@ func main() {
 				strconv.Itoa(idx),
 			)
 			if err != nil {
-				fmt.Println("😡:", err)
-			} else {
-				// You can add metadata to the embedding
-				// It could be useful for debugging and filtering with Elasticsearch
-				// TODO: see how to use this metadata in the search
-				embedding.SimpleMetaData = "👋 hello from Parakeet 🦜🪺"
-
-
-				_, err := elasticStore.Save(embedding)
-				if err != nil {
-					fmt.Println("😡:", err)
-				} else {
-					fmt.Println("Document", embedding.Id, "indexed successfully")
-				}
+				log.Fatalln("😡:", err)
 			}
+			// You can add metadata to the embedding
+			// It could be useful for debugging and filtering with Elasticsearch
+			// TODO: see how to use this metadata in the search
+			embedding.SimpleMetaData = "👋 hello from Parakeet 🦜🪺"
+
+			if _, err = elasticStore.Save(embedding); err != nil {
+				log.Fatalln("😡:", err)
+			}
+			fmt.Println("Document", embedding.Id, "indexed successfully")
 		}
 	}
 }
