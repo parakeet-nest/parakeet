@@ -18,7 +18,7 @@ Wait for some seconds until the services are up and running.
 
 ```bash
 export ELASTIC_PASSWORD=iloveparakeets
-curl -u elastic:$ELASTIC_PASSWORD https://localhost:9200
+curl -u elastic:$ELASTIC_PASSWORD http://localhost:9200
 ```
 
 You should get something like this:

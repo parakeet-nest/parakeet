@@ -2,6 +2,15 @@
 
 ## Release notes
 
+## v0.2.4 🥮 [mooncake]
+> Release in progress 🚧
+
+- Improving the RAG example with Elasticsearch: `40-rag-with-elastic-markdown`
+- New examples:
+  - Structured output: `66-structured-outputs`
+  - Experiments with Hypothetical Document Embeddings (HyDE): `65-hyde` (🚧 this is a work in progress)
+
+
 ## v0.2.3 🥧 [pie]
 
 #### What's new in v0.2.3?
