@@ -43,6 +43,25 @@ if err != nil {
 ```
 > See these examples: `04-chat-stream` and `66-structured-outputs`
 
+#### NoSuchOllamaHostError
+
+```golang
+// package completion
+type NoSuchOllamaHostError struct {
+	Host string
+	Message string
+}
+```
+
+**Usage**:
+```golang
+if noHostErr, ok := err.(*completion.NoSuchOllamaHostError); ok {
+  fmt.Printf("🦙 Got No Such Ollama Host error: %s\n", noHostErr.Message)
+  fmt.Printf("🌍 Expected Host: %s\n", noHostErr.Host)
+}
+```
+
+
 ### MCP
 
 

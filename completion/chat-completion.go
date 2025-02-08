@@ -13,7 +13,6 @@ import (
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
-
 func Chat(url string, query llm.Query) (llm.Answer, error) {
 	kindOfCompletion := "chat"
 
@@ -54,6 +53,9 @@ func Chat(url string, query llm.Query) (llm.Answer, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		if strings.HasSuffix(err.Error(), "no such host") {
+			return llm.Answer{}, &NoSuchOllamaHostError{Host: url, Message: "no such host"}
+		}
 		return llm.Answer{}, err
 	}
 	defer resp.Body.Close()
@@ -134,6 +136,10 @@ func ChatStream(url string, query llm.Query, onChunk func(llm.Answer) error) (ll
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		if strings.HasSuffix(err.Error(), "no such host") {
+			return llm.Answer{}, &NoSuchOllamaHostError{Host: url, Message: "no such host"}
+		}
+
 		return llm.Answer{}, err
 	}
 

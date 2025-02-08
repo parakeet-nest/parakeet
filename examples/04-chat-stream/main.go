@@ -61,8 +61,14 @@ func main() {
 			fmt.Printf("💥 Got Model Not Found error: %s\n", modelErr.Message)
 			fmt.Printf("😡 Error code: %d\n", modelErr.Code)
 			fmt.Printf("🧠 Expected Model: %s\n", modelErr.Model)
-		} else {
-			log.Fatal("😡:", err)
+		} 
+
+		if noHostErr, ok := err.(*completion.NoSuchOllamaHostError); ok {
+			fmt.Printf("🦙 Got No Such Ollama Host error: %s\n", noHostErr.Message)
+			fmt.Printf("🌍 Expected Host: %s\n", noHostErr.Host)
 		}
+		
+		log.Fatal("😡:", err)
+		
 	}
 }

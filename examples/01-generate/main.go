@@ -21,7 +21,6 @@ func main() {
 	model := "tinydolphin"
 
 
-
 	// Define the options
 	//options := llm.DefaultOptions()
 	//options.Temperature = 0.5

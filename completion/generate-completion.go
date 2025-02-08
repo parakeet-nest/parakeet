@@ -41,6 +41,10 @@ func Generate(url string, query llm.GenQuery) (llm.GenAnswer, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		if strings.HasSuffix(err.Error(), "no such host") {
+			return llm.GenAnswer{}, &NoSuchOllamaHostError{Host: url, Message: "no such host"}
+		}
+
 		return llm.GenAnswer{}, err
 	}
 	defer resp.Body.Close()
@@ -119,6 +123,10 @@ func GenerateStream(url string, query llm.GenQuery, onChunk func(llm.GenAnswer) 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		if strings.HasSuffix(err.Error(), "no such host") {
+			return llm.GenAnswer{}, &NoSuchOllamaHostError{Host: url, Message: "no such host"}
+		}
+
 		return llm.GenAnswer{}, err
 	}
 
