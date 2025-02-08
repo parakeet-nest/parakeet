@@ -61,8 +61,27 @@ if noHostErr, ok := err.(*completion.NoSuchOllamaHostError); ok {
 }
 ```
 
+### First MCP support
 
-### MCP
+Integration of `github.com/mark3labs/mcp-go/mcp` and `github.com/mark3labs/mcp-go/client` (this is a work in progress 🚧)
+
+#### Helpers
+
+- `mcphelpers.GetMCPClient(ctx context.Context, command string, env []string, args ...string) (*client.StdioMCPClient, *mcp.InitializeResult, error)`
+- `mcphelpers.GetTools(mcpClient *client.StdioMCPClient) ([]llm.Tool, error)`
+- `tools.ConvertMCPTools` to convert the MCP tools list to a list compliant with Ollama LLM tools. (used by `GetTools`)
+- `mcphelpers.CallTool(ctx context.Context, mcpClient *client.StdioMCPClient, functionName string, arguments map[string]interface{}) (*mcp.CallToolResult, error)`
+- `mcphelpers.GetTextFromResult(mcpResult *mcp.CallToolResult) (string, error)`
+
+> See this example: `67-mcp` (an example of a MCP server is provided)
+
+#### Error management (specific type errors)
+
+- `MCPClientCreationError`
+- `MCPClientInitializationError`
+- `MCPGetToolsError`
+- `MCPToolCallError`
+- `MCPResultExtractionError`
 
 
 ## v0.2.3 🥧 [pie]

@@ -3,6 +3,7 @@ package tools
 import (
 	"encoding/json"
 
+	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
@@ -54,4 +55,49 @@ func GenerateSystemToolsInstructions() string {
 	search the name of the tool in the list of tools with the Name field
 	`
 	return systemContentInstructions
+}
+
+// ConvertToLLMTools converts mcp.Tool to llm.Tool format
+func ConvertMCPTools(tools []mcp.Tool) []llm.Tool {
+	llmTools := make([]llm.Tool, len(tools))
+	for i, tool := range tools {
+		llmTools[i] = llm.Tool{
+			Type: "function",
+			Function: llm.Function{
+				Name:        tool.Name,
+				Description: tool.Description,
+				Parameters: llm.Parameters{
+					Type:       tool.InputSchema.Type,
+					Required:   tool.InputSchema.Required,
+					Properties: convertToLLMProperties(tool.InputSchema.Properties),
+				},
+			},
+		}
+	}
+	return llmTools
+}
+
+// Helper function to convert properties to llm.Property format
+func convertToLLMProperties(props map[string]interface{}) map[string]llm.Property {
+	result := make(map[string]llm.Property)
+
+	for name, prop := range props {
+		if propMap, ok := prop.(map[string]interface{}); ok {
+			property := llm.Property{
+				Type:        getString(propMap, "type"),
+				Description: getString(propMap, "description"),
+			}
+			result[name] = property
+		}
+	}
+
+	return result
+}
+
+// Helper function to safely get string values from map (unchanged)
+func getString(m map[string]interface{}, key string) string {
+	if v, ok := m[key].(string); ok {
+		return v
+	}
+	return ""
 }

@@ -119,6 +119,8 @@ use (
 
 	./examples/65-hyde
 	./examples/66-structured-outputs
+	./examples/67-mcp
+	./examples/67-mcp/mcp-server
 
 	examples/90-characters
 	examples/91-characters
