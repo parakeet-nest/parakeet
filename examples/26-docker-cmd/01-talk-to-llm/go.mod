@@ -2,7 +2,7 @@ module 01-talk-to-llm
 
 go 1.23.1
 
-require github.com/parakeet-nest/parakeet v0.2.3
+require github.com/parakeet-nest/parakeet v0.2.4
 
 require (
 	go.etcd.io/bbolt v1.3.10 // indirect

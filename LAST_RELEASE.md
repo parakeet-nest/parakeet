@@ -3,7 +3,6 @@
 ## Release notes
 
 ## v0.2.4 🥮 [mooncake]
-> Release in progress 🚧
 
 ### RAG
 
