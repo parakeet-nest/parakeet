@@ -13,19 +13,6 @@ import (
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
-type ModelNotFoundError struct {
-	Code    int
-	Message string
-	Model   string
-}
-
-func (e *ModelNotFoundError) Error() string {
-	return fmt.Sprintf("Code: %d, Message: %s, Model: %s", e.Code, e.Message, e.Model)
-}
-
-type CompletionError struct {
-	Error string
-}
 
 func Chat(url string, query llm.Query) (llm.Answer, error) {
 	kindOfCompletion := "chat"

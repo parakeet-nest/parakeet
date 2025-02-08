@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/parakeet-nest/parakeet/llm"
 )
@@ -53,6 +54,21 @@ func Generate(url string, query llm.GenQuery) (llm.GenAnswer, error) {
 		// we need to create a new error because
 		// because, even if the status is not ok (ex 401 Unauthorized)
 		// the error == nil
+		if resp.StatusCode == http.StatusNotFound {
+			var completionError CompletionError
+			var modelNotFound ModelNotFoundError
+			err = json.Unmarshal(body, &completionError)
+			if err != nil {
+				return llm.GenAnswer{}, err
+			}
+			if strings.HasPrefix(completionError.Error, "model") && strings.HasSuffix(completionError.Error, "not found, try pulling it first") {
+				modelNotFound.Code = resp.StatusCode
+				modelNotFound.Message = completionError.Error
+				modelNotFound.Model = query.Model
+			}
+			return llm.GenAnswer{}, &modelNotFound
+		}
+
 		return llm.GenAnswer{}, errors.New("Error: status code: " + resp.Status + "\n" + string(body))
 	}
 
@@ -161,6 +177,16 @@ func GenerateStream(url string, query llm.GenQuery, onChunk func(llm.GenAnswer) 
 	}
 
 	if resp.StatusCode != http.StatusOK {
+		if resp.StatusCode == http.StatusNotFound {
+			var modelNotFound ModelNotFoundError
+
+			modelNotFound.Code = resp.StatusCode
+			modelNotFound.Message = "model " + query.Model + " not found, try pulling it first"
+			modelNotFound.Model = query.Model
+
+			return llm.GenAnswer{}, &modelNotFound
+		}
+
 		return llm.GenAnswer{}, errors.New("Error: status code: " + resp.Status)
 	} else {
 		return fullAnswer, nil
