@@ -16,7 +16,7 @@ go get github.com/parakeet-nest/parakeet
 
 ## Some examples
 
-## Chat with streaming
+### Chat with streaming
 
 ```golang
 ollamaUrl := "http://localhost:11434"
@@ -50,7 +50,7 @@ _, err := completion.ChatStream(ollamaUrl, query,
     })
 ```
 
-## Tools (function calling)
+### Tools (function calling)
 
 ```golang
 
@@ -141,7 +141,7 @@ for idx, toolCall := range answer.Message.ToolCalls {
 }
 ```
 
-## Structured Output
+### Structured Output
 
 ```golang
 ollamaUrl := "http://localhost:11434"
@@ -194,7 +194,7 @@ fmt.Println(answer.Message.Content)
 */
 ```
 
-## Quick RAG
+### Quick RAG
 
 ```golang
 docs := []string{
