@@ -24,12 +24,19 @@ func main() {
 	if err != nil {
 		log.Fatalln("😡:", err)
 	}
-	ollamaUrl := os.Getenv("OLLAMA_HOST")
-	model := os.Getenv("LLM")
 
+	ollamaUrl := os.Getenv("OLLAMA_HOST")
+	if ollamaUrl == "" {
+		ollamaUrl = "http://localhost:11434"
+	}
+
+	model := os.Getenv("LLM_CHAT")
+	if model == "" {
+		model = "qwen2.5:0.5b"
+	}
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 0.0,
+		option.Temperature: 1.5,
 	})
 
 	// define schema for a structured output
