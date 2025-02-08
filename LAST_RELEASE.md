@@ -13,6 +13,8 @@ Improving the RAG example with Elasticsearch: `40-rag-with-elastic-markdown` (ðŸ
   
 - Structured output: `66-structured-outputs`
 - Experiments with Hypothetical Document Embeddings (HyDE): `65-hyde` (ðŸš§ this is a work in progress)
+- MCP Client: `67-mcp`
+- How to use DeepSeek R1 (`1.5b`): `68-deepseek-r1`
 
 ### Error management
 

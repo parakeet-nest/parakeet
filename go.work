@@ -121,6 +121,7 @@ use (
 	./examples/66-structured-outputs
 	./examples/67-mcp
 	./examples/67-mcp/mcp-server
+	./examples/68-deepseek-r1
 
 	examples/90-characters
 	examples/91-characters
