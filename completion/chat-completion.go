@@ -8,18 +8,33 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/parakeet-nest/parakeet/llm"
 )
+
+type ModelNotFoundError struct {
+	Code    int
+	Message string
+	Model   string
+}
+
+func (e *ModelNotFoundError) Error() string {
+	return fmt.Sprintf("Code: %d, Message: %s, Model: %s", e.Code, e.Message, e.Model)
+}
+
+type CompletionError struct {
+	Error string
+}
 
 func Chat(url string, query llm.Query) (llm.Answer, error) {
 	kindOfCompletion := "chat"
 
 	/*
-	var outputSchema = "" 
-	if query.Format != "" && query.Format != "json" {
-		outputSchema = query.Format
-	}
+		var outputSchema = ""
+		if query.Format != "" && query.Format != "json" {
+			outputSchema = query.Format
+		}
 	*/
 
 	query.Stream = false
@@ -38,8 +53,6 @@ func Chat(url string, query llm.Query) (llm.Answer, error) {
 	if err != nil {
 		return llm.Answer{}, err
 	}
-
-	//fmt.Println("🔴 jsonQuery", string(jsonQuery))
 
 	req, err := http.NewRequest(http.MethodPost, url+"/api/"+kindOfCompletion, bytes.NewBuffer(jsonQuery))
 	if err != nil {
@@ -67,7 +80,24 @@ func Chat(url string, query llm.Query) (llm.Answer, error) {
 		// we need to create a new error because
 		// because, even if the status is not ok (ex 401 Unauthorized)
 		// the error == nil
+
+		if resp.StatusCode == http.StatusNotFound {
+			var completionError CompletionError
+			var modelNotFound ModelNotFoundError
+			err = json.Unmarshal(body, &completionError)
+			if err != nil {
+				return llm.Answer{}, err
+			}
+			if strings.HasPrefix(completionError.Error, "model") && strings.HasSuffix(completionError.Error, "not found, try pulling it first") {
+				modelNotFound.Code = resp.StatusCode
+				modelNotFound.Message = completionError.Error
+				modelNotFound.Model = query.Model
+			}
+			return llm.Answer{}, &modelNotFound
+		}
+
 		return llm.Answer{}, errors.New("Error: status code: " + resp.Status + "\n" + string(body))
+
 	}
 
 	var answer llm.Answer
@@ -175,6 +205,16 @@ func ChatStream(url string, query llm.Query, onChunk func(llm.Answer) error) (ll
 	}
 
 	if resp.StatusCode != http.StatusOK {
+		if resp.StatusCode == http.StatusNotFound {
+			var modelNotFound ModelNotFoundError
+
+			modelNotFound.Code = resp.StatusCode
+			modelNotFound.Message = "model " + query.Model + " not found, try pulling it first"
+			modelNotFound.Model = query.Model
+
+			return llm.Answer{}, &modelNotFound
+		}
+
 		return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
 	} else {
 		return fullAnswer, nil

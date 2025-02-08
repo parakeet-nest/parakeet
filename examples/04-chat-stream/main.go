@@ -11,9 +11,8 @@ import (
 	"log"
 
 	"github.com/parakeet-nest/parakeet/completion"
-	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/enums/option"
-
+	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func main() {
@@ -31,12 +30,11 @@ func main() {
 	And, please, be structured with bullet points`
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 0.5,
-		option.RepeatLastN: 2,
+		option.Temperature:   0.5,
+		option.RepeatLastN:   2,
 		option.RepeatPenalty: 3.0,
-		option.Verbose: true,
+		option.Verbose:       false,
 	})
-
 
 	query := llm.Query{
 		Model: model,
@@ -52,12 +50,19 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			return nil
 		})
-	
+
 	fmt.Println("📝 Full answer:")
 	fmt.Println(fullAnswer.Message.Role)
 	fmt.Println(fullAnswer.Message.Content)
 
 	if err != nil {
-		log.Fatal("😡:", err)
+		// test if the model is not found
+		if modelErr, ok := err.(*completion.ModelNotFoundError); ok {
+			fmt.Printf("💥 Got Model Not Found error: %s\n", modelErr.Message)
+			fmt.Printf("😡 Error code: %d\n", modelErr.Code)
+			fmt.Printf("🧠 Expected Model: %s\n", modelErr.Model)
+		} else {
+			log.Fatal("😡:", err)
+		}
 	}
 }

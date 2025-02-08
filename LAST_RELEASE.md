@@ -5,10 +5,45 @@
 ## v0.2.4 🥮 [mooncake]
 > Release in progress 🚧
 
-- Improving the RAG example with Elasticsearch: `40-rag-with-elastic-markdown`
-- New examples:
-  - Structured output: `66-structured-outputs`
-  - Experiments with Hypothetical Document Embeddings (HyDE): `65-hyde` (🚧 this is a work in progress)
+### RAG
+
+Improving the RAG example with Elasticsearch: `40-rag-with-elastic-markdown` (🙏 Thank you [@codefromthecrypt](https://github.com/codefromthecrypt))
+
+### New examples:
+  
+- Structured output: `66-structured-outputs`
+- Experiments with Hypothetical Document Embeddings (HyDE): `65-hyde` (🚧 this is a work in progress)
+
+### Error management
+
+#### ModelNotFoundError
+
+```golang
+// package completion
+type ModelNotFoundError struct {
+  Code    int
+  Message string
+  Model   string
+}
+```
+
+**Usage**:
+```golang
+answer, err := completion.Chat(ollamaUrl, query)
+if err != nil {
+  // test if the model is not found
+  if modelErr, ok := err.(*completion.ModelNotFoundError); ok {
+    fmt.Printf("💥 Got Model Not Found error: %s\n", modelErr.Message)
+    fmt.Printf("😡 Error code: %d\n", modelErr.Code)
+    fmt.Printf("🧠 Expected Model: %s\n", modelErr.Model)
+  } else {
+    log.Fatal("😡:", err)
+  }
+}
+```
+> See these examples: `04-chat-stream` and `66-structured-outputs`
+
+### MCP
 
 
 ## v0.2.3 🥧 [pie]

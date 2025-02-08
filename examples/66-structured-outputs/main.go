@@ -72,7 +72,14 @@ func main() {
 
 	answer, err := completion.Chat(ollamaUrl, query)
 	if err != nil {
-		log.Fatal("😡:", err)
+		// test if the model is not found
+		if modelErr, ok := err.(*completion.ModelNotFoundError); ok {
+			fmt.Printf("💥 Got Model Not Found error: %s\n", modelErr.Message)
+			fmt.Printf("😡 Error code: %d\n", modelErr.Code)
+			fmt.Printf("🧠 Expected Model: %s\n", modelErr.Model)
+		} else {
+			log.Fatal("😡:", err)
+		}
 	}
 	fmt.Println(answer.Message.Content)
 
