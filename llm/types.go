@@ -75,6 +75,7 @@ type MessageRecord struct {
 	Id      string `json:"id"`
 	Role    string `json:"role"`
 	Content string `json:"content"`
+	SessionId string `json:"sessionId"`
 }
 
 /*

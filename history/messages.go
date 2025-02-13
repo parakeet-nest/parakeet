@@ -9,6 +9,8 @@ type Messages interface {
 	GetAllMessages() ([]llm.Message, error)
 	Save(messageRecord llm.MessageRecord) (llm.MessageRecord, error)
 	SaveMessage(id string, message llm.Message) (llm.MessageRecord, error)
+
+	SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error)
 }
 
 

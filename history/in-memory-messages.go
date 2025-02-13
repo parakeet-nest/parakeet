@@ -53,3 +53,16 @@ func (m *MemoryMessages) SaveMessage(id string, message llm.Message) (llm.Messag
 	}
 	return m.Save(messageRecord)
 }
+
+func (m *MemoryMessages) SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error) {
+	messageRecord := llm.MessageRecord{
+		Id:      messageId,
+		Role:    message.Role,
+		Content: message.Content,
+		SessionId: sessionId,
+	}
+	return m.Save(messageRecord)
+}
+
+
+// 	SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error)

@@ -97,3 +97,16 @@ func (b *BboltMessages) SaveMessage(id string, message llm.Message) (llm.Message
 	}
 	return b.Save(messageRecord)
 }
+
+
+func (b *BboltMessages) SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error) {
+	messageRecord := llm.MessageRecord{
+		Id:      messageId,
+		Role:    message.Role,
+		Content: message.Content,
+		SessionId: sessionId,
+	}
+	return b.Save(messageRecord)
+}
+
+// 	SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error)

@@ -1,4 +1,4 @@
-module 69-web-chat-bot
+module 70-web-chat-bot-with-session
 
 go 1.23.1
 
