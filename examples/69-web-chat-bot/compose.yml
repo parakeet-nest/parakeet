@@ -1,0 +1,43 @@
+services:
+  # docker compose -f compose.local.yml up --build 
+
+  download-local-llm:
+    image: curlimages/curl:8.6.0
+    entrypoint: ["curl", "http://host.docker.internal:11434/api/pull", "-d", '{"name": "qwen2.5:3b"}']
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - LLM_CHAT=qwen2.5:3b
+    depends_on:
+      download-local-llm:
+        condition: service_completed_successfully
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/main.go
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 9090:8501
+    environment:
+      - BACKEND_SERVICE_URL=http://backend:5050
+      - PAGE_TITLE=🙂🤓🥸 We are Bob!
+      - PAGE_HEADER=We are legion 🤖🤖🤖
+      - PAGE_ICON=🤖
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - action: rebuild
+          path: ./frontend/app.py
+
+

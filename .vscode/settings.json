@@ -1,8 +1,8 @@
 {
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Ayu Green Mirage Bordered",
-    "editor.fontSize": 14,
-    "terminal.integrated.fontSize": 14,
+    "workbench.colorTheme": "Idea intellij light theme",
+    "editor.fontSize": 13,
+    "terminal.integrated.fontSize": 13,
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "editor.detectIndentation": true,

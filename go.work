@@ -123,6 +123,8 @@ use (
 	./examples/67-mcp/mcp-server
 	./examples/68-deepseek-r1
 
+	./examples/69-web-chat-bot/backend
+
 	examples/90-characters
 	examples/91-characters
 
