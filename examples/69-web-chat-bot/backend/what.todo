@@ -1,0 +1,66 @@
+This is my project
+
+parakeet/
+  ├── examples/
+  │   └── 69-web-chat-bot/
+  │       └── backend
+  │           ├── Dockerfile
+  │           ├── main.go
+  │           └── go.mod
+  ├── cli/
+  ├── content/
+  ├── data/
+  ├── db/
+  ├── embeddings/
+  ├── enums/
+  ├── flock/
+  ├── gear/
+  ├── history/
+  ├── llm/
+  ├── mcphelpers/
+  ├── prompt/
+  ├── similarity/
+  ├── tools/
+  ├── wasm/
+  ├── completion/
+  └── parakeet.go 
+
+
+the main file of the library is parakeet.go 
+
+the example of code is in parakeet/examples/69-web-chat-bot/backend
+
+the other directories are the package of the library
+
+this is my current Dockerfile:
+
+```
+FROM golang:1.23.1-alpine AS builder
+WORKDIR /app
+COPY main.go .
+COPY go.mod .
+
+RUN <<EOF
+go mod tidy 
+go build -o web-chat-bot
+EOF
+
+FROM scratch
+WORKDIR /app
+COPY --from=builder /app/web-chat-bot .
+
+CMD ["./web-chat-bot"]
+```
+and this is the go.mod file
+
+```
+module 69-web-chat-bot
+
+go 1.23.1
+
+require github.com/parakeet-nest/parakeet v0.2.4
+
+replace github.com/parakeet-nest/parakeet => ../../..
+```
+
+I need to dockerize the backend example, how can I handle `replace github.com/parakeet-nest/parakeet => ../../..`

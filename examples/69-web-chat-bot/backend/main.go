@@ -91,24 +91,21 @@ func main() {
 
 		fmt.Println("🅰:", conversationMessages)
 
-
 		query := llm.Query{
-			Model: model,
+			Model:    model,
 			Messages: conversationMessages,
-			Options: options,
+			Options:  options,
 		}
 		/*
-		query := llm.Query{
-			Model: model,
-			Messages: []llm.Message{
-				{Role: "system", Content: systemInstructions},
-				{Role: "user", Content: userMessage},
-			},
-			Options: options,
-		}
+			query := llm.Query{
+				Model: model,
+				Messages: []llm.Message{
+					{Role: "system", Content: systemInstructions},
+					{Role: "user", Content: userMessage},
+				},
+				Options: options,
+			}
 		*/
-
-
 
 		answer, err := completion.ChatStream(ollamaUrl, query,
 			func(answer llm.Answer) error {

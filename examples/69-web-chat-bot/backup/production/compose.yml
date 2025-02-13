@@ -8,8 +8,8 @@ services:
 
   backend:
     build:
-      context: ../..  # Points to parakeet root directory
-      dockerfile: examples/69-web-chat-bot/backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     environment:
       - OLLAMA_BASE_URL=http://host.docker.internal:11434
       - LLM_CHAT=qwen2.5:3b

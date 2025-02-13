@@ -10,7 +10,6 @@ type Messages interface {
 	Save(messageRecord llm.MessageRecord) (llm.MessageRecord, error)
 	SaveMessage(id string, message llm.Message) (llm.MessageRecord, error)
 }
-// TODO: implement Delete
-// TODO: get with prefix
+
 
 
