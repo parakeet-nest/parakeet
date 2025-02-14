@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
+	"sync"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
@@ -25,6 +25,9 @@ func GetBytesBody(request *http.Request) []byte {
 	request.Body.Read(body)
 	return body
 }
+
+var m sync.Mutex
+var messagesCounters = make(map[string]int)
 
 func main() {
 
@@ -62,8 +65,7 @@ func main() {
 	mux := http.NewServeMux()
 	shouldIStopTheCompletion := false
 
-	messagesCounter := 0
-	conversationLength := 6
+	messagesCounters := map[string]int{}
 
 	mux.HandleFunc("POST /chat", func(response http.ResponseWriter, request *http.Request) {
 		// add a flusher
@@ -80,8 +82,20 @@ func main() {
 			response.Write([]byte("😡 Error: " + err.Error()))
 		}
 
+		fmt.Println("📝 posted data:", data)
+
 		userMessage := data["message"]
-		previousMessages, _ := conversation.GetAllMessages()
+		sessionId := data["sessionId"]
+
+		//? 💌 Get all messages from the conversation filtered by the session id
+		//previousMessages, _ := conversation.GetAllMessages()
+		previousMessages, _ := conversation.GetAllMessagesOfSession(sessionId)
+
+		//? 📝 Print the previous messages
+		fmt.Println("👋 sessionId", sessionId, "previousMessages:")
+		for _, message := range previousMessages {
+			fmt.Println(" - message:", message)
+		}
 
 		// (Re)Create the conversation
 		conversationMessages := []llm.Message{}
@@ -92,27 +106,11 @@ func main() {
 		// last question
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
 
-		//? 📝 Print the previous messages
-		fmt.Println("👋 previousMessages:")
-		for _, message := range previousMessages {
-			fmt.Println(" - message:", message)
-		}
-
 		query := llm.Query{
 			Model:    model,
 			Messages: conversationMessages,
 			Options:  options,
 		}
-		/*
-			query := llm.Query{
-				Model: model,
-				Messages: []llm.Message{
-					{Role: "system", Content: systemInstructions},
-					{Role: "user", Content: userMessage},
-				},
-				Options: options,
-			}
-		*/
 
 		answer, err := completion.ChatStream(ollamaUrl, query,
 			func(answer llm.Answer) error {
@@ -127,38 +125,34 @@ func main() {
 				}
 			})
 
+
 		if err != nil {
 			shouldIStopTheCompletion = false
 			response.Write([]byte("bye: " + err.Error()))
 		}
 
+		// Is it useful or not?
+		m.Lock()
+		defer m.Unlock()
 		//! I use a counter for the id of the message, then I can create an ordered list of messages
-		messagesCounter++
-		conversation.SaveMessage(strconv.Itoa(messagesCounter), llm.Message{
+
+		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* remove the top message of the conversation if the conversation length is reached
-		if messagesCounter >= conversationLength {
-			fmt.Println("🟢 counter:", messagesCounter)
-			topMessageId := strconv.Itoa(messagesCounter - (conversationLength- 1))
-			msg, _ := conversation.Get(topMessageId)
-			fmt.Println("🟩 message:", msg.Id, msg.Role, msg.Content)
-			conversation.RemoveMessage(topMessageId)
-		}
+		//* Remove the top(first) message of conversation of maxMessages(6) messages
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 6)
 
-		messagesCounter++
-		conversation.SaveMessage(strconv.Itoa(messagesCounter), llm.Message{
+		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		if messagesCounter >= conversationLength {
-			fmt.Println("🔵 counter:", messagesCounter)
-			topMessageId := strconv.Itoa(messagesCounter - (conversationLength- 1))
-			msg, _ := conversation.Get(topMessageId)
-			fmt.Println("🟦 message:", msg.Id, msg.Role, msg.Content)
-			conversation.RemoveMessage(topMessageId)
-		}
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 6)
+
+	})
+
+	mux.HandleFunc("POST /clear-history", func(response http.ResponseWriter, request *http.Request) {
+		// TODO: Clear all messages from the conversation
 	})
 
 	// Cancel/Stop the generation of the completion

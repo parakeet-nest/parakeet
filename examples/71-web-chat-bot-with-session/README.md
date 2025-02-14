@@ -1,4 +1,4 @@
-# Web Chat bot
+# Web Chat bot with session (with Bbolt)
 
 If you are working on a release, to test this sample:
 ```bash

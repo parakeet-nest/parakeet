@@ -1,22 +1,6 @@
-
 ----------------------------------
-add SessionId to llm.MessageRecord
-----------------------------------
-
-----------------------------------
-update the other methods to take 
-in account the id of session
+- Redis suppport
+- Similarity search with the history
+- Add Daphnia support / Artemia?
 ----------------------------------
 
-----------------------------------
-implement:
-----------------------------------
-- GetFiltered(patternId string) ([]llm.MessageRecord, error)
-- GetFilteredMessages(patternId string) ([]llm.Message, error)
-- RemoveMessage(id string)
-- RemoveFilteredMessages(patternId string)
-- RemoveAllMessages()
-
-----------------------------------
-Add Daphnia support
-----------------------------------

@@ -124,6 +124,9 @@ use (
 	./examples/68-deepseek-r1
 
 	./examples/69-web-chat-bot/backend
+	./examples/70-web-chat-bot-with-session/backend
+	./examples/71-web-chat-bot-with-session/backend
+
 
 	examples/90-characters
 	examples/91-characters

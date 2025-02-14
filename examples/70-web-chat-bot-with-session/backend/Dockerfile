@@ -4,6 +4,8 @@ COPY main.go .
 COPY go.mod .
 
 RUN <<EOF
+go mod edit -dropreplace github.com/parakeet-nest/parakeet
+go mod download
 go mod tidy 
 go build -o web-chat-bot
 EOF

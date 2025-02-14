@@ -1,5 +1,5 @@
 services:
-  # docker compose up --build 
+  # docker compose -f compose.dev.yml up --build 
 
   download-local-llm:
     image: curlimages/curl:8.6.0
@@ -8,8 +8,8 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ../..  # Points to parakeet root directory
+      dockerfile: examples/69-web-chat-bot/backend/Dockerfile.dev
     environment:
       - OLLAMA_BASE_URL=http://host.docker.internal:11434
       - LLM_CHAT=qwen2.5:3b
@@ -30,7 +30,7 @@ services:
       - 9090:8501
     environment:
       - BACKEND_SERVICE_URL=http://backend:5050
-      - PAGE_TITLE=🙂🤓🥸 We are Bob!
+      - PAGE_TITLE=🙂🤓🥸 We are Bob! [DEV MODE]
       - PAGE_HEADER=We are legion 🤖🤖🤖
       - PAGE_ICON=🤖
     depends_on:
