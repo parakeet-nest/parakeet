@@ -2,6 +2,29 @@
 
 ## Release notes
 
+## v0.2.5 🥧 [pie] (🚧 in progress)
+
+### Conversational history
+
+#### In Memory
+
+- Added `history.RemoveMessage(id string)`
+  - see example: `69-web-chat-bot`
+- Added `history.SaveMessageWithSession(sessionId string, messagesCounters *map[string]int, message llm.Message)`
+  - see example: `70-web-chat-bot-with-session`
+- Added `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
+  - see example: `70-web-chat-bot-with-session`
+
+#### Bbolt Memory
+
+- Added `history.RemoveMessage(id string)`
+- Added `history.SaveMessageWithSession(sessionId string, messagesCounters *map[string]int, message llm.Message)`
+  - see example: `71-web-chat-bot-with-session`
+- Added `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
+  - see example: `71-web-chat-bot-with-session`
+
+
+
 ## v0.2.4 🥮 [mooncake]
 
 ### RAG

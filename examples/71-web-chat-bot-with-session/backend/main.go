@@ -58,14 +58,11 @@ func main() {
 
 	systemInstructions := `You are a useful AI agent, your name is Bob`
 
-	conversation := history.MemoryMessages{
-		Messages: make(map[string]llm.MessageRecord),
-	}
+	conversation := history.BboltMessages{}
+	conversation.Initialize("./conversation.db")
 
 	mux := http.NewServeMux()
 	shouldIStopTheCompletion := false
-
-	messagesCounters := map[string]int{}
 
 	mux.HandleFunc("POST /chat", func(response http.ResponseWriter, request *http.Request) {
 		// add a flusher
@@ -125,7 +122,6 @@ func main() {
 				}
 			})
 
-
 		if err != nil {
 			shouldIStopTheCompletion = false
 			response.Write([]byte("bye: " + err.Error()))
@@ -140,7 +136,6 @@ func main() {
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* Remove the top(first) message of conversation of maxMessages(6) messages
 		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 6)
 
 		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{

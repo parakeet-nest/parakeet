@@ -1,17 +1,19 @@
 services:
-  # docker compose -f compose.local.yml up --build 
+  # docker compose -f compose.dev.yml up --build 
 
   download-local-llm:
     image: curlimages/curl:8.6.0
     entrypoint: ["curl", "http://host.docker.internal:11434/api/pull", "-d", '{"name": "qwen2.5:3b"}']
+    #entrypoint: ["curl", "http://robby.local:4000/api/pull", "-d", '{"name": "qwen2.5:3b"}']
 
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ../..  # Points to parakeet root directory
+      dockerfile: examples/71-web-chat-bot-with-session/backend/Dockerfile.dev
     environment:
       - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      #- OLLAMA_BASE_URL=http://robby.local:4000
       - LLM_CHAT=qwen2.5:3b
     depends_on:
       download-local-llm:

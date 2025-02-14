@@ -3,8 +3,13 @@ import requests
 import os
 from datetime import datetime
 
+PAGE_TITLE = os.environ.get('PAGE_TITLE', 'Web Chat Bot demo')
+PAGE_HEADER = os.environ.get('PAGE_HEADER', 'Made with Streamlit and Parakeet')
+
+PAGE_ICON = os.environ.get('PAGE_ICON', '🚀')
+
 # Configuration of the Streamlit page
-st.set_page_config(page_title="TechFusion 2025", page_icon="🚀")
+st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON)
 
 # Hide the Deploy button
 st.markdown("""
@@ -27,7 +32,10 @@ if "input_key" not in st.session_state:
 if "session_id" not in st.session_state:
     st.session_state.session_id = "default"
 
+
 # Backend URL (the nodejs server)
+#BACKEND_SERVICE_URL = "http://backend:5050"
+
 BACKEND_SERVICE_URL = os.environ.get('BACKEND_SERVICE_URL', 'http://backend:5050')
 
 def stream_response(message, session_id):
@@ -73,13 +81,14 @@ def clear_conversation_history(session_id):
     except requests.exceptions.RequestException as e:
         st.error(f"Error clearing history: {str(e)}")
 
+
 def increment_input_key():
     """Increment the input key to reset the input field"""
     st.session_state.input_key += 1
 
 # Page title
-st.title("🚀 TechFusion 2025")
-st.header("Where Web3 Meets AI 🤖")
+st.title(PAGE_TITLE)
+st.header(PAGE_HEADER)
 
 # Session ID input
 session_id = st.text_input(
@@ -91,13 +100,15 @@ st.session_state.session_id = session_id
 
 # Form to send a message
 with st.form(key=f"message_form_{st.session_state.input_key}"):
-    message = st.text_input("📝 Your message:", key=f"input_{st.session_state.input_key}")
-    col1, col2, col3 = st.columns([1, 2.5, 1])
+    #message = st.text_input("📝 Your message:", key=f"input_{st.session_state.input_key}")
+    message = st.text_area("📝 Your message:", key=f"input_{st.session_state.input_key}", height=150)
+    #submit_button = st.form_submit_button(label="Send...")
+    #cancel_button = st.form_submit_button(label="Cancel", type="secondary")
+    col1, col2, col3 = st.columns([1, 1, 3])
     with col1:
-        submit_button = st.form_submit_button("Send ✨")
+        submit_button = st.form_submit_button(label="Send...")
     with col2:
-        # Empty column for spacing
-        pass
+        cancel_button = st.form_submit_button(label="Cancel", type="secondary")
     with col3:
         clear_button = st.form_submit_button("Clear History 🗑️")
 
@@ -114,6 +125,7 @@ if submit_button and message and len(message.strip()) > 0:
         "content": message,
         "time": datetime.now(),
         "session_id": st.session_state.session_id
+
     })
     
     # Stream the response from the backend
@@ -131,6 +143,19 @@ if submit_button and message and len(message.strip()) > 0:
     increment_input_key()
     st.rerun()
 
+# Handle the message submission and cancellation
+if cancel_button:
+    try:
+        response = requests.delete(f"{BACKEND_SERVICE_URL}/cancel")
+        if response.status_code == 200:
+            st.success("Request cancelled successfully")
+        else:
+            st.error("Failed to cancel request")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Error cancelling request: {str(e)}")
+
+
+
 # Display the messages history
 st.write("### Messages history")
 for msg in reversed(st.session_state.messages):
@@ -141,3 +166,5 @@ for msg in reversed(st.session_state.messages):
         else:
             st.success(f"🤖 Assistant ({msg['time'].strftime('%H:%M')}) - Session: {msg['session_id']}")
             st.write(msg["content"])
+
+

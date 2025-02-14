@@ -1,39 +1,6 @@
-
-
-
-
-
 ----------------------------------
-In llm/types.go
-add SessionId to llm.MessageRecord
-done
+- Redis suppport
+- Similarity search with the history
+- Add Daphnia support / Artemia?
 ----------------------------------
 
-
-----------------------------------
-add the sessionId parameter to the SaveMessage method
-
-SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error)
-in history/messages.go
-----------------------------------
-
-
-
-
-----------------------------------
-update the other methods to take 
-in account the id of session
-----------------------------------
-
-----------------------------------
-implement:
-----------------------------------
-- GetFiltered(patternId string) ([]llm.MessageRecord, error)
-- GetFilteredMessages(patternId string) ([]llm.Message, error)
-- RemoveMessage(id string)
-- RemoveFilteredMessages(patternId string)
-- RemoveAllMessages()
-
-----------------------------------
-Add Daphnia support
-----------------------------------
