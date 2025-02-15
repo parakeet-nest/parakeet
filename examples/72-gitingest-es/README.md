@@ -4,11 +4,23 @@
 
 If you are working on a release, to test this sample:
 ```bash
-docker compose -f compose.dev.yml up --build 
+# Embeddings generation then start the application:
+docker compose -f compose.dev.yml --profile generation --profile application up --build 
+
+# Start the application only:
+docker compose -f compose.dev.yml --profile application up --build 
 ```
 
 ## Production mode
 
+If you are using the current release, to run this sample:
+```bash
+# Embeddings generation then start the application:
+docker compose --profile generation --profile application up --build 
+
+# Start the application only:
+docker compose --profile application up --build 
+```
 
 ## Questions examples
 
