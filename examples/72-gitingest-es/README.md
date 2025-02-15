@@ -3,24 +3,24 @@
 ```mermaid
 flowchart TD
     subgraph Generation["Generation Profile"]
-        gitingest[("gitingest\nIngests code from GitHub")]
-        create-embeddings["create-embeddings\nGenerates embeddings"]
+        gitingest[("gitingest: Ingests code from GitHub")]
+        create-embeddings["create-embeddings: Generates embeddings"]
     end
 
     subgraph Application["Application Profile"]
-        frontend["frontend\nStreamlit UI\nPort: 9090"]
-        backend["backend\nGo Service"]
+        frontend["frontend: Streamlit UI: Port: 9090"]
+        backend["backend: Go Service"]
     end
 
     subgraph Shared["Shared Services"]
-        elasticsearch[("elasticsearch\nPort: 9200")]
-        kibana["kibana\nPort: 5601"]
-        elasticsearch_settings["elasticsearch_settings\nInitial setup"]
+        elasticsearch[("elasticsearch: Port: 9200")]
+        kibana["kibana: Port: 5601"]
+        elasticsearch_settings["elasticsearch_settings: Initial setup"]
     end
 
     subgraph LLM["LLM Services"]
-        download-local-llm["download-local-llm\nDownloads chat model"]
-        download-local-llm-embeddings["download-local-llm-embeddings\nDownloads embeddings model"]
+        download-local-llm["download-local-llm: Downloads chat model"]
+        download-local-llm-embeddings["download-local-llm-embeddings: Downloads embeddings model"]
     end
 
     %% Dependencies for Generation Profile
