@@ -127,10 +127,13 @@ use (
 	./examples/70-web-chat-bot-with-session/backend
 	./examples/71-web-chat-bot-with-session/backend
 
+	./examples/72-gitingest-es/create-embeddings
+	./examples/72-gitingest-es/backend
 
+
+	// Testing and experiments
 	examples/90-characters
 	examples/91-characters
-
 	examples/99-testing
 	
 	//prompting/01-draft
