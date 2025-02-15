@@ -1,0 +1,11 @@
+services:
+
+  gitingest:
+    build:
+      context: ./gitingest
+      dockerfile: Dockerfile
+    environment:
+      - GITHUB_REPOSITORY=https://github.com/parakeet-nest/parakeet
+    volumes:
+      - ./data:/app/data
+      
