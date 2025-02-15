@@ -127,8 +127,8 @@ services:
   backend:
     profiles: [application]
     build:
-      context: ../..  # Points to parakeet root directory
-      dockerfile: examples/72-gitingest-es/backend/Dockerfile.dev
+      context: ./backend
+      dockerfile: Dockerfile
     environment:
       - CONTENT_PATH=/app/data/tree.txt
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
