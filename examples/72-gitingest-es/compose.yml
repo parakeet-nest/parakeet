@@ -6,7 +6,6 @@ name: parakeet-genai-stack
 # Start the application only:
 # docker compose -f compose.dev.yml --profile application up --build 
 
-
 services:
 
   gitingest:

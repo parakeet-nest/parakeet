@@ -1,5 +1,49 @@
 # Chat with your code
 
+```mermaid
+flowchart TD
+    subgraph Generation["Generation Profile"]
+        gitingest[("gitingest\nIngests code from GitHub")]
+        create-embeddings["create-embeddings\nGenerates embeddings"]
+    end
+
+    subgraph Application["Application Profile"]
+        frontend["frontend\nStreamlit UI\nPort: 9090"]
+        backend["backend\nGo Service"]
+    end
+
+    subgraph Shared["Shared Services"]
+        elasticsearch[("elasticsearch\nPort: 9200")]
+        kibana["kibana\nPort: 5601"]
+        elasticsearch_settings["elasticsearch_settings\nInitial setup"]
+    end
+
+    subgraph LLM["LLM Services"]
+        download-local-llm["download-local-llm\nDownloads chat model"]
+        download-local-llm-embeddings["download-local-llm-embeddings\nDownloads embeddings model"]
+    end
+
+    %% Dependencies for Generation Profile
+    gitingest --> create-embeddings
+    download-local-llm-embeddings --> create-embeddings
+    elasticsearch --> elasticsearch_settings
+    elasticsearch_settings --> kibana
+    elasticsearch --> create-embeddings
+    kibana --> create-embeddings
+
+    %% Dependencies for Application Profile
+    download-local-llm --> backend
+    download-local-llm-embeddings --> backend
+    elasticsearch --> backend
+    kibana --> backend
+    backend --> frontend
+
+    style Generation fill:#f9f,stroke:#333,stroke-width:2px
+    style Application fill:#bbf,stroke:#333,stroke-width:2px
+    style Shared fill:#bfb,stroke:#333,stroke-width:2px
+    style LLM fill:#ffb,stroke:#333,stroke-width:2px
+```
+
 ## Development mode
 
 If you are working on a release, to test this sample:
