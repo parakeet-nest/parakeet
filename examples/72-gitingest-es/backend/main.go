@@ -7,11 +7,13 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
+	"sync"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/option"
+	"github.com/parakeet-nest/parakeet/gear"
+	"github.com/parakeet-nest/parakeet/history"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
@@ -26,49 +28,49 @@ func GetBytesBody(request *http.Request) []byte {
 	return body
 }
 
+// USed for the history of messages
+var m sync.Mutex
+var messagesCounters = make(map[string]int)
+
 func main() {
+	httpPort := gear.GetEnvString("HTTP_PORT", "5050")
 
-	var contentPath = os.Getenv("CONTENT_PATH")
-	if contentPath == "" {
-		contentPath = "../data/tree.txt"
+	conversation := history.MemoryMessages{
+		Messages: make(map[string]llm.MessageRecord),
 	}
+	//messagesCounters := map[string]int{}
 
-	// open ../data/tree.txt
-	// read the content of tree.txt
-	directoryTree, err := os.ReadFile(contentPath)
+	var directoryTreePath = gear.GetEnvString("DIRECTORY_TREE_PATH", "../data/tree.txt")
+
+	directoryTree, err := os.ReadFile(directoryTreePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln("😡:", err)
 	}
 
-	ollamaUrl := os.Getenv("OLLAMA_BASE_URL")
-	if ollamaUrl == "" {
-		ollamaUrl = "http://localhost:11434"
-	}
+	systemInstructionsPath := gear.GetEnvString("SYSTEM_INSTRUCTIONS_PATH", "../instructions/parakeet.instructions.md")
 
-	model := os.Getenv("LLM_CHAT")
-	if model == "" {
-		model = "deepseek-r1:1.5b"
-	}
-
-	var httpPort = os.Getenv("HTTP_PORT")
-	if httpPort == "" {
-		httpPort = "5050"
-	}
-
-	embeddingsModel := os.Getenv("LLM_EMBEDDINGS")
-	if embeddingsModel == "" {
-		embeddingsModel = "mxbai-embed-large"
-	}
-
-	maxSimilaritiesEnv := os.Getenv("MAX_SIMILARITIES")
-	if maxSimilaritiesEnv == "" {
-		maxSimilaritiesEnv = "5"
-	}
-	maxSimilarities , err := strconv.Atoi(maxSimilaritiesEnv)
+	systemInstructions, err := os.ReadFile(systemInstructionsPath)
 	if err != nil {
-		maxSimilarities = 5
+		log.Fatalln("😡:", err)
 	}
 
+	fmt.Println("🤖📝 system instructions:", string(systemInstructions))
+
+	ollamaUrl := gear.GetEnvString("OLLAMA_BASE_URL", "http://localhost:11434")
+
+	model := gear.GetEnvString("LLM_CHAT", "deepseek-r1:1.5b")
+	embeddingsModel := gear.GetEnvString("LLM_EMBEDDINGS", "mxbai-embed-large")
+
+	maxSimilarities := gear.GetEnvInt("MAX_SIMILARITIES", 5)
+
+	// Options
+	temperature := gear.GetEnvFloat("OPTION_TEMPERATURE", 0.5)
+	repeatLastN := gear.GetEnvInt("OPTION_REPEAT_LAST_N", 2)
+	repeatPenalty := gear.GetEnvFloat("OPTION_REPEAT_PENALTY", 2.2)
+	topK := gear.GetEnvInt("OPTION_TOP_K", 10)
+	topP := gear.GetEnvFloat("OPTION_TOP_P", 0.5)
+
+	// Initialize the Elasticsearch store
 	elasticStore := embeddings.ElasticsearchStore{}
 	err = elasticStore.Initialize(
 		[]string{
@@ -86,20 +88,12 @@ func main() {
 	fmt.Println("🌍", ollamaUrl, "📕", model, "🌐", embeddingsModel)
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature:   0.5,
-		option.RepeatLastN:   2,
-		option.RepeatPenalty: 2.2,
-		option.TopK:          10,
-		option.TopP:          0.5,
+		option.Temperature:   temperature,
+		option.RepeatLastN:   repeatLastN,
+		option.RepeatPenalty: repeatPenalty,
+		option.TopK:          topK,
+		option.TopP:          topP,
 	})
-
-	systemInstructions := os.Getenv("SYSTEM_INSTRUCTIONS")
-	if systemInstructions == "" {
-		systemInstructions = `You are a useful AI agent, your name is Bob`
-	}
-
-	fmt.Println("🤖📝 system instructions:", systemInstructions)
-
 
 	mux := http.NewServeMux()
 	shouldIStopTheCompletion := false
@@ -124,6 +118,10 @@ func main() {
 		userMessage := data["message"]
 		sessionId := data["sessionId"]
 		fmt.Println("📝 sessionId:", sessionId)
+
+		//? History of messages
+		previousMessages, _ := conversation.GetAllMessagesOfSession(sessionId)
+		//? End of history of messages
 
 		//! Similarity search
 		// Create an embedding from the question
@@ -157,21 +155,40 @@ func main() {
 
 		//! End of similarity search
 
+		// (Re)Create the conversation
+		conversationMessages := []llm.Message{}
+
+		// history
+		conversationMessages = append(conversationMessages, previousMessages...)
+
+		// instruction
+		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: string(systemInstructions) + "\n"})
+		// history
+		//conversationMessages = append(conversationMessages, previousMessages...)
+		// Repository tree
+		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "REPOSITORY:\n" + string(directoryTree)})
+		// Source code
+		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "SOURCE CODE:\n" + repositoryContent})
+		// last question
+		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
+
 		// Prompt construction
-		messages := []llm.Message{
-			{Role: "system", Content: string(systemInstructions)+"\n"},
-			{Role: "system", Content: "REPOSITORY:\n" + string(directoryTree)},
-			{Role: "system", Content: "SOURCE CODE:\n" + repositoryContent},
-			{Role: "user", Content: userMessage},
-		}
+		/*
+			messages := []llm.Message{
+				{Role: "system", Content: string(systemInstructions) + "\n"},
+				{Role: "system", Content: "REPOSITORY:\n" + string(directoryTree)},
+				{Role: "system", Content: "SOURCE CODE:\n" + repositoryContent},
+				{Role: "user", Content: userMessage},
+			}
+		*/
 
 		query := llm.Query{
 			Model:    model,
-			Messages: messages,
+			Messages: conversationMessages,
 			Options:  options,
 		}
 
-		_, err = completion.ChatStream(ollamaUrl, query,
+		answer, err := completion.ChatStream(ollamaUrl, query,
 			func(answer llm.Answer) error {
 				//log.Println("📝:", answer.Message.Content)
 				response.Write([]byte(answer.Message.Content))
@@ -188,6 +205,47 @@ func main() {
 			shouldIStopTheCompletion = false
 			response.Write([]byte("bye: " + err.Error()))
 		}
+
+		// Is it useful or not?
+		m.Lock()
+		defer m.Unlock()
+		//! I use a counter for the id of the message, then I can create an ordered list of messages
+
+		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
+			Role:    "user",
+			Content: userMessage,
+		})
+		//* Remove the top(first) message of conversation of maxMessages(3) messages
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 3)
+
+		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
+			Role:    "assistant",
+			Content: answer.Message.Content,
+		})
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 3)
+
+		//* Create an embedding from the user message if it starts with "LEARN:"
+		/*
+		if userMessage[:6] == "LEARN:" {
+			embedding, err := embeddings.CreateEmbedding(
+				ollamaUrl,
+				llm.Query4Embedding{
+					Model:  embeddingsModel,
+					Prompt: userMessage[6:],
+				},
+				"learn",
+			)
+			if err != nil {
+				log.Fatalln("😡:", err)
+			}
+
+			if _, err = elasticStore.Save(embedding); err != nil {
+				log.Fatalln("😡:", err)
+			}
+
+			fmt.Println("🎉 Document", embedding.Id, "indexed successfully")
+		}
+		*/
 
 	})
 

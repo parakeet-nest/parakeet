@@ -9,6 +9,7 @@ import (
 
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/embeddings"
+	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
@@ -38,20 +39,12 @@ func createChunk(piecesOfContent []string) []RepositoryChunk {
 func main() {
 	fmt.Println("Hello, World!")
 
-	var contentPath = os.Getenv("CONTENT_PATH")
-	if contentPath == "" {
-		contentPath = "../data/content.txt"
-	}
+	contentPath := gear.GetEnvString("CONTENT_PATH", "../data/content.txt")
 
-	ollamaUrl := os.Getenv("OLLAMA_BASE_URL")
-	if ollamaUrl == "" {
-		ollamaUrl = "http://localhost:11434"
-	}
+	ollamaUrl := gear.GetEnvString("OLLAMA_BASE_URL", "http://localhost:11434")
 
-	embeddingsModel := os.Getenv("LLM_EMBEDDINGS")
-	if embeddingsModel == "" {
-		embeddingsModel = "mxbai-embed-large"
-	}
+	embeddingsModel := gear.GetEnvString("LLM_EMBEDDINGS", "mxbai-embed-large")
+
 
 	elasticStore := embeddings.ElasticsearchStore{}
 	err := elasticStore.Initialize(

@@ -66,6 +66,8 @@ docker compose --profile generation --profile application up --build
 docker compose --profile application up --build 
 ```
 
+## If you change of repository, you need to destroy the data or create a new ES index
+
 ## Questions examples
 
 

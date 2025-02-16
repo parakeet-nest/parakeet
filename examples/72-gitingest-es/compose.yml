@@ -14,9 +14,8 @@ services:
       context: ./gitingest
       dockerfile: Dockerfile
     environment:
-      - GITHUB_REPOSITORY=https://github.com/parakeet-nest/parakeet
-      - INCLUDE_PATTERNS=*.go
-      #- INCLUDE_PATTERNS=*.go,*.md
+      - GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
+      - INCLUDE_PATTERNS=${INCLUDE_PATTERNS}
     volumes:
       - ./data:/app/data
 
@@ -91,8 +90,8 @@ services:
   create-embeddings:
     profiles: [generation]
     build:
-      context: ../..  # Points to parakeet root directory
-      dockerfile: examples/72-gitingest-es/create-embeddings/Dockerfile.dev
+      context: ./create-embeddings
+      dockerfile: Dockerfile    
     environment:
       - CONTENT_PATH=/app/data/content.txt
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
@@ -129,7 +128,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     environment:
-      - CONTENT_PATH=/app/data/tree.txt
+      - DIRECTORY_TREE_PATH=/app/data/tree.txt
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
       - LLM_CHAT=${LLM_CHAT}
       - LLM_EMBEDDINGS=${LLM_EMBEDDINGS}
@@ -137,15 +136,17 @@ services:
       - ELASTICSEARCH_USERNAME=${ELASTIC_USERNAME}
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTICSEARCH_INDEX=${ELASTIC_INDEX}
-      - MAX_SIMILARITIES=20
-      - SYSTEM_INSTRUCTIONS= |-
-          You are an expert in the codebase of the Parakeet project. 
-          Parakeeet is a Golang library to develop GenAI application with Ollama.
-          You are asked to provide a brief explanation of the codebase and answer questions about the codebase.
-          Use only the codebase and the documentation to answer the questions.
-          The system will provide you with the most relevant code snippets to help you answer the questions.
+      - MAX_SIMILARITIES=${MAX_SIMILARITIES}
+      - OPTION_TEMPERATURE=${OPTION_TEMPERATURE}
+      - OPTION_REPEAT_LAST_N=${OPTION_REPEAT_LAST_N}
+      - OPTION_REPEAT_PENALTY=${OPTION_REPEAT_PENALTY}
+      - OPTION_TOP_P=${OPTION_TOP_P}
+      - OPTION_TOP_K=${OPTION_TOP_K}
+      - SYSTEM_INSTRUCTIONS_PATH=${SYSTEM_INSTRUCTIONS_PATH}
+
     volumes:
       - ./data:/app/data
+      - ./instructions:/app/instructions
     depends_on:
       download-local-llm-embeddings:
         condition: service_completed_successfully
@@ -172,6 +173,8 @@ services:
       - PAGE_TITLE=🤓 AMA about your source code!
       - PAGE_HEADER=Made with 💖 and probably too much caffeine
       - PAGE_ICON=🤖
+      - LLM_CHAT=${LLM_CHAT}
+      - LLM_EMBEDDINGS=${LLM_EMBEDDINGS}
     depends_on:
       - backend
     develop:
