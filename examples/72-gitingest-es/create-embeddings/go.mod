@@ -1,8 +1,11 @@
-module 65-hyde
+module embeddings-gitingest
 
 go 1.23.1
 
-require github.com/parakeet-nest/parakeet v0.2.4
+require (
+	github.com/joho/godotenv v1.5.1
+	github.com/parakeet-nest/parakeet v0.2.4
+)
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -23,3 +26,5 @@ require (
 	golang.org/x/net v0.32.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 )
+
+replace github.com/parakeet-nest/parakeet => ../../..

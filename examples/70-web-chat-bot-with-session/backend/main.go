@@ -65,7 +65,7 @@ func main() {
 	mux := http.NewServeMux()
 	shouldIStopTheCompletion := false
 
-	messagesCounters := map[string]int{}
+	//messagesCounters := map[string]int{}
 
 	mux.HandleFunc("POST /chat", func(response http.ResponseWriter, request *http.Request) {
 		// add a flusher

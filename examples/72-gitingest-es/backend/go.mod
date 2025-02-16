@@ -1,4 +1,4 @@
-module 65-hyde
+module web-chat-bot-about-your-code
 
 go 1.23.1
 
@@ -12,14 +12,17 @@ require (
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/sea-monkeys/artemia v0.0.0 // indirect
 	github.com/sea-monkeys/daphnia v0.0.3 // indirect
-	github.com/yuin/goldmark v1.7.8 // indirect
-	go.etcd.io/bbolt v1.3.11 // indirect
 	go.opentelemetry.io/otel v1.28.0 // indirect
 	go.opentelemetry.io/otel/metric v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
-	golang.org/x/net v0.32.0 // indirect
+)
+
+require (
+	github.com/google/uuid v1.6.0 // indirect
+	go.etcd.io/bbolt v1.3.11 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 )
+
+replace github.com/parakeet-nest/parakeet => ../../..

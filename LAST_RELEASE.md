@@ -4,7 +4,15 @@
 
 ## v0.2.5 🥧 [pie] (🚧 in progress)
 
-### Conversational history
+### Helpers
+
+Get and cast environment variable value at the same time:
+
+- `gear.GetEnvFloat(key string, defaultValue float64) float64 `
+- `gear.GetEnvInt(key string, defaultValue int) int`
+- `gear.GetEnvString(key string, defaultValue string) string`
+
+### Conversational history + new samples
 
 #### In Memory
 
