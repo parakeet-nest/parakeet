@@ -80,7 +80,7 @@ services:
 
   download-local-llm-embeddings:
     profiles: [generation, application]
-    image: curlimages/curl:8.6.0
+    image: curlimages/curl:8.12.1
     #entrypoint: ["curl", "http://host.docker.internal:11434/api/pull", "-d", '{"name": "nomic-embed-text:latest"}']
     entrypoint:
       - "sh"
