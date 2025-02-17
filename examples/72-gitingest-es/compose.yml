@@ -21,7 +21,7 @@ services:
 
   elasticsearch:
     profiles: [generation, application]
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.2
     container_name: elasticsearch
     ports:
       - 9200:9200
