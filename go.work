@@ -130,6 +130,9 @@ use (
 	./examples/72-gitingest-es/create-embeddings
 	./examples/72-gitingest-es/backend
 
+	./examples/73-gitingest-simpler/backend
+
+
 
 	// Testing and experiments
 	examples/90-characters

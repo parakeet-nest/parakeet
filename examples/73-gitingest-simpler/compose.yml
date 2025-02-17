@@ -1,0 +1,81 @@
+name: simpler-parakeet-genai-stack
+
+# Embeddings generation then start the application:
+# docker compose -f compose.dev.yml --profile generation up --build 
+
+# Start the application only:
+# docker compose -f compose.dev.yml --profile application up --build 
+
+services:
+
+  gitingest:
+    profiles: [generation]
+    build:
+      context: ./gitingest
+      dockerfile: Dockerfile
+    environment:
+      - GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
+      - INCLUDE_PATTERNS=${INCLUDE_PATTERNS}
+    volumes:
+      - ./data:/app/data
+
+  download-local-llm:
+    profiles: [application]
+    image: curlimages/curl:8.12.1
+    entrypoint:
+      - "sh"
+      - "-c"
+      - 'curl "${OLLAMA_BASE_URL}/api/pull" -d "{\"name\": \"${LLM_CHAT}\"}"'
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+
+  backend:
+    profiles: [application]
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - DIRECTORY_TREE_PATH=/app/data/tree.txt
+      - CONTENT_PATH=/app/data/content.txt
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - LLM_CHAT=${LLM_CHAT}
+      - OPTION_TEMPERATURE=${OPTION_TEMPERATURE}
+      - OPTION_REPEAT_LAST_N=${OPTION_REPEAT_LAST_N}
+      - OPTION_REPEAT_PENALTY=${OPTION_REPEAT_PENALTY}
+      - OPTION_TOP_P=${OPTION_TOP_P}
+      - OPTION_TOP_K=${OPTION_TOP_K}
+      - SYSTEM_INSTRUCTIONS_PATH=${SYSTEM_INSTRUCTIONS_PATH}
+
+    volumes:
+      - ./data:/app/data
+      - ./instructions:/app/instructions
+    depends_on:
+      download-local-llm:
+        condition: service_completed_successfully
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/main.go
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      
+  frontend:
+    profiles: [application]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 9090:8501
+    environment:
+      - BACKEND_SERVICE_URL=http://backend:5050
+      - PAGE_TITLE=🤓 AMA about your source code!
+      - PAGE_HEADER=Made with 💖 and probably too much caffeine
+      - PAGE_ICON=🤖
+      - LLM_CHAT=${LLM_CHAT}
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - action: rebuild
+          path: ./frontend/app.py
+
