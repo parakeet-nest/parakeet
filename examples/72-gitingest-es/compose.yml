@@ -147,6 +147,8 @@ services:
       - OPTION_TOP_P=${OPTION_TOP_P}
       - OPTION_TOP_K=${OPTION_TOP_K}
       - SYSTEM_INSTRUCTIONS_PATH=${SYSTEM_INSTRUCTIONS_PATH}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
     volumes:
       - ./data:/app/data
