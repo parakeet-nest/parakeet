@@ -86,6 +86,8 @@ services:
       - "sh"
       - "-c"
       - 'curl "${OLLAMA_BASE_URL}/api/pull" -d "{\"name\": \"${LLM_EMBEDDINGS}\"}"'
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
 
   create-embeddings:
     profiles: [generation]
