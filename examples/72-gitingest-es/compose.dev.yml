@@ -164,6 +164,8 @@ services:
       watch:
         - action: rebuild
           path: ./backend/main.go
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   frontend:
     profiles: [application]
