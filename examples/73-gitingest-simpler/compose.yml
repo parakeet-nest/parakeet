@@ -1,6 +1,6 @@
 name: simpler-parakeet-genai-stack
 
-# Embeddings generation then start the application:
+# Generate the files:
 # docker compose -f compose.dev.yml --profile generation up --build 
 
 # Start the application only:

@@ -1,6 +1,6 @@
 name: simpler-parakeet-genai-stack
 
-# Embeddings generation then start the application:
+# Generate the files:
 # docker compose -f compose.dev.yml --profile generation up --build 
 
 # Start the application only:
@@ -44,6 +44,10 @@ services:
       - OPTION_REPEAT_PENALTY=${OPTION_REPEAT_PENALTY}
       - OPTION_TOP_P=${OPTION_TOP_P}
       - OPTION_TOP_K=${OPTION_TOP_K}
+      - OPTION_MIN_P=${OPTION_MIN_P}
+      - OPTION_MIROSTAT=${OPTION_MIROSTAT}
+      - OPTION_MIROSTAT_TAU=${OPTION_MIROSTAT_TAU}
+      - OPTION_MIROSTAT_ETA=${OPTION_MIROSTAT_ETA}
       - SYSTEM_INSTRUCTIONS_PATH=${SYSTEM_INSTRUCTIONS_PATH}
 
     volumes:

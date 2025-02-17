@@ -20,6 +20,7 @@ const (
 	MirostatTau      = "MirostatTau"
 	MirostatEta      = "MirostatEta"
 	PenalizeNewline  = "PenalizeNewline"
+	MinP             = "MinP"
 
 	Verbose = "Verbose"
 )

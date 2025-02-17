@@ -72,6 +72,12 @@ func main() {
 	repeatPenalty := gear.GetEnvFloat("OPTION_REPEAT_PENALTY", 2.2)
 	topK := gear.GetEnvInt("OPTION_TOP_K", 10)
 	topP := gear.GetEnvFloat("OPTION_TOP_P", 0.5)
+	minP := gear.GetEnvFloat("OPTION_MIN_P", 0.1)
+	microstat := gear.GetEnvInt("OPTION_MIROSTAT", 1)
+	microstatTau := gear.GetEnvFloat("OPTION_MIROSTAT_TAU", 3.0)
+	microstatEta := gear.GetEnvFloat("OPTION_MIROSTAT_ETA", 0.1)
+
+
 
 	fmt.Println("🌍", ollamaUrl, "📕", model)
 
@@ -81,6 +87,10 @@ func main() {
 		option.RepeatPenalty: repeatPenalty,
 		option.TopK:          topK,
 		option.TopP:          topP,
+		option.MinP:          minP,
+		option.Mirostat:      microstat,
+		option.MirostatTau:   microstatTau,
+		option.MirostatEta:   microstatEta,
 	})
 
 	mux := http.NewServeMux()
@@ -124,7 +134,7 @@ func main() {
 		// Repository tree
 		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "REPOSITORY:\n" + string(directoryTree)})
 		// Source code
-		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "SOURCE CODE:\n" + string(contentFiles)})
+		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "CONTENT:\n" + string(contentFiles)})
 		// last question
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
 
