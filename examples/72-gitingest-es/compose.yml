@@ -61,7 +61,7 @@ services:
 
   kibana:
     profiles: [generation, application]
-    image: docker.elastic.co/kibana/kibana:8.17.0
+    image: docker.elastic.co/kibana/kibana:8.17.2
     container_name: kibana
     depends_on:
       elasticsearch_settings:
