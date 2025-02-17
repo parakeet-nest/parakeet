@@ -123,6 +123,8 @@ services:
       - "sh"
       - "-c"
       - 'curl "${OLLAMA_BASE_URL}/api/pull" -d "{\"name\": \"${LLM_CHAT}\"}"'
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
 
   backend:
     profiles: [application]
