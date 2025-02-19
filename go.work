@@ -132,6 +132,10 @@ use (
 
 	./examples/73-gitingest-simpler/backend
 
+	./examples/74-rag-with-bbolt/create-embeddings
+	./examples/74-rag-with-bbolt/use-embeddings
+	./examples/74-rag-with-bbolt/simple-question
+
 
 
 	// Testing and experiments
