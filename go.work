@@ -133,8 +133,8 @@ use (
 	./examples/73-gitingest-daphnia/create-embeddings
 	./examples/73-gitingest-daphnia/backend
 
-	./examples/74-rag-with-bbolt/create-embeddings
-	./examples/74-rag-with-bbolt/use-embeddings
+	./examples/74-rag-with-daphnia/create-embeddings
+	./examples/74-rag-with-daphnia/use-embeddings
 
 
 	// Testing and experiments
