@@ -21,7 +21,9 @@ require (
 
 require (
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/yuin/goldmark v1.7.8 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
+	golang.org/x/net v0.32.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 )
 

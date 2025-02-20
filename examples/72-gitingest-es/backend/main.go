@@ -10,6 +10,7 @@ import (
 	"sync"
 
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/gear"
@@ -58,10 +59,12 @@ func main() {
 
 	ollamaUrl := gear.GetEnvString("OLLAMA_BASE_URL", "http://localhost:11434")
 
-	model := gear.GetEnvString("LLM_CHAT", "deepseek-r1:1.5b")
+	model := gear.GetEnvString("LLM_CHAT", "qwen2.5:3b")
 	embeddingsModel := gear.GetEnvString("LLM_EMBEDDINGS", "mxbai-embed-large")
 
 	maxSimilarities := gear.GetEnvInt("MAX_SIMILARITIES", 5)
+
+	historyMessages := gear.GetEnvInt("HISTORY_MESSAGES", 3)
 
 	// Options
 	temperature := gear.GetEnvFloat("OPTION_TEMPERATURE", 0.5)
@@ -69,6 +72,7 @@ func main() {
 	repeatPenalty := gear.GetEnvFloat("OPTION_REPEAT_PENALTY", 2.2)
 	topK := gear.GetEnvInt("OPTION_TOP_K", 10)
 	topP := gear.GetEnvFloat("OPTION_TOP_P", 0.5)
+	numCtx := gear.GetEnvInt("OPTION_NUM_CTX", 4096)
 
 	// Initialize the Elasticsearch store
 	elasticStore := embeddings.ElasticsearchStore{}
@@ -93,6 +97,7 @@ func main() {
 		option.RepeatPenalty: repeatPenalty,
 		option.TopK:          topK,
 		option.TopP:          topP,
+		option.NumCtx:        numCtx,
 	})
 
 	mux := http.NewServeMux()
@@ -168,7 +173,9 @@ func main() {
 		// Repository tree
 		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "REPOSITORY:\n" + string(directoryTree)})
 		// Source code
-		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "SOURCE CODE:\n" + repositoryContent})
+		//conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "SOURCE CODE:\n" + repositoryContent})
+		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content:  repositoryContent})
+
 		// last question
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
 
@@ -182,6 +189,25 @@ func main() {
 			}
 		*/
 
+		// Estimate the number of tokens
+		concatenatedMessages:= ""
+		for _, message := range conversationMessages {
+			//fmt.Println("📝", message.Content)
+			concatenatedMessages += message.Content + "\n"
+		}
+		fmt.Println("================================================")
+		estimatedTokens := content.EstimateGPTTokens(concatenatedMessages)
+		fmt.Println("🧩 estimated tokens:", estimatedTokens)
+		fmt.Println("================================================")
+
+		if numCtx < estimatedTokens {
+			fmt.Println("🔥 numCtx is less than estimated tokens")
+			options.NumCtx = estimatedTokens + 100
+		} else {
+			options.NumCtx = numCtx
+		}
+
+		
 		query := llm.Query{
 			Model:    model,
 			Messages: conversationMessages,
@@ -215,14 +241,14 @@ func main() {
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* Remove the top(first) message of conversation of maxMessages(3) messages
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 3)
+		//* Remove the top(first) message of conversation of maxMessages(historyMessages) messages
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, historyMessages)
 
 		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 3)
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, historyMessages)
 
 		//* Create an embedding from the user message if it starts with "LEARN:"
 		/*

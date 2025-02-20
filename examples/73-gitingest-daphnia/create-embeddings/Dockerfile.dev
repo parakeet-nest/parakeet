@@ -6,17 +6,17 @@ WORKDIR /app
 COPY . .
 
 # Move to the backend directory
-WORKDIR /app/examples/73-gitingest-simpler/backend
+WORKDIR /app/examples/73-gitingest-daphnia/create-embeddings
 
 # Update go.mod to point to the root of the copied parakeet code
 RUN go mod edit -replace github.com/parakeet-nest/parakeet=/app
 
 # Build the application
 RUN go mod download
-RUN go build -o web-chat-bot
+RUN go build -o create-embeddings
 
 FROM scratch
 WORKDIR /app
-COPY --from=builder /app/examples/73-gitingest-simpler/backend/web-chat-bot .
+COPY --from=builder /app/examples/73-gitingest-daphnia/create-embeddings .
 
-CMD ["./web-chat-bot"]
+CMD ["./create-embeddings"]

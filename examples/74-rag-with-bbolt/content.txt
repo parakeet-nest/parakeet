@@ -40,18 +40,6 @@ import (
 	"os"
 )
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {
 	manifest := extism.Manifest{
 		Wasm: []extism.Wasm{
@@ -79,18 +67,6 @@ This plug-in was written in Rust and it does one thing, it counts vowels in a st
 Let's add that code to our main func:
 
 ```go
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {
     // ...
 
@@ -124,18 +100,6 @@ All exports have a simple interface of optional bytes in, and optional bytes out
 Plug-ins may be stateful or stateless. Plug-ins can maintain state between calls by the use of variables. Our count vowels plug-in remembers the total number of vowels it's ever counted in the "total" key in the result. You can see this by making subsequent calls to the export:
 
 ```go
-/*
-### main  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main () {
     // ...
 
@@ -165,18 +129,6 @@ These variables will persist until this plug-in is freed or you initialize a new
 Plug-ins may optionally take a configuration object. This is a static way to configure the plug-in. Our count-vowels plugin takes an optional configuration to change out which characters are considered vowels. Example:
 
 ```go
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {
     manifest := extism.Manifest{
         Wasm: []extism.Wasm{
@@ -370,18 +322,6 @@ import (
 	extism "github.com/extism/go-sdk"
 )
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {
 	manifest := extism.Manifest{
 		AllowedPaths: map[string]string{
@@ -455,23 +395,7 @@ import (
 	"github.com/tetratelabs/wazero/sys"
 )
 
-/*
-### PluginCtxKey Type
-**Description:**
-This custom type is defined within the Extism Go SDK to improve code readability and manage specific plugin-related operations.
-**Usage:**
-- Used as an alias for core data types in the SDK.
-- Helps in structuring data representation effectively.
-*/
 type PluginCtxKey string
-/*
-### InputOffsetKey Type
-**Description:**
-This custom type is defined within the Extism Go SDK to improve code readability and manage specific plugin-related operations.
-**Usage:**
-- Used as an alias for core data types in the SDK.
-- Helps in structuring data representation effectively.
-*/
 type InputOffsetKey string
 
 //go:embed extism-runtime.wasm
@@ -480,31 +404,11 @@ var extismRuntimeWasm []byte
 //go:embed extism-runtime.wasm.version
 var extismRuntimeWasmVersion string
 
-/*
-### RuntimeVersion Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func RuntimeVersion() string {
 	return extismRuntimeWasmVersion
 }
 
 // Runtime represents the Extism plugin's runtime environment, including the underlying Wazero runtime and modules.
-/*
-### Runtime Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type Runtime struct {
 	Wazero wazero.Runtime
 	Extism api.Module
@@ -512,14 +416,6 @@ type Runtime struct {
 }
 
 // PluginInstanceConfig contains configuration options for the Extism plugin.
-/*
-### PluginInstanceConfig Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type PluginInstanceConfig struct {
 	// ModuleConfig allows the user to specify custom module configuration.
 	//
@@ -530,14 +426,6 @@ type PluginInstanceConfig struct {
 }
 
 // HttpRequest represents an HTTP request to be made by the plugin.
-/*
-### HttpRequest Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type HttpRequest struct {
 	Url     string
 	Headers map[string]string
@@ -545,14 +433,6 @@ type HttpRequest struct {
 }
 
 // LogLevel defines different log levels.
-/*
-### LogLevel Type
-**Description:**
-This custom type is defined within the Extism Go SDK to improve code readability and manage specific plugin-related operations.
-**Usage:**
-- Used as an alias for core data types in the SDK.
-- Helps in structuring data representation effectively.
-*/
 type LogLevel int32
 
 const (
@@ -566,18 +446,6 @@ const (
 	LogLevelOff LogLevel = math.MaxInt32
 )
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (l LogLevel) ExtismCompat() int32 {
 	switch l {
 	case LogLevelTrace:
@@ -595,18 +463,6 @@ func (l LogLevel) ExtismCompat() int32 {
 	}
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (l LogLevel) String() string {
 	s := ""
 	switch l {
@@ -627,14 +483,6 @@ func (l LogLevel) String() string {
 }
 
 // Plugin is used to call WASM functions
-/*
-### Plugin Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type Plugin struct {
 	close                []func(ctx context.Context) error
 	extism               api.Module
@@ -656,67 +504,19 @@ type Plugin struct {
 	traceCtx             *observe.TraceCtx
 }
 
-/*
-### logStd Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func logStd(level LogLevel, message string) {
 	log.Print(message)
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) Module() *Module {
 	return &Module{inner: p.mainModule}
 }
 
 // SetLogger sets a custom logging callback
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) SetLogger(logger func(LogLevel, string)) {
 	p.log = logger
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) Log(level LogLevel, message string) {
 	minimumLevel := LogLevel(pluginLogLevel.Load())
 
@@ -730,45 +530,17 @@ func (p *Plugin) Log(level LogLevel, message string) {
 	}
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) Logf(level LogLevel, format string, args ...any) {
 	message := fmt.Sprintf(format, args...)
 	p.Log(level, message)
 }
 
 // Wasm is an interface that represents different ways of providing WebAssembly data.
-/*
-### Wasm Type
-**Description:**
-This custom type is defined within the Extism Go SDK to improve code readability and manage specific plugin-related operations.
-**Usage:**
-- Used as an alias for core data types in the SDK.
-- Helps in structuring data representation effectively.
-*/
 type Wasm interface {
 	ToWasmData(ctx context.Context) (WasmData, error)
 }
 
 // WasmData represents in-memory WebAssembly data, including its content, hash, and name.
-/*
-### WasmData Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type WasmData struct {
 	Data []byte `json:"data"`
 	Hash string `json:"hash,omitempty"`
@@ -776,14 +548,6 @@ type WasmData struct {
 }
 
 // WasmFile represents WebAssembly data that needs to be loaded from a file.
-/*
-### WasmFile Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type WasmFile struct {
 	Path string `json:"path"`
 	Hash string `json:"hash,omitempty"`
@@ -791,14 +555,6 @@ type WasmFile struct {
 }
 
 // WasmUrl represents WebAssembly data that needs to be fetched from a URL.
-/*
-### WasmUrl Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type WasmUrl struct {
 	Url     string            `json:"url"`
 	Hash    string            `json:"hash,omitempty"`
@@ -807,14 +563,6 @@ type WasmUrl struct {
 	Method  string            `json:"method,omitempty"`
 }
 
-/*
-### concreteWasm Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type concreteWasm struct {
 	Data    []byte            `json:"data,omitempty"`
 	Path    string            `json:"path,omitempty"`
@@ -825,34 +573,10 @@ type concreteWasm struct {
 	Name    string            `json:"name,omitempty"`
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (d WasmData) ToWasmData(ctx context.Context) (WasmData, error) {
 	return d, nil
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (f WasmFile) ToWasmData(ctx context.Context) (WasmData, error) {
 	select {
 	case <-ctx.Done():
@@ -871,18 +595,6 @@ func (f WasmFile) ToWasmData(ctx context.Context) (WasmData, error) {
 	}
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (u WasmUrl) ToWasmData(ctx context.Context) (WasmData, error) {
 	client := http.DefaultClient
 
@@ -917,14 +629,6 @@ func (u WasmUrl) ToWasmData(ctx context.Context) (WasmData, error) {
 	}, nil
 }
 
-/*
-### ManifestMemory Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type ManifestMemory struct {
 	MaxPages             uint32 `json:"max_pages,omitempty"`
 	MaxHttpResponseBytes int64  `json:"max_http_response_bytes,omitempty"`
@@ -933,14 +637,6 @@ type ManifestMemory struct {
 
 // Manifest represents the plugin's manifest, including Wasm modules and configuration.
 // See https://extism.org/docs/concepts/manifest for schema.
-/*
-### Manifest Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type Manifest struct {
 	Wasm         []Wasm            `json:"wasm"`
 	Memory       *ManifestMemory   `json:"memory,omitempty"`
@@ -950,14 +646,6 @@ type Manifest struct {
 	Timeout      uint64            `json:"timeout_ms,omitempty"`
 }
 
-/*
-### concreteManifest Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type concreteManifest struct {
 	Wasm   []concreteWasm `json:"wasm"`
 	Memory *struct {
@@ -971,18 +659,6 @@ type concreteManifest struct {
 	Timeout      uint64            `json:"timeout_ms,omitempty"`
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (m *Manifest) UnmarshalJSON(data []byte) error {
 	tmp := concreteManifest{}
 	err := json.Unmarshal(data, &tmp)
@@ -1037,35 +713,11 @@ func (m *Manifest) UnmarshalJSON(data []byte) error {
 }
 
 // Close closes the plugin by freeing the underlying resources.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) Close(ctx context.Context) error {
 	return p.CloseWithContext(ctx)
 }
 
 // CloseWithContext closes the plugin by freeing the underlying resources.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) CloseWithContext(ctx context.Context) error {
 	for _, fn := range p.close {
 		if err := fn(ctx); err != nil {
@@ -1079,52 +731,16 @@ func (p *Plugin) CloseWithContext(ctx context.Context) error {
 var pluginLogLevel = atomic.Int32{}
 
 // SetPluginLogLevel sets the log level for the plugin
-/*
-### SetLogLevel Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func SetLogLevel(level LogLevel) {
 	pluginLogLevel.Store(int32(level))
 }
 
 // SetInput sets the input data for the plugin to be used in the next WebAssembly function call.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) SetInput(data []byte) (uint64, error) {
 	return p.SetInputWithContext(context.Background(), data)
 }
 
 // SetInputWithContext sets the input data for the plugin to be used in the next WebAssembly function call.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) SetInputWithContext(ctx context.Context, data []byte) (uint64, error) {
 	_, err := p.extism.ExportedFunction("reset").Call(ctx)
 	if err != nil {
@@ -1142,35 +758,11 @@ func (p *Plugin) SetInputWithContext(ctx context.Context, data []byte) (uint64, 
 }
 
 // GetOutput retrieves the output data from the last WebAssembly function call.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) GetOutput() ([]byte, error) {
 	return p.GetOutputWithContext(context.Background())
 }
 
 // GetOutputWithContext retrieves the output data from the last WebAssembly function call.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) GetOutputWithContext(ctx context.Context) ([]byte, error) {
 	outputOffs, err := p.extism.ExportedFunction("output_offset").Call(ctx)
 	if err != nil {
@@ -1191,52 +783,16 @@ func (p *Plugin) GetOutputWithContext(ctx context.Context) ([]byte, error) {
 }
 
 // Memory returns the plugin's WebAssembly memory interface.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) Memory() api.Memory {
 	return p.extism.ExportedMemory("memory")
 }
 
 // GetError retrieves the error message from the last WebAssembly function call, if any.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) GetError() string {
 	return p.GetErrorWithContext(context.Background())
 }
 
 // GetErrorWithContext retrieves the error message from the last WebAssembly function call.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) GetErrorWithContext(ctx context.Context) string {
 	errOffs, err := p.extism.ExportedFunction("error_get").Call(ctx)
 	if err != nil {
@@ -1257,52 +813,16 @@ func (p *Plugin) GetErrorWithContext(ctx context.Context) string {
 }
 
 // FunctionExists returns true when the named function is present in the plugin's main Module
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) FunctionExists(name string) bool {
 	return p.mainModule.ExportedFunction(name) != nil
 }
 
 // Call a function by name with the given input, returning the output
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) Call(name string, data []byte) (uint32, []byte, error) {
 	return p.CallWithContext(context.Background(), name, data)
 }
 
 // Call a function by name with the given input and context, returning the output
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) CallWithContext(ctx context.Context, name string, data []byte) (uint32, []byte, error) {
 	ctx = context.WithValue(ctx, PluginCtxKey("extism"), p.extism)
 	if p.Timeout > 0 {
@@ -1398,18 +918,6 @@ func (p *Plugin) CallWithContext(ctx context.Context, name string, data []byte) 
 	return rc, output, returnErr
 }
 
-/*
-### calculateHash Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func calculateHash(data []byte) string {
 	hasher := sha256.New()
 	hasher.Write(data)
@@ -1444,18 +952,6 @@ import (
 	"github.com/tetratelabs/wazero/sys"
 )
 
-/*
-### TestWasmUrl Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestWasmUrl(t *testing.T) {
 	url := "https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm"
 	wasm := WasmUrl{
@@ -1475,18 +971,6 @@ func TestWasmUrl(t *testing.T) {
 	assert.True(t, ok, "Plugin must be succussfuly created")
 }
 
-/*
-### TestHashMismatch Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHashMismatch(t *testing.T) {
 	wasm := WasmFile{
 		Path: "wasm/alloc.wasm",
@@ -1511,18 +995,6 @@ func TestHashMismatch(t *testing.T) {
 	assert.NotNil(t, err, "Plugin must fail")
 }
 
-/*
-### TestFunctionExsits Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestFunctionExsits(t *testing.T) {
 	manifest := manifest("alloc.wasm")
 
@@ -1534,18 +1006,6 @@ func TestFunctionExsits(t *testing.T) {
 	}
 }
 
-/*
-### TestFailOnUnknownFunction Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestFailOnUnknownFunction(t *testing.T) {
 	manifest := manifest("alloc.wasm")
 
@@ -1557,18 +1017,6 @@ func TestFailOnUnknownFunction(t *testing.T) {
 	}
 }
 
-/*
-### TestCallFunction Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestCallFunction(t *testing.T) {
 	manifest := manifest("count_vowels.wasm")
 
@@ -1595,18 +1043,6 @@ func TestCallFunction(t *testing.T) {
 	}
 }
 
-/*
-### TestCallFunctionMultipleInstances Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestCallFunctionMultipleInstances(t *testing.T) {
 	ctx := context.Background()
 	manifest := manifest("alloc.wasm")
@@ -1631,18 +1067,6 @@ func TestCallFunctionMultipleInstances(t *testing.T) {
 	wg.Wait()
 }
 
-/*
-### TestClosePlugin Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestClosePlugin(t *testing.T) {
 	manifest := manifest("alloc.wasm")
 
@@ -1661,18 +1085,6 @@ func TestClosePlugin(t *testing.T) {
 	}
 }
 
-/*
-### TestAlloc Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestAlloc(t *testing.T) {
 	manifest := manifest("alloc.wasm")
 
@@ -1685,18 +1097,6 @@ func TestAlloc(t *testing.T) {
 	}
 }
 
-/*
-### TestConfig Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestConfig(t *testing.T) {
 
 	params := map[string]string{
@@ -1726,18 +1126,6 @@ func TestConfig(t *testing.T) {
 	}
 }
 
-/*
-### TestFail Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestFail(t *testing.T) {
 	manifest := manifest("fail.wasm")
 
@@ -1751,18 +1139,6 @@ func TestFail(t *testing.T) {
 	}
 }
 
-/*
-### TestHello Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHello(t *testing.T) {
 	manifest := manifest("hello.wasm")
 
@@ -1780,18 +1156,6 @@ func TestHello(t *testing.T) {
 	}
 }
 
-/*
-### TestExit Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestExit(t *testing.T) {
 	cases := map[string]uint32{
 		"-1":  0xffffffff, // NOTE: wazero doesn't support negative exit codes
@@ -1821,18 +1185,6 @@ func TestExit(t *testing.T) {
 	}
 }
 
-/*
-### TestHost_simple Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHost_simple(t *testing.T) {
 	manifest := manifest("host.wasm")
 
@@ -1862,18 +1214,6 @@ func TestHost_simple(t *testing.T) {
 	}
 }
 
-/*
-### TestHost_memory Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHost_memory(t *testing.T) {
 	manifest := manifest("host_memory.wasm")
 
@@ -1918,18 +1258,6 @@ func TestHost_memory(t *testing.T) {
 	}
 }
 
-/*
-### TestHost_multiple Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHost_multiple(t *testing.T) {
 	manifest := manifest("host_multiple.wasm")
 
@@ -2016,18 +1344,6 @@ func TestHost_multiple(t *testing.T) {
 	assert.Equal(t, "🟣:👋 Hello from say_purple Jane Doe", string(res))
 }
 
-/*
-### TestHTTP_allowed Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHTTP_allowed(t *testing.T) {
 	manifest := manifest("http.wasm")
 	manifest.AllowedHosts = []string{"jsonplaceholder.*.com"}
@@ -2052,18 +1368,6 @@ func TestHTTP_allowed(t *testing.T) {
 	}
 }
 
-/*
-### TestHTTP_denied Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHTTP_denied(t *testing.T) {
 	allowed := []string{
 		"", // If no allowed hosts are defined, then all requests are denied
@@ -2086,18 +1390,6 @@ func TestHTTP_denied(t *testing.T) {
 	}
 }
 
-/*
-### TestHTTPHeaders_allowed Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHTTPHeaders_allowed(t *testing.T) {
 	manifest := manifest("http_headers.wasm")
 	manifest.AllowedHosts = []string{"extism.org"}
@@ -2122,18 +1414,6 @@ func TestHTTPHeaders_allowed(t *testing.T) {
 	}
 }
 
-/*
-### TestHTTPHeaders_denied Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHTTPHeaders_denied(t *testing.T) {
 	manifest := manifest("http_headers.wasm")
 	manifest.AllowedHosts = []string{"extism.org"}
@@ -2156,18 +1436,6 @@ func TestHTTPHeaders_denied(t *testing.T) {
 	}
 }
 
-/*
-### TestLog_default Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestLog_default(t *testing.T) {
 	manifest := manifest("log.wasm")
 
@@ -2194,29 +1462,9 @@ func TestLog_default(t *testing.T) {
 	}
 }
 
-/*
-### TestLog_custom Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestLog_custom(t *testing.T) {
 	manifest := manifest("log.wasm")
 
-/*
-### LogEntry Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 	type LogEntry struct {
 		message string
 		level   LogLevel
@@ -2291,18 +1539,6 @@ This structure is a core component of the Extism Go SDK and plays a crucial role
 	}
 }
 
-/*
-### TestTimeout Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestTimeout(t *testing.T) {
 	manifest := manifest("sleep.wasm")
 	manifest.Timeout = 100            // 100ms
@@ -2329,18 +1565,6 @@ func TestTimeout(t *testing.T) {
 	assert.Equal(t, "module closed with context deadline exceeded", err.Error())
 }
 
-/*
-### TestCancel Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestCancel(t *testing.T) {
 	manifest := manifest("sleep.wasm")
 	manifest.Config["duration"] = "3" // sleep for 3 seconds
@@ -2375,18 +1599,6 @@ func TestCancel(t *testing.T) {
 	assert.Equal(t, "module closed with context canceled", err.Error())
 }
 
-/*
-### TestVar Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestVar(t *testing.T) {
 	manifest := manifest("var.wasm")
 
@@ -2416,18 +1628,6 @@ func TestVar(t *testing.T) {
 
 }
 
-/*
-### TestNoVars Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestNoVars(t *testing.T) {
 	manifest := manifest("var.wasm")
 	manifest.Memory = &ManifestMemory{MaxVarBytes: 0}
@@ -2446,18 +1646,6 @@ func TestNoVars(t *testing.T) {
 
 }
 
-/*
-### TestFS Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestFS(t *testing.T) {
 	manifest := manifest("fs.wasm")
 	manifest.AllowedPaths = map[string]string{
@@ -2478,18 +1666,6 @@ func TestFS(t *testing.T) {
 	}
 }
 
-/*
-### TestReadOnlyMount Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestReadOnlyMount(t *testing.T) {
 	manifest := manifest("read_write.wasm")
 	manifest.AllowedPaths = map[string]string{
@@ -2516,18 +1692,6 @@ func TestReadOnlyMount(t *testing.T) {
 	}
 }
 
-/*
-### TestCountVowels Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestCountVowels(t *testing.T) {
 	manifest := manifest("count_vowels.wasm")
 
@@ -2547,18 +1711,6 @@ func TestCountVowels(t *testing.T) {
 	}
 }
 
-/*
-### TestMultipleCallsOutput Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestMultipleCallsOutput(t *testing.T) {
 	manifest := manifest("count_vowels.wasm")
 
@@ -2582,18 +1734,6 @@ func TestMultipleCallsOutput(t *testing.T) {
 	}
 }
 
-/*
-### TestHelloHaskell Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestHelloHaskell(t *testing.T) {
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
@@ -2624,18 +1764,6 @@ func TestHelloHaskell(t *testing.T) {
 	}
 }
 
-/*
-### TestJsonManifest Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestJsonManifest(t *testing.T) {
 	m := `
 	{
@@ -2672,18 +1800,6 @@ func TestJsonManifest(t *testing.T) {
 	}
 }
 
-/*
-### TestInputOffset Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestInputOffset(t *testing.T) {
 	manifest := manifest("input_offset.wasm")
 
@@ -2699,18 +1815,6 @@ func TestInputOffset(t *testing.T) {
 	}
 }
 
-/*
-### TestObserve Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestObserve(t *testing.T) {
 	ctx := context.Background()
 
@@ -2798,18 +1902,6 @@ func TestObserve(t *testing.T) {
 }
 
 // make sure cancelling the context given to NewCompiledPlugin doesn't affect plugin calls
-/*
-### TestContextCancel Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestContextCancel(t *testing.T) {
 	manifest := manifest("sleep.wasm")
 	manifest.Config["duration"] = "0" // sleep for 0 seconds
@@ -2840,18 +1932,6 @@ func TestContextCancel(t *testing.T) {
 }
 
 // make sure we can still turn on experimental wazero features
-/*
-### TestEnableExperimentalFeature Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestEnableExperimentalFeature(t *testing.T) {
 	var buf bytes.Buffer
 
@@ -2889,18 +1969,6 @@ func TestEnableExperimentalFeature(t *testing.T) {
 	}
 }
 
-/*
-### TestModuleLinking Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestModuleLinking(t *testing.T) {
 	manifest := Manifest{
 		Wasm: []Wasm{
@@ -2930,18 +1998,6 @@ func TestModuleLinking(t *testing.T) {
 	}
 }
 
-/*
-### TestModuleLinkingMultipleInstances Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestModuleLinkingMultipleInstances(t *testing.T) {
 	manifest := Manifest{
 		Wasm: []Wasm{
@@ -2989,18 +2045,6 @@ func TestModuleLinkingMultipleInstances(t *testing.T) {
 	}
 }
 
-/*
-### TestCompiledModuleMultipleInstances Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestCompiledModuleMultipleInstances(t *testing.T) {
 	manifest := Manifest{
 		Wasm: []Wasm{
@@ -3054,18 +2098,6 @@ func TestCompiledModuleMultipleInstances(t *testing.T) {
 	wg.Wait()
 }
 
-/*
-### TestMultipleCallsOutputParallel Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func TestMultipleCallsOutputParallel(t *testing.T) {
 	manifest := manifest("count_vowels.wasm")
 	numInstances := 300
@@ -3101,18 +2133,6 @@ func TestMultipleCallsOutputParallel(t *testing.T) {
 	wg.Wait()
 }
 
-/*
-### BenchmarkInitialize Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func BenchmarkInitialize(b *testing.B) {
 	ctx := context.Background()
 	cache := wazero.NewCompilationCache()
@@ -3144,18 +2164,6 @@ func BenchmarkInitialize(b *testing.B) {
 	})
 }
 
-/*
-### BenchmarkInitializeWithCache Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func BenchmarkInitializeWithCache(b *testing.B) {
 	ctx := context.Background()
 	cache := wazero.NewCompilationCache()
@@ -3187,18 +2195,6 @@ func BenchmarkInitializeWithCache(b *testing.B) {
 	})
 }
 
-/*
-### BenchmarkNoop Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func BenchmarkNoop(b *testing.B) {
 	ctx := context.Background()
 	cache := wazero.NewCompilationCache()
@@ -3258,18 +2254,6 @@ var (
 	Match65536 = Match32768 + Match32768
 )
 
-/*
-### BenchmarkReplace Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func BenchmarkReplace(b *testing.B) {
 	ctx := context.Background()
 	cache := wazero.NewCompilationCache()
@@ -3335,18 +2319,6 @@ func BenchmarkReplace(b *testing.B) {
 	}
 }
 
-/*
-### wasiPluginConfig Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func wasiPluginConfig() PluginInstanceConfig {
 	config := PluginInstanceConfig{
 		ModuleConfig: wazero.NewModuleConfig().WithSysWalltime().WithStdout(os.Stdout).WithStderr(os.Stderr),
@@ -3354,18 +2326,6 @@ func wasiPluginConfig() PluginInstanceConfig {
 	return config
 }
 
-/*
-### manifest Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func manifest(name string) Manifest {
 	manifest := Manifest{
 		Wasm: []Wasm{
@@ -3382,18 +2342,6 @@ func manifest(name string) Manifest {
 	return manifest
 }
 
-/*
-### pluginInstance Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func pluginInstance(t *testing.T, manifest Manifest, funcs ...HostFunction) (*Plugin, bool) {
 	ctx := context.Background()
 	config := wasiPluginConfig()
@@ -3416,18 +2364,6 @@ func pluginInstance(t *testing.T, manifest Manifest, funcs ...HostFunction) (*Pl
 	return instance, true
 }
 
-/*
-### pluginInstanceHttpHeaders Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func pluginInstanceHttpHeaders(t *testing.T, manifest Manifest, funcs ...HostFunction) (*Plugin, bool) {
 	ctx := context.Background()
 	config := wasiPluginConfig()
@@ -3451,18 +2387,6 @@ func pluginInstanceHttpHeaders(t *testing.T, manifest Manifest, funcs ...HostFun
 	return instance, true
 }
 
-/*
-### plugin Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func plugin(t *testing.T, manifest Manifest, funcs ...HostFunction) *CompiledPlugin {
 	ctx := context.Background()
 	p, err := NewCompiledPlugin(ctx, manifest, PluginConfig{
@@ -3473,18 +2397,6 @@ func plugin(t *testing.T, manifest Manifest, funcs ...HostFunction) *CompiledPlu
 	return p
 }
 
-/*
-### assertCall Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func assertCall(t *testing.T, err error, exit uint32) bool {
 	if err != nil {
 		t.Error(err)
@@ -3497,18 +2409,6 @@ func assertCall(t *testing.T, err error, exit uint32) bool {
 	return true
 }
 
-/*
-### uintToLEBytes Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func uintToLEBytes(num uint) []byte {
 	var bytes [4]byte
 	bytes[0] = byte(num)
@@ -3518,18 +2418,6 @@ func uintToLEBytes(num uint) []byte {
 	return bytes[:]
 }
 
-/*
-### uintFromLEBytes Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func uintFromLEBytes(bytes []byte) uint {
 	return uint(bytes[0]) | uint(bytes[1])<<8 | uint(bytes[2])<<16 | uint(bytes[3])<<24
 }
@@ -3596,25 +2484,9 @@ const (
 //
 // To safely decode/encode values from/to the uint64 inputs/ouputs, users are encouraged to use
 // Extism's EncodeXXX or DecodeXXX functions.
-/*
-### HostFunctionStackCallback Type
-**Description:**
-This custom type is defined within the Extism Go SDK to improve code readability and manage specific plugin-related operations.
-**Usage:**
-- Used as an alias for core data types in the SDK.
-- Helps in structuring data representation effectively.
-*/
 type HostFunctionStackCallback func(ctx context.Context, p *CurrentPlugin, stack []uint64)
 
 // HostFunction represents a custom function defined by the host.
-/*
-### HostFunction Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type HostFunction struct {
 	stackCallback HostFunctionStackCallback
 	Name          string
@@ -3623,18 +2495,6 @@ type HostFunction struct {
 	Returns       []api.ValueType
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (f *HostFunction) SetNamespace(namespace string) {
 	f.Namespace = namespace
 }
@@ -3654,18 +2514,6 @@ func (f *HostFunction) SetNamespace(namespace string) {
 //		[]ValueType{ValueTypeI64, ValueTypeI64},
 //		ValueTypeI64
 //	 )
-/*
-### NewHostFunctionWithStack Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func NewHostFunctionWithStack(
 	name string,
 	callback HostFunctionStackCallback,
@@ -3681,113 +2529,33 @@ func NewHostFunctionWithStack(
 	}
 }
 
-/*
-### CurrentPlugin Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type CurrentPlugin struct {
 	plugin *Plugin
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *Plugin) currentPlugin() *CurrentPlugin {
 	return &CurrentPlugin{p}
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) Log(level LogLevel, message string) {
 	p.plugin.Log(level, message)
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) Logf(level LogLevel, format string, args ...any) {
 	p.plugin.Logf(level, format, args...)
 }
 
 // Memory returns the plugin's WebAssembly memory interface.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) Memory() api.Memory {
 	return p.plugin.Memory()
 }
 
 // Alloc a new memory block of the given length, returning its offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) Alloc(n uint64) (uint64, error) {
 	return p.AllocWithContext(context.Background(), n)
 }
 
 // Alloc a new memory block of the given length, returning its offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) AllocWithContext(ctx context.Context, n uint64) (uint64, error) {
 	out, err := p.plugin.extism.ExportedFunction("alloc").Call(ctx, uint64(n))
 	if err != nil {
@@ -3800,35 +2568,11 @@ func (p *CurrentPlugin) AllocWithContext(ctx context.Context, n uint64) (uint64,
 }
 
 // Free the memory block specified by the given offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) Free(offset uint64) error {
 	return p.FreeWithContext(context.Background(), offset)
 }
 
 // Free the memory block specified by the given offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) FreeWithContext(ctx context.Context, offset uint64) error {
 	_, err := p.plugin.extism.ExportedFunction("free").Call(ctx, uint64(offset))
 	if err != nil {
@@ -3839,35 +2583,11 @@ func (p *CurrentPlugin) FreeWithContext(ctx context.Context, offset uint64) erro
 }
 
 // Length returns the number of bytes allocated at the specified offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) Length(offs uint64) (uint64, error) {
 	return p.LengthWithContext(context.Background(), offs)
 }
 
 // Length returns the number of bytes allocated at the specified offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) LengthWithContext(ctx context.Context, offs uint64) (uint64, error) {
 	out, err := p.plugin.extism.ExportedFunction("length").Call(ctx, uint64(offs))
 	if err != nil {
@@ -3880,35 +2600,11 @@ func (p *CurrentPlugin) LengthWithContext(ctx context.Context, offs uint64) (uin
 }
 
 // Write a string to wasm memory and return the offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) WriteString(s string) (uint64, error) {
 	return p.WriteBytes([]byte(s))
 }
 
 // WriteBytes writes a string to wasm memory and return the offset
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) WriteBytes(b []byte) (uint64, error) {
 	ptr, err := p.Alloc(uint64(len(b)))
 	if err != nil {
@@ -3924,18 +2620,6 @@ func (p *CurrentPlugin) WriteBytes(b []byte) (uint64, error) {
 }
 
 // ReadString reads a string from wasm memory
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) ReadString(offset uint64) (string, error) {
 	buffer, err := p.ReadBytes(offset)
 	if err != nil {
@@ -3946,18 +2630,6 @@ func (p *CurrentPlugin) ReadString(offset uint64) (string, error) {
 }
 
 // ReadBytes reads a byte array from memory
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CurrentPlugin) ReadBytes(offset uint64) ([]byte, error) {
 	length, err := p.Length(offset)
 	if err != nil {
@@ -3975,18 +2647,6 @@ func (p *CurrentPlugin) ReadBytes(offset uint64) ([]byte, error) {
 	return cpy, nil
 }
 
-/*
-### buildHostModule Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func buildHostModule(ctx context.Context, rt wazero.Runtime, name string, funcs []HostFunction) (api.Module, error) {
 	builder := rt.NewHostModuleBuilder(name)
 
@@ -3995,18 +2655,6 @@ func buildHostModule(ctx context.Context, rt wazero.Runtime, name string, funcs 
 	return builder.Instantiate(ctx)
 }
 
-/*
-### defineCustomHostFunctions Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func defineCustomHostFunctions(builder wazero.HostModuleBuilder, funcs []HostFunction) {
 	for _, f := range funcs {
 
@@ -4028,18 +2676,6 @@ func defineCustomHostFunctions(builder wazero.HostModuleBuilder, funcs []HostFun
 	}
 }
 
-/*
-### instantiateEnvModule Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func instantiateEnvModule(ctx context.Context, rt wazero.Runtime) (api.Module, error) {
 	builder := rt.NewHostModuleBuilder("extism:host/env")
 
@@ -4143,18 +2779,6 @@ func instantiateEnvModule(ctx context.Context, rt wazero.Runtime) (api.Module, e
 	return builder.Instantiate(ctx)
 }
 
-/*
-### store_u64 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func store_u64(ctx context.Context, mod api.Module, stack []uint64) {
 	p, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin)
 	if !ok {
@@ -4169,18 +2793,6 @@ func store_u64(ctx context.Context, mod api.Module, stack []uint64) {
 	}
 }
 
-/*
-### load_u64 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func load_u64(ctx context.Context, mod api.Module, stack []uint64) {
 	p, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin)
 	if !ok {
@@ -4193,18 +2805,6 @@ func load_u64(ctx context.Context, mod api.Module, stack []uint64) {
 	}
 }
 
-/*
-### inputLoad_u64 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func inputLoad_u64(ctx context.Context, mod api.Module, stack []uint64) {
 	p, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin)
 	if !ok {
@@ -4222,18 +2822,6 @@ func inputLoad_u64(ctx context.Context, mod api.Module, stack []uint64) {
 	}
 }
 
-/*
-### configGet Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func configGet(ctx context.Context, m api.Module, offset uint64) uint64 {
 	if plugin, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin); ok {
 		cp := plugin.currentPlugin()
@@ -4260,18 +2848,6 @@ func configGet(ctx context.Context, m api.Module, offset uint64) uint64 {
 	panic("Invalid context, `plugin` key not found")
 }
 
-/*
-### varGet Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func varGet(ctx context.Context, m api.Module, offset uint64) uint64 {
 	if plugin, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin); ok {
 		cp := plugin.currentPlugin()
@@ -4300,18 +2876,6 @@ func varGet(ctx context.Context, m api.Module, offset uint64) uint64 {
 	panic("Invalid context, `plugin` key not found")
 }
 
-/*
-### varSet Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func varSet(ctx context.Context, m api.Module, nameOffset uint64, valueOffset uint64) {
 	plugin, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin)
 	if !ok {
@@ -4359,18 +2923,6 @@ func varSet(ctx context.Context, m api.Module, nameOffset uint64, valueOffset ui
 	plugin.Var[name] = value
 }
 
-/*
-### httpRequest Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func httpRequest(ctx context.Context, m api.Module, requestOffset uint64, bodyOffset uint64) uint64 {
 	if plugin, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin); ok {
 		cp := plugin.currentPlugin()
@@ -4481,18 +3033,6 @@ func httpRequest(ctx context.Context, m api.Module, requestOffset uint64, bodyOf
 	panic("Invalid context, `plugin` key not found")
 }
 
-/*
-### httpStatusCode Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func httpStatusCode(ctx context.Context, m api.Module) int32 {
 	if plugin, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin); ok {
 		return int32(plugin.LastStatusCode)
@@ -4501,18 +3041,6 @@ func httpStatusCode(ctx context.Context, m api.Module) int32 {
 	panic("Invalid context, `plugin` key not found")
 }
 
-/*
-### httpHeaders Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func httpHeaders(ctx context.Context, _ api.Module) uint64 {
 	if plugin, ok := ctx.Value(PluginCtxKey("plugin")).(*Plugin); ok {
 		if plugin.LastResponseHeaders == nil {
@@ -4533,18 +3061,6 @@ func httpHeaders(ctx context.Context, _ api.Module) uint64 {
 	panic("Invalid context, `plugin` key not found")
 }
 
-/*
-### getLogLevel Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func getLogLevel(ctx context.Context, m api.Module) int32 {
 	// if _, ok := callCtx.Value(PluginCtxKey("plugin")).(*Plugin); ok {
 	// 	panic("Invalid context, `plugin` key not found")
@@ -4553,86 +3069,26 @@ func getLogLevel(ctx context.Context, m api.Module) int32 {
 }
 
 // EncodeI32 encodes the input as a ValueTypeI32.
-/*
-### EncodeI32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func EncodeI32(input int32) uint64 {
 	return api.EncodeI32(input)
 }
 
 // DecodeI32 decodes the input as a ValueTypeI32.
-/*
-### DecodeI32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func DecodeI32(input uint64) int32 {
 	return api.DecodeI32(input)
 }
 
 // EncodeU32 encodes the input as a ValueTypeI32.
-/*
-### EncodeU32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func EncodeU32(input uint32) uint64 {
 	return api.EncodeU32(input)
 }
 
 // DecodeU32 decodes the input as a ValueTypeI32.
-/*
-### DecodeU32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func DecodeU32(input uint64) uint32 {
 	return api.DecodeU32(input)
 }
 
 // EncodeI64 encodes the input as a ValueTypeI64.
-/*
-### EncodeI64 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func EncodeI64(input int64) uint64 {
 	return api.EncodeI64(input)
 }
@@ -4640,18 +3096,6 @@ func EncodeI64(input int64) uint64 {
 // EncodeF32 encodes the input as a ValueTypeF32.
 //
 // See DecodeF32
-/*
-### EncodeF32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func EncodeF32(input float32) uint64 {
 	return api.EncodeF32(input)
 }
@@ -4659,18 +3103,6 @@ func EncodeF32(input float32) uint64 {
 // DecodeF32 decodes the input as a ValueTypeF32.
 //
 // See EncodeF32
-/*
-### DecodeF32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func DecodeF32(input uint64) float32 {
 	return api.DecodeF32(input)
 }
@@ -4678,18 +3110,6 @@ func DecodeF32(input uint64) float32 {
 // EncodeF64 encodes the input as a ValueTypeF64.
 //
 // See EncodeF32
-/*
-### EncodeF64 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func EncodeF64(input float64) uint64 {
 	return api.EncodeF64(input)
 }
@@ -4697,18 +3117,6 @@ func EncodeF64(input float64) uint64 {
 // DecodeF64 decodes the input as a ValueTypeF64.
 //
 // See EncodeF64
-/*
-### DecodeF64 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func DecodeF64(input uint64) float64 {
 	return api.DecodeF64(input)
 }
@@ -4724,32 +3132,12 @@ import "github.com/tetratelabs/wazero/api"
 // Module is a wrapper around a wazero module. It allows us to provide
 // our own API and stability guarantees despite any changes that wazero
 // may choose to make.
-/*
-### Module Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type Module struct {
 	inner api.Module
 }
 
 // ExportedFunctions returns a map of functions exported from the module
 // keyed by the function name.
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (m *Module) ExportedFunctions() map[string]FunctionDefinition {
 	v := make(map[string]FunctionDefinition)
 	for name, def := range m.inner.ExportedFunctionDefinitions() {
@@ -4760,30 +3148,10 @@ func (m *Module) ExportedFunctions() map[string]FunctionDefinition {
 
 // FunctionDefinition represents a function defined in a module. It provides
 // a wrapper around the underlying wazero function definition.
-/*
-### FunctionDefinition Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type FunctionDefinition struct {
 	inner api.FunctionDefinition
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (f *FunctionDefinition) Name() string {
 	return f.inner.Name()
 }
@@ -4810,14 +3178,6 @@ import (
 	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 )
 
-/*
-### CompiledPlugin Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type CompiledPlugin struct {
 	runtime wazero.Runtime
 	main    wazero.CompiledModule
@@ -4844,14 +3204,6 @@ type CompiledPlugin struct {
 	enableHttpResponseHeaders bool
 }
 
-/*
-### PluginConfig Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type PluginConfig struct {
 	RuntimeConfig             wazero.RuntimeConfig
 	EnableWasi                bool
@@ -4878,18 +3230,6 @@ type PluginConfig struct {
 // to be used. Plugins are not thread-safe. If you need to use a plugin
 // across multiple goroutines, use NewCompiledPlugin and create instances
 // of the plugin using the CompiledPlugin.Instance method.
-/*
-### NewPlugin Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func NewPlugin(
 	ctx context.Context,
 	manifest Manifest,
@@ -4910,18 +3250,6 @@ func NewPlugin(
 	return p, nil
 }
 
-/*
-### calculateMaxHttp Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func calculateMaxHttp(manifest Manifest) int64 {
 	// Default is 50MB
 	maxHttp := int64(1024 * 1024 * 50)
@@ -4931,18 +3259,6 @@ func calculateMaxHttp(manifest Manifest) int64 {
 	return maxHttp
 }
 
-/*
-### calculateMaxVar Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func calculateMaxVar(manifest Manifest) int64 {
 	// Default is 1MB
 	maxVar := int64(1024 * 1024)
@@ -4955,18 +3271,6 @@ func calculateMaxVar(manifest Manifest) int64 {
 // NewCompiledPlugin creates a compiled plugin that is ready to be instantiated.
 // You can instantiate the plugin multiple times using the CompiledPlugin.Instance
 // method and run those instances concurrently.
-/*
-### NewCompiledPlugin Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func NewCompiledPlugin(
 	ctx context.Context,
 	manifest Manifest,
@@ -5108,18 +3412,6 @@ func NewCompiledPlugin(
 //  1. Create a host module wrapper that keeps the original module name (needed for imports to work)
 //  2. Instantiate actual module copies with unique names for each Plugin
 //  3. The wrapper forwards function calls to the correct module instance for each Plugin
-/*
-### createModuleWrapper Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func createModuleWrapper(ctx context.Context, rt wazero.Runtime, name string, compiled wazero.CompiledModule) (api.Module, error) {
 	builder := rt.NewHostModuleBuilder(name)
 
@@ -5173,34 +3465,10 @@ func createModuleWrapper(ctx context.Context, rt wazero.Runtime, name string, co
 	return builder.Instantiate(ctx)
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CompiledPlugin) Close(ctx context.Context) error {
 	return p.runtime.Close(ctx)
 }
 
-/*
-###  Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func (p *CompiledPlugin) Instance(ctx context.Context, config PluginInstanceConfig) (*Plugin, error) {
 	instanceNum := p.instanceCount.Add(1)
 
@@ -5328,14 +3596,6 @@ import (
 
 // TODO: test runtime initialization for WASI and Haskell
 
-/*
-### runtimeType Type
-**Description:**
-This custom type is defined within the Extism Go SDK to improve code readability and manage specific plugin-related operations.
-**Usage:**
-- Used as an alias for core data types in the SDK.
-- Helps in structuring data representation effectively.
-*/
 type runtimeType uint8
 
 const (
@@ -5344,14 +3604,6 @@ const (
 	Wasi
 )
 
-/*
-### guestRuntime Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type guestRuntime struct {
 	mainRuntime moduleRuntime
 	runtimes    map[string]moduleRuntime
@@ -5359,14 +3611,6 @@ type guestRuntime struct {
 	initialized bool
 }
 
-/*
-### moduleRuntime Structure
-**Description:**
-This structure is a core component of the Extism Go SDK and plays a crucial role in handling WebAssembly plugin interactions.
-**Usage:**
-- Used to store and manage plugin execution data.
-- Provides structured configuration and runtime state management.
-*/
 type moduleRuntime struct {
 	runtimeType runtimeType
 	init        func(ctx context.Context) error
@@ -5376,18 +3620,6 @@ type moduleRuntime struct {
 // detectGuestRuntime detects the runtime of the main module and all other modules
 // it returns a guest runtime with an initialization function specific that invokes
 // the initialization function of all the modules, with the main module last.
-/*
-### detectGuestRuntime Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func detectGuestRuntime(p *Plugin) guestRuntime {
 	r := guestRuntime{runtimes: make(map[string]moduleRuntime)}
 
@@ -5423,18 +3655,6 @@ func detectGuestRuntime(p *Plugin) guestRuntime {
 
 // detectModuleRuntime detects the specific runtime of a given module
 // it returns a module runtime with an initialization function specific to that module
-/*
-### detectModuleRuntime Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func detectModuleRuntime(p *Plugin, m api.Module) moduleRuntime {
 	runtime, ok := haskellRuntime(p, m)
 	if ok {
@@ -5453,18 +3673,6 @@ func detectModuleRuntime(p *Plugin, m api.Module) moduleRuntime {
 // Check for Haskell runtime initialization functions
 // Initialize Haskell runtime if `hs_init` and `hs_exit` are present,
 // by calling the `hs_init` export
-/*
-### haskellRuntime Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func haskellRuntime(p *Plugin, m api.Module) (moduleRuntime, bool) {
 	initFunc := m.ExportedFunction("hs_init")
 	if initFunc == nil {
@@ -5499,18 +3707,6 @@ func haskellRuntime(p *Plugin, m api.Module) (moduleRuntime, bool) {
 }
 
 // Check for initialization functions defined by the WASI standard
-/*
-### wasiRuntime Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func wasiRuntime(p *Plugin, m api.Module) (moduleRuntime, bool) {
 	if !p.hasWasi {
 		return moduleRuntime{}, false
@@ -5527,18 +3723,6 @@ func wasiRuntime(p *Plugin, m api.Module) (moduleRuntime, bool) {
 }
 
 // Check for `_initialize` this is used by WASI to initialize certain interfaces.
-/*
-### reactorModule Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func reactorModule(m api.Module, p *Plugin) (moduleRuntime, bool) {
 	init := findFunc(m, p, "_initialize")
 	if init == nil {
@@ -5553,18 +3737,6 @@ func reactorModule(m api.Module, p *Plugin) (moduleRuntime, bool) {
 
 // Check for `__wasm__call_ctors`, this is used by WASI to
 // initialize certain interfaces.
-/*
-### commandModule Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func commandModule(m api.Module, p *Plugin) (moduleRuntime, bool) {
 	init := findFunc(m, p, "__wasm_call_ctors")
 	if init == nil {
@@ -5577,18 +3749,6 @@ func commandModule(m api.Module, p *Plugin) (moduleRuntime, bool) {
 	return moduleRuntime{runtimeType: Wasi, init: init}, true
 }
 
-/*
-### findFunc Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func findFunc(m api.Module, p *Plugin, name string) func(context.Context) error {
 	initFunc := m.ExportedFunction(name)
 	if initFunc == nil {
@@ -5608,18 +3768,6 @@ func findFunc(m api.Module, p *Plugin, name string) func(context.Context) error 
 	}
 }
 
-/*
-### equal Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func equal(actual []byte, expected []byte) bool {
 	if len(actual) != len(expected) {
 		return false
@@ -5643,18 +3791,6 @@ package main
 import "github.com/extism/go-pdk"
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	thing, ok := pdk.GetConfig("thing")
 
@@ -5671,18 +3807,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -5698,18 +3822,6 @@ import (
 	"github.com/extism/go-pdk"
 )
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {
 	if config, ok := pdk.GetConfig("code"); ok {
 		if code, err := strconv.Atoi(config); err == nil {
@@ -5735,50 +3847,14 @@ import (
 )
 
 //export __wasm_call_ctors
-/*
-### __wasm_call_ctors Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func __wasm_call_ctors()
 
 //export _initialize
-/*
-### _initialize Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func _initialize() {
 	__wasm_call_ctors()
 }
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	content, err := updateFile("/mnt/test.txt")
 	if err != nil {
@@ -5793,18 +3869,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### updateFile Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func updateFile(filename string) ([]byte, error) {
 	// Read the file and get its contents as a byte slice
 	content, err := os.ReadFile(filename)
@@ -5821,18 +3885,6 @@ func updateFile(filename string) ([]byte, error) {
 	return content, nil
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -5849,33 +3901,9 @@ import (
 
 //go:wasm-module extism:host/user
 //export mult
-/*
-### mult Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func mult(x, y uint64) uint64
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	r := mult(42, 2)
 
@@ -5888,18 +3916,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -5916,33 +3932,9 @@ import (
 
 //go:wasm-module host
 //export to_upper
-/*
-### to_upper Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func to_upper(offset uint64) uint64
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	name := pdk.InputString()
 
@@ -5965,18 +3957,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -5991,32 +3971,8 @@ import (
 
 //go:wasm-module extism:host/user
 //export hostPurpleMessage
-/*
-### hostPurpleMessage Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func hostPurpleMessage(offset uint64) uint64
 
-/*
-### purpleMessage Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func purpleMessage(message string) pdk.Memory {
 	messageMemory := pdk.AllocateString(message)
 	off := hostPurpleMessage(messageMemory.Offset())
@@ -6025,32 +3981,8 @@ func purpleMessage(message string) pdk.Memory {
 
 //go:wasm-module extism:host/user
 //export hostGreenMessage
-/*
-### hostGreenMessage Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func hostGreenMessage(offset uint64) uint64
 
-/*
-### greenMessage Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func greenMessage(message string) pdk.Memory {
 	messageMemory := pdk.AllocateString(message)
 	off := hostGreenMessage(messageMemory.Offset())
@@ -6059,18 +3991,6 @@ func greenMessage(message string) pdk.Memory {
 
 //go:wasm-module extism:host/user
 //export say_purple
-/*
-### say_purple Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func say_purple() int32 {
 	input := pdk.InputString()
 	output := "👋 Hello from say_purple " + input
@@ -6084,18 +4004,6 @@ func say_purple() int32 {
 
 //go:wasm-module extism:host/user
 //export say_green
-/*
-### say_green Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func say_green() int32 {
 	input := pdk.Input()
 	output := "🫱 Hey from say_green " + string(input)
@@ -6106,18 +4014,6 @@ func say_green() int32 {
 	return 0
 
 }
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6131,18 +4027,6 @@ import (
 )
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	// create an HTTP Request (without relying on WASI), set headers as needed
 	req := pdk.NewHTTPRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
@@ -6157,18 +4041,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6184,18 +4056,6 @@ import (
 )
 
 //go:export capitalize
-/*
-### Capitalize Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func Capitalize(ptr uint64) uint64 {
 	mem := pdk.FindMemory(ptr)
 	bytes := mem.ReadBytes()
@@ -6204,18 +4064,6 @@ func Capitalize(ptr uint64) uint64 {
 	return out.Offset()
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6231,18 +4079,6 @@ import (
 )
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	pdk.Log(pdk.LogTrace, "this is a trace log")
 	pdk.Log(pdk.LogDebug, "this is a debug log")
@@ -6253,18 +4089,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### getU32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func getU32(name string) (uint32, bool) {
 	bytes := pdk.GetVar(name)
 	if bytes == nil {
@@ -6281,50 +4105,14 @@ func getU32(name string) (uint32, bool) {
 	return uintFromLEBytes(array), true
 }
 
-/*
-### setU32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func setU32(name string, value uint32) {
 	pdk.SetVar(name, uintToLEBytes(value))
 }
 
-/*
-### uintFromLEBytes Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func uintFromLEBytes(bytes [4]byte) uint32 {
 	return uint32(bytes[0]) | uint32(bytes[1])<<8 | uint32(bytes[2])<<16 | uint32(bytes[3])<<24
 }
 
-/*
-### uintToLEBytes Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func uintToLEBytes(num uint32) []byte {
 	var bytes [4]byte
 	bytes[0] = byte(num)
@@ -6334,18 +4122,6 @@ func uintToLEBytes(num uint32) []byte {
 	return bytes[:]
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6360,33 +4136,9 @@ import (
 
 //go:wasm-module lib
 //export capitalize
-/*
-### Capitalize Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func Capitalize(offset uint64) uint64
 
 //go:export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	name := pdk.InputString()
 
@@ -6399,18 +4151,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6422,35 +4162,11 @@ package main
 import "github.com/extism/go-pdk"
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	pdk.SetErrorString("my custom error")
 	return 1
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6466,36 +4182,12 @@ import (
 )
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	input := pdk.InputString()
 	fmt.Println("this was printed from the plugin", input)
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6511,18 +4203,6 @@ import (
 )
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	input := pdk.InputString()
 
@@ -6535,18 +4215,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6564,18 +4232,6 @@ import (
 )
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	config, _ := pdk.GetConfig("duration")
 	seconds, _ := strconv.Atoi(config)
@@ -6596,18 +4252,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 
@@ -6623,18 +4267,6 @@ import (
 )
 
 //export run_test
-/*
-### run_test Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func run_test() int32 {
 	a, ok := getU32("a")
 
@@ -6653,18 +4285,6 @@ func run_test() int32 {
 	return 0
 }
 
-/*
-### getU32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func getU32(name string) (uint32, bool) {
 	bytes := pdk.GetVar(name)
 	if bytes == nil {
@@ -6681,50 +4301,14 @@ func getU32(name string) (uint32, bool) {
 	return uintFromLEBytes(array), true
 }
 
-/*
-### setU32 Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func setU32(name string, value uint32) {
 	pdk.SetVar(name, uintToLEBytes(value))
 }
 
-/*
-### uintFromLEBytes Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func uintFromLEBytes(bytes [4]byte) uint32 {
 	return uint32(bytes[0]) | uint32(bytes[1])<<8 | uint32(bytes[2])<<16 | uint32(bytes[3])<<24
 }
 
-/*
-### uintToLEBytes Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func uintToLEBytes(num uint32) []byte {
 	var bytes [4]byte
 	bytes[0] = byte(num)
@@ -6734,18 +4318,6 @@ func uintToLEBytes(num uint32) []byte {
 	return bytes[:]
 }
 
-/*
-### main Function
-**Purpose:**
-This function serves as a fundamental operation within the Extism Go SDK, handling WebAssembly execution and management.
-**Parameters:**
-- *(Refer to function signature for parameter details)*
-**Returns:**
-- *(Refer to function signature for return details)*
-**Usage:**
-- Can be called to perform key Extism SDK actions.
-- Provides essential support for plugin execution.
-*/
 func main() {}
 
 

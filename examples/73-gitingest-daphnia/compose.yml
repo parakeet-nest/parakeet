@@ -1,10 +1,10 @@
-name: simpler-parakeet-genai-stack
+name: parakeet-genai-stack-with-daphnia
 
-# Generate the files:
-# docker compose -f compose.dev.yml --profile generation up --build 
+# Embeddings generation then start the application:
+# docker compose -f compose.yml --profile generation --profile application up --build 
 
 # Start the application only:
-# docker compose -f compose.dev.yml --profile application up --build 
+# docker compose -f compose.yml --profile application up --build 
 
 services:
 
@@ -19,9 +19,43 @@ services:
     volumes:
       - ./data:/app/data
 
+  download-local-llm-embeddings:
+    profiles: [generation, application]
+    image: curlimages/curl:8.12.1
+    #entrypoint: ["curl", "http://host.docker.internal:11434/api/pull", "-d", '{"name": "nomic-embed-text:latest"}']
+    entrypoint:
+      - "sh"
+      - "-c"
+      - 'curl "${OLLAMA_BASE_URL}/api/pull" -d "{\"name\": \"${LLM_EMBEDDINGS}\"}"'
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+
+  create-embeddings:
+    profiles: [generation]
+    build:
+      context: ./create-embeddings
+      dockerfile: Dockerfile    
+    environment:
+      - CONTENT_PATH=/app/data/content.txt
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - LLM_EMBEDDINGS=${LLM_EMBEDDINGS}
+      - LANGUAGE=${LANGUAGE}
+      - DAPHNIA_STORE_PATH=${DAPHNIA_STORE_PATH}
+    volumes:
+      - ./data:/app/data
+      - ./store:/app/store
+    depends_on:
+      download-local-llm-embeddings:
+        condition: service_completed_successfully
+      gitingest:
+        condition: service_completed_successfully
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+
   download-local-llm:
     profiles: [application]
     image: curlimages/curl:8.12.1
+    #entrypoint: ["curl", "http://host.docker.internal:11434/api/pull", "-d", '{"name": "qwen2.5:7b"}']
     entrypoint:
       - "sh"
       - "-c"
@@ -32,28 +66,31 @@ services:
   backend:
     profiles: [application]
     build:
-      context: ../..  # Points to parakeet root directory
-      dockerfile: examples/73-gitingest-simpler/backend/Dockerfile.dev
+      context: ./backend
+      dockerfile: Dockerfile
     environment:
       - DIRECTORY_TREE_PATH=/app/data/tree.txt
-      - CONTENT_PATH=/app/data/content.txt
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
       - LLM_CHAT=${LLM_CHAT}
+      - LLM_EMBEDDINGS=${LLM_EMBEDDINGS}
+      - MAX_SIMILARITIES=${MAX_SIMILARITIES}
+      - HISTORY_MESSAGES=${HISTORY_MESSAGES}
       - OPTION_TEMPERATURE=${OPTION_TEMPERATURE}
       - OPTION_REPEAT_LAST_N=${OPTION_REPEAT_LAST_N}
       - OPTION_REPEAT_PENALTY=${OPTION_REPEAT_PENALTY}
       - OPTION_TOP_P=${OPTION_TOP_P}
       - OPTION_TOP_K=${OPTION_TOP_K}
-      - OPTION_MIN_P=${OPTION_MIN_P}
-      - OPTION_MIROSTAT=${OPTION_MIROSTAT}
-      - OPTION_MIROSTAT_TAU=${OPTION_MIROSTAT_TAU}
-      - OPTION_MIROSTAT_ETA=${OPTION_MIROSTAT_ETA}
+      - OPTION_NUM_CTX=${OPTION_NUM_CTX}
       - SYSTEM_INSTRUCTIONS_PATH=${SYSTEM_INSTRUCTIONS_PATH}
+      - DAPHNIA_STORE_PATH=${DAPHNIA_STORE_PATH}
 
     volumes:
       - ./data:/app/data
       - ./instructions:/app/instructions
+      - ./store:/app/store
     depends_on:
+      download-local-llm-embeddings:
+        condition: service_completed_successfully
       download-local-llm:
         condition: service_completed_successfully
     develop:
@@ -62,7 +99,7 @@ services:
           path: ./backend/main.go
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
+      
   frontend:
     profiles: [application]
     build:
@@ -76,6 +113,7 @@ services:
       - PAGE_HEADER=Made with 💖 and probably too much caffeine
       - PAGE_ICON=🤖
       - LLM_CHAT=${LLM_CHAT}
+      - LLM_EMBEDDINGS=${LLM_EMBEDDINGS}
     depends_on:
       - backend
     develop:

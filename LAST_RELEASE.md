@@ -6,7 +6,35 @@
 
 ### Helpers
 
-Get and cast environment variable value at the same time:
+#### Estimate the number of tokens in a test
+
+- `content.CountTokens(text string) int`
+- `content.CountTokensAdvanced(text string) int`
+- `content.EstimateGPTTokens(text string) int`
+
+> this could be useful to estimate the value of `num_ctx`
+
+#### Extract elements from source code:
+
+- `source.ExtractCodeElements(fileContent string, language string) ([]CodeElement, error)`
+
+```golang
+// CodeElement represents a code structure element (class, function, method)
+type CodeElement struct {
+	Type        string // "class", "function", "method"
+	Name        string
+	Signature   string
+	Description string
+	LineNumber  int
+	ParentClass string // For methods
+	Parameters  []string
+	Source      string // Source code of the element
+}
+```
+
+> the `Signature` could be useful to add context to embeddings.
+
+#### Get and cast environment variable value at the same time:
 
 - `gear.GetEnvFloat(key string, defaultValue float64) float64 `
 - `gear.GetEnvInt(key string, defaultValue int) int`

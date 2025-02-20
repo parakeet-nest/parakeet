@@ -10,6 +10,8 @@ import (
 	"sync"
 
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/content"
+	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/history"
@@ -46,13 +48,6 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	var contentPath = gear.GetEnvString("CONTENT_PATH", "../data/content.txt")
-
-	contentFiles, err := os.ReadFile(contentPath)
-	if err != nil {
-		log.Fatalln("😡:", err)
-	}
-
 	systemInstructionsPath := gear.GetEnvString("SYSTEM_INSTRUCTIONS_PATH", "../instructions/parakeet.instructions.md")
 
 	systemInstructions, err := os.ReadFile(systemInstructionsPath)
@@ -64,7 +59,14 @@ func main() {
 
 	ollamaUrl := gear.GetEnvString("OLLAMA_BASE_URL", "http://localhost:11434")
 
-	model := gear.GetEnvString("LLM_CHAT", "deepseek-r1:1.5b")
+	model := gear.GetEnvString("LLM_CHAT", "qwen2.5:3b")
+	embeddingsModel := gear.GetEnvString("LLM_EMBEDDINGS", "mxbai-embed-large")
+
+	maxSimilarities := gear.GetEnvInt("MAX_SIMILARITIES", 5)
+	// Similarity threshold (cosine distance) for similarities search
+	threshold := gear.GetEnvFloat("SIMILARITY_THRESHOLD", 0.65)
+
+	historyMessages := gear.GetEnvInt("HISTORY_MESSAGES", 3)
 
 	// Options
 	temperature := gear.GetEnvFloat("OPTION_TEMPERATURE", 0.5)
@@ -72,14 +74,19 @@ func main() {
 	repeatPenalty := gear.GetEnvFloat("OPTION_REPEAT_PENALTY", 2.2)
 	topK := gear.GetEnvInt("OPTION_TOP_K", 10)
 	topP := gear.GetEnvFloat("OPTION_TOP_P", 0.5)
-	minP := gear.GetEnvFloat("OPTION_MIN_P", 0.1)
-	microstat := gear.GetEnvInt("OPTION_MIROSTAT", 1)
-	microstatTau := gear.GetEnvFloat("OPTION_MIROSTAT_TAU", 3.0)
-	microstatEta := gear.GetEnvFloat("OPTION_MIROSTAT_ETA", 0.1)
+	numCtx := gear.GetEnvInt("OPTION_NUM_CTX", 4096)
 
+	// Initialize the vector store
+	var vectorStorePath = gear.GetEnvString("DAPHNIA_STORE_PATH", "../store/sourcedata.gob")
 
+	vectorStore := embeddings.DaphniaVectoreStore{}
+	err = vectorStore.Initialize(vectorStorePath)
 
-	fmt.Println("🌍", ollamaUrl, "📕", model)
+	if err != nil {
+		log.Fatalln("😡:", err)
+	}
+
+	fmt.Println("🌍", ollamaUrl, "📕", model, "🌐", embeddingsModel)
 
 	options := llm.SetOptions(map[string]interface{}{
 		option.Temperature:   temperature,
@@ -87,10 +94,7 @@ func main() {
 		option.RepeatPenalty: repeatPenalty,
 		option.TopK:          topK,
 		option.TopP:          topP,
-		option.MinP:          minP,
-		option.Mirostat:      microstat,
-		option.MirostatTau:   microstatTau,
-		option.MirostatEta:   microstatEta,
+		option.NumCtx:        numCtx,
 	})
 
 	mux := http.NewServeMux()
@@ -121,6 +125,39 @@ func main() {
 		previousMessages, _ := conversation.GetAllMessagesOfSession(sessionId)
 		//? End of history of messages
 
+		//! Similarity search
+		// Create an embedding from the question
+		embeddingFromQuestion, err := embeddings.CreateEmbedding(
+			ollamaUrl,
+			llm.Query4Embedding{
+				Model:  embeddingsModel,
+				Prompt: userMessage,
+			},
+			"question",
+		)
+		if err != nil {
+			log.Fatalln("😡:", err)
+		}
+		fmt.Println("🔎 searching for similarity...")
+
+		//threshold := 0.65
+		similarities, err := vectorStore.SearchTopNSimilarities(embeddingFromQuestion, threshold, maxSimilarities)
+
+		for _, similarity := range similarities {
+			fmt.Println("📝 doc:", similarity.Id, "score:", similarity.Score)
+			fmt.Println("--------------------------------------------------")
+			fmt.Println("📝 metadata:", similarity.Prompt)
+			fmt.Println("--------------------------------------------------")
+		}
+
+		if err != nil {
+			log.Fatalln("😡:", err)
+		}
+
+		repositoryContent := embeddings.GenerateContentFromSimilarities(similarities)
+
+		//! End of similarity search
+
 		// (Re)Create the conversation
 		conversationMessages := []llm.Message{}
 
@@ -134,7 +171,9 @@ func main() {
 		// Repository tree
 		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "REPOSITORY:\n" + string(directoryTree)})
 		// Source code
-		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "CONTENT:\n" + string(contentFiles)})
+		//conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "SOURCE CODE:\n" + repositoryContent})
+		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content:  repositoryContent})
+
 		// last question
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
 
@@ -147,6 +186,24 @@ func main() {
 				{Role: "user", Content: userMessage},
 			}
 		*/
+
+		// Estimate the number of tokens
+		concatenatedMessages:= ""
+		for _, message := range conversationMessages {
+			//fmt.Println("📝", message.Content)
+			concatenatedMessages += message.Content + "\n"
+		}
+		fmt.Println("================================================")
+		estimatedTokens := content.EstimateGPTTokens(concatenatedMessages)
+		fmt.Println("🧩 estimated tokens:", estimatedTokens)
+		fmt.Println("================================================")
+
+		if numCtx < estimatedTokens {
+			fmt.Println("🔥 numCtx is less than estimated tokens")
+			options.NumCtx = estimatedTokens + 100
+		} else {
+			options.NumCtx = numCtx
+		}
 
 		query := llm.Query{
 			Model:    model,
@@ -181,14 +238,14 @@ func main() {
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* Remove the top(first) message of conversation of maxMessages(3) messages
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 3)
+		//* Remove the top(first) message of conversation of maxMessages(historyMessages) messages
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, historyMessages)
 
 		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 3)
+		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, historyMessages)
 
 	})
 
