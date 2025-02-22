@@ -28,8 +28,9 @@ nav:
     - 🧾 Structured outputs: structured-outputs.md
     - WASM Plugins: wasm-plugins.md
     - Protected endpoint: protected-endpoint.md
-    - 🛠️ Other Parakeet Helpers: other-helpers.md
+    - 🛠️ LLMs & Parakeet Helpers: llms-helpers.md
     - 🔨 Prompt Helpers: prompt-helpers.md
+    - 🧰 Tools box: tools-box.md
     - 📺 UI (Input/Print) Helpers: ui-helpers.md
     - 📺 CLI Helpers: cli-helpers.md
     - Verbose mode: verbose-mode.md

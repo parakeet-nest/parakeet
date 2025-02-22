@@ -1,4 +1,4 @@
-# Other helpers and Parakeet methods
+# LLM helpers and Parakeet methods
 
 ## Get Information about a model
 
