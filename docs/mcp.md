@@ -12,6 +12,13 @@ Integration of `github.com/mark3labs/mcp-go/mcp` and `github.com/mark3labs/mcp-g
 - `mcphelpers.CallTool(ctx context.Context, mcpClient *client.StdioMCPClient, functionName string, arguments map[string]interface{}) (*mcp.CallToolResult, error)`
 - `mcphelpers.GetTextFromResult(mcpResult *mcp.CallToolResult) (string, error)`
 
+## Error management (specific type errors)
+
+- `MCPClientCreationError`
+- `MCPClientInitializationError`
+- `MCPGetToolsError`
+- `MCPToolCallError`
+- `MCPResultExtractionError`
 
 !!! note
 	👀 you will find a complete example in:
