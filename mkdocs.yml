@@ -23,6 +23,7 @@ nav:
     - 📝🔎 Contextual Retrieval: contextual-retrieval.md
     - Parsing Markdown: parsing-markdown.md
     - Parsing Source Code: parsing-source-code.md
+    - Content Helpers: content-helpers.md
     - Function Calling (before tools support): function-calling-before-tools-support.md
     - Function Calling (without tools support): function-calling-without-tools-support.md
     - Function Calling with Tools: tools.md

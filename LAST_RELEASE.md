@@ -6,7 +6,7 @@
 
 ### Helpers
 
-#### Estimate the number of tokens in a test
+#### Estimate the number of tokens in a text
 
 - `content.CountTokens(text string) int`
 - `content.CountTokensAdvanced(text string) int`
