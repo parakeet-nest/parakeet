@@ -59,8 +59,6 @@ type CodeElement struct {
 - Added `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
   - see example: `71-web-chat-bot-with-session`
 
-
-
 ## v0.2.4 🥮 [mooncake]
 
 ### RAG
