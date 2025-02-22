@@ -1,7 +1,7 @@
 module 60-safety-models
 
-go 1.23.1
+go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.4
+require github.com/parakeet-nest/parakeet v0.2.5
 
 replace github.com/parakeet-nest/parakeet => ../..

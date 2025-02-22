@@ -1,6 +1,6 @@
 module github.com/parakeet-nest/parakeet
 
-go 1.23.1
+go 1.24.0
 
 require (
 	github.com/charmbracelet/bubbles v0.20.0

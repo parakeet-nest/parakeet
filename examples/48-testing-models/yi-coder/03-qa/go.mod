@@ -1,8 +1,8 @@
 module 48-testing-models-03-yi-coder
 
-go 1.23.1
+go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.4
+require github.com/parakeet-nest/parakeet v0.2.5
 
 require (
 	github.com/yuin/goldmark v1.7.4 // indirect

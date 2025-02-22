@@ -1,8 +1,8 @@
 module 69-web-chat-bot
 
-go 1.23.1
+go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.4
+require github.com/parakeet-nest/parakeet v0.2.5
 
 require (
 	go.etcd.io/bbolt v1.3.11 // indirect

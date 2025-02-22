@@ -1,8 +1,8 @@
 module 18-call-functions-for-real
 
-go 1.23.1
+go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.4
+require github.com/parakeet-nest/parakeet v0.2.5
 
 require (
 	github.com/dylibso/observe-sdk/go v0.0.0-20240819160327-2d926c5d788a // indirect

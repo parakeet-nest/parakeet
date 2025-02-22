@@ -1,10 +1,10 @@
 module 70-web-chat-bot-with-session
 
-go 1.23.1
+go 1.24.0
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/parakeet-nest/parakeet v0.2.4
+	github.com/parakeet-nest/parakeet v0.2.5
 )
 
 require (
