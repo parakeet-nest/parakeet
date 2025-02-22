@@ -180,6 +180,19 @@ func ParseMarkdownWithHierarchy(content string) []Chunk {
 	return chunks
 }
 
+// ParseMarkdownWithLineage parses the given markdown content and returns a slice of Chunk structs.
+// Each Chunk represents a header and its associated content, along with its hierarchical lineage.
+//
+// The function processes the markdown content line by line, identifying headers and their levels
+// using a regular expression. It then collects the content associated with each header and
+// determines the parent header to build the hierarchical structure.
+//
+// Parameters:
+//   - content: A string containing the markdown content to be parsed.
+//
+// Returns:
+//   - A slice of Chunk structs, each representing a header and its associated content, along with
+//     its hierarchical lineage.
 func ParseMarkdownWithLineage(content string) []Chunk {
 	lines := strings.Split(content, "\n")
 	var chunks []Chunk
