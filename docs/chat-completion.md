@@ -239,3 +239,43 @@ conversation.Initialize("../conversation.db")
     - [examples/11-chat-conversational-bbolt/begin](https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt/begin): start a conversation and save the history
     - [examples/11-chat-conversational-bbolt/resume](https://github.com/parakeet-nest/parakeet/tree/main/examples/11-chat-conversational-bbolt/resume): load the messages from the history bucket and resue the conversation
 
+
+## Conversational history: remove messages 
+
+### In Memory
+
+- Remove a message by id `history.RemoveMessage(id string)`
+
+!!! note
+	👀 you will find a complete example in:
+
+    - [examples/69-web-chat-bot](https://github.com/parakeet-nest/parakeet/tree/main/examples/69-web-chat-bot)
+
+### Bbolt Memory
+
+- Remove a message by id `history.RemoveMessage(id string)`
+
+
+## Conversational history: handling sessions
+
+### In Memory
+
+- `history.SaveMessageWithSession(sessionId string, messagesCounters *map[string]int, message llm.Message)`
+
+- `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
+
+!!! note
+	👀 you will find a complete example in:
+
+    - [examples/70-web-chat-bot-with-session](https://github.com/parakeet-nest/parakeet/tree/main/examples/70-web-chat-bot-with-session)
+
+
+### Bbolt Memory
+
+- `history.SaveMessageWithSession(sessionId string, messagesCounters *map[string]int, message llm.Message)`
+- `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
+
+!!! note
+	👀 you will find a complete example in:
+
+    - [examples/71-web-chat-bot-with-session](https://github.com/parakeet-nest/parakeet/tree/main/examples/71-web-chat-bot-with-session)
