@@ -124,6 +124,5 @@ func main() {
 		default:
 			log.Fatal("😡:", err)
 		}
-
 	}
 }

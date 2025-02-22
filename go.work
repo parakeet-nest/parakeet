@@ -127,10 +127,19 @@ use (
 	./examples/70-web-chat-bot-with-session/backend
 	./examples/71-web-chat-bot-with-session/backend
 
+	./examples/72-gitingest-es/create-embeddings
+	./examples/72-gitingest-es/backend
 
+	./examples/73-gitingest-daphnia/create-embeddings
+	./examples/73-gitingest-daphnia/backend
+
+	./examples/74-rag-with-daphnia/create-embeddings
+	./examples/74-rag-with-daphnia/use-embeddings
+
+
+	// Testing and experiments
 	examples/90-characters
 	examples/91-characters
-
 	examples/99-testing
 	
 	//prompting/01-draft

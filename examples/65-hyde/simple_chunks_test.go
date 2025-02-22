@@ -73,7 +73,8 @@ func TestGenerateSimpleChunks(t *testing.T) {
 					Embedding: embedding.Embedding,
 					Id:        embedding.Id,
 				})
-				fmt.Println("📝 Embedding:", record.Embedding)
+				//fmt.Println("📝 Embedding:", record.Embedding)
+				fmt.Println("📝 Embedding:", record.Id)
 
 
 				if err != nil {
@@ -84,6 +85,7 @@ func TestGenerateSimpleChunks(t *testing.T) {
 
 			fmt.Println("---[Improved chunk]--------------------------------")
 			fmt.Println(embedding.Prompt)
+			fmt.Println("Lineage:", doc.Lineage)
 			fmt.Println("---------------------------------------------------")
 
 		}

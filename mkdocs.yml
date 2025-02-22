@@ -22,16 +22,22 @@ nav:
     - Chunkers & Splitters: chunkers-and-splitters.md
     - 📝🔎 Contextual Retrieval: contextual-retrieval.md
     - Parsing Markdown: parsing-markdown.md
+    - Parsing Source Code: parsing-source-code.md
+    - Content Helpers: content-helpers.md
     - Function Calling (before tools support): function-calling-before-tools-support.md
     - Function Calling (without tools support): function-calling-without-tools-support.md
     - Function Calling with Tools: tools.md
+    - 🧾 Structured outputs: structured-outputs.md
     - WASM Plugins: wasm-plugins.md
     - Protected endpoint: protected-endpoint.md
-    - 🛠️ Other Parakeet Helpers: other-helpers.md
+    - 🛠️ LLMs & Parakeet Helpers: llms-helpers.md
     - 🔨 Prompt Helpers: prompt-helpers.md
+    - 🧰 Tools box: tools-box.md
     - 📺 UI (Input/Print) Helpers: ui-helpers.md
     - 📺 CLI Helpers: cli-helpers.md
     - Verbose mode: verbose-mode.md
+    - MCP Client: mcp.md
+    - 😡 Error Handling: error-handling.md
     - OpenAI API support: openaiapi-support.md
     - 👮‍♂️ Flock agents: flock-agents.md
     - 🧪 Parakeet Examples & Recipes: parakeet-examples.md

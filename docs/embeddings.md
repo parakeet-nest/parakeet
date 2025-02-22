@@ -116,6 +116,22 @@ err := elasticStore.Initialize(
     - [examples/33-rag-with-elastic/create-embeddings](https://github.com/parakeet-nest/parakeet/tree/main/examples/33-rag-with-elastic/create-embeddings): create and populate the vector store
     - [examples/33-rag-with-elastic/use-embeddings](https://github.com/parakeet-nest/parakeet/tree/main/examples/33-rag-with-elastic/use-embeddings): search similarities in the vector store
 
+### Daphnia vector store
+
+[Daphnia](https://github.com/sea-monkeys/daphnia) is another one of my projects to create an embedded vector database (useful to experiment).
+
+```golang
+// Initialize the vector store
+vectorStore := embeddings.DaphniaVectoreStore{}
+vectorStore.Initialize("my-data.gob")
+```
+
+!!! note
+	👀 you will find a complete example in:
+
+    - [examples/65-hyde](https://github.com/parakeet-nest/parakeet/tree/main/examples/65-hyde)
+    - [examples/74-rag-with-daphnia](https://github.com/parakeet-nest/parakeet/tree/main/examples/4-rag-with-daphnia)
+
 ### Additional data
 
 you can add additional data to a vector record (embedding):

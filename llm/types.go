@@ -72,9 +72,9 @@ func (m *Message) FirstToolCallToJSONString() (string, error) {
 }
 
 type MessageRecord struct {
-	Id      string `json:"id"`
-	Role    string `json:"role"`
-	Content string `json:"content"`
+	Id        string `json:"id"`
+	Role      string `json:"role"`
+	Content   string `json:"content"`
 	SessionId string `json:"sessionId"`
 }
 
@@ -124,6 +124,8 @@ type Options struct {
 	MirostatEta      float64 `json:"mirostat_eta"`
 	PenalizeNewline  bool    `json:"penalize_newline"`
 
+	MinP float64 `json:"min_p"`
+
 	Verbose bool
 }
 
@@ -150,6 +152,7 @@ func DefaultOptions() Options {
 		MirostatEta:      0.1,
 		PenalizeNewline:  true,
 		Seed:             -1,
+		MinP:             0.05,
 	}
 }
 
@@ -193,6 +196,8 @@ func SetOptions(options map[string]interface{}) Options {
 			defaultOptions.Seed = value.(int)
 		case "Verbose":
 			defaultOptions.Verbose = value.(bool)
+		case "MinP":
+			defaultOptions.MinP = value.(float64)
 		}
 	}
 	return defaultOptions
