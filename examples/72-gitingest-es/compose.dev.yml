@@ -6,6 +6,8 @@ name: parakeet-genai-stack
 # Start the application only:
 # docker compose -f compose.dev.yml --profile application up --build 
 
+# How to call a function of a wasm module in golang with the extism-go sdk?
+
 services:
 
   gitingest:
