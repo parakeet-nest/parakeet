@@ -1,9 +1,9 @@
 name: parakeet-genai-stack-with-daphnia
 
-# Embeddings generation then start the application:
-# docker compose -f compose.yml --profile generation --profile application up --build 
+# Embeddings generation:
+# docker compose -f compose.yml --profile generation up --build 
 
-# Start the application only:
+# Start the application:
 # docker compose -f compose.yml --profile application up --build 
 
 services:
