@@ -34,6 +34,17 @@ type LanguagePatterns struct {
 // GetLanguagePatterns returns regex patterns for a specific language
 func GetLanguagePatterns(language string) LanguagePatterns {
 	switch strings.ToLower(language) {
+	case "rust":
+		return LanguagePatterns{
+			// Matches both struct and trait declarations
+			ClassPattern: regexp.MustCompile(`^\s*(?:struct|trait)\s+([A-Za-z0-9_]+)(?:<[^>]+>)?(?:\s*(?:where\s+[^{]+)?)\s*(?:\{|;)`),
+			// Matches standalone functions
+			FunctionPattern: regexp.MustCompile(`^\s*(?:pub\s+)?(?:async\s+)?fn\s+([A-Za-z0-9_]+)\s*(?:<[^>]+>)?\s*\((.*)\)(?:\s*->\s*[^{]+)?\s*(?:where\s+[^{]+)?\s*\{`),
+			// Matches impl block methods
+			MethodPattern: regexp.MustCompile(`^\s*(?:pub\s+)?(?:async\s+)?fn\s+([A-Za-z0-9_]+)\s*(?:<[^>]+>)?\s*\(&(?:mut\s+)?self(?:\s*,\s*(.*))?\)(?:\s*->\s*[^{]+)?\s*(?:where\s+[^{]+)?\s*\{`),
+			// Matches both /// and /** ... */ style comments
+			CommentPattern: regexp.MustCompile(`(?s)^\s*(?:///|/\*\*)(.*?)(?:\*/)?$`),
+		}
 	case "python":
 		return LanguagePatterns{
 			ClassPattern:    regexp.MustCompile(`^\s*class\s+([A-Za-z0-9_]+)(?:\(([^)]*)\))?:`),
@@ -322,7 +333,7 @@ func determineElementEndLine(lines []string, startLine, maxEndLine int, language
 			}
 		}
 
-	case "go", "java", "javascript", "c", "cpp":
+	case "go", "java", "javascript", "c", "cpp", "rust":
 		// Bracket-based languages
 		bracketLevel := 0
 		foundOpeningBracket := false
