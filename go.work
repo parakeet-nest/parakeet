@@ -136,6 +136,8 @@ use (
 	./examples/74-rag-with-daphnia/create-embeddings
 	./examples/74-rag-with-daphnia/use-embeddings
 
+	./examples/75-mcp-sse
+
 
 	// Testing and experiments
 	examples/90-characters

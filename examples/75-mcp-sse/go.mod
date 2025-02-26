@@ -1,4 +1,4 @@
-module 67-mcp
+module 75-mcp-sse
 
 go 1.24.0
 

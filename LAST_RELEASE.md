@@ -2,7 +2,16 @@
 
 ## Release notes
 
-## v0.2.5 🥧 [pie] (🚧 in progress)
+## v0.2.6 🍿 [popcorn] (🚧 in progress)
+
+### MCP support progress: SSE Client
+
+- `mcphelpers.GetMCPSSEClient(ctx context.Context, baseURL string) (*client.SSEMCPClient, *mcp.InitializeResult, error)`
+- `mcphelpers.GetSSETools(ctx context.Context, mcpClient *client.SSEMCPClient) ([]llm.Tool, error)`
+- `mcphelpers.CallSSETool(ctx context.Context, mcpClient *client.SSEMCPClient, functionName string, arguments map[string]interface{}) (*mcp.CallToolResult, error)`
+
+
+## v0.2.5 🥧 [pie] 
 
 ### Helpers
 

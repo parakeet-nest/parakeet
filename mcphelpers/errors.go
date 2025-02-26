@@ -20,6 +20,24 @@ func (e *MCPClientCreationError) Error() string {
 	return fmt.Sprintf("MCPClientCreationError: %s", e.Message)
 }
 
+type MCPSSEClientCreationError struct {
+	Message string
+}
+
+func (e *MCPSSEClientCreationError) Error() string {
+	return fmt.Sprintf("MCPSSEClientCreationError: %s", e.Message)
+}
+
+
+type MCPSSEClientStartError struct {
+	Message string
+}
+
+func (e *MCPSSEClientStartError) Error() string {
+	return fmt.Sprintf("MCPSSEClientStartError: %s", e.Message)
+}
+
+
 type MCPClientInitializationError struct {
 	Message string
 }
@@ -27,6 +45,16 @@ type MCPClientInitializationError struct {
 func (e *MCPClientInitializationError) Error() string {
 	return fmt.Sprintf("MCPClientInitializationError: %s", e.Message)
 }
+
+type MCPSSEClientInitializationError struct {
+	Message string
+}
+
+func (e *MCPSSEClientInitializationError) Error() string {
+	return fmt.Sprintf("MCPSSEClientInitializationError: %s", e.Message)
+}
+
+
 
 type MCPGetToolsError struct {
 	Message string

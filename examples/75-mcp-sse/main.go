@@ -41,28 +41,30 @@ func main() {
 	defer cancel()
 
 	// Create a new mcp client
-	mcpClient, _, err := mcphelpers.GetMCPClient(ctx, "docker",
-		[]string{}, // Empty ENV
-		"run",
-		"--rm",
-		"-i",
-		"mcp-curl",
-	)
+	mcpClient, result, err := mcphelpers.GetMCPSSEClient(ctx, "http://0.0.0.0:3001")
 
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
 	defer mcpClient.Close()
 
-	ollamaTools, err := mcphelpers.GetTools(ctx, mcpClient)
+	fmt.Println("🚀 Initialized with server:", result.ServerInfo.Name, result.ServerInfo.Version)
+
+	ollamaTools, err := mcphelpers.GetSSETools(ctx, mcpClient)
+
+	fmt.Println("=============================================")
+	fmt.Println("🛠️ Tools:", ollamaTools)
+	fmt.Println("=============================================")
 
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
-
+	// https://raw.githubusercontent.com/sea-monkeys/WASImancer/main/README.md
+	toolPrompt := `Fetch this page: https://raw.githubusercontent.com/sea-monkeys/WASImancer/main/README.md
+	`
 	// Send request to a LLM with tools suppot
 	messages := []llm.Message{
-		{Role: "user", Content: "Fetch this page: https://raw.githubusercontent.com/parakeet-nest/parakeet/main/README.md"},
+		{Role: "user", Content: toolPrompt},
 	}
 
 	options := llm.SetOptions(map[string]interface{}{
@@ -90,12 +92,14 @@ func main() {
 	// 🖐️ Call the mcp server
 	fmt.Println("🦙🛠️ 📣 calling:", toolCall.Function.Name, toolCall.Function.Arguments)
 
-	mcpResult, err := mcphelpers.CallTool(ctx, mcpClient, toolCall.Function.Name, toolCall.Function.Arguments)
+	mcpResult, err := mcphelpers.CallSSETool(ctx, mcpClient, toolCall.Function.Name, toolCall.Function.Arguments)
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
 	// Get the text from the result
 	contentOfTheWebPage, _ := mcphelpers.GetTextFromResult(mcpResult)
+
+	fmt.Println("📝 CONTENT:", contentOfTheWebPage)
 
 	// add this {Role: "user", Content: contentForThePrompt} to the messages
 	messages = append(messages,
@@ -114,6 +118,9 @@ func main() {
 		Messages: messages,
 		Options:  chatOptions,
 	}
+
+	fmt.Println("📝 SUMMARY:")
+
 
 	_, err = completion.ChatStream(ollamaUrl, query,
 		func(answer llm.Answer) error {

@@ -65,11 +65,11 @@ func GetMCPClient(ctx context.Context, command string, env []string, args ...str
 // Returns:
 //   - A slice of llm.Tool containing the converted tools.
 //   - An error if there is any issue during the request or conversion process.
-func GetTools(mcpClient *client.StdioMCPClient) ([]llm.Tool, error) {
+func GetTools(ctx context.Context, mcpClient *client.StdioMCPClient) ([]llm.Tool, error) {
 	// List Tools
 	//fmt.Println("🛠️ Available tools...")
 	toolsRequest := mcp.ListToolsRequest{}
-	mcpTools, err := mcpClient.ListTools(context.Background(), toolsRequest)
+	mcpTools, err := mcpClient.ListTools(ctx, toolsRequest)
 	if err != nil {
 		return nil, &MCPGetToolsError{Message: fmt.Sprintf("Failed to list tools: %v", err)}
 	}
