@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
+	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/mcphelpers"
 )
@@ -21,27 +21,17 @@ func main() {
 		log.Fatalln("😡", err)
 	}
 
-	ollamaUrl := os.Getenv("OLLAMA_HOST")
-	if ollamaUrl == "" {
-		ollamaUrl = "http://localhost:11434"
-	}
-
-	modelWithToolsSupport := os.Getenv("LLM_WITH_TOOLS_SUPPORT")
-	if modelWithToolsSupport == "" {
-		modelWithToolsSupport = "qwen2.5:0.5b"
-	}
-
-	chatModel := os.Getenv("LLM_CHAT")
-	if chatModel == "" {
-		chatModel = "qwen2.5:0.5b"
-	}
+	ollamaUrl := gear.GetEnvString("OLLAMA_HOST", "http://localhost:11434")
+	modelWithToolsSupport := gear.GetEnvString("LLM_WITH_TOOLS_SUPPORT", "qwen2.5:0.5b")
+	chatModel := gear.GetEnvString("LLM_CHAT", "qwen2.5:0.5b")
+	mcpSSEServerUrl := gear.GetEnvString("MCP_HOST", "http://http://0.0.0.0:5001")
 
 	// Create context with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	// Create a new mcp client
-	mcpClient, result, err := mcphelpers.GetMCPSSEClient(ctx, "http://0.0.0.0:3001")
+	mcpClient, result, err := mcphelpers.GetMCPSSEClient(ctx, mcpSSEServerUrl)
 
 	if err != nil {
 		log.Fatalln("😡", err)
@@ -120,7 +110,6 @@ func main() {
 	}
 
 	fmt.Println("📝 SUMMARY:")
-
 
 	_, err = completion.ChatStream(ollamaUrl, query,
 		func(answer llm.Answer) error {

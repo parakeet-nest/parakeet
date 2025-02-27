@@ -31,7 +31,7 @@ func main() {
 	ollamaUrl := gear.GetEnvString("OLLAMA_HOST", "http://localhost:11434")
 	modelWithToolsSupport := gear.GetEnvString("LLM_WITH_TOOLS_SUPPORT", "qwen2.5:0.5b")
 	chatModel := gear.GetEnvString("LLM_CHAT", "qwen2.5:0.5b")
-	mcpSSEServerUrl := gear.GetEnvString("MCP_HOST", "http://http://0.0.0.0:3001")
+	mcpSSEServerUrl := gear.GetEnvString("MCP_HOST", "http://http://0.0.0.0:5001")
 
 	displaySettings(ollamaUrl, modelWithToolsSupport, chatModel, mcpSSEServerUrl)
 
