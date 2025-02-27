@@ -10,6 +10,9 @@
 - `mcphelpers.GetSSETools(ctx context.Context, mcpClient *client.SSEMCPClient) ([]llm.Tool, error)`
 - `mcphelpers.CallSSETool(ctx context.Context, mcpClient *client.SSEMCPClient, functionName string, arguments map[string]interface{}) (*mcp.CallToolResult, error)`
 
+Added to SSE MCP examples using the [WASImancer MCP server project](https://github.com/sea-monkeys/WASImancer):
+- `75-mcp-sse`
+- `76-mcp-sse`
 
 ## v0.2.5 🥧 [pie] 
 
