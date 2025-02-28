@@ -9,6 +9,9 @@ docker run --rm -p 5001:3001 \
   -e PLUGINS_PATH=./plugins \
   -e PLUGINS_DEFINITION_FILE=plugins.yml \
   -v "$(pwd)/plugins":/app/plugins \
+  -e RESOURCES_PATH=./resources \
+  -e RESOURCES_DEFINITION_FILE=resources.yml \
+  -v "$(pwd)/resources":/app/resources \
   k33g/wasimancer:preview 
 ```
 

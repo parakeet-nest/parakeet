@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/gear"
@@ -41,13 +42,73 @@ func main() {
 
 	// Create a new mcp client
 	mcpClient, result, err := mcphelpers.GetMCPSSEClient(ctx, mcpSSEServerUrl)
-	
+
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
 	defer mcpClient.Close()
 
 	fmt.Println("🚀 Initialized with server:", result.ServerInfo.Name, result.ServerInfo.Version)
+
+	// Create a request to list resources
+	listRequest := mcp.ListResourcesRequest{}
+	// Call the ListResources API
+	resources, err := mcpClient.ListResources(ctx, listRequest)
+	if err != nil {
+		log.Fatalf("😡 Failed to list resources: %v", err)
+	}
+
+	// Print the list of available resources
+	fmt.Println("🌍 Available Static Resources:")
+	for _, resource := range resources.Resources {
+		fmt.Printf("- Name: %s, URI: %s, MIME Type: %s\n",
+			resource.Name, resource.URI, resource.MIMEType)
+	}
+
+	// Create a request to read the resource
+	readRequest := mcp.ReadResourceRequest{}
+	readRequest.Params.URI = "system://instructions"
+
+	// Call the ReadResource API
+	resourceResult, err := mcpClient.ReadResource(ctx, readRequest)
+	if err != nil {
+		log.Fatalf("😡 Failed to read resource: %v", err)
+	}
+
+	systemMCPInstructions := ``
+	systemChatInstructions := ``
+
+
+	// Print the resource contents
+	fmt.Printf("Contents of resource %s:\n", readRequest.Params.URI)
+
+	/*
+	fmt.Printf("Contents of resource %s:\n", resourceURI)
+	for _, content := range resourceResult.Contents {
+		if textContent, ok := content.(mcp.TextResourceContents); ok {
+			fmt.Println(textContent.Text)
+		} else {
+			fmt.Printf("Unknown content type: %+v\n", content)
+		}
+	}
+	*/
+
+	//TODO: This is a workaround to get the text from the resource
+	for _, content := range resourceResult.Contents {
+		contentsMap := content.(map[string]interface {})
+		fmt.Println("- 📝:", contentsMap["kind"], contentsMap["text"])
+
+		if contentsMap["kind"] == "mcp" {
+			systemMCPInstructions = contentsMap["text"].(string)
+		}
+		if contentsMap["kind"] == "chat" {
+			systemChatInstructions = contentsMap["text"].(string)
+		}
+	}
+
+	fmt.Println("📝 MCP Instructions:", systemMCPInstructions)
+	fmt.Println("📝 Chat Instructions:", systemChatInstructions)
+
 
 	ollamaTools, err := mcphelpers.GetSSETools(ctx, mcpClient)
 
@@ -59,14 +120,7 @@ func main() {
 		log.Fatalln("😡", err)
 	}
 
-	systemMCPInstructions := `You are a useful AI agent. 
-	Your job is to understand the user prompt ans decide if you need to use a tool to run external commands.
-	Ignore all things not related to the usage of a tool.
-	`
 
-	systemChatInstructions := `You are a useful AI agent. your job is to answer the user prompt.
-	If you detect that the user prompt is related to a tool, ignore this part and focus on the other parts.
-	`
 	// This prompt will be use by the Tools LLM and the Chat LLM
 	globalPrompt := `Fetch this page: https://raw.githubusercontent.com/sea-monkeys/WASImancer/main/README.md 
 	and then make a brief summary of the content.`

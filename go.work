@@ -138,7 +138,8 @@ use (
 
 	./examples/75-mcp-sse
 	./examples/76-mcp-sse
-
+	./examples/77-mcp-sse-resources
+	./examples/78-mcp-sse-resources
 
 	// Testing and experiments
 	examples/90-characters
