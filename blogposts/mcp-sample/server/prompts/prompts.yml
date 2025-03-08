@@ -9,7 +9,6 @@ prompts:
         - text: 'Fetch the content of the following url: ${url}'
           role: 'user'
 
-
     - name: summarize
       arguments:
         - name: 'content'

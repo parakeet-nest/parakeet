@@ -53,8 +53,7 @@ func main() {
 	// Print the list of available resources
 	fmt.Println("🌍 Available Static Resources:")
 	for _, resource := range resources {
-		fmt.Printf("- Name: %s, URI: %s, MIME Type: %s\n",
-			resource.Name, resource.URI, resource.MIMEType)
+		fmt.Printf("- Name: %s, URI: %s, \n", resource.Name, resource.URI)
 	}
 
 

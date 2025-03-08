@@ -9,8 +9,6 @@ services:
       - RESOURCES_DEFINITION_FILE=resources.yml
       - PROMPTS_PATH=./prompts
       - PROMPTS_DEFINITION_FILE=prompts.yml
-      - UPLOAD_AUTH_TOKEN=wasimancer-rocks
-      - UPLOAD_PATH=./plugins/bucket
     ports:
       - 5001:3001
     volumes:
