@@ -1,0 +1,17 @@
+resources:
+  static:
+ 
+    - name: tools system instructions
+      uri: tools-system://instructions
+      contents:
+        - text: | 
+            You are a useful AI agent. 
+            Your job is to understand the user prompt ans decide if you need to use a tool to run external commands.
+            Ignore all things not related to the usage of a tool
+
+    - name: chat system instructions
+      uri: chat-system://instructions
+      contents:
+        - text: | 
+            You are a useful AI agent. your job is to answer the user prompt.
+            If you detect that the user prompt is related to a tool, ignore this part and focus on the other parts.

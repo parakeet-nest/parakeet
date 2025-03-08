@@ -1,0 +1,15 @@
+plugins:
+
+  - name: fetch
+    path: /fetch/wasimancer-plugin-fetch.wasm
+    version: 1.0.0
+    description: fetch the content of a url
+    functions:
+      - displayName: fetch
+        function: fetch
+        arguments:
+          - name: url
+            type: string
+            description: url to fetch
+        description: fetch the content of a url
+

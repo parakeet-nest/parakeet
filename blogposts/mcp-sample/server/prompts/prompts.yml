@@ -1,0 +1,19 @@
+prompts:
+  predefined:
+
+    - name: 'fetch-page'
+      arguments:
+        - name: 'url'
+          type: 'string'
+      messages:
+        - text: 'Fetch the content of the following url: ${url}'
+          role: 'user'
+
+
+    - name: summarize
+      arguments:
+        - name: 'content'
+          type: 'string'
+      messages:
+        - text: 'Summarize the following text: ${content}'
+          role: 'user'
