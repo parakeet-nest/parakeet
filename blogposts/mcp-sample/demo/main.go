@@ -150,9 +150,16 @@ func main() {
 		}
 	}
 
-	fmt.Println("🦙🛠️ 📣 calling:")
+	fmt.Println()
+	fmt.Println("🛠️ 📣 calling:")
 
-	content, err := mcpClient.CallTool("fetch", map[string]interface{}{"url": "https://google.com"})
+	content, err := mcpClient.CallTool(
+		"fetch",
+		map[string]interface{}{
+			"url": "https://raw.githubusercontent.com/parakeet-nest/parakeet/refs/heads/main/blogposts/mcp-sample/demo/README.md",
+		},
+	)
+
 	if err != nil {
 		log.Fatalln("😡", err)
 	}

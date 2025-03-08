@@ -6,61 +6,53 @@ import (
 	"log"
 	"time"
 
-	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
-	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/llm"
 	mcpsse "github.com/parakeet-nest/parakeet/mcp-sse"
 )
 
-func displaySettings(ollamaUrl, modelWithToolsSupport, chatModel, mcpSSEServerUrl string) {
-	fmt.Println("🦙 OLLAMA_HOST:", ollamaUrl)
-	fmt.Println("🛠️ LLM_WITH_TOOLS_SUPPORT:", modelWithToolsSupport)
-	fmt.Println("🤖 LLM_CHAT:", chatModel)
-	fmt.Println("🔌 MCP_HOST:", mcpSSEServerUrl)
-}
-
 func main() {
-
-	// Load environment variables
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("😡", err)
-	}
-
-	// Get environment variables
-	ollamaUrl := gear.GetEnvString("OLLAMA_HOST", "http://localhost:11434")
-	modelWithToolsSupport := gear.GetEnvString("LLM_WITH_TOOLS_SUPPORT", "qwen2.5:0.5b")
-	chatModel := gear.GetEnvString("LLM_CHAT", "qwen2.5:0.5b")
-	mcpSSEServerUrl := gear.GetEnvString("MCP_HOST", "http://0.0.0.0:5001")
 
 	// Create context with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
+	ollamaUrl := "http://localhost:11434"
+	modelWithToolsSupport := "qwen2.5:0.5b"
+	chatModel := "qwen2.5:0.5b"
+
 	// Create a new mcp client
-	mcpClient, err := mcpsse.NewClient(ctx, mcpSSEServerUrl)
+	mcpClient, err := mcpsse.NewClient(ctx, "http://0.0.0.0:5001")
+	defer mcpClient.Close()
+
 	if err != nil {
-		log.Fatalln("😡", err)
+		log.Fatalln("😡 error when creating the MCP client:", err)
 	}
-	// Start the client
+
+	// Start and initialize the client
 	err = mcpClient.Start()
+
 	if err != nil {
-		log.Fatalln("😡", err)
+		log.Fatalln("😡 error when starting the MCP client:", err)
 	}
-	// Initialize the client
+
 	result, err := mcpClient.Initialize()
+
 	if err != nil {
-		log.Fatalln("😡", err)
+		log.Fatalln("😡 error when initializing the MCP client:", err)
 	}
 
 	fmt.Println("1. 🚀 Initialized with server:", result.ServerInfo.Name, result.ServerInfo.Version)
+
+	// ------------------------------
+	//  List and read the ressources
+	// ------------------------------
 	fmt.Println("2. 📚 Reading resource from the MCP server...")
 
 	resourceResult, err := mcpClient.ReadResource("tools-system://instructions")
 	if err != nil {
-		log.Fatalln("😡", err)
+		log.Fatalln("😡 Failed to read resource:", err)
 	}
 	toolsSystemInstructions := resourceResult.Contents[0]["text"].(string)
 
@@ -70,23 +62,31 @@ func main() {
 	}
 	chatSystemInstructions := resourceResult.Contents[0]["text"].(string)
 
-	fmt.Println("  - 📚 Tools System Instructions:", toolsSystemInstructions)
-	fmt.Println("  - 📚 Chat System Instructions:", chatSystemInstructions)
+	fmt.Println("- 📚 Tools System Instructions:", toolsSystemInstructions)
+	fmt.Println("- 📚 Chat System Instructions:", chatSystemInstructions)
 
+	// ------------------------------
+	//  List and read the prompts
+	// ------------------------------
 	fmt.Println("3. 📝 Get tools Prompt from the MCP server...")
-	// Get the prompt for the Tools LLM from the MCP server
+
 	promptForToolsLLM, err := mcpClient.GetAndFillPrompt(
 		"fetch-page",
-		map[string]string{"url": "https://raw.githubusercontent.com/sea-monkeys/WASImancer/main/README.md"},
+		map[string]string{
+			"url": "https://raw.githubusercontent.com/sea-monkeys/WASImancer/main/README.md",
+		},
 	)
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
-
-	fmt.Println("4. 📣 Filled Prompt:", "role:", promptForToolsLLM.Messages[0].Role, "content:", promptForToolsLLM.Messages[0].Content)
+	fmt.Println(
+		"4. 📣 Filled Prompt:",
+		"role:", promptForToolsLLM.Messages[0].Role,
+		"content:", promptForToolsLLM.Messages[0].Content,
+	)
 
 	fmt.Println("5. 🛠️ Get tools list from the MCP server...")
-	
+
 	// Get the list of tools from the MCP server
 	ollamaTools, err := mcpClient.ListTools()
 	if err != nil {
@@ -136,9 +136,16 @@ func main() {
 	fmt.Println("  - 🌍 Content length:", len(pageContent.Text))
 
 	fmt.Println("8. 📝 Get chat Prompt from the MCP server...")
-	prompt, _ := mcpClient.GetAndFillPrompt("summarize", map[string]string{"content": pageContent.Text})
+	prompt, _ := mcpClient.GetAndFillPrompt(
+		"summarize",
+		map[string]string{"content": pageContent.Text},
+	)
 
-	fmt.Println("  - 📣 Filled Prompt:", "role:", prompt.Messages[0].Role, "content length:",len(prompt.Messages[0].Content))
+	fmt.Println(
+		"  - 📣 Filled Prompt:",
+		"role:", prompt.Messages[0].Role,
+		"content length:", len(prompt.Messages[0].Content),
+	)
 
 	// Prepare messages for the Chat LLM
 	messagesForChatLLM := []llm.Message{
@@ -146,11 +153,10 @@ func main() {
 	}
 	messagesForChatLLM = append(messagesForChatLLM, prompt.Messages...)
 
-
 	chatOptions := llm.SetOptions(map[string]interface{}{
-		option.Temperature:   0.5,
+		option.Temperature:   0.0,
 		option.RepeatLastN:   2,
-		option.RepeatPenalty: 3.0,
+		option.RepeatPenalty: 2.0,
 	})
 
 	query := llm.Query{
@@ -158,7 +164,6 @@ func main() {
 		Messages: messagesForChatLLM,
 		Options:  chatOptions,
 	}
-
 
 	fmt.Println("9. 📣 Send chat request to the LLM and display the summary of the page...")
 	// Call the Chat LLM
@@ -172,8 +177,4 @@ func main() {
 		log.Fatalln("😡", err)
 	}
 
-	mcpClient.Close()
-
-	fmt.Println()
-	fmt.Println("👋 Bye!")
 }
