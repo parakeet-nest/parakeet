@@ -10,12 +10,11 @@ import (
 )
 
 func main() {
-
 	ollamaUrl := "http://localhost:11434"
-	//ollamaUrl := "http://robby.local:4000" // this is my RPI5
+	//ollamaUrl := "http://robby.local:4000"	// this is my RPI5
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	model := "allenporter/xlam:1b"
+	model := "qwen2.5:0.5b"
 
 	toolsList := []llm.Tool{
 		{
@@ -68,7 +67,6 @@ func main() {
 		option.RepeatPenalty: 2.0,
 	})
 
-
 	query := llm.Query{
 		Model:    model,
 		Messages: messages,
@@ -81,6 +79,7 @@ func main() {
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
+
 
 	// Search tool to call in the answer
 	tool, err := answer.Message.ToolCalls.Find("hello")

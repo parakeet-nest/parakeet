@@ -78,7 +78,7 @@ use (
 	./examples/42-make-a-slm-smarter/03-rag-list
 
 	./examples/43-function-calling/01-xlam
-	./examples/43-function-calling/02-qwen2tools
+	./examples/43-function-calling/02-qwen
 
 	./examples/44-chat-openai
 	./examples/45-chat-stream-openai
@@ -136,10 +136,12 @@ use (
 	./examples/74-rag-with-daphnia/create-embeddings
 	./examples/74-rag-with-daphnia/use-embeddings
 
-	./examples/75-mcp-sse
-	./examples/76-mcp-sse
-	./examples/77-mcp-sse-resources
-	./examples/78-mcp-sse-resources
+	./examples/75-mcp-sse/01-call-fetch
+	./examples/75-mcp-sse/02-call-addition
+	./examples/75-mcp-sse/03-get-resources
+	./examples/75-mcp-sse/04-get-prompts
+	./examples/75-mcp-sse/05-all-in-one
+
 
 	// Testing and experiments
 	examples/90-characters

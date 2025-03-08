@@ -1,0 +1,30 @@
+plugins:
+
+  - name: fetch
+    path: /fetch/wasimancer-plugin-fetch.wasm
+    version: 1.0.0
+    description: fetch the content of a url
+    functions:
+      - displayName: fetch
+        function: fetch
+        arguments:
+          - name: url
+            type: string
+            description: url to fetch
+        description: fetch the content of a url
+
+  - name: addition
+    path: /addition/wasimancer_plugin_addition.wasm
+    version: 1.0.0
+    description: addition
+    functions:
+      - displayName: add with rust
+        function: add
+        arguments:
+          - name: left
+            type: number
+            description: first number
+          - name: right
+            type: number
+            description: second number
+        description: a function to add numbers

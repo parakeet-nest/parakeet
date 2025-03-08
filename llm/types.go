@@ -2,6 +2,7 @@ package llm
 
 import (
 	"encoding/json"
+	"errors"
 )
 
 type LLM struct {
@@ -39,6 +40,35 @@ func (ft *FunctionTool) ToJSONString() (string, error) {
 	return jsonString, nil
 }
 
+type ToolCall struct {
+	Function FunctionTool //`json:"function"`
+	Result   interface{}
+	Error    error
+}
+
+type ToolCalls []ToolCall
+
+func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
+	var tool = ToolCall{}
+	for toolCallIdx := range *tc {
+		if (*tc)[toolCallIdx].Function.Name == toolName {
+			tool = (*tc)[toolCallIdx]
+		}
+	}
+	if tool.Function.Name == "" {
+		return tool, errors.New("Tool not found")
+	}
+	return tool, nil
+}
+
+
+type Message struct {
+	Role      string    `json:"role"`
+	Content   string    `json:"content"`
+	ToolCalls ToolCalls `json:"tool_calls"`
+}
+
+/*
 type Message struct {
 	Role      string `json:"role"`
 	Content   string `json:"content"`
@@ -48,6 +78,7 @@ type Message struct {
 		Error    error
 	} `json:"tool_calls"`
 }
+*/
 
 func (m *Message) ToolCallsToJSONString() (string, error) {
 	// Marshal the data into JSON
@@ -225,3 +256,51 @@ type Query4Embedding struct {
 	TokenHeaderName  string
 	TokenHeaderValue string
 }
+
+// Related to MCP
+type Resource struct {
+	Name string `json:"name"`
+	URI  string `json:"uri"`
+	MIMEType string `json:"mimeType"`
+	Description string `json:"description"`
+}
+
+type Resources []Resource
+
+type Prompt struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Arguments   []Argument `json:"arguments"`
+	Messages	[]Message `json:"messages"`
+}
+
+type Prompts []Prompt
+
+func (prpts *Prompts) Find(promptName string) (Prompt, error) {
+	var prompt = Prompt{}
+	for promptIdx := range *prpts {
+		if (*prpts)[promptIdx].Name == promptName {
+			prompt = (*prpts)[promptIdx]
+		}
+	}
+	if prompt.Name == "" {
+		return prompt, errors.New("Prompt not found")
+	}
+	return prompt, nil
+}
+
+
+
+type Argument struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Required    bool   `json:"required"`
+}
+
+
+/*
+		mcpPrompt.Arguments
+		mcpPrompt.Name
+		mcpPrompt.Description
+
+*/

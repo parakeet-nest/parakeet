@@ -1,6 +1,0 @@
-resources:
-  static:
-    - name: about
-      uri: about://parakeet
-      contents:
-        - text: 🦜🪺 Parakeet is a golang library to talk with 🦙 Ollama

@@ -9,9 +9,11 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/llm"
-	"github.com/parakeet-nest/parakeet/mcphelpers"
+
+	mcpstdio "github.com/parakeet-nest/parakeet/mcp-stdio"
 )
 
 func main() {
@@ -41,7 +43,7 @@ func main() {
 	defer cancel()
 
 	// Create a new mcp client
-	mcpClient, _, err := mcphelpers.GetMCPClient(ctx, "docker",
+	mcpClient, err := mcpstdio.NewClient(ctx, "docker",
 		[]string{}, // Empty ENV
 		"run",
 		"--rm",
@@ -52,9 +54,14 @@ func main() {
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
-	defer mcpClient.Close()
+	//defer mcpClient.Close()
 
-	ollamaTools, err := mcphelpers.GetTools(ctx, mcpClient)
+	_, err = mcpClient.Initialize()
+	if err != nil {
+		log.Fatalln("😡", err)
+	}
+
+	ollamaTools, err := mcpClient.ListTools()
 
 	if err != nil {
 		log.Fatalln("😡", err)
@@ -90,16 +97,18 @@ func main() {
 	// 🖐️ Call the mcp server
 	fmt.Println("🦙🛠️ 📣 calling:", toolCall.Function.Name, toolCall.Function.Arguments)
 
-	mcpResult, err := mcphelpers.CallTool(ctx, mcpClient, toolCall.Function.Name, toolCall.Function.Arguments)
+	mcpResult, err := mcpClient.CallTool(toolCall.Function.Name, toolCall.Function.Arguments)
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
 	// Get the text from the result
-	contentOfTheWebPage, _ := mcphelpers.GetTextFromResult(mcpResult)
+	contentOfTheWebPage := mcpResult.Text
+
+	//fmt.Println("🌍 Content:", contentOfTheWebPage)
 
 	// add this {Role: "user", Content: contentForThePrompt} to the messages
 	messages = append(messages,
-		llm.Message{Role: "user", Content: "Make a summary of the below page:"},
+		llm.Message{Role: "user", Content: "MWhat is the main topic of the below page:"},
 		llm.Message{Role: "user", Content: contentOfTheWebPage},
 	)
 
@@ -107,6 +116,7 @@ func main() {
 		option.Temperature:   0.5,
 		option.RepeatLastN:   2,
 		option.RepeatPenalty: 3.0,
+		option.NumCtx:        content.EstimateGPTTokens(contentOfTheWebPage) + 1000,
 	})
 
 	query := llm.Query{
@@ -125,4 +135,5 @@ func main() {
 		log.Fatalln("😡", err)
 	}
 
+	mcpClient.Close()
 }
