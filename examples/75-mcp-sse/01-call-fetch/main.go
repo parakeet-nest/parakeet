@@ -99,48 +99,6 @@ func main() {
 
 	fmt.Println("🌍 Content:", content.Text)
 
-
-	
-
-	/*
-	   // Get the text from the result
-	   contentOfTheWebPage, _ := mcphelpers.GetTextFromResult(mcpResult)
-
-	   fmt.Println("📝 CONTENT:", contentOfTheWebPage)
-
-	   // add this {Role: "user", Content: contentForThePrompt} to the messages
-	   messages = append(messages,
-
-	   	llm.Message{Role: "user", Content: "Make a summary of the below page:"},
-	   	llm.Message{Role: "user", Content: contentOfTheWebPage},
-
-	   )
-
-	   	chatOptions := llm.SetOptions(map[string]interface{}{
-	   		option.Temperature:   0.5,
-	   		option.RepeatLastN:   2,
-	   		option.RepeatPenalty: 3.0,
-	   	})
-
-	   	query := llm.Query{
-	   		Model:    chatModel,
-	   		Messages: messages,
-	   		Options:  chatOptions,
-	   	}
-
-	   fmt.Println("📝 SUMMARY:")
-
-	   _, err = completion.ChatStream(ollamaUrl, query,
-
-	   	func(answer llm.Answer) error {
-	   		fmt.Print(answer.Message.Content)
-	   		return nil
-	   	})
-
-	   	if err != nil {
-	   		log.Fatalln("😡", err)
-	   	}
-	*/
 	mcpClient.Close()
 	fmt.Println("👋 Bye!")
 }

@@ -2,17 +2,14 @@
 
 ## Release notes
 
-## v0.2.6 🍿 [popcorn] (🚧 in progress)
+## v0.2.6 🍿 [popcorn]
 
-### MCP support progress: SSE Client
+- MCP support progress: 
+  - SSE transport Client
+  - new STDIO transport Client
 
-- `mcphelpers.GetMCPSSEClient(ctx context.Context, baseURL string) (*client.SSEMCPClient, *mcp.InitializeResult, error)`
-- `mcphelpers.GetSSETools(ctx context.Context, mcpClient *client.SSEMCPClient) ([]llm.Tool, error)`
-- `mcphelpers.CallSSETool(ctx context.Context, mcpClient *client.SSEMCPClient, functionName string, arguments map[string]interface{}) (*mcp.CallToolResult, error)`
-
-Added to SSE MCP examples using the [WASImancer MCP server project](https://github.com/sea-monkeys/WASImancer):
-- `75-mcp-sse`
-- `76-mcp-sse`
+- Added a SSE MCP example using the [WASImancer MCP server project](https://github.com/sea-monkeys/WASImancer): `75-mcp-sse`
+- Update of the STDIO MCP example: `67-mcp`
 
 ## v0.2.5 🥧 [pie] 
 

@@ -2,7 +2,7 @@ module 63-agents-chat-stream
 
 go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.5
+require github.com/parakeet-nest/parakeet v0.2.6
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect
