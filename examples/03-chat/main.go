@@ -20,7 +20,8 @@ func main() {
 	ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	model := "deepseek-coder"
+	//model := "deepseek-coder"
+	model := "qwen2.5-coder:7b" 
 
 	systemContent := `You are an expert in computer programming.
 	Please make friendly answer for the noobs.

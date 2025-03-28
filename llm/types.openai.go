@@ -1,4 +1,5 @@
 package llm
+
 // OpenAI API support
 import "encoding/json"
 
@@ -29,9 +30,11 @@ type OpenAIQuery struct {
 	StreamOptions map[string]interface{} `json:"stream_options,omitempty"` // OpenAI specific
 	//--------------------------------------------
 
-	Stream            bool   `json:"stream"`
-	Tools             []Tool `json:"tools,omitempty"`                         // not used right now
-	ToolChoices       string `json:"tool_choices,omitempty"`        // not used right now
+	Stream bool `json:"stream"`
+
+	Tools      []Tool `json:"tools,omitempty"`
+	ToolChoice string `json:"tool_choice,omitempty"`
+
 	ParallelToolCalls bool   `json:"parallel_tool_calls,omitempty"` // not used right now
 	User              string `json:"user,omitempty"`                // not used right now
 
@@ -43,8 +46,8 @@ type OpenAIQuery struct {
 
 	//TokenHeaderName  string
 	//TokenHeaderValue string
-	Verbose bool `json:"-"`  
-	OpenAIAPIKey string `json:"-"`  
+	Verbose      bool   `json:"-"`
+	OpenAIAPIKey string `json:"-"`
 }
 
 func (query *OpenAIQuery) ToJsonString() string {
@@ -61,28 +64,56 @@ func (query *OpenAIQuery) ToJsonString() string {
 }
 
 type OpenAIMessage struct {
-    Role    string `json:"role,omitempty"`
-    Content string `json:"content,omitempty"`
+	Role    string `json:"role,omitempty"`
+	Content string `json:"content,omitempty"`
+	//ToolCalls []interface{} `json:"tool_calls,omitempty"` 
+	ToolCalls []map[string]interface{} `json:"tool_calls,omitempty"` 
+
 }
+
+
+/*
+type OpenAIToolCall struct {
+	ID   string `json:"id,omitempty"`
+	Type string `json:"type,omitempty"` // "function" or "tool"
+	Function FunctionTool `json:"function,omitempty"`
+}
+*/
+//type OpenAIToolCalls []OpenAIToolCall
+
+//! ????
+
+/*
+        "tool_calls": [
+          {
+            "id": "call_hkPjBb3TnBg532I7LStxDuqr",
+            "type": "function",
+            "function": {
+              "name": "hello",
+              "arguments": "{\"name\":\"Bob\"}"
+            }
+          }
+        ],
+*/
 
 type Delta struct {
 	Content string `json:"content,omitempty"`
 }
 
 type Choice struct {
-    Index        int     `json:"index,omitempty"`
-    Message      OpenAIMessage `json:"message,omitempty"`
-    Logprobs     *string `json:"logprobs,omitempty"` // Assuming logprobs can be null
-    FinishReason string  `json:"finish_reason,omitempty"`
-	Delta Delta `json:"delta,omitempty"`
+	Index        int           `json:"index,omitempty"`
+	Message      OpenAIMessage `json:"message,omitempty"`
+	Logprobs     *string       `json:"logprobs,omitempty"` // Assuming logprobs can be null
+	FinishReason string        `json:"finish_reason,omitempty"`
+	Delta        Delta         `json:"delta,omitempty"`
 }
 
 // "choices":[{"index":0,"delta":{"content":" redemption"}
 
 type Usage struct {
-    PromptTokens     int `json:"prompt_tokens,omitempty"`
-    CompletionTokens int `json:"completion_tokens,omitempty"`
-    TotalTokens      int `json:"total_tokens,omitempty"`
+	PromptTokens     int `json:"prompt_tokens,omitempty"`
+	CompletionTokens int `json:"completion_tokens,omitempty"`
+	TotalTokens      int `json:"total_tokens,omitempty"`
 }
 
 /*
@@ -96,13 +127,13 @@ type Usage struct {
 */
 
 type OpenAIAnswer struct {
-    ID               string   `json:"id"`
-    Object           string   `json:"object"`
-    Created          int64    `json:"created"`
-    Model            string   `json:"model"`
-    SystemFingerprint string  `json:"system_fingerprint"`
-    Choices          []Choice `json:"choices"`
-    Usage            Usage    `json:"usage"`
+	ID                string   `json:"id"`
+	Object            string   `json:"object"`
+	Created           int64    `json:"created"`
+	Model             string   `json:"model"`
+	SystemFingerprint string   `json:"system_fingerprint"`
+	Choices           []Choice `json:"choices"`
+	Usage             Usage    `json:"usage"`
 }
 
 func (answer *OpenAIAnswer) ToJsonString() string {
@@ -131,10 +162,9 @@ curl https://api.openai.com/v1/embeddings \
 // https://platform.openai.com/docs/guides/embeddings/what-are-embeddings
 type OpenAIQuery4Embedding struct {
 	Input string `json:"input"`
-	Model  string `json:"model"`
+	Model string `json:"model"`
 
-	OpenAIAPIKey string `json:"-"`  
-
+	OpenAIAPIKey string `json:"-"`
 }
 
 /*
@@ -162,10 +192,10 @@ type OpenAIQuery4Embedding struct {
 */
 
 type OpenAIEmbeddingResponse struct {
-	Object    string    `json:"object"`
-	Data      []Embedding `json:"data"`
-	Model     string    `json:"model"`
-	Usage     Usage     `json:"usage"`
+	Object string      `json:"object"`
+	Data   []Embedding `json:"data"`
+	Model  string      `json:"model"`
+	Usage  Usage       `json:"usage"`
 }
 
 type Embedding struct {
@@ -173,4 +203,3 @@ type Embedding struct {
 	Index     int       `json:"index"`
 	Embedding []float64 `json:"embedding"`
 }
-

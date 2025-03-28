@@ -10,9 +10,10 @@ import (
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/content"
 	"github.com/parakeet-nest/parakeet/embeddings"
-	"github.com/parakeet-nest/parakeet/llm"
 	"github.com/parakeet-nest/parakeet/enums/option"
+	"github.com/parakeet-nest/parakeet/enums/provider"
 
+	"github.com/parakeet-nest/parakeet/llm"
 
 	"fmt"
 	"log"
@@ -67,7 +68,7 @@ func main() {
 	}
 
 	// Generate data for a SLM with OpenAI
-	openAIUrl := "https://api.openai.com/v1"
+	openAIURL := "https://api.openai.com/v1"
 	model := "gpt-4o-mini"
 
 	systemContent := `You are a useful AI agent.`
@@ -85,15 +86,12 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	query := llm.OpenAIQuery{
+	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
 			{Role: "system", Content: systemContent},
 			{Role: "user", Content: prompt},
 		},
-		//Verbose: true,
-		OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
-		//Verbose: 	true,
 	}
 
 	/*
@@ -104,11 +102,11 @@ func main() {
 		fmt.Println(answer.Choices[0].Message.Content)
 	*/
 
-	markdownReport, err := completion.ChatWithOpenAIStream(openAIUrl, query,
-		func(answer llm.OpenAIAnswer) error {
-			fmt.Print(answer.Choices[0].Delta.Content)
+	markdownReport, err := completion.ChatStream(openAIURL, query,
+		func(answer llm.Answer) error {
+			fmt.Print(answer.Message.Content)
 			return nil
-		})
+		}, provider.OpenAI, os.Getenv("OPENAI_API_KEY"))
 
 	if err != nil {
 		log.Fatal("😡:", err)
@@ -122,7 +120,7 @@ func main() {
 	defer file.Close()
 
 	// Write the content of markdownReport to the file
-	_, err = file.WriteString(markdownReport)
+	_, err = file.WriteString(markdownReport.Message.Content)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
@@ -133,11 +131,10 @@ func main() {
 	// Make the SLM smarter
 	ollamaUrl := "http://localhost:11434"
 
-	smallChatModel := "qwen2:1.5b"
-	//smallChatModel := "gemma2:2b"
+	smallChatModel := "qwen2.5:1.5b"
 
-	//embeddingsModel := "mxbai-embed-large"
-	embeddingsModel := "bge-m3"
+	embeddingsModel := "mxbai-embed-large"
+	//embeddingsModel := "bge-m3"
 
 	systemContent, err = content.InterpolateString(
 		`**Instruction:**
@@ -191,11 +188,11 @@ func main() {
 	}
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 0.0,
-		option.RepeatLastN: 10,
+		option.Temperature:   0.0,
+		option.RepeatLastN:   10,
 		option.RepeatPenalty: 10.0,
-		option.TopK: 10,
-		option.TopP: 0.5,
+		option.TopK:          10,
+		option.TopP:          0.5,
 	})
 
 	for {
@@ -221,7 +218,6 @@ func main() {
 			log.Fatalln("😡:", err)
 		}
 		fmt.Println("🔎 searching for similarity...")
-
 
 		similarities, err := store.SearchTopNSimilarities(embeddingFromQuestion, 0.5, 1)
 

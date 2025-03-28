@@ -144,6 +144,12 @@ use (
 
 	./examples/76-play-with-smollm
 
+	./examples/77-chat-model-runner
+	./examples/78-chat-stream-model-runner
+	./examples/79-embeddings-memory-model-runner
+	./examples/80-tools-model-runner
+	./examples/81-tools-openai
+
 
 	// Testing and experiments
 	examples/90-characters

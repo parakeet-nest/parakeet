@@ -10,18 +10,14 @@ import (
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
-type EmbeddingResponse struct {
-	Embedding []float64 `json:"embedding"`
-}
+func ollamaCreateEmbedding(ollamaURL string, query llm.Query4Embedding, id string) (llm.VectorRecord, error) {
 
-func CreateEmbedding(ollamaUrl string, query llm.Query4Embedding, id string) (llm.VectorRecord, error) {
-	//log.Println("⏳ Creating embedding... ", id)
 	jsonData, err := json.Marshal(query)
 	if err != nil {
 		return llm.VectorRecord{}, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, ollamaUrl+"/api/embeddings", bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest(http.MethodPost, ollamaURL+"/api/embeddings", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return llm.VectorRecord{}, err
 	}

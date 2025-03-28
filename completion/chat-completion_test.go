@@ -55,7 +55,7 @@ making him the crew's unsung guardian in the cosmos. His best friend is Spiderma
 </doc>
 </context>`
 
-var model = "qwen:0.5b"
+var model = "qwen2.5:0.5b"
 
 // Remark: KeegOrg does not exist int the Star Trek franchise
 

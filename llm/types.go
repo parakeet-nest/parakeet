@@ -61,11 +61,10 @@ func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
 	return tool, nil
 }
 
-
 type Message struct {
 	Role      string    `json:"role"`
 	Content   string    `json:"content"`
-	ToolCalls ToolCalls `json:"tool_calls"`
+	ToolCalls ToolCalls `json:"tool_calls,omitempty"`
 }
 
 /*
@@ -157,7 +156,23 @@ type Options struct {
 
 	MinP float64 `json:"min_p"`
 
-	Verbose bool
+	//Verbose bool
+	Verbose bool `json:"-"` 
+
+	// *** OpenAI specific fields ***
+	/*
+	LogitBias       map[string]interface{} `json:"logit_bias,omitempty"`      // OpenAI specific
+	Logprobs        bool                   `json:"logprobs,omitempty"`        // OpenAI specific
+	TopLogprobs     int                    `json:"top_logprobs,omitempty"`    // OpenAI specific
+	MaxTokens       int                    `json:"max_tokens,omitempty"`      // OpenAI specific
+	N               int                    `json:"n,omitempty"`               // OpenAI specific
+	Response_format map[string]interface{} `json:"response_format,omitempty"` // OpenAI specific
+	ServiceTier     string                 `json:"service_tier,omitempty"`    // OpenAI specific
+
+	StreamOptions map[string]interface{} `json:"stream_options,omitempty"` 	  // OpenAI specific
+	OpenAIAPIKey string `json:"-"`
+	*/
+	// *** End of OpenAI specific fields ***
 }
 
 /* Default Ollama Options
@@ -259,19 +274,19 @@ type Query4Embedding struct {
 
 // Related to MCP
 type Resource struct {
-	Name string `json:"name"`
-	URI  string `json:"uri"`
-	MIMEType string `json:"mimeType"`
+	Name        string `json:"name"`
+	URI         string `json:"uri"`
+	MIMEType    string `json:"mimeType"`
 	Description string `json:"description"`
 }
 
 type Resources []Resource
 
 type Prompt struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name        string     `json:"name"`
+	Description string     `json:"description"`
 	Arguments   []Argument `json:"arguments"`
-	Messages	[]Message `json:"messages"`
+	Messages    []Message  `json:"messages"`
 }
 
 type Prompts []Prompt
@@ -289,18 +304,15 @@ func (prpts *Prompts) Find(promptName string) (Prompt, error) {
 	return prompt, nil
 }
 
-
-
 type Argument struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Required    bool   `json:"required"`
 }
 
-
 /*
-		mcpPrompt.Arguments
-		mcpPrompt.Name
-		mcpPrompt.Description
+	mcpPrompt.Arguments
+	mcpPrompt.Name
+	mcpPrompt.Description
 
 */

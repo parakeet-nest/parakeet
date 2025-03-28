@@ -3,10 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 
-	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/provider"
@@ -40,16 +38,10 @@ var docs = []string{
 }
 
 func main() {
-	// create a `.env` file with the following content:
-	// OPENAI_API_KEY=your_openai_api_key
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("😡:", err)
-	}
 
-	openAIURL := "https://api.openai.com/v1"
-	model := "gpt-4o-mini"
-	embeddingsModel := "text-embedding-3-large"
+	modelRunnerURL := "http://localhost:12434/engines/llama.cpp/v1"
+	model := "ai/qwen2.5:latest"
+	embeddingsModel := "ai/mxbai-embed-large"
 
 	store := embeddings.MemoryVectorStore{
 		Records: make(map[string]llm.VectorRecord),
@@ -59,14 +51,13 @@ func main() {
 	for idx, doc := range docs {
 		fmt.Println("Creating embedding from document ", idx)
 		embedding, err := embeddings.CreateEmbedding(
-			openAIURL,
+			modelRunnerURL,
 			llm.Query4Embedding{
 				Model:  embeddingsModel,
-				Prompt: doc,				
+				Prompt: doc,
 			},
 			strconv.Itoa(idx),
-			provider.OpenAI,
-			os.Getenv("OPENAI_API_KEY"),
+			provider.DockerModelRunner,
 		)
 		if err != nil {
 			fmt.Println("😡:", err)
@@ -88,14 +79,13 @@ func main() {
 
 	// Create an embedding from the question
 	embeddingFromQuestion, err := embeddings.CreateEmbedding(
-		openAIURL,
+		modelRunnerURL,
 		llm.Query4Embedding{
-			Model:        embeddingsModel,
-			Prompt:       userContent,
+			Model:  embeddingsModel,
+			Prompt: userContent,
 		},
 		"question",
-		provider.OpenAI,
-		os.Getenv("OPENAI_API_KEY"),
+		provider.DockerModelRunner,
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
@@ -121,11 +111,11 @@ func main() {
 	fmt.Println("🤖 answer:")
 
 	// Answer the question
-	_, err = completion.ChatStream(openAIURL, query,
+	_, err = completion.ChatStream(modelRunnerURL, query,
 		func(answer llm.Answer) error {
 			fmt.Print(answer.Message.Content)
 			return nil
-		}, provider.OpenAI, os.Getenv("OPENAI_API_KEY"))
+		}, provider.DockerModelRunner)
 
 	if err != nil {
 		log.Fatal("😡:", err)
