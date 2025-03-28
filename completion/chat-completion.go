@@ -13,6 +13,8 @@ import (
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
+// TODO: use an option mechanism to allow using other LLM solutions
+
 func Chat(url string, query llm.Query) (llm.Answer, error) {
 	kindOfCompletion := "chat"
 

@@ -142,6 +142,8 @@ use (
 	./examples/75-mcp-sse/04-get-prompts
 	./examples/75-mcp-sse/05-all-in-one
 
+	./examples/76-play-with-smollm
+
 
 	// Testing and experiments
 	examples/90-characters
