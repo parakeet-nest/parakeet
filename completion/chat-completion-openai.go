@@ -10,12 +10,13 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/parakeet-nest/parakeet/completion/typesprovider/openai"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func openAIChat(url string, query llm.Query, openAIKey string) (llm.Answer, error) {
 
-	openAIQuery := llm.OpenAIQuery{
+	openAIQuery := openai.Query{
 		Model:    query.Model,
 		Messages: query.Messages,
 
@@ -88,7 +89,7 @@ func openAIChat(url string, query llm.Query, openAIKey string) (llm.Answer, erro
 		return llm.Answer{}, errors.New("Error: status code: " + resp.Status + "\n" + string(body))
 	}
 
-	var openAIAnswer llm.OpenAIAnswer
+	var openAIAnswer openai.Answer
 	err = json.Unmarshal(body, &openAIAnswer)
 
 	if err != nil {
@@ -104,7 +105,7 @@ func openAIChat(url string, query llm.Query, openAIKey string) (llm.Answer, erro
 
 func openAIChatStream(url string, query llm.Query, onChunk func(llm.Answer) error, openAIKey string) (llm.Answer, error) {
 
-	openAIQuery := llm.OpenAIQuery{
+	openAIQuery := openai.Query{
 		Model:    query.Model,
 		Messages: query.Messages,
 
@@ -167,7 +168,7 @@ func openAIChatStream(url string, query llm.Query, onChunk func(llm.Answer) erro
 	fullAnswer := ""
 	var returnAnswer = llm.Answer{}
 
-	fullResponse := llm.OpenAIAnswer{}
+	fullResponse := openai.Answer{}
 	// Read and stream the response
 	scanner := bufio.NewScanner(resp.Body)
 	for scanner.Scan() {
@@ -179,18 +180,11 @@ func openAIChatStream(url string, query llm.Query, onChunk func(llm.Answer) erro
 			}
 
 			// Parse the response JSON
-			var response llm.OpenAIAnswer
+			var response openai.Answer
 			err := json.Unmarshal([]byte(data), &response)
 			if err != nil {
-				//return err
 				return llm.Answer{}, err
-				//fmt.Println("Error parsing JSON:", err)
-				//continue
 			}
-
-			//fullAnswer = response // for the verbose mode, this will be the last chunk
-
-			//fullAnswer.Choices[0].Delta.Content += response.Choices[0].Delta.Content
 
 			fullAnswer += response.Choices[0].Delta.Content
 
@@ -221,19 +215,15 @@ func openAIChatStream(url string, query llm.Query, onChunk func(llm.Answer) erro
 	}
 
 	if err := scanner.Err(); err != nil {
-		//return err
 		return llm.Answer{}, err
-		//fmt.Println("Error reading response:", err)
 	}
 
 	if openAIQuery.Verbose {
-		//fmt.Println("[llm/query]", query.ToJsonString())
 		fmt.Println()
 		fmt.Println("[llm/completion]", fullResponse.ToJsonString())
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		//return errors.New("Error: status code: " + resp.Status)
 		return llm.Answer{}, errors.New("Error: status code: " + resp.Status)
 	} else {
 		//return nil

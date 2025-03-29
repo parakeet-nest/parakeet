@@ -7,6 +7,9 @@ import (
 	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/gear"
 	"github.com/parakeet-nest/parakeet/llm"
+
+	"github.com/parakeet-nest/parakeet/completion/typesprovider/openai"
+
 )
 
 func getProvider(options ...string) string {
@@ -49,7 +52,7 @@ func ChatStream(url string, query llm.Query, onChunk func(llm.Answer) error, opt
 	}
 }
 
-func convertOpenAIAnswerToAnswer(openAIAnswer llm.OpenAIAnswer) (llm.Answer, error) {
+func convertOpenAIAnswerToAnswer(openAIAnswer openai.Answer) (llm.Answer, error) {
 
 	if openAIAnswer.Choices[0].Message.ToolCalls != nil {
 		// Conversion of openAI ToolCalls  to toolcalls for llm.Answer

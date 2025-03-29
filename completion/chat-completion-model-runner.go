@@ -10,12 +10,13 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/parakeet-nest/parakeet/completion/typesprovider/openai"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func modelRunnerChat(url string, query llm.Query) (llm.Answer, error) {
-
-	openAIQuery := llm.OpenAIQuery{
+	
+	openAIQuery := openai.Query{
 		Model:    query.Model,
 		Messages: query.Messages,
 
@@ -86,7 +87,7 @@ func modelRunnerChat(url string, query llm.Query) (llm.Answer, error) {
 		return llm.Answer{}, errors.New("Error: status code: " + resp.Status + "\n" + string(body))
 	}
 
-	var openAIAnswer llm.OpenAIAnswer
+	var openAIAnswer openai.Answer
 	err = json.Unmarshal(body, &openAIAnswer)
 
 	if err != nil {
@@ -105,7 +106,7 @@ func modelRunnerChat(url string, query llm.Query) (llm.Answer, error) {
 
 func modelRunnerChatStream(url string, query llm.Query, onChunk func(llm.Answer) error) (llm.Answer, error) {
 
-	openAIQuery := llm.OpenAIQuery{
+	openAIQuery := openai.Query{
 		Model:    query.Model,
 		Messages: query.Messages,
 
@@ -167,7 +168,7 @@ func modelRunnerChatStream(url string, query llm.Query, onChunk func(llm.Answer)
 	fullAnswer := ""
 	var returnAnswer = llm.Answer{}
 
-	fullResponse := llm.OpenAIAnswer{}
+	fullResponse := openai.Answer{}
 	// Read and stream the response
 	scanner := bufio.NewScanner(resp.Body)
 	for scanner.Scan() {
@@ -179,7 +180,7 @@ func modelRunnerChatStream(url string, query llm.Query, onChunk func(llm.Answer)
 			}
 
 			// Parse the response JSON
-			var response llm.OpenAIAnswer
+			var response openai.Answer
 			err := json.Unmarshal([]byte(data), &response)
 			if err != nil {
 				return llm.Answer{}, err

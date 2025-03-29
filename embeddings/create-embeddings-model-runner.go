@@ -7,35 +7,17 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/parakeet-nest/parakeet/embeddings/typesprovider/openai"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 func modelRunnerCreateEmbedding(modelRunnerURL string, query llm.Query4Embedding, id string) (llm.VectorRecord, error) {
 
-	var openAIQuery4Embedding = llm.OpenAIQuery4Embedding{
+	var openAIQuery4Embedding = openai.Query4Embedding{
 		Input:        query.Prompt,
 		Model:        query.Model,
 		OpenAIAPIKey: "no-key",
 	}
-	/*
-		type Query4Embedding struct {
-			Prompt string `json:"prompt"`
-			Model  string `json:"model"`
-
-			TokenHeaderName  string
-			TokenHeaderValue string
-		}
-	*/
-
-	/*
-		type OpenAIQuery4Embedding struct {
-			Input string `json:"input"`
-			Model  string `json:"model"`
-
-			OpenAIAPIKey string `json:"-"`
-
-		}
-	*/
 
 	jsonData, err := json.Marshal(openAIQuery4Embedding)
 	if err != nil {
@@ -73,7 +55,7 @@ func modelRunnerCreateEmbedding(modelRunnerURL string, query llm.Query4Embedding
 		return llm.VectorRecord{}, err
 	}
 
-	var answer llm.OpenAIEmbeddingResponse
+	var answer openai.EmbeddingResponse
 	err = json.Unmarshal([]byte(string(body)), &answer)
 	if err != nil {
 		return llm.VectorRecord{}, err
