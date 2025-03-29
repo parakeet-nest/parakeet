@@ -8,7 +8,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
@@ -19,7 +18,7 @@ func main() {
 	ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	model := "deepseek-coder"
+	model := "qwen2.5:3b"
 
 	systemContent := `You are an expert in computer programming.
 	Please make friendly answer for the noobs.
@@ -51,24 +50,5 @@ func main() {
 			return nil
 		})
 
-	fmt.Println("📝 Full answer:")
-	fmt.Println(fullAnswer.Message.Role)
-	fmt.Println(fullAnswer.Message.Content)
-
-	if err != nil {
-		// test if the model is not found
-		if modelErr, ok := err.(*completion.ModelNotFoundError); ok {
-			fmt.Printf("💥 Got Model Not Found error: %s\n", modelErr.Message)
-			fmt.Printf("😡 Error code: %d\n", modelErr.Code)
-			fmt.Printf("🧠 Expected Model: %s\n", modelErr.Model)
-		} 
-
-		if noHostErr, ok := err.(*completion.NoSuchOllamaHostError); ok {
-			fmt.Printf("🦙 Got No Such Ollama Host error: %s\n", noHostErr.Message)
-			fmt.Printf("🌍 Expected Host: %s\n", noHostErr.Host)
-		}
-		
-		log.Fatal("😡:", err)
-		
-	}
+	fmt.Println("📝 Full answer:", fullAnswer, err)
 }

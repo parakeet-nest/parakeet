@@ -142,6 +142,14 @@ use (
 	./examples/75-mcp-sse/04-get-prompts
 	./examples/75-mcp-sse/05-all-in-one
 
+	./examples/76-play-with-smollm
+
+	./examples/77-chat-model-runner
+	./examples/78-chat-stream-model-runner
+	./examples/79-embeddings-memory-model-runner
+	./examples/80-tools-model-runner
+	./examples/81-tools-openai
+	./examples/82-web-chat-bot-model-runner/backend
 
 	// Testing and experiments
 	examples/90-characters

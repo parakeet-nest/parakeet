@@ -7,24 +7,31 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/parakeet-nest/parakeet/embeddings/typesprovider/openai"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
-func CreateEmbeddingWithOpenAI(url string, query llm.OpenAIQuery4Embedding, id string) (llm.VectorRecord, error) {
-	//log.Println("⏳ Creating embedding... ", id)
-	jsonData, err := json.Marshal(query)
+func openAICreateEmbedding(modelRunnerURL string, query llm.Query4Embedding, id string, openAIKey string) (llm.VectorRecord, error) {
+
+	var openAIQuery4Embedding = openai.Query4Embedding{
+		Input:        query.Prompt,
+		Model:        query.Model,
+		OpenAIAPIKey: openAIKey,
+	}
+
+	jsonData, err := json.Marshal(openAIQuery4Embedding)
 	if err != nil {
 		return llm.VectorRecord{}, err
 	}
 
 	// curl https://api.openai.com/v1/embeddings \
 	// https://platform.openai.com/docs/guides/embeddings/what-are-embeddings
-	req, err := http.NewRequest(http.MethodPost, url+"/embeddings", bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest(http.MethodPost, modelRunnerURL+"/embeddings", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return llm.VectorRecord{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+query.OpenAIAPIKey)
+	req.Header.Set("Authorization", "Bearer "+openAIQuery4Embedding.OpenAIAPIKey)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -48,14 +55,14 @@ func CreateEmbeddingWithOpenAI(url string, query llm.OpenAIQuery4Embedding, id s
 		return llm.VectorRecord{}, err
 	}
 
-	var answer llm.OpenAIEmbeddingResponse
+	var answer openai.EmbeddingResponse
 	err = json.Unmarshal([]byte(string(body)), &answer)
 	if err != nil {
 		return llm.VectorRecord{}, err
 	}
 
 	vectorRecord := llm.VectorRecord{
-		Prompt:    query.Input,
+		Prompt:    openAIQuery4Embedding.Input,
 		Embedding: answer.Data[0].Embedding,
 		Id:        id,
 	}
@@ -66,4 +73,5 @@ func CreateEmbeddingWithOpenAI(url string, query llm.OpenAIQuery4Embedding, id s
 	}
 
 	return vectorRecord, nil
+
 }

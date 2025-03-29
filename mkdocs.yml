@@ -15,35 +15,50 @@ copyright: Copyright &copy; 2024 - 2025 Philippe Charrière
 
 nav:
     - 🏠 Home: index.md
-    - Generate completion: generate-completion.md
-    - Chat completion: chat-completion.md
-    - How to set the Options: set-options.md
-    - Embeddings: embeddings.md
-    - Chunkers & Splitters: chunkers-and-splitters.md
-    - 📝🔎 Contextual Retrieval: contextual-retrieval.md
-    - Parsing Markdown: parsing-markdown.md
-    - Parsing Source Code: parsing-source-code.md
-    - Content Helpers: content-helpers.md
-    - Function Calling (before tools support): function-calling-before-tools-support.md
-    - Function Calling (without tools support): function-calling-without-tools-support.md
-    - Function Calling with Tools: tools.md
+    - 📝 What's new: what-is-new.md
+    - 🤖 Generate completion: generate-completion.md
+    - 💬 Chat completion: chat-completion.md
+    - 🧾 How to set the Options: set-options.md
+    - 🔖 Embeddings: embeddings.md
+    - ✂ Chunking:
+      - Chunkers & Splitters: chunkers-and-splitters.md
+      - 📝🔎 Contextual Retrieval: contextual-retrieval.md
+      - Parsing Markdown: parsing-markdown.md
+      - Parsing Source Code: parsing-source-code.md
+      - Content Helpers: content-helpers.md
+    - ⚒️ Function Calling with Tools: tools.md
     - 🧾 Structured outputs: structured-outputs.md
-    - WASM Plugins: wasm-plugins.md
-    - Protected endpoint: protected-endpoint.md
-    - 🛠️ LLMs & Parakeet Helpers: llms-helpers.md
-    - 🔨 Prompt Helpers: prompt-helpers.md
-    - 🧰 Tools box: tools-box.md
-    - 📺 UI (Input/Print) Helpers: ui-helpers.md
-    - 📺 CLI Helpers: cli-helpers.md
-    - Verbose mode: verbose-mode.md
-    - MCP Client: mcp.md
-    - 😡 Error Handling: error-handling.md
-    - OpenAI API support: openaiapi-support.md
-    - 👮‍♂️ Flock agents: flock-agents.md
+    - 🧭 MCP Client: mcp.md
+
+    - 🐳 Docker Model Runner support: docker-model-runner-support.md
+    - 🌀 OpenAI API support: openaiapi-support.md
+
+    - 🟪 WASM Plugins: wasm-plugins.md
+    - 🔐 Protected endpoint: protected-endpoint.md
+
     - 🧪 Parakeet Examples & Recipes: parakeet-examples.md
-    - 🚀 Parakeet Demos: parakeet-demos.md
-    - 📝 Parakeet Blog Posts: parakeet-blog.md
- 
+
+    - ⚙️ Various helpers:
+      - 🧰 Tools box: tools-box.md
+      - 🛠️ LLMs & Parakeet Helpers: llms-helpers.md
+      - 🔨 Prompt Helpers: prompt-helpers.md
+      - 🗣️ Verbose mode: verbose-mode.md
+      - 📺 UI (Input/Print) Helpers: ui-helpers.md
+      - 📺 CLI Helpers: cli-helpers.md
+
+    - 🔬 Experimental:
+      - 👮‍♂️ Flock agents: flock-agents.md
+      - 😡 Error Handling: error-handling.md
+
+    - 📰 Various contents:
+      - 📝 Parakeet Blog Posts: parakeet-blog.md
+
+    - 📚 Old content:
+      - Function Calling (before tools support): function-calling-before-tools-support.md
+      - Function Calling (without tools support): function-calling-without-tools-support.md
+      - 🚀 Parakeet Demos: parakeet-demos.md
+
+
 theme:
   name: material
   palette:

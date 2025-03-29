@@ -1,12 +1,16 @@
-package llm
+package openai
+
 // OpenAI API support
-import "encoding/json"
+import (
+	"encoding/json"
+	"github.com/parakeet-nest/parakeet/llm"
+)
 
 // https://platform.openai.com/docs/api-reference/chat/create
 
-type OpenAIQuery struct {
-	Model    string    `json:"model"`
-	Messages []Message `json:"messages"`
+type Query struct {
+	Model    string        `json:"model"`
+	Messages []llm.Message `json:"messages"`
 
 	//Options  OpenAIOptions `json:"options"`
 	//--------------------------------------------
@@ -29,9 +33,11 @@ type OpenAIQuery struct {
 	StreamOptions map[string]interface{} `json:"stream_options,omitempty"` // OpenAI specific
 	//--------------------------------------------
 
-	Stream            bool   `json:"stream"`
-	Tools             []Tool `json:"tools,omitempty"`                         // not used right now
-	ToolChoices       string `json:"tool_choices,omitempty"`        // not used right now
+	Stream bool `json:"stream"`
+
+	Tools      []llm.Tool `json:"tools,omitempty"`
+	ToolChoice string `json:"tool_choice,omitempty"`
+
 	ParallelToolCalls bool   `json:"parallel_tool_calls,omitempty"` // not used right now
 	User              string `json:"user,omitempty"`                // not used right now
 
@@ -43,11 +49,11 @@ type OpenAIQuery struct {
 
 	//TokenHeaderName  string
 	//TokenHeaderValue string
-	Verbose bool `json:"-"`  
-	OpenAIAPIKey string `json:"-"`  
+	Verbose      bool   `json:"-"`
+	OpenAIAPIKey string `json:"-"`
 }
 
-func (query *OpenAIQuery) ToJsonString() string {
+func (query *Query) ToJsonString() string {
 	// for the verbose mode
 	// Marshal the answer into JSON
 	jsonBytes, err := json.MarshalIndent(query, "", "  ")
@@ -61,28 +67,54 @@ func (query *OpenAIQuery) ToJsonString() string {
 }
 
 type OpenAIMessage struct {
-    Role    string `json:"role,omitempty"`
-    Content string `json:"content,omitempty"`
+	Role    string `json:"role,omitempty"`
+	Content string `json:"content,omitempty"`
+	//ToolCalls []interface{} `json:"tool_calls,omitempty"`
+	ToolCalls []map[string]interface{} `json:"tool_calls,omitempty"`
 }
+
+/*
+type OpenAIToolCall struct {
+	ID   string `json:"id,omitempty"`
+	Type string `json:"type,omitempty"` // "function" or "tool"
+	Function FunctionTool `json:"function,omitempty"`
+}
+*/
+//type OpenAIToolCalls []OpenAIToolCall
+
+//! ????
+
+/*
+   "tool_calls": [
+     {
+       "id": "call_hkPjBb3TnBg532I7LStxDuqr",
+       "type": "function",
+       "function": {
+         "name": "hello",
+         "arguments": "{\"name\":\"Bob\"}"
+       }
+     }
+   ],
+*/
 
 type Delta struct {
 	Content string `json:"content,omitempty"`
 }
 
 type Choice struct {
-    Index        int     `json:"index,omitempty"`
-    Message      OpenAIMessage `json:"message,omitempty"`
-    Logprobs     *string `json:"logprobs,omitempty"` // Assuming logprobs can be null
-    FinishReason string  `json:"finish_reason,omitempty"`
-	Delta Delta `json:"delta,omitempty"`
+	Index        int           `json:"index,omitempty"`
+	Message      OpenAIMessage `json:"message,omitempty"`
+	Logprobs     *string       `json:"logprobs,omitempty"` // Assuming logprobs can be null
+	FinishReason string        `json:"finish_reason,omitempty"`
+	Delta        Delta         `json:"delta,omitempty"`
 }
 
 // "choices":[{"index":0,"delta":{"content":" redemption"}
 
 type Usage struct {
-    PromptTokens     int `json:"prompt_tokens,omitempty"`
-    CompletionTokens int `json:"completion_tokens,omitempty"`
-    TotalTokens      int `json:"total_tokens,omitempty"`
+	PromptTokens     int `json:"prompt_tokens,omitempty"`
+	CompletionTokens int `json:"completion_tokens,omitempty"`
+	TotalTokens      int `json:"total_tokens,omitempty"`
 }
 
 /*
@@ -95,17 +127,17 @@ type Usage struct {
 {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
 */
 
-type OpenAIAnswer struct {
-    ID               string   `json:"id"`
-    Object           string   `json:"object"`
-    Created          int64    `json:"created"`
-    Model            string   `json:"model"`
-    SystemFingerprint string  `json:"system_fingerprint"`
-    Choices          []Choice `json:"choices"`
-    Usage            Usage    `json:"usage"`
+type Answer struct {
+	ID                string   `json:"id"`
+	Object            string   `json:"object"`
+	Created           int64    `json:"created"`
+	Model             string   `json:"model"`
+	SystemFingerprint string   `json:"system_fingerprint"`
+	Choices           []Choice `json:"choices"`
+	Usage             Usage    `json:"usage"`
 }
 
-func (answer *OpenAIAnswer) ToJsonString() string {
+func (answer *Answer) ToJsonString() string {
 	// for the verbose mode
 	// Marshal the answer into JSON
 	jsonBytes, err := json.MarshalIndent(answer, "", "  ")
@@ -117,60 +149,3 @@ func (answer *OpenAIAnswer) ToJsonString() string {
 	jsonString := string(jsonBytes)
 	return jsonString
 }
-
-/*
-curl https://api.openai.com/v1/embeddings \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -d '{
-    "input": "Your text string goes here",
-    "model": "text-embedding-3-small"
-  }'
-*/
-
-// https://platform.openai.com/docs/guides/embeddings/what-are-embeddings
-type OpenAIQuery4Embedding struct {
-	Input string `json:"input"`
-	Model  string `json:"model"`
-
-	OpenAIAPIKey string `json:"-"`  
-
-}
-
-/*
-{
-  "object": "list",
-  "data": [
-    {
-      "object": "embedding",
-      "index": 0,
-      "embedding": [
-        -0.006929283495992422,
-        -0.005336422007530928,
-        ... (omitted for spacing)
-        -4.547132266452536e-05,
-        -0.024047505110502243
-      ],
-    }
-  ],
-  "model": "text-embedding-3-small",
-  "usage": {
-    "prompt_tokens": 5,
-    "total_tokens": 5
-  }
-}
-*/
-
-type OpenAIEmbeddingResponse struct {
-	Object    string    `json:"object"`
-	Data      []Embedding `json:"data"`
-	Model     string    `json:"model"`
-	Usage     Usage     `json:"usage"`
-}
-
-type Embedding struct {
-	Object    string    `json:"object"`
-	Index     int       `json:"index"`
-	Embedding []float64 `json:"embedding"`
-}
-

@@ -5,6 +5,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
 
 	"fmt"
@@ -19,26 +20,24 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	openAIUrl := "https://api.openai.com/v1"
+	openAIURL := "https://api.openai.com/v1"
 	model := "gpt-4o-mini"
 
 	systemContent := `You are an expert in Star Trek.`
 	userContent := `Who is Jean-Luc Picard?`
 
-	query := llm.OpenAIQuery{
+	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
 			{Role: "system", Content: systemContent},
 			{Role: "user", Content: userContent},
 		},
-		//Verbose: true,
-		OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
 	}
 
-	answer, err := completion.ChatWithOpenAI(openAIUrl, query)
+	answer, err := completion.Chat(openAIURL, query, provider.OpenAI, os.Getenv("OPENAI_API_KEY"))
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
-	fmt.Println(answer.Choices[0].Message.Content)
+	fmt.Println(answer.Message.Content)
 
 }

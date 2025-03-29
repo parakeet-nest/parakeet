@@ -9,6 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/embeddings"
+	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
@@ -46,7 +47,7 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	openAIUrl := "https://api.openai.com/v1"
+	openAIURL := "https://api.openai.com/v1"
 	model := "gpt-4o-mini"
 	embeddingsModel := "text-embedding-3-large"
 
@@ -57,14 +58,15 @@ func main() {
 	// Create embeddings from documents and save them in the store
 	for idx, doc := range docs {
 		fmt.Println("Creating embedding from document ", idx)
-		embedding, err := embeddings.CreateEmbeddingWithOpenAI(
-			openAIUrl,
-			llm.OpenAIQuery4Embedding{
+		embedding, err := embeddings.CreateEmbedding(
+			openAIURL,
+			llm.Query4Embedding{
 				Model:  embeddingsModel,
-				Input: doc,
-				OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
+				Prompt: doc,				
 			},
 			strconv.Itoa(idx),
+			provider.OpenAI,
+			os.Getenv("OPENAI_API_KEY"),
 		)
 		if err != nil {
 			fmt.Println("😡:", err)
@@ -85,14 +87,15 @@ func main() {
     to the best of your ability using only the resources provided.`
 
 	// Create an embedding from the question
-	embeddingFromQuestion, err := embeddings.CreateEmbeddingWithOpenAI(
-		openAIUrl,
-		llm.OpenAIQuery4Embedding{
+	embeddingFromQuestion, err := embeddings.CreateEmbedding(
+		openAIURL,
+		llm.Query4Embedding{
 			Model:        embeddingsModel,
-			Input:       userContent,
-			OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
+			Prompt:       userContent,
 		},
 		"question",
+		provider.OpenAI,
+		os.Getenv("OPENAI_API_KEY"),
 	)
 	if err != nil {
 		log.Fatalln("😡:", err)
@@ -105,25 +108,24 @@ func main() {
 
 	documentsContent := `<context><doc>` + similarity.Prompt + `</doc></context>`
 
-	query := llm.OpenAIQuery{
+	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
 			{Role: "system", Content: systemContent},
 			{Role: "system", Content: documentsContent},
 			{Role: "user", Content: userContent},
 		},
-		OpenAIAPIKey: os.Getenv("OPENAI_API_KEY"),
 	}
 
 	fmt.Println("")
 	fmt.Println("🤖 answer:")
 
 	// Answer the question
-	_, err = completion.ChatWithOpenAIStream(openAIUrl, query,
-		func(answer llm.OpenAIAnswer) error {
-			fmt.Print(answer.Choices[0].Delta.Content)
+	_, err = completion.ChatStream(openAIURL, query,
+		func(answer llm.Answer) error {
+			fmt.Print(answer.Message.Content)
 			return nil
-		})
+		}, provider.OpenAI, os.Getenv("OPENAI_API_KEY"))
 
 	if err != nil {
 		log.Fatal("😡:", err)

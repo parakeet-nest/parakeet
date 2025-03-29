@@ -57,6 +57,12 @@ type Query struct {
 
 	TokenHeaderName  string
 	TokenHeaderValue string
+
+	// *** OpenAI specific fields ***
+	// I will movve them to the options
+
+	// *** End of OpenAI specific fields ***
+
 }
 
 func (query *Query) ToJsonString() string {

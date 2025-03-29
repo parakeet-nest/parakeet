@@ -9,7 +9,7 @@ import (
 
 func TestMetricsOfAnswers(t *testing.T) {
 	ollamaUrl := "http://localhost:11434"
-	model := "tinyllama:latest"
+	model := "qwen2.5:3b"
 	userContent := "Who is James T Kirk?"
 
 	options := llm.Options{
