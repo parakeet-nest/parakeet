@@ -83,14 +83,14 @@ func main() {
 
 	answer, err := completion.Chat(openAIURL, query, provider.OpenAI, openAIKey)
 	if err != nil {
-		log.Fatal("😡 completion:", err)
+		log.Fatal("😡:", err)
 	}
 	fmt.Println(answer.Message.ToolCalls)
 
 	// Search tool to call in the answer
 	tool, err := answer.Message.ToolCalls.Find("hello")
 	if err != nil {
-		log.Fatal("😡 ToolCalls.Find:", err)
+		log.Fatal("😡:", err)
 	}
 	result, _ := tool.Function.ToJSONString()
 	fmt.Println(result)
@@ -108,13 +108,13 @@ func main() {
 
 	answer, err = completion.Chat(openAIURL, query, provider.OpenAI, openAIKey)
 	if err != nil {
-		log.Fatal("😡 completion bis:", err)
+		log.Fatal("😡:", err)
 	}
 
 	// Search tool to call in the answer
 	tool, err = answer.Message.ToolCalls.Find("addNumbers")
 	if err != nil {
-		log.Fatal("😡 ToolCalls.Find bis:", err)
+		log.Fatal("😡:", err)
 	}
 	result, _ = tool.Function.ToJSONString()
 	fmt.Println(result)

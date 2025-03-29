@@ -2,6 +2,12 @@
 
 ## Release notes
 
+## v0.2.7 🐳 [spouting whale]
+
+Addition of **Docker Model Runner** support (and OpenAI at the same time) allowing easy development of generative AI applications in Docker containers.
+
+> - All the examples OpenAI related have been udated
+
 ## v0.2.6 🍿 [popcorn]
 
 - MCP support progress: 

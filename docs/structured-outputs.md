@@ -2,7 +2,7 @@
 
 !!! info "🚧 work in progress"
 
-📝 Ref: https://ollama.com/blog/structured-outputs
+📝 Ref: [https://ollama.com/blog/structured-outputs](https://ollama.com/blog/structured-outputs)
 
 !!! note
 	👀 you will find a complete example in:

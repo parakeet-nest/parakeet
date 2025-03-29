@@ -149,7 +149,7 @@ use (
 	./examples/79-embeddings-memory-model-runner
 	./examples/80-tools-model-runner
 	./examples/81-tools-openai
-
+	./examples/82-web-chat-bot-model-runner/backend
 
 	// Testing and experiments
 	examples/90-characters

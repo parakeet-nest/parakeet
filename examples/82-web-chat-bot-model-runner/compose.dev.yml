@@ -1,0 +1,46 @@
+services:
+  # docker compose -f compose.dev.yml up --build 
+
+  download-local-llm:
+    image: curlimages/curl:8.12.1
+    #profiles: ["disabled"]
+    entrypoint:
+      - "sh"
+      - "-c"
+      - 'curl -s "${MODEL_RUNNER_BASE_URL}/models/create" -d "{\"from\": \"${LLM_CHAT}\"}"'
+
+  backend:
+    build:
+      context: ../..  # Points to parakeet root directory
+      dockerfile: examples/82-web-chat-bot-model-runner/backend/Dockerfile.dev
+    environment:
+      - MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      - LLM_CHAT=${LLM_CHAT}
+    depends_on:
+      download-local-llm:
+        condition: service_completed_successfully
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/main.go
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 9090:8501
+    environment:
+      - BACKEND_SERVICE_URL=http://backend:5050
+      - PAGE_TITLE=🙂🤓🥸 We are Bob! [DEV MODE]
+      - PAGE_HEADER=We are legion 🤖🤖🤖
+      - PAGE_ICON=🤖
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - action: rebuild
+          path: ./frontend/app.py
+
+

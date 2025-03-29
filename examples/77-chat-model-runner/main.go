@@ -18,17 +18,10 @@ import (
 
 func main() {
 	modelRunnerURL := "http://localhost:12434/engines/llama.cpp/v1"
-
 	model := "ai/qwen2.5:latest" 
 
-	systemContent := `You are an expert in computer programming.
-	Please make friendly answer for the noobs.
-	Add source code examples if you can.`
-
-	userContent := `I need a clear explanation regarding the following question:
-	Can you create a "hello world" program in Golang?
-	And, please, be structured with bullet points`
-
+	systemContent := `You are an expert in Star Trek.`
+	userContent := `Who is Jean-Luc Picard?`
 
 	options := llm.SetOptions(map[string]interface{}{
 		option.Temperature: 0.5,
