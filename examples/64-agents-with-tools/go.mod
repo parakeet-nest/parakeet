@@ -2,7 +2,7 @@ module 64-agents-with-tools
 
 go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.6
+require github.com/parakeet-nest/parakeet v0.2.7
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect
