@@ -2,7 +2,7 @@
 
 ## Release notes
 
-### v0.2.8 🍩 [donut]
+### v0.2.8 🍩 [doughnut]
 
 - `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.
 
