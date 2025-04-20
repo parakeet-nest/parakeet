@@ -4,7 +4,14 @@
 
 ### v0.2.8 🍩 [doughnut]
 
+Added:
 - `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.
+- `history.KeepLastN(n int) error`: keeps the last n messages in the Messages list.
+- `history.KeepLastNOfSession(sessionId string, n int) error`: keeps the last n messages of the session in the Messages list.
+
+Changes:
+- `history.SaveMessageWithSession(sessionId, messageId string, message llm.Message)`
+- `history.RemoveTopMessageOfSession(sessionId string)`
 
 ## v0.2.7 🐳 [spouting whale]
 
