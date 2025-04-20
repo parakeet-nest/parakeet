@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"strconv"
 
+	"github.com/google/uuid"
+
 	bbolt "github.com/parakeet-nest/parakeet/db"
 	"github.com/parakeet-nest/parakeet/llm"
 	bolt "go.etcd.io/bbolt"
@@ -110,6 +112,11 @@ func (b *BboltMessages) Save(messageRecord llm.MessageRecord) (llm.MessageRecord
 }
 
 func (b *BboltMessages) SaveMessage(id string, message llm.Message) (llm.MessageRecord, error) {
+	if id == "" {
+		// generate a unique for the message
+		id = uuid.New().String()
+	}
+
 	messageRecord := llm.MessageRecord{
 		Id:      id,
 		Role:    message.Role,
@@ -119,6 +126,11 @@ func (b *BboltMessages) SaveMessage(id string, message llm.Message) (llm.Message
 }
 
 func (b *BboltMessages) SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error) {
+	if messageId == "" {
+		// generate a unique for the message
+		messageId = uuid.New().String()
+	}
+
 	messageRecord := llm.MessageRecord{
 		Id:        messageId,
 		Role:      message.Role,

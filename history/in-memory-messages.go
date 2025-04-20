@@ -3,7 +3,7 @@ package history
 import (
 	"sort"
 	"strconv"
-
+	"github.com/google/uuid"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
@@ -87,12 +87,17 @@ func (m *MemoryMessages) GetAllMessagesOfSession(sessionId string, patterns ...s
 
 }
 
+// TODO: private or public?
 func (m *MemoryMessages) Save(messageRecord llm.MessageRecord) (llm.MessageRecord, error) {
 	m.Messages[messageRecord.Id] = messageRecord
 	return messageRecord, nil
 }
 
 func (m *MemoryMessages) SaveMessage(id string, message llm.Message) (llm.MessageRecord, error) {
+	if id == "" {
+		// generate a unique for the message
+		id = uuid.New().String()
+	}
 	messageRecord := llm.MessageRecord{
 		Id:      id,
 		Role:    message.Role,
@@ -102,6 +107,10 @@ func (m *MemoryMessages) SaveMessage(id string, message llm.Message) (llm.Messag
 }
 
 func (m *MemoryMessages) SaveMessageWithSessionId(sessionId, messageId string, message llm.Message) (llm.MessageRecord, error) {
+	if messageId == "" {
+		// generate a unique for the message
+		messageId = uuid.New().String()
+	}
 	messageRecord := llm.MessageRecord{
 		Id:        messageId,
 		Role:      message.Role,

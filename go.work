@@ -152,6 +152,8 @@ use (
 	./examples/82-web-chat-bot-model-runner/backend
 	./examples/83-web-chat-bot-ollama/backend
 
+	./examples/84-conversational-memory
+
 	// Testing and experiments
 	examples/90-characters
 	examples/91-characters
