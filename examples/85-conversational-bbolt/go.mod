@@ -1,4 +1,4 @@
-module 11-chat-bbolt-begin
+module 85-conversational-bbolt
 
 go 1.24.0
 
@@ -10,4 +10,4 @@ require (
 	golang.org/x/sys v0.32.0 // indirect
 )
 
-replace github.com/parakeet-nest/parakeet => ../../..
+replace github.com/parakeet-nest/parakeet => ../..

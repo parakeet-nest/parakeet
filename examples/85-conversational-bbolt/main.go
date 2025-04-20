@@ -1,8 +1,9 @@
 /*
 Topic: Parakeet
-Use history.MemoryMessages to handle the conversational history in memory
+Use history.BboltMessages{} to handle the conversational history in a Bbolt bucket
 with Ollama and parakeet
 */
+
 package main
 
 import (
@@ -15,9 +16,8 @@ import (
 
 func main() {
 
-	conversation := history.MemoryMessages{
-		Messages: make(map[string]llm.MessageRecord),
-	}
+	conversation := history.BboltMessages{}
+	conversation.Initialize("./conversation.db")
 
 	// Save the conversation
 	_, err := conversation.SaveMessage("", llm.Message{
@@ -40,13 +40,10 @@ func main() {
 		Content: "the same here",
 	})
 
+
 	messages, err := conversation.GetAllMessages()
 	// Get the conversation
 	fmt.Println("🟢 conversation:", messages)
-
-	if err != nil {
-		log.Fatal("😡:", err)
-	}
 
 	if err != nil {
 		log.Fatal("😡:", err)

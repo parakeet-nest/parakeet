@@ -153,6 +153,7 @@ use (
 	./examples/83-web-chat-bot-ollama/backend
 
 	./examples/84-conversational-memory
+	./examples/85-conversational-bbolt
 
 	// Testing and experiments
 	examples/90-characters

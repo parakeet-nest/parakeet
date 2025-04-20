@@ -9,6 +9,16 @@ import (
 
 type MemoryMessages struct {
 	Messages map[string]llm.MessageRecord
+	Keys    []string  // Add this field to maintain order
+
+}
+
+// Add a new constructor
+func NewMemoryMessages() *MemoryMessages {
+    return &MemoryMessages{
+        Messages: make(map[string]llm.MessageRecord),
+        Keys:    make([]string, 0),
+    }
 }
 
 func (m *MemoryMessages) Get(id string) (llm.MessageRecord, error) {
@@ -36,28 +46,16 @@ func (m *MemoryMessages) GetAll() ([]llm.MessageRecord, error) {
 
 // TODO: implement the filter by pattern()
 func (m *MemoryMessages) GetAllMessages(patterns ...string) ([]llm.Message, error) {
-
-	keys := make([]string, 0, len(m.Messages))
-	for k := range m.Messages {
-		keys = append(keys, k)
-	}
-
-	// Sort the keys
-	sort.Strings(keys)
-
-	// Create ordered slice of messages
-	var messages []llm.Message
-
-	for _, key := range keys {
-
-		messages = append(messages, llm.Message{
-			Role:    m.Messages[key].Role,
-			Content: m.Messages[key].Content,
-		})
-	}
-
-	return messages, nil
-
+    var messages []llm.Message
+    
+    for _, key := range m.Keys {
+        messages = append(messages, llm.Message{
+            Role:    m.Messages[key].Role,
+            Content: m.Messages[key].Content,
+        })
+    }
+    
+    return messages, nil
 }
 
 // TODO: implement the filter by pattern()
@@ -89,8 +87,11 @@ func (m *MemoryMessages) GetAllMessagesOfSession(sessionId string, patterns ...s
 
 // TODO: private or public?
 func (m *MemoryMessages) Save(messageRecord llm.MessageRecord) (llm.MessageRecord, error) {
-	m.Messages[messageRecord.Id] = messageRecord
-	return messageRecord, nil
+    if _, exists := m.Messages[messageRecord.Id]; !exists {
+        m.Keys = append(m.Keys, messageRecord.Id)
+    }
+    m.Messages[messageRecord.Id] = messageRecord
+    return messageRecord, nil
 }
 
 func (m *MemoryMessages) SaveMessage(id string, message llm.Message) (llm.MessageRecord, error) {
@@ -121,14 +122,22 @@ func (m *MemoryMessages) SaveMessageWithSessionId(sessionId, messageId string, m
 }
 
 func (m *MemoryMessages) RemoveMessage(id string) error {
-	delete(m.Messages, id)
-	return nil
+    delete(m.Messages, id)
+    // Remove from Keys
+    for i, key := range m.Keys {
+        if key == id {
+            m.Keys = append(m.Keys[:i], m.Keys[i+1:]...)
+            break
+        }
+    }
+    return nil
 }
 
 // TODO: to test
 func (m *MemoryMessages) RemoveAllMessages() error {
-	m.Messages = map[string]llm.MessageRecord{}
-	return nil
+    m.Messages = make(map[string]llm.MessageRecord)
+    m.Keys = make([]string, 0)
+    return nil
 }
 
 // TODO: to test

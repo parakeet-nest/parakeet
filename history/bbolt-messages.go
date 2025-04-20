@@ -2,6 +2,7 @@ package history
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -11,30 +12,59 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
-const bucketName string = "messages-bucket"
+const (
+	messagesBucketName string = "messages-bucket"
+	orderBucketName    string = "messages-order-bucket" // New bucket for ordering
+)
 
 type BboltMessages struct {
 	messages *bolt.DB
+	counter  int // Track message count for ordering
+
 }
 
 func (b *BboltMessages) Initialize(dbPath string) error {
-
-	db, err := bbolt.Initialize(dbPath, bucketName)
+	db, err := bbolt.Initialize(dbPath, messagesBucketName)
 	if err != nil {
 		return err
 	}
+
+	// Create order bucket in the same db
+	err = db.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists([]byte(orderBucketName))
+		return err
+	})
+	if err != nil {
+		return err
+	}
+
 	b.messages = db
+	b.counter = 0
 	return nil
 }
 
 func (b *BboltMessages) Get(id string) (llm.MessageRecord, error) {
-	jsonStr := bbolt.Get(b.messages, bucketName, id)
-	messageRecord := llm.MessageRecord{}
-	err := json.Unmarshal([]byte(jsonStr), &messageRecord)
-	if err != nil {
-		return llm.MessageRecord{}, err
-	}
-	return messageRecord, nil
+    var messageRecord llm.MessageRecord
+    
+    err := b.messages.View(func(tx *bolt.Tx) error {
+        bucket := tx.Bucket([]byte(messagesBucketName))
+        if bucket == nil {
+            return fmt.Errorf("bucket %s not found", messagesBucketName)
+        }
+        
+        data := bucket.Get([]byte(id))
+        if data == nil {
+            return fmt.Errorf("message with id %s not found", id)
+        }
+        
+        return json.Unmarshal(data, &messageRecord)
+    })
+    
+    if err != nil {
+        return llm.MessageRecord{}, err
+    }
+    
+    return messageRecord, nil
 }
 
 func (b *BboltMessages) GetMessage(id string) (llm.Message, error) {
@@ -49,33 +79,70 @@ func (b *BboltMessages) GetMessage(id string) (llm.Message, error) {
 }
 
 func (b *BboltMessages) GetAll() ([]llm.MessageRecord, error) {
-	var records []llm.MessageRecord
-	mapStr := bbolt.GetAll(b.messages, bucketName)
-	for _, v := range mapStr {
-		messageRecord := llm.MessageRecord{}
-		err := json.Unmarshal([]byte(v), &messageRecord)
-		if err != nil {
-			return nil, err
-		}
-		records = append(records, messageRecord)
-	}
-	return records, nil
+    var records []llm.MessageRecord
+    
+    err := b.messages.View(func(tx *bolt.Tx) error {
+        orderBucket := tx.Bucket([]byte(orderBucketName))
+        messagesBucket := tx.Bucket([]byte(messagesBucketName))
+        
+        if orderBucket == nil || messagesBucket == nil {
+            return fmt.Errorf("buckets not found")
+        }
+        
+        return orderBucket.ForEach(func(orderKey, messageId []byte) error {
+            messageData := messagesBucket.Get(messageId)
+            if messageData == nil {
+                return nil // Skip if message was deleted
+            }
+            
+            var messageRecord llm.MessageRecord
+            if err := json.Unmarshal(messageData, &messageRecord); err != nil {
+                return err
+            }
+            
+            records = append(records, messageRecord)
+            return nil
+        })
+    })
+    
+    if err != nil {
+        return nil, err
+    }
+    
+    return records, nil
 }
 
 // TODO: implement the filter by pattern()
 func (b *BboltMessages) GetAllMessages(patterns ...string) ([]llm.Message, error) {
-	var messages []llm.Message
-	records, err := b.GetAll()
-	if err != nil {
-		return nil, err
-	}
-	for _, messageRecord := range records {
-		messages = append(messages, llm.Message{
-			Role:    messageRecord.Role,
-			Content: messageRecord.Content,
-		})
-	}
-	return messages, nil
+    var messages []llm.Message
+    
+    err := b.messages.View(func(tx *bolt.Tx) error {
+        orderBucket := tx.Bucket([]byte(orderBucketName))
+        messagesBucket := tx.Bucket([]byte(messagesBucketName))
+        
+        return orderBucket.ForEach(func(orderKey, messageId []byte) error {
+            messageData := messagesBucket.Get(messageId)
+            if messageData == nil {
+                return nil // Skip if message was deleted
+            }
+            
+            var messageRecord llm.MessageRecord
+            if err := json.Unmarshal(messageData, &messageRecord); err != nil {
+                return err
+            }
+            
+            messages = append(messages, llm.Message{
+                Role:    messageRecord.Role,
+                Content: messageRecord.Content,
+            })
+            return nil
+        })
+    })
+    
+    if err != nil {
+        return nil, err
+    }
+    return messages, nil
 }
 
 // TODO: to test
@@ -98,13 +165,28 @@ func (b *BboltMessages) GetAllMessagesOfSession(sessionId string, patterns ...st
 }
 
 func (b *BboltMessages) Save(messageRecord llm.MessageRecord) (llm.MessageRecord, error) {
+	// Increment counter for ordering
+	b.counter++
+	orderKey := fmt.Sprintf("%019d", b.counter) // Pad with zeros for proper sorting
 
-	jsonStr, err := json.Marshal(messageRecord)
-	if err != nil {
-		return llm.MessageRecord{}, err
-	}
+	// Start transaction to save both message and order
+	err := b.messages.Update(func(tx *bolt.Tx) error {
+		// Save message
+		messagesBucket := tx.Bucket([]byte(messagesBucketName))
+		jsonStr, err := json.Marshal(messageRecord)
+		if err != nil {
+			return err
+		}
+		err = messagesBucket.Put([]byte(messageRecord.Id), jsonStr)
+		if err != nil {
+			return err
+		}
 
-	err = bbolt.Save(b.messages, bucketName, messageRecord.Id, string(jsonStr))
+		// Save order
+		orderBucket := tx.Bucket([]byte(orderBucketName))
+		return orderBucket.Put([]byte(orderKey), []byte(messageRecord.Id))
+	})
+
 	if err != nil {
 		return llm.MessageRecord{}, err
 	}
@@ -141,7 +223,24 @@ func (b *BboltMessages) SaveMessageWithSessionId(sessionId, messageId string, me
 }
 
 func (b *BboltMessages) RemoveMessage(id string) error {
-	return bbolt.Delete(b.messages, bucketName, id)
+    return b.messages.Update(func(tx *bolt.Tx) error {
+        messagesBucket := tx.Bucket([]byte(messagesBucketName))
+        orderBucket := tx.Bucket([]byte(orderBucketName))
+        
+        // Find and remove from order bucket first
+        c := orderBucket.Cursor()
+        for k, v := c.First(); k != nil; k, v = c.Next() {
+            if string(v) == id {
+                if err := orderBucket.Delete(k); err != nil {
+                    return err
+                }
+                break
+            }
+        }
+        
+        // Remove from messages bucket
+        return messagesBucket.Delete([]byte(id))
+    })
 }
 
 // TODO: to test
