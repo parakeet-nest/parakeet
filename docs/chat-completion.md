@@ -279,3 +279,7 @@ conversation.Initialize("../conversation.db")
 	👀 you will find a complete example in:
 
     - [examples/71-web-chat-bot-with-session](https://github.com/parakeet-nest/parakeet/tree/main/examples/71-web-chat-bot-with-session)
+
+### In Memory and Bbolt
+
+- `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.

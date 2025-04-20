@@ -44,12 +44,17 @@ func main() {
 	// Get the conversation
 	fmt.Println("🟢 conversation:", messages)
 
-	if err != nil {
-		log.Fatal("😡:", err)
-	}
+	conversation.RemoveTopMessage()
+	
+	messages, err = conversation.GetAllMessages()
+	// Get the conversation
+	fmt.Println("🟢 conversation:", messages)
+
 
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
+
+
 
 }

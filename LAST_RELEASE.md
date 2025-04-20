@@ -2,6 +2,10 @@
 
 ## Release notes
 
+### v0.2.8 🍩 [donut]
+
+- `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.
+
 ## v0.2.7 🐳 [spouting whale]
 
 Addition of **Docker Model Runner** support (and OpenAI at the same time) allowing easy development of generative AI applications in Docker containers.

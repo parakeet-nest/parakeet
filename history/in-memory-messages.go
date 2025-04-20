@@ -196,3 +196,21 @@ func (m *MemoryMessages) RemoveTopMessageOfSession(sessionId string, messagesCou
 	}
 	return nil
 }
+
+// RemoveTopMessage removes the oldest message from the Messages map and updates the Keys slice
+func (m *MemoryMessages) RemoveTopMessage() error {
+    if len(m.Keys) == 0 {
+        return nil // No messages to remove
+    }
+    
+    // Get the oldest message ID (first in Keys slice)
+    topMessageId := m.Keys[0]
+    
+    // Remove from Messages map
+    delete(m.Messages, topMessageId)
+    
+    // Remove from Keys slice
+    m.Keys = m.Keys[1:] // Remove first element
+    
+    return nil
+}

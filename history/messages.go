@@ -20,6 +20,7 @@ type Messages interface {
 
 	RemoveMessage(id string) error
 	RemoveAllMessages() error
+	RemoveTopMessage() error
 	
 	RemoveAllMessagesOfSession(sessionId string) error
 

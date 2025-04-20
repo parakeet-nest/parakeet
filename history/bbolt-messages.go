@@ -320,3 +320,31 @@ func (b *BboltMessages) RemoveTopMessageOfSession(sessionId string, messagesCoun
 	}
 	return nil
 }
+
+// RemoveTopMessage removes the oldest message from the database
+func (b *BboltMessages) RemoveTopMessage() error {
+    return b.messages.Update(func(tx *bolt.Tx) error {
+        orderBucket := tx.Bucket([]byte(orderBucketName))
+        messagesBucket := tx.Bucket([]byte(messagesBucketName))
+        
+        if orderBucket == nil || messagesBucket == nil {
+            return fmt.Errorf("buckets not found")
+        }
+        
+        // Get the first (oldest) message
+        cursor := orderBucket.Cursor()
+        orderKey, messageId := cursor.First()
+        if orderKey == nil {
+            return nil // No messages to remove
+        }
+        
+        // Remove from messages bucket
+        err := messagesBucket.Delete(messageId)
+        if err != nil {
+            return err
+        }
+        
+        // Remove from order bucket
+        return orderBucket.Delete(orderKey)
+    })
+}
