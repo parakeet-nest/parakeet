@@ -7,6 +7,8 @@ type Messages interface {
 	GetMessage(id string) (llm.Message, error)
 	GetAll() ([]llm.MessageRecord, error)
 
+	GetLastNMessages(n int) ([]llm.Message, error)
+
 	GetAllMessages(patterns ... string) ([]llm.Message, error)
 	
 	GetAllMessagesOfSession(sessionId string, patterns ... string) ([]llm.Message, error)

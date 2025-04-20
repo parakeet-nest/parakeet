@@ -17,6 +17,6 @@ RUN go build -o web-chat-bot
 
 FROM scratch
 WORKDIR /app
-COPY --from=builder /app/examples/82-web-chat-bot-model-runner/backend/web-chat-bot .
+COPY --from=builder /app/examples/83-web-chat-bot-ollama/backend/web-chat-bot .
 
 CMD ["./web-chat-bot"]

@@ -45,6 +45,37 @@ func (m *MemoryMessages) GetAll() ([]llm.MessageRecord, error) {
 	return records, nil
 }
 
+// GetLastNMessages returns the last n messages from the Messages list.
+// If n <= 0, returns an error.
+// If n > total messages, returns all messages.
+func (m *MemoryMessages) GetLastNMessages(n int) ([]llm.Message, error) {
+    if n <= 0 {
+        return nil, fmt.Errorf("n must be positive, got %d", n)
+    }
+
+    totalMessages := len(m.Keys)
+    if totalMessages == 0 {
+        return []llm.Message{}, nil
+    }
+
+    // Calculate starting index
+    startIndex := totalMessages - n
+    if startIndex < 0 {
+        startIndex = 0
+    }
+
+    // Get last n messages using Keys slice for order
+    var messages []llm.Message
+    for _, key := range m.Keys[startIndex:] {
+        messages = append(messages, llm.Message{
+            Role:    m.Messages[key].Role,
+            Content: m.Messages[key].Content,
+        })
+    }
+
+    return messages, nil
+}
+
 // TODO: implement the filter by pattern()
 func (m *MemoryMessages) GetAllMessages(patterns ...string) ([]llm.Message, error) {
 	var messages []llm.Message

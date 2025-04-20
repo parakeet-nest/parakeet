@@ -6,8 +6,10 @@
 
 Added:
 - `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.
-- `history.KeepLastN(n int) error`: keeps the last n messages in the Messages list.
-- `history.KeepLastNOfSession(sessionId string, n int) error`: keeps the last n messages of the session in the Messages list.
+- `history.KeepLastN(n int) error`: keeps the last n messages in the Messages list (and remove the oldest).
+- `history.KeepLastNOfSession(sessionId string, n int) error`: keeps the last n messages of the session in the Messages list (and remove the oldest).
+- `history.GetLastNMessages(n int) ([]llm.Message, error)`: returns the last n messages in the Messages list.
+- `llm.Conversation(messages ...interface{}) []Message`: Conversation creates or extends a conversation with provided messages
 
 Changes:
 - `history.SaveMessageWithSession(sessionId, messageId string, message llm.Message)`

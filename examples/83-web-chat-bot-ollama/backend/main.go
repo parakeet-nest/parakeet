@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
@@ -46,7 +45,7 @@ func main() {
 
 	options := llm.SetOptions(map[string]interface{}{
 		option.Temperature:   0.0,
-		option.RepeatLastN: 2,
+		option.RepeatLastN:   2,
 		option.RepeatPenalty: 2.2,
 	})
 
@@ -59,7 +58,6 @@ func main() {
 	mux := http.NewServeMux()
 	shouldIStopTheCompletion := false
 
-	messagesCounter := 0
 	conversationLength := 6
 
 	mux.HandleFunc("POST /chat", func(response http.ResponseWriter, request *http.Request) {
@@ -80,16 +78,19 @@ func main() {
 		userMessage := data["message"]
 		previousMessages, _ := conversation.GetAllMessages()
 
-		// (Re)Create the conversation
-		conversationMessages := []llm.Message{}
+
 		// instruction
 		/*
-		For the cogito:3b model
-		{
-		"role": "system",
-		"content": "Enable deep thinking subroutine."
-		},
+			For the cogito:3b model
+			{
+			"role": "system",
+			"content": "Enable deep thinking subroutine."
+			},
 		*/
+
+		/*
+		// (Re)Create the conversation
+		conversationMessages := []llm.Message{}
 		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: "Enable deep thinking subroutine."})
 
 		conversationMessages = append(conversationMessages, llm.Message{Role: "system", Content: systemInstructions})
@@ -97,6 +98,15 @@ func main() {
 		conversationMessages = append(conversationMessages, previousMessages...)
 		// last question
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
+		 */
+
+		// (Re)Create the conversation
+		conversationMessages := llm.Conversation(
+			llm.Message{Role: "system", Content: "Enable deep thinking subroutine."},
+			llm.Message{Role: "system", Content: systemInstructions},
+			previousMessages,
+			llm.Message{Role: "user", Content: userMessage},
+		)
 
 		//? 📝 Print the previous messages
 		fmt.Println("👋 previousMessages:")
@@ -127,33 +137,19 @@ func main() {
 			response.Write([]byte("bye: " + err.Error()))
 		}
 
-		//! I use a counter for the id of the message, then I can create an ordered list of messages
-		messagesCounter++
-		conversation.SaveMessage(strconv.Itoa(messagesCounter), llm.Message{
+		
+
+		conversation.SaveMessage("", llm.Message{
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* remove the top message of the conversation if the conversation length is reached
-		if messagesCounter >= conversationLength {
-			fmt.Println("🟢 counter:", messagesCounter)
-			topMessageId := strconv.Itoa(messagesCounter - (conversationLength - 1))
-			msg, _ := conversation.Get(topMessageId)
-			fmt.Println("🟩 message:", msg.Id, msg.Role, msg.Content)
-			conversation.RemoveMessage(topMessageId)
-		}
 
-		messagesCounter++
-		conversation.SaveMessage(strconv.Itoa(messagesCounter), llm.Message{
+		conversation.SaveMessage("", llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		if messagesCounter >= conversationLength {
-			fmt.Println("🔵 counter:", messagesCounter)
-			topMessageId := strconv.Itoa(messagesCounter - (conversationLength - 1))
-			msg, _ := conversation.Get(topMessageId)
-			fmt.Println("🟦 message:", msg.Id, msg.Role, msg.Content)
-			conversation.RemoveMessage(topMessageId)
-		}
+
+		conversation.KeepLastN(conversationLength)
 	})
 
 	// Cancel/Stop the generation of the completion

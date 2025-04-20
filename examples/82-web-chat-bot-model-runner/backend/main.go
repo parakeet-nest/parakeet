@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
@@ -29,13 +28,12 @@ func GetBytesBody(request *http.Request) []byte {
 
 func main() {
 
-	modelRunnerURL := os.Getenv("MODEL_RUNNER_BASE_URL")+"/engines/llama.cpp/v1"
+	modelRunnerURL := os.Getenv("MODEL_RUNNER_BASE_URL") + "/engines/llama.cpp/v1"
 
 	model := os.Getenv("LLM_CHAT")
 
 	fmt.Println("modelRunnerURL:", modelRunnerURL)
 	fmt.Println("model:", model)
-
 
 	var httpPort = os.Getenv("HTTP_PORT")
 	if httpPort == "" {
@@ -58,7 +56,6 @@ func main() {
 	mux := http.NewServeMux()
 	shouldIStopTheCompletion := false
 
-	messagesCounter := 0
 	conversationLength := 6
 
 	mux.HandleFunc("POST /chat", func(response http.ResponseWriter, request *http.Request) {
@@ -79,6 +76,7 @@ func main() {
 		userMessage := data["message"]
 		previousMessages, _ := conversation.GetAllMessages()
 
+		/*
 		// (Re)Create the conversation
 		conversationMessages := []llm.Message{}
 		// instruction
@@ -87,6 +85,14 @@ func main() {
 		conversationMessages = append(conversationMessages, previousMessages...)
 		// last question
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
+		*/
+
+		// (Re)Create the conversation
+		conversationMessages := llm.Conversation(
+			llm.Message{Role: "system", Content: systemInstructions},
+			previousMessages,
+			llm.Message{Role: "user", Content: userMessage},
+		)
 
 		//? 📝 Print the previous messages
 		fmt.Println("👋 previousMessages:")
@@ -117,33 +123,18 @@ func main() {
 			response.Write([]byte("bye: " + err.Error()))
 		}
 
-		//! I use a counter for the id of the message, then I can create an ordered list of messages
-		messagesCounter++
-		conversation.SaveMessage(strconv.Itoa(messagesCounter), llm.Message{
+		conversation.SaveMessage("", llm.Message{
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* remove the top message of the conversation if the conversation length is reached
-		if messagesCounter >= conversationLength {
-			fmt.Println("🟢 counter:", messagesCounter)
-			topMessageId := strconv.Itoa(messagesCounter - (conversationLength- 1))
-			msg, _ := conversation.Get(topMessageId)
-			fmt.Println("🟩 message:", msg.Id, msg.Role, msg.Content)
-			conversation.RemoveMessage(topMessageId)
-		}
 
-		messagesCounter++
-		conversation.SaveMessage(strconv.Itoa(messagesCounter), llm.Message{
+		conversation.SaveMessage("", llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		if messagesCounter >= conversationLength {
-			fmt.Println("🔵 counter:", messagesCounter)
-			topMessageId := strconv.Itoa(messagesCounter - (conversationLength- 1))
-			msg, _ := conversation.Get(topMessageId)
-			fmt.Println("🟦 message:", msg.Id, msg.Role, msg.Content)
-			conversation.RemoveMessage(topMessageId)
-		}
+
+		conversation.KeepLastN(conversationLength)
+
 	})
 
 	// Cancel/Stop the generation of the completion

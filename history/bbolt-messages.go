@@ -111,6 +111,85 @@ func (b *BboltMessages) GetAll() ([]llm.MessageRecord, error) {
 	return records, nil
 }
 
+// GetLastNMessages returns the last n messages from the Messages list.
+// If n <= 0, returns an error.
+// If n > total messages, returns all messages.
+func (b *BboltMessages) GetLastNMessages(n int) ([]llm.Message, error) {
+    if n <= 0 {
+        return nil, fmt.Errorf("n must be positive, got %d", n)
+    }
+
+    var messages []llm.Message
+
+    err := b.messages.View(func(tx *bolt.Tx) error {
+        orderBucket := tx.Bucket([]byte(orderBucketName))
+        messagesBucket := tx.Bucket([]byte(messagesBucketName))
+
+        if orderBucket == nil || messagesBucket == nil {
+            return fmt.Errorf("buckets not found")
+        }
+
+        // Count total messages and collect all order keys
+        var orderKeys [][]byte
+        cursor := orderBucket.Cursor()
+        for k, _ := cursor.First(); k != nil; k, _ = cursor.Next() {
+            orderKeys = append(orderKeys, k)
+        }
+
+        // If we have fewer messages than requested, return all
+        if len(orderKeys) <= n {
+            // Get all messages in order
+            for _, orderKey := range orderKeys {
+                messageId := orderBucket.Get(orderKey)
+                messageData := messagesBucket.Get(messageId)
+                if messageData == nil {
+                    continue
+                }
+
+                var messageRecord llm.MessageRecord
+                if err := json.Unmarshal(messageData, &messageRecord); err != nil {
+                    return err
+                }
+
+                messages = append(messages, llm.Message{
+                    Role:    messageRecord.Role,
+                    Content: messageRecord.Content,
+                })
+            }
+            return nil
+        }
+
+        // Get last n messages
+        for i := len(orderKeys) - n; i < len(orderKeys); i++ {
+            messageId := orderBucket.Get(orderKeys[i])
+            messageData := messagesBucket.Get(messageId)
+            if messageData == nil {
+                continue
+            }
+
+            var messageRecord llm.MessageRecord
+            if err := json.Unmarshal(messageData, &messageRecord); err != nil {
+                return err
+            }
+
+            messages = append(messages, llm.Message{
+                Role:    messageRecord.Role,
+                Content: messageRecord.Content,
+            })
+        }
+
+        return nil
+    })
+
+    if err != nil {
+        return nil, err
+    }
+
+    return messages, nil
+}
+
+
+
 // TODO: implement the filter by pattern()
 func (b *BboltMessages) GetAllMessages(patterns ...string) ([]llm.Message, error) {
 	var messages []llm.Message
