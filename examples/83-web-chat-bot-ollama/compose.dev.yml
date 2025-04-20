@@ -1,0 +1,35 @@
+services:
+  # docker compose -f compose.dev.yml up --build 
+
+  backend:
+    build:
+      context: ../..  # Points to parakeet root directory
+      dockerfile: examples/83-web-chat-bot-ollama/backend/Dockerfile.dev
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - LLM_CHAT=${LLM_CHAT}
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/main.go
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 9090:8501
+    environment:
+      - BACKEND_SERVICE_URL=http://backend:5050
+      - PAGE_TITLE=🙂🤓🥸 We are Bob! [DEV MODE]
+      - PAGE_HEADER=We are legion 🤖🤖🤖
+      - PAGE_ICON=🤖
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - action: rebuild
+          path: ./frontend/app.py
+
+

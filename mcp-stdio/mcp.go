@@ -97,26 +97,18 @@ func (c *Client) Close() error {
 func getTextFromResult(mcpResult *mcp.CallToolResult) (string, error) {
 	//fmt.Println("📣 Result:", mcpResult.Result)
 	//return mcpResult.Content[0].(map[string]interface{})["text"].(string)
-	var finalText string
+	
 	if len(mcpResult.Content) == 0 {
 		return "", &STDIOResultExtractionError{Message: "content is empty"}
 	}
 
-	contentMap, ok := mcpResult.Content[0].(map[string]interface{})
+    content, ok := mcpResult.Content[0].(mcp.TextContent)
 	if !ok {
-		return "", &STDIOResultExtractionError{Message: "content[0] is not a map"}
+		return "", &STDIOResultExtractionError{Message: "content[0] is not TextContent"}
 	}
 
-	textInterface, ok := contentMap["text"]
-	if !ok {
-		return "", &STDIOResultExtractionError{Message: "no 'text' key in map"}
-	}
+    return content.Text, nil
 
-	finalText, ok = textInterface.(string)
-	if !ok {
-		return "", &STDIOResultExtractionError{Message: "text is not a string"}
-	}
-	return finalText, nil
 
 }
 
@@ -143,7 +135,8 @@ func (c *Client) ListResources() (llm.Resources, error) {
 }
 
 type ResourceResult struct {
-	Contents []map[string]interface{}
+	//Contents []map[string]interface{}
+	Contents []string
 }
 
 // TODO: to be tested:
@@ -160,8 +153,8 @@ func (c *Client) ReadResource(uri string) (ResourceResult, error) {
 
 	resourceResult := ResourceResult{}
 	for _, content := range mcpResourceResult.Contents {
-		contentsMap := content.(map[string]interface{})
-		resourceResult.Contents = append(resourceResult.Contents, contentsMap)
+		contentsMap := content.(mcp.TextResourceContents)
+		resourceResult.Contents = append(resourceResult.Contents, contentsMap.Text)
 	}
 
 	return resourceResult, nil
@@ -214,9 +207,10 @@ func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string
 		
 		prompt.Messages = append(prompt.Messages, llm.Message{
 			Role: string(message.Role),
-			Content : message.Content.(map[string]interface{})["text"].(string),
+			Content: message.Content.(mcp.TextContent).Text,
 		})
 	}
+	// 	Content: message.Content.(map[string]interface{})["text"].(string),
 
 	return prompt, nil
 }

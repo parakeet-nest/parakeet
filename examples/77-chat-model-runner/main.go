@@ -8,7 +8,7 @@ package main
 
 import (
 	"github.com/parakeet-nest/parakeet/completion"
-	"github.com/parakeet-nest/parakeet/enums/option"
+	//"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
 
@@ -23,10 +23,17 @@ func main() {
 	systemContent := `You are an expert in Star Trek.`
 	userContent := `Who is Jean-Luc Picard?`
 
+	/*
 	options := llm.SetOptions(map[string]interface{}{
 		option.Temperature: 0.5,
 		option.RepeatPenalty: 2.0,
 	})
+	*/
+
+	options := llm.Options{
+		Temperature: 	0.5,
+		RepeatPenalty: 	2.0,
+	}
 
 	query := llm.Query{
 		Model: model,

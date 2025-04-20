@@ -150,6 +150,7 @@ use (
 	./examples/80-tools-model-runner
 	./examples/81-tools-openai
 	./examples/82-web-chat-bot-model-runner/backend
+	./examples/83-web-chat-bot-ollama/backend
 
 	// Testing and experiments
 	examples/90-characters

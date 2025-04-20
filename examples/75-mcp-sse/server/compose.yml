@@ -1,6 +1,6 @@
 services:  
   wasimancer-server:
-    image: k33g/wasimancer:0.0.1
+    image: k33g/wasimancer:0.0.6
     environment:
       - HTTP_PORT=3001
       - PLUGINS_PATH=./plugins
@@ -9,7 +9,9 @@ services:
       - RESOURCES_DEFINITION_FILE=resources.yml
       - PROMPTS_PATH=./prompts
       - PROMPTS_DEFINITION_FILE=prompts.yml
-      - UPLOAD_AUTH_TOKEN=wasimancer-rocks
+      - WASIMANCER_ADMIN_TOKEN=wasimancer-rocks
+      #- WASIMANCER_AUTHENTICATION_TOKEN=mcp-is-the-way
+      - WASIMANCER_AUTHENTICATION_TOKEN=NO_AUTHENTICATION
       - UPLOAD_PATH=./plugins/bucket
     ports:
       - 5001:3001

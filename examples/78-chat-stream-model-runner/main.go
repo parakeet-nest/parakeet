@@ -16,6 +16,8 @@ import (
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
+
+
 func main() {
 
 	options := llm.SetOptions(map[string]interface{}{
@@ -24,7 +26,7 @@ func main() {
 	})
 
 	query := llm.Query{
-		Model: "ai/mistral:latest",
+		Model: "ai/qwen2.5:latest",
 		Messages: []llm.Message{
 			{Role: "system", Content: `You are a Borg in Star Trek. Speak like a Borg`},
 			{Role: "user", Content: `Who is Jean-Luc Picard?`},

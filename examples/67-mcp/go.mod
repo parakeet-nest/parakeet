@@ -8,9 +8,10 @@ require (
 )
 
 require (
-	github.com/mark3labs/mcp-go v0.8.5 // indirect
+	github.com/mark3labs/mcp-go v0.18.0 // indirect
+	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	github.com/yuin/goldmark v1.7.8 // indirect
-	golang.org/x/net v0.32.0 // indirect
+	golang.org/x/net v0.39.0 // indirect
 )
 
 replace github.com/parakeet-nest/parakeet => ../..

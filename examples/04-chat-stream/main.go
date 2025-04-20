@@ -44,11 +44,14 @@ func main() {
 		Options: options,
 	}
 
-	fullAnswer, err := completion.ChatStream(ollamaUrl, query,
+	_, err := completion.ChatStream(ollamaUrl, query,
 		func(answer llm.Answer) error {
 			fmt.Print(answer.Message.Content)
 			return nil
 		})
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
 
-	fmt.Println("📝 Full answer:", fullAnswer, err)
+	//fmt.Println("Full answer:", fullAnswer.Message, err)
 }

@@ -62,13 +62,13 @@ func main() {
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
-	toolsSystemInstructions := resourceResult.Contents[0]["text"].(string)
+	toolsSystemInstructions := resourceResult.Contents
 
 	resourceResult, err = mcpClient.ReadResource("chat-system://instructions")
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
-	chatSystemInstructions := resourceResult.Contents[0]["text"].(string)
+	chatSystemInstructions := resourceResult.Contents
 
 	fmt.Println("  - 📚 Tools System Instructions:", toolsSystemInstructions)
 	fmt.Println("  - 📚 Chat System Instructions:", chatSystemInstructions)
@@ -95,7 +95,7 @@ func main() {
 
 	// Prepare messages for the Tools LLM
 	messagesForToolsLLM := []llm.Message{
-		{Role: "system", Content: toolsSystemInstructions},
+		{Role: "system", Content: toolsSystemInstructions[0]},
 	}
 	messagesForToolsLLM = append(messagesForToolsLLM, promptForToolsLLM.Messages...)
 
@@ -142,7 +142,7 @@ func main() {
 
 	// Prepare messages for the Chat LLM
 	messagesForChatLLM := []llm.Message{
-		{Role: "system", Content: chatSystemInstructions},
+		{Role: "system", Content: chatSystemInstructions[0]},
 	}
 	messagesForChatLLM = append(messagesForChatLLM, prompt.Messages...)
 
