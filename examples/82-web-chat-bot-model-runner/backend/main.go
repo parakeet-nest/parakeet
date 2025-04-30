@@ -88,7 +88,7 @@ func main() {
 		*/
 
 		// (Re)Create the conversation
-		conversationMessages := llm.Conversation(
+		conversationMessages := llm.SetOfMessages(
 			llm.Message{Role: "system", Content: systemInstructions},
 			previousMessages,
 			llm.Message{Role: "user", Content: userMessage},

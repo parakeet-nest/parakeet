@@ -12,6 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
+	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
 
 	"fmt"
@@ -36,7 +37,7 @@ func main() {
 	}
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 1.5,
+		option.Temperature: 0.0,
 	})
 
 	// define schema for a structured output
@@ -60,17 +61,26 @@ func main() {
 		"required": []string{"name", "capital", "languages"},
 	}
 
+	//model = "ai/qwen2.5:latest"
+
 	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
-			{Role: "user", Content: "Tell me about Canada."},
+			{Role: "user", Content: "Tell me about Canada"},
 		},
 		Options: options,
 		Format:  schema,
 		Raw:     false,
 	}
 
-	answer, err := completion.Chat(ollamaUrl, query)
+
+
+	// ollamaUrl = "http://localhost:12434/engines/llama.cpp/v1"
+	// TODO: if provider is DMR or OpenAI , Copy the value of Fromat to ResponseFormat (response_format)
+
+	//answer, err := completion.Chat(ollamaUrl, query, provider.DockerModelRunner)
+
+	answer, err := completion.Chat(ollamaUrl, query, provider.Ollama)
 	if err != nil {
 		// test if the model is not found
 		if modelErr, ok := err.(*completion.ModelNotFoundError); ok {

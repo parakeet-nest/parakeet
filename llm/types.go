@@ -3,6 +3,7 @@ package llm
 import (
 	"encoding/json"
 	"errors"
+
 )
 
 type LLM struct {
@@ -65,6 +66,7 @@ type Message struct {
 	Role      string    `json:"role"`
 	Content   string    `json:"content"`
 	ToolCalls ToolCalls `json:"tool_calls,omitempty"`
+	Label string // used by squawk DSL
 }
 
 /*

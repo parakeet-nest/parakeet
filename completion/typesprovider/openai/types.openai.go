@@ -27,7 +27,11 @@ type Query struct {
 	TopLogprobs     int                    `json:"top_logprobs,omitempty"`    // OpenAI specific
 	MaxTokens       int                    `json:"max_tokens,omitempty"`      // OpenAI specific
 	N               int                    `json:"n,omitempty"`               // OpenAI specific
-	Response_format map[string]interface{} `json:"response_format,omitempty"` // OpenAI specific
+	Responseformat map[string]interface{} `json:"response_format,omitempty"` // OpenAI specific
+
+	//Responseformat any `json:"response_format,omitempty"` // OpenAI specific
+
+
 	ServiceTier     string                 `json:"service_tier,omitempty"`    // OpenAI specific
 
 	StreamOptions map[string]interface{} `json:"stream_options,omitempty"` // OpenAI specific
@@ -46,6 +50,7 @@ type Query struct {
 	//Raw       bool   `json:"raw,omitempty"`
 	//System    string `json:"system,omitempty"`
 	//Template  string `json:"template,omitempty"`
+	//ResponseFormat any `json:"response_format,omitempty"` // change the type string to any to accept any type of format in case of structured outputs
 
 	//TokenHeaderName  string
 	//TokenHeaderValue string

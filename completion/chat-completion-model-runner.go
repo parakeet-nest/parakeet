@@ -35,8 +35,20 @@ func modelRunnerChat(url string, query llm.Query) (llm.Answer, error) {
 		Verbose: query.Options.Verbose,
 
 		OpenAIAPIKey: "no-key",
+
 	}
 
+	//TODO: test if the query.Format is empty
+	openAIQuery.Responseformat = map[string]interface{}{
+		"type": "json_schema",
+		"json_schema": map[string]interface{}{
+			"name": "my_schema",
+			"schema": query.Format,
+		},
+	}
+	//TODO: make it with OpenAI too
+	
+	
 	openAIQuery.Tools = query.Tools
 
 	// if tool call is not used
@@ -60,6 +72,8 @@ func modelRunnerChat(url string, query llm.Query) (llm.Answer, error) {
 	if err != nil {
 		return llm.Answer{}, err
 	}
+
+	//fmt.Println("[llm/query]", string(jsonQuery))
 
 	req, err := http.NewRequest(http.MethodPost, url+kindOfCompletion, bytes.NewBuffer(jsonQuery))
 	if err != nil {

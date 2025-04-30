@@ -155,6 +155,8 @@ use (
 	./examples/84-conversational-memory
 	./examples/85-conversational-bbolt
 
+	./examples/86-squawk-demo
+
 	// Testing and experiments
 	examples/90-characters
 	examples/91-characters

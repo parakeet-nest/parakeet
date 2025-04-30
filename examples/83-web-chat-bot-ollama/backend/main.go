@@ -100,8 +100,9 @@ func main() {
 		conversationMessages = append(conversationMessages, llm.Message{Role: "user", Content: userMessage})
 		 */
 
+		 
 		// (Re)Create the conversation
-		conversationMessages := llm.Conversation(
+		conversationMessages := llm.SetOfMessages(
 			llm.Message{Role: "system", Content: "Enable deep thinking subroutine."},
 			llm.Message{Role: "system", Content: systemInstructions},
 			previousMessages,
@@ -138,7 +139,6 @@ func main() {
 		}
 
 		
-
 		conversation.SaveMessage("", llm.Message{
 			Role:    "user",
 			Content: userMessage,
