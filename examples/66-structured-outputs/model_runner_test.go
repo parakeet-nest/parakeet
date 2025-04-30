@@ -1,47 +1,37 @@
-/*
-Topic: Parakeet
-Generate a chat completion with Ollama and parakeet
-no streaming
-*/
-
 package main
 
 import (
+	"fmt"
+	"log"
 	"os"
+	"testing"
 
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
 	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
-
-	"fmt"
-	"log"
 )
 
-func main() {
-
+func TestWithModelRunner(t *testing.T) {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalln("😡:", err)
+		t.Fatalf("Error loading .env file: %v", err)
+	}
+	modelRunnerUrl := os.Getenv("MODEL_RUNNER_BASE_URL")
+	if modelRunnerUrl == "" {
+		modelRunnerUrl = "http://localhost:12434/engines/llama.cpp/v1"
 	}
 
-	ollamaUrl := os.Getenv("OLLAMA_BASE_URL")
-	if ollamaUrl == "" {
-		ollamaUrl = "http://localhost:11434"
-	}
-
-	model := os.Getenv("OLLAMA_LLM_CHAT")
+	model := os.Getenv("MODEL_RUNNER_LLM_CHAT")
 	if model == "" {
-		model = "qwen2.5:0.5b"
+		model = "ai/qwen2.5:latest"
 	}
 
 	options := llm.SetOptions(map[string]interface{}{
 		option.Temperature: 0.0,
 	})
 
-	// define schema for a structured output
-	// ref: https://ollama.com/blog/structured-outputs
 	schema := map[string]any{
 		"type": "object",
 		"properties": map[string]any{
@@ -72,7 +62,7 @@ func main() {
 	}
 
 
-	answer, err := completion.Chat(ollamaUrl, query, provider.Ollama)
+	answer, err := completion.Chat(modelRunnerUrl, query, provider.DockerModelRunner)
 	if err != nil {
 		// test if the model is not found
 		if modelErr, ok := err.(*completion.ModelNotFoundError); ok {
@@ -85,8 +75,10 @@ func main() {
 			fmt.Printf("🌍 Expected Host: %s\n", noHostErr.Host)
 		}
 		log.Fatal("😡:", err)
+		t.Fatalf("Error: %v", err)
+
+
 
 	}
-	fmt.Println(answer.Message.Content)
-
+	fmt.Println("Model Runner:", answer.Message.Content)
 }

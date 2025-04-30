@@ -241,3 +241,6 @@ func (s *Squawk) LastError(optionalError ...error) error {
 	// response_format
 // TODO: embeddings
 // TODO: similarity search
+// TODO: add Summarize() method (user message)
+// TODO: add ForKids() method (user message)
+// ...

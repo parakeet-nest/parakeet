@@ -37,6 +37,15 @@ func openAIChat(url string, query llm.Query, openAIKey string) (llm.Answer, erro
 		OpenAIAPIKey: openAIKey,
 	}
 
+	//TODO: test if the query.Format is empty
+	openAIQuery.Responseformat = map[string]interface{}{
+		"type": "json_schema",
+		"json_schema": map[string]interface{}{
+			"name":   "my_schema",
+			"schema": query.Format,
+		},
+	}
+
 	openAIQuery.Tools = query.Tools
 
 	// if tool call is not used
@@ -128,6 +137,16 @@ func openAIChatStream(url string, query llm.Query, onChunk func(llm.Answer) erro
 
 		OpenAIAPIKey: openAIKey,
 	}
+
+	//TODO: test if the query.Format is empty
+	//TODO: to be tested - not sure it works with stream
+	openAIQuery.Responseformat = map[string]interface{}{
+		"type": "json_schema",
+		"json_schema": map[string]interface{}{
+			"name": "my_schema",
+			"schema": query.Format,
+		},
+	}	
 
 	kindOfCompletion := "/chat/completions"
 
