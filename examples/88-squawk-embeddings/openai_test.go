@@ -63,7 +63,7 @@ func TestEmbeddingsWithOpenAI(t *testing.T) {
 		Model(model).
 		BaseURL(openAIBaseUrl).Provider(provider.OpenAI, os.Getenv("OPENAI_API_KEY"))
 
-	openAIParrot.Store(&store).Embeddings(docs, true)
+	openAIParrot.Store(&store).GenerateEmbeddings(docs, true)
 
 	openAIParrot.
 		SimilaritySearch("Who is James T Kirk?", 0.6, 1, true).

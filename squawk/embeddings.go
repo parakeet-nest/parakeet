@@ -81,7 +81,7 @@ func (s *Squawk) generateEmbeddingsFromDocuments(docs []string, logs bool) *Squa
 	return s
 }
 
-func (s *Squawk) Embeddings(docs []string, optionalParameters ...any) *Squawk {
+func (s *Squawk) GenerateEmbeddings(docs []string, optionalParameters ...any) *Squawk {
 	if len(optionalParameters) > 0 {
 		if logs, ok := optionalParameters[0].(bool); ok {
 			s.generateEmbeddingsFromDocuments(docs, logs)

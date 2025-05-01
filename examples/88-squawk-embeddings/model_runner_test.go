@@ -61,7 +61,7 @@ func TestEmbeddingsWithModelRunner(t *testing.T) {
 		Model(model).
 		BaseURL(modelRunnerBaseUrl).Provider(provider.DockerModelRunner)
 
-	dmrParrot.Store(&store).Embeddings(docs, true)
+	dmrParrot.Store(&store).GenerateEmbeddings(docs, true)
 
 	dmrParrot.
 		SimilaritySearch("Who is James T Kirk?", 0.6, 1, true).

@@ -56,7 +56,7 @@ func TestEmbeddingsWithOllama(t *testing.T) {
 		Model(model).
 		BaseURL(ollamaBaseUrl).Provider(provider.Ollama)
 
-	ollamaParrot.Store(&store).Embeddings(docs, true)
+	ollamaParrot.Store(&store).GenerateEmbeddings(docs, true)
 
 	ollamaParrot.
 		SimilaritySearch("Who is James T Kirk?", 0.6, 1, true).
