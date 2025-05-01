@@ -18,7 +18,7 @@ func TestWithOpenAI(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error loading .env file: %v", err)
 	}
-	openaiUrl := os.Getenv("OPENAI_BASE_URL")
+	openaiUrl := os.Getenv("OPENAI_BASE_URL")+"/v1"
 	if openaiUrl == "" {
 		openaiUrl = "https://api.openai.com/v1"
 	}

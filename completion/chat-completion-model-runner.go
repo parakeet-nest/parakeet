@@ -38,13 +38,14 @@ func modelRunnerChat(url string, query llm.Query) (llm.Answer, error) {
 
 	}
 
-	//TODO: test if the query.Format is empty
-	openAIQuery.Responseformat = map[string]interface{}{
-		"type": "json_schema",
-		"json_schema": map[string]interface{}{
-			"name": "my_schema",
-			"schema": query.Format,
-		},
+	if query.Format != nil {
+		openAIQuery.Responseformat = map[string]interface{}{
+			"type": "json_schema",
+			"json_schema": map[string]interface{}{
+				"name": "my_schema",
+				"schema": query.Format,
+			},
+		}
 	}
 	
 	openAIQuery.Tools = query.Tools
@@ -142,16 +143,15 @@ func modelRunnerChatStream(url string, query llm.Query, onChunk func(llm.Answer)
 		OpenAIAPIKey: "no-key",
 	}
 
-	//TODO: test if the query.Format is empty
-	//TODO: to be tested - not sure it works with stream
-	openAIQuery.Responseformat = map[string]interface{}{
-		"type": "json_schema",
-		"json_schema": map[string]interface{}{
-			"name": "my_schema",
-			"schema": query.Format,
-		},
+	if query.Format != nil {
+		openAIQuery.Responseformat = map[string]interface{}{
+			"type": "json_schema",
+			"json_schema": map[string]interface{}{
+				"name": "my_schema",
+				"schema": query.Format,
+			},
+		}
 	}
-
 
 	kindOfCompletion := "/chat/completions"
 

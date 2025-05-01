@@ -156,6 +156,8 @@ use (
 	./examples/85-conversational-bbolt
 
 	./examples/86-squawk-demo
+	./examples/87-squawk-meta-prompts
+	./examples/88-squawk-embeddings
 
 	// Testing and experiments
 	examples/90-characters

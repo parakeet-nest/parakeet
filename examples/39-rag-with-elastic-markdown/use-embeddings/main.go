@@ -64,7 +64,7 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 5)
+	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 1.0, 5)
 
 	for _, similarity := range similarities {
 		fmt.Println("📝 doc:", similarity.Id, "score:", similarity.Score)

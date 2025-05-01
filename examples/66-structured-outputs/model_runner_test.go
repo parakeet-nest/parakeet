@@ -18,7 +18,7 @@ func TestWithModelRunner(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error loading .env file: %v", err)
 	}
-	modelRunnerUrl := os.Getenv("MODEL_RUNNER_BASE_URL")
+	modelRunnerUrl := os.Getenv("MODEL_RUNNER_BASE_URL")+"/engines/llama.cpp/v1"
 	if modelRunnerUrl == "" {
 		modelRunnerUrl = "http://localhost:12434/engines/llama.cpp/v1"
 	}

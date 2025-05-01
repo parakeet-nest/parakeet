@@ -1,47 +1,66 @@
 package squawk
 
-import (
-	"log"
+/*
+"Squawk is the jQuery of generative AI"
+Squawk plays a similar role in generative AI that jQuery did for JavaScript.
+It simplifies common tasks, making the technology more accessible and easier to work with.
+*/
 
+import (
 	"github.com/parakeet-nest/parakeet/completion"
+	"github.com/parakeet-nest/parakeet/embeddings"
 	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
 )
 
 type Squawk struct {
-	setOfMessages []llm.Message
-	baseUrl       string
-	apiUrl        string
-	provider      string
-	model         string
-	options       llm.Options
-	openAPIKey    string
-	lastAnswer    llm.Answer
-	lastError	 error
+	setOfMessages   []llm.Message
+	baseUrl         string
+	apiUrl          string
+	provider        string
+	chatModel       string
+	embeddingsModel string
+	options         llm.Options
+	openAPIKey      string
+	lastAnswer      llm.Answer
+	lastError       error
+	schema          map[string]any // for structured output
+
+	// embeddings
+	vectorStore  embeddings.VectorStore
+	similarities []llm.VectorRecord
 }
 
-/*
-I want to create a DSL for parakeet to make it easier to use.
-
-
-*/
-
-func New(model string) *Squawk {
+func New() *Squawk {
 	s := &Squawk{
-		setOfMessages: []llm.Message{},
-		model:         model,
-		baseUrl:       "",
-		apiUrl:        "",
-		provider:      provider.Ollama,
-		options:       llm.Options{},
-		lastAnswer:   llm.Answer{},
-		lastError:    nil,
+		setOfMessages:   []llm.Message{},
+		chatModel:       "",
+		embeddingsModel: "",
+		baseUrl:         "",
+		apiUrl:          "",
+		provider:        provider.Ollama,
+		options:         llm.Options{},
+		lastAnswer:      llm.Answer{},
+		lastError:       nil,
+
+		vectorStore:  nil,
+		similarities: []llm.VectorRecord{},
 	}
 	// Initialize the Squawk instance with the provided model and arguments
 	// You can add any necessary initialization logic here
 
 	// The possible value for args[0] is a string, which is the llm provider
 
+	return s
+}
+
+// You can change of model
+func (s *Squawk) Model(model string) *Squawk {
+	s.chatModel = model
+	return s
+}
+func (s *Squawk) EmbeddingsModel(model string) *Squawk {
+	s.embeddingsModel = model
 	return s
 }
 
@@ -103,6 +122,24 @@ func (s *Squawk) BaseURL(url string) *Squawk {
 	return s
 }
 
+// Provider sets the LLM (Large Language Model) provider for the Squawk instance
+// and configures the API URL and other parameters based on the selected provider.
+//
+// Parameters:
+//   - llmProvider: A string representing the LLM provider. Supported values include:
+//   - provider.Ollama: Configures the API URL for the Ollama provider.
+//   - provider.DockerModelRunner: Configures the API URL for the Docker Model Runner provider.
+//   - provider.OpenAI: Configures the API URL for OpenAI and sets the OpenAI API key.
+//   - parameters: Optional additional parameters. For provider.OpenAI, the first parameter
+//     should be the OpenAI API key.
+//
+// Behavior:
+//   - If the baseUrl is not set, a default API URL is assigned based on the provider.
+//   - For provider.OpenAI, the first parameter in the `parameters` slice is used as the API key.
+//   - If an unsupported provider is specified, the baseUrl is used as the API URL.
+//
+// Returns:
+//   - A pointer to the updated Squawk instance.
 func (s *Squawk) Provider(llmProvider string, parameters ...string) *Squawk {
 	s.provider = llmProvider
 	switch llmProvider {
@@ -122,19 +159,16 @@ func (s *Squawk) Provider(llmProvider string, parameters ...string) *Squawk {
 		}
 
 	case provider.OpenAI:
-		log.Println("🔵", llmProvider, parameters[0])
-		s.apiUrl = "https://api.openai.com/v1"
+		//log.Println("🔵", llmProvider, parameters[0])
+		if s.baseUrl == "" {
+			s.apiUrl = "https://api.openai.com/v1"
+		} else {
+			s.apiUrl = s.baseUrl + "/v1"
+		}
 		s.openAPIKey = parameters[0]
 	default: // Ollama
 		s.apiUrl = s.baseUrl
 	}
-	//log.Println("🔴", s.apiUrl)
-	return s
-}
-
-// You can change of model
-func (s *Squawk) Model(model string) *Squawk {
-	s.model = model
 	return s
 }
 
@@ -144,9 +178,14 @@ func (s *Squawk) Options(options llm.Options) *Squawk {
 	return s
 }
 
+func (s *Squawk) Schema(schema map[string]any) *Squawk {
+	s.schema = schema
+	return s
+}
+
 func (s *Squawk) chatExec() (llm.Answer, error) {
 	query := llm.Query{
-		Model:    s.model,
+		Model:    s.chatModel,
 		Messages: s.setOfMessages,
 		Options:  s.options,
 	}
@@ -161,13 +200,41 @@ func (s *Squawk) chatExec() (llm.Answer, error) {
 	return answer, nil
 }
 
+func (s *Squawk) structuredOutputExec() (llm.Answer, error) {
+	query := llm.Query{
+		Model:    s.chatModel,
+		Messages: s.setOfMessages,
+		Options:  s.options,
+		Format:   s.schema,
+		Raw:      false,
+	}
+	answer, err := completion.Chat(s.apiUrl, query, s.provider, s.openAPIKey)
+	if err != nil {
+		return llm.Answer{}, err
+	}
+	s.lastAnswer = answer
+	return answer, nil
+}
+
+func (s *Squawk) StructuredOutput(callBack func(answer llm.Answer, self *Squawk, err error)) *Squawk {
+	answer, err := s.structuredOutputExec()
+	if err != nil {
+		callBack(answer, s, err)
+		s.lastError = err
+		return s
+	}
+	callBack(answer, s, nil)
+	//s.lastAnswer = answer
+	return s
+}
+
 func (s *Squawk) chatStreamExec(callBack func(answer llm.Answer) error) (llm.Answer, error) {
 	query := llm.Query{
-		Model:    s.model,
+		Model:    s.chatModel,
 		Messages: s.setOfMessages,
 		Options:  s.options,
 	}
-	answer, err := completion.ChatStream(s.apiUrl, query, callBack , s.provider, s.openAPIKey)
+	answer, err := completion.ChatStream(s.apiUrl, query, callBack, s.provider, s.openAPIKey)
 	if err != nil {
 		return llm.Answer{}, err
 	}
@@ -196,13 +263,13 @@ func (s *Squawk) ChatStream(callBack func(answer llm.Answer, self *Squawk) error
 		s.lastAnswer = llm.Answer{}
 		s.lastError = err
 		return s
-	} 
+	}
 	s.lastAnswer = answer
 	s.lastError = nil
 	return s
 }
 
-func (s *Squawk) Exec(callBack func(self *Squawk)) *Squawk {
+func (s *Squawk) Cmd(callBack func(self *Squawk)) *Squawk {
 	callBack(s)
 	return s
 }
@@ -223,7 +290,7 @@ func (s *Squawk) SaveAnswer(optionalParameters ...string) *Squawk {
 func (s *Squawk) LastAnswer(optionalAnswer ...llm.Answer) llm.Answer {
 	if len(optionalAnswer) > 0 {
 		s.lastAnswer = optionalAnswer[0]
-	} 
+	}
 	return s.lastAnswer
 }
 func (s *Squawk) LastError(optionalError ...error) error {
@@ -233,14 +300,20 @@ func (s *Squawk) LastError(optionalError ...error) error {
 	return s.lastError
 }
 
-// TODO: remove messages by label
-// TODO: replace messages by label
-// TODO: json format output -> Structured output with OpenAI???
+func (s *Squawk) RemoveMessageByLabel(label string) *Squawk {
+	// Remove messages by label
+	var newMessages []llm.Message
+	for _, message := range s.setOfMessages {
+		if message.Label != label {
+			newMessages = append(newMessages, message)
+		}
+	}
+	s.setOfMessages = newMessages
+	return s
+}
+
 // TODO: tools (+ MCP conversion)
-	// https://platform.openai.com/docs/guides/structured-outputs?api-mode=chat&lang=curl
-	// response_format
-// TODO: embeddings
-// TODO: similarity search
-// TODO: add Summarize() method (user message)
-// TODO: add ForKids() method (user message)
+// https://platform.openai.com/docs/guides/structured-outputs?api-mode=chat&lang=curl
+// response_format
 // ...
+//TODO: add default options ()
