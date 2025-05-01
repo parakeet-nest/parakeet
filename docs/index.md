@@ -10,7 +10,7 @@ Parakeet is the simplest Go library to create **GenAI apps** with **[Ollama](htt
 ## Install
 
 !!! note
-	current release: `v0.2.7 🐳 [spouting whale]`
+	current release: `v0.2.8 🍩 [doughnut]`
 
 ```bash
 go get github.com/parakeet-nest/parakeet
