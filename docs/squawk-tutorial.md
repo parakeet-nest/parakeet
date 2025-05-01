@@ -1,10 +1,10 @@
-# Squawk Tutorial: The "jQuery" of Generative AI
+# Squawk Tutorial: 
 
 !!! note
     This tutorial covers the core functionality of Squawk. For more advanced use cases and detailed API documentation, refer to the official Squawk documentation and source code.
 
 
-Squawk is a DSL for Parakeet designed to simplify interactions with language models, making generative AI more accessible and easier to work with - similar to how jQuery simplified JavaScript development. This tutorial covers how to use Squawk for chat completions, retrieval-augmented generation (RAG), structured outputs, and function calling.
+This tutorial covers how to use Squawk for chat completions, retrieval-augmented generation (RAG), structured outputs, and function calling.
 
 ## Table of Contents
 
@@ -549,3 +549,12 @@ squawk.New().
         fmt.Println(self.Messages())
     })
 ```
+
+!!! note
+	👀 you will find complete examples in:
+
+    - [examples/86-squawk-demo](https://github.com/parakeet-nest/parakeet/tree/main/examples/86-squawk-demo)
+    - [examples/87-squawk-meta-prompts](https://github.com/parakeet-nest/parakeet/tree/main/examples/87-squawk-meta-prompts)
+    - [examples/88-squawk-embeddings](https://github.com/parakeet-nest/parakeet/tree/main/examples/88-squawk-embeddings)
+    - [examples/89-squawk-tools](https://github.com/parakeet-nest/parakeet/tree/main/examples/89-squawk-tools)
+    - [examples/92-squawk-tutorial](https://github.com/parakeet-nest/parakeet/tree/main/examples/92-squawk-tutorial)

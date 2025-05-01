@@ -12,7 +12,7 @@ Added:
 - `llm.SetOfMessages(messages ...interface{}) []Message`: SetOfMessages creates or extends a "conversation" with provided messages
 - Added support for structured output to the Docker Model Runner Chat API
 - Added support for structured output to the OpenAI Chat API
-- Added Squawk DSL
+- Added Squawk DSL 🎉
 
 Changes:
 - `history.SaveMessageWithSession(sessionId, messageId string, message llm.Message)`

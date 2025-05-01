@@ -1,5 +1,24 @@
 # What's new with Parakeet 
 
+## 🦜 Parakeet `v0.2.8` 🍩 [doughnut]
+
+- Landing of **[Squawk](squawk-getting-started.md)**: a Parakeet DSL
+```golang
+squawk.New().
+    Model(model).
+    BaseURL(ollamaBaseUrl).
+    Provider(provider.Ollama).
+    Options(options).
+    System("You are a useful AI agent, you are a Star Trek expert.").
+    User("Who is James T Kirk?").
+    Chat(func(answer llm.Answer, self *squawk.Squawk, err error) {
+        fmt.Println(answer.Message.Content)
+    })
+```
+- Improvement of the history messages management
+- Added support for structured output to the Docker Model Runner Chat API
+- Added support for structured output to the OpenAI Chat API
+
 ## 🦜 Parakeet `v0.2.7` 🐳 [spouting whale]
 
 Addition of **Docker Model Runner** support (and OpenAI at the same time) allowing easy development of generative AI applications in Docker containers.

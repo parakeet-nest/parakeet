@@ -1,8 +1,8 @@
 # Function Calling with tool support
-> Ollama API: chat request with tools https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
+> Ollama API: chat request with tools [https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools](https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools)
 
-Since Ollama `0.3.0`, Ollama supports **tools calling**, blog post: https://ollama.com/blog/tool-support.
-A list of supported models can be found under the Tools category on the models page: https://ollama.com/search?c=tools
+Since Ollama `0.3.0`, Ollama supports **tools calling**, blog post: [https://ollama.com/blog/tool-support](https://ollama.com/blog/tool-support).
+A list of supported models can be found under the Tools category on the models page: [https://ollama.com/search?c=tools](https://ollama.com/search?c=tools)
 
 ## Define a list of tools
 
