@@ -29,6 +29,10 @@ type Squawk struct {
 	// embeddings
 	vectorStore  embeddings.VectorStore
 	similarities []llm.VectorRecord
+
+	// tools
+	tools     []llm.Tool
+	toolCalls []llm.ToolCall
 }
 
 func New() *Squawk {
@@ -73,6 +77,7 @@ func (s *Squawk) System(message string, optionalParameters ...string) *Squawk {
 
 	} else {
 		s.setOfMessages = append(s.setOfMessages, llm.Message{Role: "system", Content: message})
+		//fmt.Println("🔵", s.setOfMessages)
 	}
 
 	return s
@@ -114,6 +119,10 @@ func (s *Squawk) SetOfMessages(messages ...interface{}) *Squawk {
 		}
 	}
 	return s
+}
+
+func (s *Squawk) Messages() []llm.Message {
+	return s.setOfMessages
 }
 
 func (s *Squawk) BaseURL(url string) *Squawk {

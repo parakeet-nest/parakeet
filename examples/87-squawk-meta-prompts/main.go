@@ -59,7 +59,6 @@ func main() {
 	fmt.Println("\n====================================")
 
 	squawk.New().
-		
 		BaseURL(os.Getenv("MODEL_RUNNER_BASE_URL")).
 		Provider(provider.DockerModelRunner).
 		Summarize(p.LastAnswer().Message.Content).

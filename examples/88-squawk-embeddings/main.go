@@ -66,12 +66,32 @@ func main() {
 		})).
 		Store(&store).
 		GenerateEmbeddings(starWarsChars, true).
+		System("You are a useful AI agent, you are a Star Wars expert.").
 		User("Who is Luke Skywalker?", "q1").
-		SimilaritySearchFromUserMessage("q1", 0.6, 1).
+		SimilaritySearchFromUserMessage("q1", 0.6, 1, true).
+		AddSimilaritiesToMessages("sim1").
+		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
+			fmt.Print(answer.Message.Content)
+			return nil
+		}).
+		SaveAnswer("a1"). // save the answe to the history / to the messages list
+		Cmd(func(self *squawk.Squawk) {
+			// List of messages
+			fmt.Println("\n====================================")
+			fmt.Println("List of messages:")
+			for _, m := range self.Messages() {
+				fmt.Println("  - ", m.Role, m.Content)
+			}
+			fmt.Println("====================================")
+
+		}).
+		RemoveMessageByLabel("q1").
+		RemoveMessageByLabel("sim1").
+		User("Who is Leia?", "q2").
+		SimilaritySearchFromUserMessage("q2", 0.6, 1, true).
 		AddSimilaritiesToMessages().
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)
 			return nil
 		})
-
 }

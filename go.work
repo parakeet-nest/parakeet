@@ -158,6 +158,7 @@ use (
 	./examples/86-squawk-demo
 	./examples/87-squawk-meta-prompts
 	./examples/88-squawk-embeddings
+	./examples/89-squawk-tools
 
 	// Testing and experiments
 	examples/90-characters

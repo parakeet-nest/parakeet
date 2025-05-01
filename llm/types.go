@@ -49,6 +49,7 @@ type ToolCall struct {
 
 type ToolCalls []ToolCall
 
+//! if there are several tools with the same name, only the last one is kept
 func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
 	var tool = ToolCall{}
 	for toolCallIdx := range *tc {
@@ -60,6 +61,14 @@ func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
 		return tool, errors.New("Tool not found")
 	}
 	return tool, nil
+}
+
+func (tc *ToolCalls) Tools() []ToolCall {
+	tools := []ToolCall{}
+	for _, tool := range *tc {
+		tools = append(tools, tool)
+	}
+	return tools
 }
 
 type Message struct {

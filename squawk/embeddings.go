@@ -47,7 +47,6 @@ func (s *Squawk) generateEmbeddingsFromDocuments(docs []string, logs bool) *Squa
 
 		//TODO:query
 
-
 		embedding, err := embeddings.CreateEmbedding(
 			s.apiUrl,
 			llm.Query4Embedding{
@@ -103,7 +102,6 @@ func (s *Squawk) searchSimilarities(content string, limit float64, max int, logs
 		},
 		"content",
 		s.provider, s.openAPIKey,
-
 	)
 	if err != nil {
 		if logs {
@@ -145,7 +143,7 @@ func (s *Squawk) SimilaritySearch(content string, limit float64, max int, option
 }
 
 func (s *Squawk) SimilaritySearchFromUserMessage(userMessageLabel string, limit float64, max int, optionalParameters ...any) *Squawk {
-	
+
 	// search the message with the label
 	var content string
 	for _, message := range s.setOfMessages {
@@ -159,7 +157,7 @@ func (s *Squawk) SimilaritySearchFromUserMessage(userMessageLabel string, limit 
 		log.Println("😡 No message found with label:", userMessageLabel)
 		return s
 	}
-	
+
 	if len(optionalParameters) > 0 {
 		if logs, ok := optionalParameters[0].(bool); ok {
 			s.searchSimilarities(content, limit, max, logs)
@@ -174,10 +172,12 @@ func (s *Squawk) SimilaritySearchFromUserMessage(userMessageLabel string, limit 
 
 func (s *Squawk) AddSimilaritiesToMessages(optionalParameters ...string) *Squawk {
 	if len(optionalParameters) > 0 {
+		//fmt.Println("🔴📝 Adding similarities to messages:", optionalParameters[0])
 		s.setOfMessages = append(
 			s.setOfMessages,
 			llm.Message{Role: "system", Content: embeddings.GenerateContextFromSimilarities(s.similarities), Label: optionalParameters[0]},
 		)
+		
 
 	} else {
 		s.setOfMessages = append(s.setOfMessages, llm.Message{Role: "system", Content: embeddings.GenerateContextFromSimilarities(s.similarities)})
@@ -190,17 +190,15 @@ func (s *Squawk) AddSimilaritiesToMessagesWithPrefix(prefix string, optionalPara
 	if len(optionalParameters) > 0 {
 		s.setOfMessages = append(
 			s.setOfMessages,
-			llm.Message{Role: "system", Content: prefix+embeddings.GenerateContextFromSimilarities(s.similarities), Label: optionalParameters[0]},
+			llm.Message{Role: "system", Content: prefix + embeddings.GenerateContextFromSimilarities(s.similarities), Label: optionalParameters[0]},
 		)
 
 	} else {
-		s.setOfMessages = append(s.setOfMessages, llm.Message{Role: "system", Content: prefix+embeddings.GenerateContextFromSimilarities(s.similarities)})
+		s.setOfMessages = append(s.setOfMessages, llm.Message{Role: "system", Content: prefix + embeddings.GenerateContextFromSimilarities(s.similarities)})
 	}
 
 	return s
 }
-
-
 
 func (s *Squawk) Similarities() []llm.VectorRecord {
 	return s.similarities
