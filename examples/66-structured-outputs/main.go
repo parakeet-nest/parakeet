@@ -12,6 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/enums/option"
+	"github.com/parakeet-nest/parakeet/enums/provider"
 	"github.com/parakeet-nest/parakeet/llm"
 
 	"fmt"
@@ -25,18 +26,18 @@ func main() {
 		log.Fatalln("😡:", err)
 	}
 
-	ollamaUrl := os.Getenv("OLLAMA_HOST")
+	ollamaUrl := os.Getenv("OLLAMA_BASE_URL")
 	if ollamaUrl == "" {
 		ollamaUrl = "http://localhost:11434"
 	}
 
-	model := os.Getenv("LLM_CHAT")
+	model := os.Getenv("OLLAMA_LLM_CHAT")
 	if model == "" {
 		model = "qwen2.5:0.5b"
 	}
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 1.5,
+		option.Temperature: 0.0,
 	})
 
 	// define schema for a structured output
@@ -63,14 +64,15 @@ func main() {
 	query := llm.Query{
 		Model: model,
 		Messages: []llm.Message{
-			{Role: "user", Content: "Tell me about Canada."},
+			{Role: "user", Content: "Tell me about Canada"},
 		},
 		Options: options,
 		Format:  schema,
 		Raw:     false,
 	}
 
-	answer, err := completion.Chat(ollamaUrl, query)
+
+	answer, err := completion.Chat(ollamaUrl, query, provider.Ollama)
 	if err != nil {
 		// test if the model is not found
 		if modelErr, ok := err.(*completion.ModelNotFoundError); ok {

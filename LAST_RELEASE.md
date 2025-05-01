@@ -2,6 +2,22 @@
 
 ## Release notes
 
+### v0.2.8 🍩 [doughnut]
+
+Added:
+- `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.
+- `history.KeepLastN(n int) error`: keeps the last n messages in the Messages list (and remove the oldest).
+- `history.KeepLastNOfSession(sessionId string, n int) error`: keeps the last n messages of the session in the Messages list (and remove the oldest).
+- `history.GetLastNMessages(n int) ([]llm.Message, error)`: returns the last n messages in the Messages list.
+- `llm.SetOfMessages(messages ...interface{}) []Message`: SetOfMessages creates or extends a "conversation" with provided messages
+- Added support for structured output to the Docker Model Runner Chat API
+- Added support for structured output to the OpenAI Chat API
+- Added Squawk DSL 🎉
+
+Changes:
+- `history.SaveMessageWithSession(sessionId, messageId string, message llm.Message)`
+- `history.RemoveTopMessageOfSession(sessionId string)`
+
 ## v0.2.7 🐳 [spouting whale]
 
 Addition of **Docker Model Runner** support (and OpenAI at the same time) allowing easy development of generative AI applications in Docker containers.

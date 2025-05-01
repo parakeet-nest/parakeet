@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
@@ -22,8 +23,27 @@ type ElasticsearchStore struct {
 	elasticsearchClient *elasticsearch.Client
 }
 
+func (ess *ElasticsearchStore) Get(id string) (llm.VectorRecord, error) {
+	// TODO: to be implemented if needed
+	return llm.VectorRecord{}, nil
+}
+func (ess *ElasticsearchStore) GetAll() ([]llm.VectorRecord, error) {
+	// TODO: to be implemented if needed
+	return []llm.VectorRecord{}, nil
+}
+
+func (ess *ElasticsearchStore) SearchMaxSimilarity(embeddingFromQuestion llm.VectorRecord) (llm.VectorRecord, error) {
+	// TODO: to be implemented if needed
+	return llm.VectorRecord{}, nil
+}
+
+func (ess *ElasticsearchStore) SearchSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64) ([]llm.VectorRecord, error) {
+	// TODO: to be implemented if needed
+	return []llm.VectorRecord{}, nil
+}
+
 func (ess *ElasticsearchStore) Initialize(addresses []string, user, pwd string, cert []byte, indexName string) error {
-	
+
 	cfg := elasticsearch.Config{
 		Addresses: addresses,
 		Username:  user,
@@ -41,7 +61,7 @@ func (ess *ElasticsearchStore) Initialize(addresses []string, user, pwd string, 
 func (ess *ElasticsearchStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRecord, error) {
 	// Convert the document/vectorRecord/embedding to JSON
 	docJSON, err := json.Marshal(vectorRecord)
-	
+
 	if err != nil {
 		// Error marshaling document to JSON
 		return llm.VectorRecord{}, err
@@ -66,7 +86,8 @@ func (ess *ElasticsearchStore) Save(vectorRecord llm.VectorRecord) (llm.VectorRe
 	}
 }
 
-func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, size int) ([]llm.VectorRecord, error) {
+// TODO: I added the limit, to be tested
+func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.VectorRecord, limit float64, size int) ([]llm.VectorRecord, error) {
 	// Now search for similar embeddings in Elasticsearch
 	query := map[string]interface{}{
 		"size": size, // Adjust size based on how many results you want
@@ -76,7 +97,7 @@ func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.
 					"match_all": map[string]interface{}{},
 				},
 				"script": map[string]interface{}{
-					"source": "cosineSimilarity(params.query_vector, 'embedding') + 1.0",
+					"source": fmt.Sprintf("cosineSimilarity(params.query_vector, 'embedding') + %f", limit),
 					"params": map[string]interface{}{
 						"query_vector": embeddingFromQuestion.Embedding,
 					},
@@ -104,16 +125,16 @@ func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.
 
 	if res.IsError() {
 		/*
-		var e map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
-			log.Fatalf("Error parsing the response body: %s", err)
-		} else {
-			log.Fatalf("[%s] %s: %s",
-				res.Status(),
-				e["error"].(map[string]interface{})["type"],
-				e["error"].(map[string]interface{})["reason"],
-			)
-		}
+			var e map[string]interface{}
+			if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
+				log.Fatalf("Error parsing the response body: %s", err)
+			} else {
+				log.Fatalf("[%s] %s: %s",
+					res.Status(),
+					e["error"].(map[string]interface{})["type"],
+					e["error"].(map[string]interface{})["reason"],
+				)
+			}
 		*/
 		return nil, errors.New("Error response from Elasticsearch: " + res.String())
 	}
@@ -128,7 +149,7 @@ func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.
 	// Process the search results
 	// fmt.Printf("Query took %d ms\n", int(r["took"].(float64)))
 	for _, hit := range r["hits"].(map[string]interface{})["hits"].([]interface{}) {
-		
+
 		docID := hit.(map[string]interface{})["_id"]
 		score := hit.(map[string]interface{})["_score"].(float64)
 		//fmt.Printf("Document ID: %s, Score: %f\n", docID, score)
@@ -139,8 +160,8 @@ func (ess *ElasticsearchStore) SearchTopNSimilarities(embeddingFromQuestion llm.
 
 		similarities = append(similarities, llm.VectorRecord{
 			Prompt: prompt,
-			Id: docID.(string),
-			Score: score,
+			Id:     docID.(string),
+			Score:  score,
 		})
 
 	}

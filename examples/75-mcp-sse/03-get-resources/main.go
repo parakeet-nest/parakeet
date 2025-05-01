@@ -64,7 +64,8 @@ func main() {
 	fmt.Println("📖", resourceResult.Contents)
 
 	for _, content := range resourceResult.Contents {
-		fmt.Println("- 📝 [", content["kind"],"]:", content["text"])
+		//fmt.Println("- 📝 [", content["kind"],"]:", content["text"])
+		fmt.Println("- 📝 [", content)
 
 	}
 	

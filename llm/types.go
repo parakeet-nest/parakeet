@@ -3,6 +3,7 @@ package llm
 import (
 	"encoding/json"
 	"errors"
+
 )
 
 type LLM struct {
@@ -48,6 +49,7 @@ type ToolCall struct {
 
 type ToolCalls []ToolCall
 
+//! if there are several tools with the same name, only the last one is kept
 func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
 	var tool = ToolCall{}
 	for toolCallIdx := range *tc {
@@ -61,10 +63,19 @@ func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
 	return tool, nil
 }
 
+func (tc *ToolCalls) Tools() []ToolCall {
+	tools := []ToolCall{}
+	for _, tool := range *tc {
+		tools = append(tools, tool)
+	}
+	return tools
+}
+
 type Message struct {
 	Role      string    `json:"role"`
 	Content   string    `json:"content"`
 	ToolCalls ToolCalls `json:"tool_calls,omitempty"`
+	Label string // used by squawk DSL
 }
 
 /*

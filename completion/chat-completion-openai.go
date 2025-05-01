@@ -37,6 +37,16 @@ func openAIChat(url string, query llm.Query, openAIKey string) (llm.Answer, erro
 		OpenAIAPIKey: openAIKey,
 	}
 
+	if query.Format != nil {
+		openAIQuery.Responseformat = map[string]interface{}{
+			"type": "json_schema",
+			"json_schema": map[string]interface{}{
+				"name": "my_schema",
+				"schema": query.Format,
+			},
+		}
+	}
+
 	openAIQuery.Tools = query.Tools
 
 	// if tool call is not used
@@ -127,6 +137,16 @@ func openAIChatStream(url string, query llm.Query, onChunk func(llm.Answer) erro
 		Verbose: query.Options.Verbose,
 
 		OpenAIAPIKey: openAIKey,
+	}
+
+	if query.Format != nil {
+		openAIQuery.Responseformat = map[string]interface{}{
+			"type": "json_schema",
+			"json_schema": map[string]interface{}{
+				"name": "my_schema",
+				"schema": query.Format,
+			},
+		}
 	}
 
 	kindOfCompletion := "/chat/completions"

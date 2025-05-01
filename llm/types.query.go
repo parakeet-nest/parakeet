@@ -60,6 +60,7 @@ type Query struct {
 
 	// *** OpenAI specific fields ***
 	// I will movve them to the options
+	ResponseFormat map[string]interface{} `json:"response_format,omitempty"` // "text" or "json"
 
 	// *** End of OpenAI specific fields ***
 

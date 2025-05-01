@@ -1,0 +1,1 @@
+{"model":"ai/qwen2.5:latest","messages":[{"role":"user","content":"Tell me about Canada","Label":""}],"seed":-1,"top_p":0.9,"response_format":{"json_schema":{"properties":{"capital":{"type":"string"},"languages":{"items":{"type":"string"},"type":"array"},"name":{"type":"string"}},"required":["name","capital","languages"],"type":"object"},"type":"json_schema"},"stream":false}

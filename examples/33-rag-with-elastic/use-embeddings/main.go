@@ -56,7 +56,7 @@ func main() {
 	}
 	fmt.Println("🔎 searching for similarity...")
 
-	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 3)
+	similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 1.0, 3)
 
 	for _, similarity := range similarities {
 		fmt.Println("📝 doc:", similarity.Id, "score:", similarity.Score)
@@ -75,11 +75,11 @@ func main() {
 	Be verbose!`
 
 	options := llm.SetOptions(map[string]interface{}{
-		option.Temperature: 0.0,
-		option.RepeatLastN: 2,
+		option.Temperature:   0.0,
+		option.RepeatLastN:   2,
 		option.RepeatPenalty: 3.0,
-		option.TopK: 10,
-		option.TopP: 0.5,
+		option.TopK:          10,
+		option.TopP:          0.5,
 	})
 
 	queryChat := llm.Query{

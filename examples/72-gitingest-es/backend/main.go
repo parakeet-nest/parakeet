@@ -143,7 +143,7 @@ func main() {
 		}
 		fmt.Println("🔎 searching for similarity...")
 
-		similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, maxSimilarities)
+		similarities, err := elasticStore.SearchTopNSimilarities(embeddingFromQuestion, 1.0, maxSimilarities)
 
 		for _, similarity := range similarities {
 			fmt.Println("📝 doc:", similarity.Id, "score:", similarity.Score)
@@ -235,20 +235,17 @@ func main() {
 		// Is it useful or not?
 		m.Lock()
 		defer m.Unlock()
-		//! I use a counter for the id of the message, then I can create an ordered list of messages
 
-		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
+		conversation.SaveMessageWithSession(sessionId, "", llm.Message{
 			Role:    "user",
 			Content: userMessage,
 		})
-		//* Remove the top(first) message of conversation of maxMessages(historyMessages) messages
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, historyMessages)
 
-		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
+		conversation.SaveMessageWithSession(sessionId, "", llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, historyMessages)
+		conversation.KeepLastNOfSession(sessionId, historyMessages)
 
 		//* Create an embedding from the user message if it starts with "LEARN:"
 		/*

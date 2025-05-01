@@ -130,20 +130,17 @@ func main() {
 		// Is it useful or not?
 		m.Lock()
 		defer m.Unlock()
-		//! I use a counter for the id of the message, then I can create an ordered list of messages
 
-		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
+		conversation.SaveMessageWithSession(sessionId, "", llm.Message{
 			Role:    "user",
 			Content: userMessage,
 		})
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 6)
 
-		conversation.SaveMessageWithSession(sessionId, &messagesCounters, llm.Message{
+		conversation.SaveMessageWithSession(sessionId, "", llm.Message{
 			Role:    "assistant",
 			Content: answer.Message.Content,
 		})
-		conversation.RemoveTopMessageOfSession(sessionId, &messagesCounters, 6)
-
+		conversation.KeepLastNOfSession(sessionId, 6)
 	})
 
 	mux.HandleFunc("POST /clear-history", func(response http.ResponseWriter, request *http.Request) {

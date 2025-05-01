@@ -150,10 +150,23 @@ use (
 	./examples/80-tools-model-runner
 	./examples/81-tools-openai
 	./examples/82-web-chat-bot-model-runner/backend
+	./examples/83-web-chat-bot-ollama/backend
+
+	./examples/84-conversational-memory
+	./examples/85-conversational-bbolt
+
+	./examples/86-squawk-demo
+	./examples/87-squawk-meta-prompts
+	./examples/88-squawk-embeddings
+	./examples/89-squawk-tools
 
 	// Testing and experiments
 	examples/90-characters
 	examples/91-characters
+
+	examples/92-squawk-tutorial
+
+
 	examples/99-testing
 	
 	//prompting/01-draft

@@ -260,9 +260,8 @@ conversation.Initialize("../conversation.db")
 
 ### In Memory
 
-- `history.SaveMessageWithSession(sessionId string, messagesCounters *map[string]int, message llm.Message)`
-
-- `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
+- `history.SaveMessageWithSession(sessionId, messageId string, message llm.Message)`
+- `history.RemoveTopMessageOfSession(sessionId string)`
 
 !!! note
 	👀 you will find a complete example in:
@@ -272,10 +271,46 @@ conversation.Initialize("../conversation.db")
 
 ### Bbolt Memory
 
-- `history.SaveMessageWithSession(sessionId string, messagesCounters *map[string]int, message llm.Message)`
-- `history.RemoveTopMessageOfSession(sessionId string, messagesCounters *map[string]int, conversationLength int)`
+- `history.SaveMessageWithSession(sessionId, messageId string, message llm.Message)`
+- `history.RemoveTopMessageOfSession(sessionId string)`
 
 !!! note
 	👀 you will find a complete example in:
 
     - [examples/71-web-chat-bot-with-session](https://github.com/parakeet-nest/parakeet/tree/main/examples/71-web-chat-bot-with-session)
+
+### In Memory and Bbolt
+
+- `history.RemoveTopMessage() error`: removes the oldest message from the Messages list.
+- `history.KeepLastN(n int) error`: keeps the last n messages in the Messages list (and remove the oldest).
+- `history.KeepLastNOfSession(sessionId string, n int) error`: keeps the last n messages of the session in the Messages list (and remove the oldest).
+- `history.GetLastNMessages(n int) ([]llm.Message, error)`: returns the last n messages in the Messages list.
+
+!!! note
+	👀 you will find a complete example in:
+
+    - [examples/69-web-chat-bot](https://github.com/parakeet-nest/parakeet/tree/main/examples/69-web-chat-bot)
+    - [examples/70-web-chat-bot-with-session](https://github.com/parakeet-nest/parakeet/tree/main/examples/70-web-chat-bot-with-session)
+    - [examples/71-web-chat-bot-with-session](https://github.com/parakeet-nest/parakeet/tree/main/examples/71-web-chat-bot-with-session)
+    - [examples/72-gitingest-es](https://github.com/parakeet-nest/parakeet/tree/main/examples/72-gitingest-es)
+    - [examples/73-gitingest-daphnia](https://github.com/parakeet-nest/parakeet/tree/main/examples/73-gitingest-daphnia)
+    - [examples/84-conversational-memory](https://github.com/parakeet-nest/parakeet/tree/main/examples/84-conversational-memory)
+    - [examples/85-conversational-bbolt](https://github.com/parakeet-nest/parakeet/tree/main/examples/85-conversational-bbolt)
+
+## Complex conversation
+
+You can use the helper function `llm.Conversation`. `Conversation` creates or extends a conversation with provided messages. It can accept either single messages or slices of messages as variadic parameters:
+
+```golang
+conversationMessages := llm.Conversation(
+	llm.Message{Role: "system", Content: "Enable deep thinking subroutine."},
+	llm.Message{Role: "system", Content: systemInstructions},
+	[]llm.Message{
+		llm.Message{Role: "user", Content: question},
+		llm.Message{Role: "assistant", Content: assistantMessage},
+	},
+	llm.Message{Role: "user", Content: userMessage},
+)
+```
+> It returns a slice of messages `[]llm.Message`
+

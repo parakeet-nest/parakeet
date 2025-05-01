@@ -16,9 +16,28 @@ type Client struct {
 	ctx       context.Context
 }
 
-func NewClient(ctx context.Context, baseURL string) (Client, error) {
+func NewClient(ctx context.Context, baseURL string, options ...string) (Client, error) {
+	
+	var bearerToken string
+	if len(options) > 0 {
+		bearerToken = options[0]
+	} else {
+		bearerToken = ""
+	}
+	var mcpClient *client.SSEMCPClient
+	var err error
+	if bearerToken == "" {
+		mcpClient, err = client.NewSSEMCPClient(baseURL + "/sse")
 
-	mcpClient, err := client.NewSSEMCPClient(baseURL + "/sse")
+	} else {
+
+		mcpClient, err = client.NewSSEMCPClient(
+			baseURL+"/sse",
+			client.WithHeaders(map[string]string{
+				"Authorization": "Bearer " + bearerToken}),
+		)
+	}
+
 	if err != nil {
 		return Client{}, &SSEClientCreationError{Message: fmt.Sprintf("Failed to create client: %v", err)}
 	}
@@ -116,29 +135,16 @@ func (c *Client) Close() error {
 //   - The map does not contain a "text" key.
 //   - The value associated with the "text" key is not a string.
 func getTextFromResult(mcpResult *mcp.CallToolResult) (string, error) {
-	//fmt.Println("📣 Result:", mcpResult.Result)
-	//return mcpResult.Content[0].(map[string]interface{})["text"].(string)
-	var finalText string
 	if len(mcpResult.Content) == 0 {
 		return "", &SSEResultExtractionError{Message: "content is empty"}
 	}
 
-	contentMap, ok := mcpResult.Content[0].(map[string]interface{})
+	content, ok := mcpResult.Content[0].(mcp.TextContent)
 	if !ok {
-		return "", &SSEResultExtractionError{Message: "content[0] is not a map"}
+		return "", &SSEResultExtractionError{Message: "content[0] is not TextContent"}
 	}
 
-	textInterface, ok := contentMap["text"]
-	if !ok {
-		return "", &SSEResultExtractionError{Message: "no 'text' key in map"}
-	}
-
-	finalText, ok = textInterface.(string)
-	if !ok {
-		return "", &SSEResultExtractionError{Message: "text is not a string"}
-	}
-	return finalText, nil
-
+	return content.Text, nil
 }
 
 // Static Resources
@@ -163,7 +169,8 @@ func (c *Client) ListResources() (llm.Resources, error) {
 }
 
 type ResourceResult struct {
-	Contents []map[string]interface{}
+	//Contents []map[string]interface{}
+	Contents []string
 }
 
 func (c *Client) ReadResource(uri string) (ResourceResult, error) {
@@ -177,10 +184,13 @@ func (c *Client) ReadResource(uri string) (ResourceResult, error) {
 		return ResourceResult{}, &SSEReadResourceError{Message: fmt.Sprintf("Failed to read resource: %v", err)}
 	}
 
+	//rs, ok := mcpResourceResult.Contents[0].(mcp.TextResourceContents)
+
 	resourceResult := ResourceResult{}
 	for _, content := range mcpResourceResult.Contents {
-		contentsMap := content.(map[string]interface{})
-		resourceResult.Contents = append(resourceResult.Contents, contentsMap)
+
+		contentsMap := content.(mcp.TextResourceContents)
+		resourceResult.Contents = append(resourceResult.Contents, contentsMap.Text)
 	}
 
 	return resourceResult, nil
@@ -201,19 +211,18 @@ func (c *Client) ListPrompts() (llm.Prompts, error) {
 		prompt := llm.Prompt{}
 		prompt.Name = mcpPrompt.Name
 		prompt.Description = mcpPrompt.Description // not used
-		
+
 		for _, argument := range mcpPrompt.Arguments {
 			prompt.Arguments = append(prompt.Arguments, llm.Argument{
-				Name: argument.Name,
+				Name:        argument.Name,
 				Description: argument.Description,
-				Required: argument.Required,
+				Required:    argument.Required,
 			})
 		}
-		
+
 		//fmt.Println("📣 Prompt:", mcpPrompt.Name)
 		//fmt.Println("  - Description:", mcpPrompt.Description)
 		//fmt.Println("  - Arguments:", mcpPrompt.Arguments)
-
 
 		prompts = append(prompts, prompt)
 	}
@@ -221,7 +230,7 @@ func (c *Client) ListPrompts() (llm.Prompts, error) {
 	return prompts, nil
 }
 
-func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string)  (llm.Prompt, error) {
+func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string) (llm.Prompt, error) {
 	// Create a request to read the resource
 	promptRequest := mcp.GetPromptRequest{}
 	promptRequest.Params.Name = promptName
@@ -229,20 +238,21 @@ func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string
 
 	promptResult, err := c.mcpClient.GetPrompt(c.ctx, promptRequest)
 	if err != nil {
-		return llm.Prompt{} , &SSEGetPromptError{Message: fmt.Sprintf("Failed to get prompt: %v", err)}
+		return llm.Prompt{}, &SSEGetPromptError{Message: fmt.Sprintf("Failed to get prompt: %v", err)}
 	}
 
 	prompt := llm.Prompt{}
 	prompt.Name = promptName
 	prompt.Description = promptResult.Description
-	
+
 	for _, message := range promptResult.Messages {
-		
+
 		prompt.Messages = append(prompt.Messages, llm.Message{
-			Role: string(message.Role),
-			Content : message.Content.(map[string]interface{})["text"].(string),
+			Role:    string(message.Role),
+			Content: message.Content.(mcp.TextContent).Text,
 		})
 	}
+	// 	Content: message.Content.(map[string]interface{})["text"].(string),
 
 	return prompt, nil
 }
