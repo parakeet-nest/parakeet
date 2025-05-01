@@ -35,7 +35,7 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			fmt.Println("\n------------------------------------")
 		}).
-		SaveAnswer(). // add answer to the history / to the messages list
+		SaveAssistantAnswer(). // add answer to the history / to the messages list
 		User("Who is his best friend?", "question-02").
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)
@@ -43,7 +43,7 @@ func main() {
 		}).Cmd(func(self *squawk.Squawk) {
 			fmt.Println("\n------------------------------------")
 		}).
-		SaveAnswer().
+		SaveAssistantAnswer().
 		User("Who is his worst ennemy?", "question-03").
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)
@@ -76,7 +76,7 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			fmt.Println("\n------------------------------------")
 		}).
-		SaveAnswer(). // add answer to the history / to the messages list
+		SaveAssistantAnswer(). // add answer to the history / to the messages list
 		User("Who is his best friend?", "question-02").
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)
@@ -84,7 +84,7 @@ func main() {
 		}).Cmd(func(self *squawk.Squawk) {
 			fmt.Println("\n------------------------------------")
 		}).
-		SaveAnswer().
+		SaveAssistantAnswer().
 		User("Who is his worst ennemy?", "question-03").
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)
@@ -115,7 +115,7 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			fmt.Println("\n------------------------------------")
 		}).
-		SaveAnswer(). // add answer to the history / to the messages list
+		SaveAssistantAnswer(). // add answer to the history / to the messages list
 		User("Who is his best friend?", "question-02").
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)
@@ -123,7 +123,7 @@ func main() {
 		}).Cmd(func(self *squawk.Squawk) {
 			fmt.Println("\n------------------------------------")
 		}).
-		SaveAnswer().
+		SaveAssistantAnswer().
 		User("Who is his worst ennemy?", "question-03").
 		ChatStream(func(answer llm.Answer, self *squawk.Squawk) error {
 			fmt.Print(answer.Message.Content)

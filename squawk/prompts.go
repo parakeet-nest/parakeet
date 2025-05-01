@@ -5,6 +5,9 @@ import (
 	"github.com/parakeet-nest/parakeet/prompt"
 )
 
+// MetaPrompts are a set of functions that modify the input message to the LLM.
+
+
 func (s *Squawk) ForKids(message string, optionalParameters ...string) *Squawk {
 	message = prompt.ForKids(message)
 	if len(optionalParameters) > 0 {
@@ -17,6 +20,7 @@ func (s *Squawk) ForKids(message string, optionalParameters ...string) *Squawk {
 	}
 	return s
 }
+
 
 func (s *Squawk) Brief(message string, optionalParameters ...string) *Squawk {
 	message = prompt.Brief(message)

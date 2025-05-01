@@ -163,6 +163,10 @@ use (
 	// Testing and experiments
 	examples/90-characters
 	examples/91-characters
+
+	examples/92-squawk-tutorial
+
+
 	examples/99-testing
 	
 	//prompting/01-draft

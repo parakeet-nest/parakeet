@@ -74,7 +74,7 @@ func main() {
 			fmt.Print(answer.Message.Content)
 			return nil
 		}).
-		SaveAnswer("a1"). // save the answe to the history / to the messages list
+		SaveAssistantAnswer("a1"). // save the answe to the history / to the messages list
 		Cmd(func(self *squawk.Squawk) {
 			// List of messages
 			fmt.Println("\n====================================")

@@ -36,6 +36,8 @@ nav:
     - 🟪 WASM Plugins: wasm-plugins.md
     - 🔐 Protected endpoint: protected-endpoint.md
 
+    - 🦜 Squawk (Parakeet DSL): squawk.md
+
     - 🧪 Parakeet Examples & Recipes: parakeet-examples.md
 
     - ⚙️ Various helpers:
