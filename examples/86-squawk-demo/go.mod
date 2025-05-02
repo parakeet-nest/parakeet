@@ -2,7 +2,7 @@ module 86-squawk-demo
 
 go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.7
+require github.com/parakeet-nest/parakeet v0.2.8
 
 require (
 	github.com/elastic/elastic-transport-go/v8 v8.6.1 // indirect
