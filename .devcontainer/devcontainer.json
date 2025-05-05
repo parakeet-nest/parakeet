@@ -12,33 +12,16 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-python.python",
 				"vallyscode.crayons",
 				"ms-azuretools.vscode-docker",
 				"golang.go",
-				"pomdtr.excalidraw-editor",
 				"Tobermory.es6-string-html",
 				"tamasfe.even-better-toml",
-				"ms-vscode.cpptools-extension-pack",
-				"vscjava.vscode-java-pack",
 				"hediet.vscode-drawio",
 				"aaron-bond.better-comments",
-				"dooez.alt-catppuccin-vsc",
-				"llacoste2000.unofficial-gitlab-dark-theme",
-				"AlbertoRestifo.gitlab-webide-theme",
-				"gitpod.gitpod-theme",
 				"PKief.material-icon-theme",
 				"PKief.material-product-icons",
-				"Equinusocio.vsc-material-theme",
-				"wayou.vscode-todo-highlight",
-				"redhat.java",
-				"vscjava.vscode-maven",
-				"rust-lang.rust-analyzer",
-				"coyote-studios.vscode-md-preview-plus",
-				"bytecodealliance.wit-idl",
-				"ms-kubernetes-tools.vscode-kubernetes-tools",
-				"AmirHA.better-comments-2",
-				"badeend.vscode-wit"
+				"wayou.vscode-todo-highlight"
 			]
 		}
 	},
@@ -55,6 +38,6 @@
 	"remoteUser": "${localEnv:USER}",
 	// Run commands after the container is created.
 	//"postCreateCommand": "sudo chmod 666 /var/run/docker.sock"
-	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}; sudo chmod 666 /var/run/docker.sock"
 
 }

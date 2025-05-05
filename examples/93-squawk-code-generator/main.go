@@ -10,7 +10,9 @@ import (
 )
 
 func main() {
-	ollamaBaseUrl := "http://localhost:11434"
+	//ollamaBaseUrl := "http://localhost:11434"
+	ollamaBaseUrl := "http://host.docker.internal:11434"
+
 	model := "qwen2.5:1.5b"
 
 	options := llm.SetOptions(map[string]interface{}{

@@ -28,11 +28,7 @@ RUN <<EOF
 apt-get update 
 apt-get install -y curl wget git build-essential xz-utils bat exa software-properties-common sudo sshpass mc
 apt-get install -y clang lldb lld
-apt-get -y install hey
 ln -s /usr/bin/batcat /usr/bin/bat
-
-# swift?
-#apt-get install -y libgcc-9-dev libstdc++-9-dev pkg-config zlib1g-dev
 
 apt-get clean autoclean
 apt-get autoremove --yes
@@ -97,6 +93,27 @@ echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.co
 apt-get update && apt-get install nodejs -y
 EOF
 
+
+# ------------------------------------
+# Install Docker
+# ------------------------------------
+RUN <<EOF
+# Add Docker's official GPG key:
+apt-get update
+apt-get install -y ca-certificates curl gnupg
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+EOF
+
 # ------------------------------------
 # Create a new user
 # ------------------------------------
@@ -113,6 +130,15 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Set the working directory
 WORKDIR /home/${USER_NAME}
+
+#  Add new user `${USER_NAME}` to docker group
+RUN adduser ${USER_NAME} docker
+
+RUN <<EOF
+groupadd docker
+usermod -aG docker ${USER_NAME}
+newgrp docker
+EOF
 
 # Set the user as the owner of the working directory
 RUN chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}
