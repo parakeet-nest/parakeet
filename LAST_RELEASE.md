@@ -2,6 +2,11 @@
 
 ## Release notes
 
+### v0.2.9 🥧 [pie]
+
+Added
+- `squawk.SchemaJSON(schemaJSONString string) *Squawk`
+
 ### v0.2.8 🍩 [doughnut]
 
 Added:

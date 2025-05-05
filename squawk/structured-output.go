@@ -44,7 +44,7 @@ func (s *Squawk) Schema(schema map[string]any) *Squawk {
 	return s
 }
 
-func (s *Squawk) SchemaJSONS(schemaJSONString string) *Squawk {
+func (s *Squawk) SchemaJSON(schemaJSONString string) *Squawk {
 	// transform the JSON string into a map with go methods
 	s.schema = make(map[string]any)
 	err := json.Unmarshal([]byte(schemaJSONString), &s.schema)
