@@ -1,6 +1,8 @@
 package squawk
 
 import (
+	"encoding/json"
+
 	"github.com/parakeet-nest/parakeet/completion"
 	"github.com/parakeet-nest/parakeet/llm"
 )
@@ -39,6 +41,16 @@ import (
 //	  })
 func (s *Squawk) Schema(schema map[string]any) *Squawk {
 	s.schema = schema
+	return s
+}
+
+func (s *Squawk) SchemaJSONS(schemaJSONString string) *Squawk {
+	// transform the JSON string into a map with go methods
+	s.schema = make(map[string]any)
+	err := json.Unmarshal([]byte(schemaJSONString), &s.schema)
+	if err != nil {
+		s.lastError = err
+	}
 	return s
 }
 
