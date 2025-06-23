@@ -38,9 +38,9 @@ func main() {
 
 func curlHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 
-	url, ok := request.Params.Arguments["url"].(string)
-	if !ok {
-		return mcp.NewToolResultError("url must be a string"), nil
+	url, err := request.RequireString("url")
+	if err != nil {
+		return mcp.NewToolResultError(err.Error()), nil
 	}
 	cmd := exec.Command("curl", "-s", url)
 	output, err := cmd.Output()
@@ -51,3 +51,4 @@ func curlHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToo
 
 	return mcp.NewToolResultText(content), nil
 }
+

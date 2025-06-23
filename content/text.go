@@ -11,7 +11,7 @@ import (
 // - ext: The file extension to search for.
 //
 // Returns:
-// - []string: A slice of file paths that match the given extension.
+// - []string: A slice of files contents that match the given extension.
 // - error: An error if the search encounters any issues.
 func GetArrayOfContentFiles(dirPath string, ext string) ([]string, error) {
 	content := []string{}

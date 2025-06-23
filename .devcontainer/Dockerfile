@@ -128,17 +128,17 @@ RUN adduser ${USER_NAME} sudo
 # sudo command by ammending sudoers file
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Set the working directory
-WORKDIR /home/${USER_NAME}
-
-#  Add new user `${USER_NAME}` to docker group
-RUN adduser ${USER_NAME} docker
-
 RUN <<EOF
 groupadd docker
 usermod -aG docker ${USER_NAME}
 newgrp docker
 EOF
+
+#  Add new user `${USER_NAME}` to docker group
+RUN adduser ${USER_NAME} docker
+
+# Set the working directory
+WORKDIR /home/${USER_NAME}
 
 # Set the user as the owner of the working directory
 RUN chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}
