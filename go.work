@@ -77,8 +77,7 @@ use (
 	./examples/42-make-a-slm-smarter/02-rag
 	./examples/42-make-a-slm-smarter/03-rag-list
 
-	./examples/43-function-calling/01-xlam
-	./examples/43-function-calling/02-qwen
+	./examples/43-function-calling
 
 	./examples/44-chat-openai
 	./examples/45-chat-stream-openai
@@ -159,6 +158,8 @@ use (
 	./examples/87-squawk-meta-prompts
 	./examples/88-squawk-embeddings
 	./examples/89-squawk-tools
+
+	./examples/95-mcp-http
 
 	// Testing and experiments
 	examples/90-characters

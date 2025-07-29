@@ -24,8 +24,9 @@ func ollamaChat(url string, query llm.Query) (llm.Answer, error) {
 	// if tool call is not used
 	if query.Tools == nil {
 		query.Tools = []llm.Tool{}
-	}
-	jsonQuery, err := json.Marshal(query)
+	} 
+	//jsonQuery, err := json.Marshal(query)
+	jsonQuery, err := json.MarshalIndent(query, "", "  ")
 	if err != nil {
 		return llm.Answer{}, err
 	}

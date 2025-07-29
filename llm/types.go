@@ -3,7 +3,6 @@ package llm
 import (
 	"encoding/json"
 	"errors"
-
 )
 
 type LLM struct {
@@ -42,14 +41,14 @@ func (ft *FunctionTool) ToJSONString() (string, error) {
 }
 
 type ToolCall struct {
-	Function FunctionTool //`json:"function"`
-	Result   interface{}
+	Function FunctionTool `json:"function"`
+	Result   any
 	Error    error
 }
 
 type ToolCalls []ToolCall
 
-//! if there are several tools with the same name, only the last one is kept
+// ! if there are several tools with the same name, only the last one is kept
 func (tc *ToolCalls) Find(toolName string) (ToolCall, error) {
 	var tool = ToolCall{}
 	for toolCallIdx := range *tc {
@@ -75,7 +74,7 @@ type Message struct {
 	Role      string    `json:"role"`
 	Content   string    `json:"content"`
 	ToolCalls ToolCalls `json:"tool_calls,omitempty"`
-	Label string // used by squawk DSL
+	Label     string    // used by squawk DSL
 }
 
 /*
@@ -168,20 +167,20 @@ type Options struct {
 	MinP float64 `json:"min_p"`
 
 	//Verbose bool
-	Verbose bool `json:"-"` 
+	Verbose bool `json:"-"`
 
 	// *** OpenAI specific fields ***
 	/*
-	LogitBias       map[string]interface{} `json:"logit_bias,omitempty"`      // OpenAI specific
-	Logprobs        bool                   `json:"logprobs,omitempty"`        // OpenAI specific
-	TopLogprobs     int                    `json:"top_logprobs,omitempty"`    // OpenAI specific
-	MaxTokens       int                    `json:"max_tokens,omitempty"`      // OpenAI specific
-	N               int                    `json:"n,omitempty"`               // OpenAI specific
-	Response_format map[string]interface{} `json:"response_format,omitempty"` // OpenAI specific
-	ServiceTier     string                 `json:"service_tier,omitempty"`    // OpenAI specific
+		LogitBias       map[string]interface{} `json:"logit_bias,omitempty"`      // OpenAI specific
+		Logprobs        bool                   `json:"logprobs,omitempty"`        // OpenAI specific
+		TopLogprobs     int                    `json:"top_logprobs,omitempty"`    // OpenAI specific
+		MaxTokens       int                    `json:"max_tokens,omitempty"`      // OpenAI specific
+		N               int                    `json:"n,omitempty"`               // OpenAI specific
+		Response_format map[string]interface{} `json:"response_format,omitempty"` // OpenAI specific
+		ServiceTier     string                 `json:"service_tier,omitempty"`    // OpenAI specific
 
-	StreamOptions map[string]interface{} `json:"stream_options,omitempty"` 	  // OpenAI specific
-	OpenAIAPIKey string `json:"-"`
+		StreamOptions map[string]interface{} `json:"stream_options,omitempty"` 	  // OpenAI specific
+		OpenAIAPIKey string `json:"-"`
 	*/
 	// *** End of OpenAI specific fields ***
 }

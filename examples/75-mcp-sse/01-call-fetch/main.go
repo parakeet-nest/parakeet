@@ -22,7 +22,7 @@ func main() {
 	}
 
 	ollamaUrl := gear.GetEnvString("OLLAMA_HOST", "http://localhost:11434")
-	modelWithToolsSupport := gear.GetEnvString("LLM_WITH_TOOLS_SUPPORT", "qwen2.5:0.5b")
+	modelWithToolsSupport := gear.GetEnvString("LLM_WITH_TOOLS_SUPPORT", "qwen2.5:latest")
 	//chatModel := gear.GetEnvString("LLM_CHAT", "qwen2.5:0.5b")
 	mcpSSEServerUrl := gear.GetEnvString("MCP_HOST", "http://0.0.0.0:5001")
 
@@ -63,7 +63,7 @@ func main() {
 		{Role: "user", Content: toolPrompt},
 	}
 
-	options := llm.SetOptions(map[string]interface{}{
+	options := llm.SetOptions(map[string]any{
 		option.Temperature:   0.0,
 		option.RepeatLastN:   2,
 		option.RepeatPenalty: 2.0,
@@ -74,13 +74,18 @@ func main() {
 		Messages: messages,
 		Tools:    ollamaTools,
 		Options:  options,
-		Format:   "json",
+		//Format:   "json",
 	}
 
 	answer, err := completion.Chat(ollamaUrl, toolsQuery)
 	if err != nil {
 		log.Fatalln("😡", err)
 	}
+	fmt.Println("=============================================")
+	fmt.Println("🟢 🦙 Answer:", answer.Message.Content)
+	fmt.Println("🟢 🦙 Tool Calls:", answer.Message.ToolCalls)
+	fmt.Println("=============================================")
+
 
 	// Search tool to call in the answer
 	tool, err := answer.Message.ToolCalls.Find("fetch")

@@ -40,7 +40,8 @@ func main() {
 	ollamaUrl := "http://localhost:11434"
 	// if working from a container
 	//ollamaUrl := "http://host.docker.internal:11434"
-	model := "mistral:latest"
+	//model := "mistral:latest"
+	model := "qwen2.5:latest"
 
 	toolsList := []llm.Tool{
 		{
@@ -87,7 +88,7 @@ func main() {
 		{Role: "user", Content: `say "hello" to Bob`},
 	}
 
-	options := llm.SetOptions(map[string]interface{}{
+	options := llm.SetOptions(map[string]any{
 		option.Temperature: 0.0,
 		option.RepeatLastN: 2,
 		option.RepeatPenalty: 2.0,
@@ -98,13 +99,18 @@ func main() {
 		Messages: messages,
 		Tools:    toolsList,
 		Options:  options,
-		Format:   "json",
+		//Format:   "json",
 	}
 
 	answer, err := completion.Chat(ollamaUrl, query)
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
+	fmt.Println("=============================================")
+	fmt.Println("🟢 🦙 Answer:", answer.Message.Content)
+	fmt.Println("🟢 🦙 Message:", answer.Message)
+	fmt.Println("🟢 🦙 Tool Calls:", answer.Message.ToolCalls)
+	fmt.Println("=============================================")
 
 	result, err := answer.Message.ToolCalls[0].Function.ToJSONString()
 	if err != nil {
@@ -122,7 +128,7 @@ func main() {
 		Messages: messages,
 		Tools:    toolsList,
 		Options:  options,
-		Format:   "json",
+		//Format:   "json",
 	}
 
 	answer, err = completion.Chat(ollamaUrl, query)

@@ -43,7 +43,7 @@ func (a *Agent) SetInstructions(instructions interface{}) error {
 }
 
 // GetInstructions returns the current instructions as a string, using the provided context variables
-func (a *Agent) GetInstructions(contextVars map[string]interface{}) string {
+func (a *Agent) GetInstructions(contextVars map[string]any) string {
 	switch v := a.Instructions.(type) {
 	case string:
 		return v
@@ -190,28 +190,25 @@ func (c *Orchestrator) RunWithTools(agent Agent, messages []llm.Message, context
 	}
 
 	// Execute the tool calls
-	var toolsCalls = []struct{Function llm.FunctionTool; Result interface{}; Error error}{}
+	var toolCalls []llm.ToolCall
 
 	for _, toolCall := range answer.Message.ToolCalls {
-		newToolCall := struct{Function llm.FunctionTool; Result interface{}; Error error}{}
-		newToolCall.Function = toolCall.Function
-		
-		
-		if execute  {
+		newToolCall := toolCall // copy the original ToolCall
+
+		if execute {
 			result, err := agent.Functions[toolCall.Function.Name](toolCall.Function.Arguments)
 			newToolCall.Result = result
 			newToolCall.Error = err
 		}
 
-		
-		toolsCalls = append(toolsCalls, newToolCall)
+		toolCalls = append(toolCalls, newToolCall)
 	}
 	// Add a simple response message (for demonstration)
 	response.Messages = append(response.Messages, llm.Message{
 		//Role:    "assistant",
 		Role:    answer.Message.Role,
 		Content: answer.Message.Content,
-		ToolCalls: toolsCalls,
+		ToolCalls: toolCalls,
 	})
 
 

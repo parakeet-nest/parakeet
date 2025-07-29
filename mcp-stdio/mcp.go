@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	mcpClient *client.StdioMCPClient
+	mcpClient *client.Client
 	BaseURL   string
 	ctx       context.Context
 }
@@ -29,7 +29,6 @@ func NewClient(ctx context.Context, command string, env []string, args ...string
 		ctx:       ctx,
 	}, nil
 }
-
 
 func (c *Client) Initialize() (*mcp.InitializeResult, error) {
 	initRequest := mcp.InitializeRequest{}
@@ -97,18 +96,17 @@ func (c *Client) Close() error {
 func getTextFromResult(mcpResult *mcp.CallToolResult) (string, error) {
 	//fmt.Println("📣 Result:", mcpResult.Result)
 	//return mcpResult.Content[0].(map[string]interface{})["text"].(string)
-	
+
 	if len(mcpResult.Content) == 0 {
 		return "", &STDIOResultExtractionError{Message: "content is empty"}
 	}
 
-    content, ok := mcpResult.Content[0].(mcp.TextContent)
+	content, ok := mcpResult.Content[0].(mcp.TextContent)
 	if !ok {
 		return "", &STDIOResultExtractionError{Message: "content[0] is not TextContent"}
 	}
 
-    return content.Text, nil
-
+	return content.Text, nil
 
 }
 
@@ -173,12 +171,12 @@ func (c *Client) ListPrompts() (llm.Prompts, error) {
 		prompt := llm.Prompt{}
 		prompt.Name = mcpPrompt.Name
 		prompt.Description = mcpPrompt.Description // not used
-		
+
 		for _, argument := range mcpPrompt.Arguments {
 			prompt.Arguments = append(prompt.Arguments, llm.Argument{
-				Name: argument.Name,
+				Name:        argument.Name,
 				Description: argument.Description,
-				Required: argument.Required,
+				Required:    argument.Required,
 			})
 		}
 		prompts = append(prompts, prompt)
@@ -187,8 +185,7 @@ func (c *Client) ListPrompts() (llm.Prompts, error) {
 	return prompts, nil
 }
 
-
-func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string)  (llm.Prompt, error) {
+func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string) (llm.Prompt, error) {
 	// Create a request to read the resource
 	promptRequest := mcp.GetPromptRequest{}
 	promptRequest.Params.Name = promptName
@@ -196,17 +193,17 @@ func (c *Client) GetAndFillPrompt(promptName string, arguments map[string]string
 
 	promptResult, err := c.mcpClient.GetPrompt(c.ctx, promptRequest)
 	if err != nil {
-		return llm.Prompt{} , &STDIOGetPromptError{Message: fmt.Sprintf("Failed to get prompt: %v", err)}
+		return llm.Prompt{}, &STDIOGetPromptError{Message: fmt.Sprintf("Failed to get prompt: %v", err)}
 	}
 
 	prompt := llm.Prompt{}
 	prompt.Name = promptName
 	prompt.Description = promptResult.Description
-	
+
 	for _, message := range promptResult.Messages {
-		
+
 		prompt.Messages = append(prompt.Messages, llm.Message{
-			Role: string(message.Role),
+			Role:    string(message.Role),
 			Content: message.Content.(mcp.TextContent).Text,
 		})
 	}

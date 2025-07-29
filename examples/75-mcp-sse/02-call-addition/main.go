@@ -71,7 +71,7 @@ func main() {
 		Messages: messages,
 		Tools:    ollamaTools,
 		Options:  options,
-		Format:   "json",
+		//Format:   "json",
 	}
 
 	answer, err := completion.Chat(ollamaUrl, toolsQuery)

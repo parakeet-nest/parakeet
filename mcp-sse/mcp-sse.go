@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	mcpClient *client.SSEMCPClient
+	mcpClient *client.Client
 	BaseURL   string
 	ctx       context.Context
 }
@@ -24,7 +24,7 @@ func NewClient(ctx context.Context, baseURL string, options ...string) (Client, 
 	} else {
 		bearerToken = ""
 	}
-	var mcpClient *client.SSEMCPClient
+	var mcpClient *client.Client
 	var err error
 	if bearerToken == "" {
 		mcpClient, err = client.NewSSEMCPClient(baseURL + "/sse")
@@ -41,7 +41,6 @@ func NewClient(ctx context.Context, baseURL string, options ...string) (Client, 
 	if err != nil {
 		return Client{}, &SSEClientCreationError{Message: fmt.Sprintf("Failed to create client: %v", err)}
 	}
-	defer mcpClient.Close()
 
 	return Client{
 		mcpClient: mcpClient,
@@ -81,7 +80,7 @@ func (c *Client) ListTools() ([]llm.Tool, error) {
 	if err != nil {
 		return nil, &SSEGetToolsError{Message: fmt.Sprintf("Failed to list tools: %v", err)}
 	}
-
+	//fmt.Println("🛠️ Tools found:", len(mcpTools.Tools))
 	// Convert mcp.Tools to llm.Tools
 	// TODO: Handle errors during conversion
 	ollamaTools := tools.ConvertMCPTools(mcpTools.Tools)

@@ -110,7 +110,7 @@ func main() {
 		Messages: messagesForToolsLLM,
 		Tools:    ollamaTools,
 		Options:  options,
-		Format:   "json",
+		//Format:   "json",
 	}
 
 	fmt.Println("6. 📣 Send tools request to the LLM...")

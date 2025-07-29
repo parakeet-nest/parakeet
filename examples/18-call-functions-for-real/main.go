@@ -81,7 +81,7 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	options := llm.SetOptions(map[string]interface{}{
+	options := llm.SetOptions(map[string]any{
 		option.Temperature: 0.0,
 		option.RepeatLastN: 2,
 		option.RepeatPenalty: 2.0,

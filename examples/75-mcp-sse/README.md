@@ -10,4 +10,4 @@ docker compose up
 # the plugins are already built
 ```
 
-Then, you can run every sqmples of the current directory
+Then, you can run every samples of the current directory

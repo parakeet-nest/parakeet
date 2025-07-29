@@ -100,7 +100,7 @@ func main() {
 		{Role: "user", Content: userContent},
 	}
 
-	options := llm.SetOptions(map[string]interface{}{
+	options := llm.SetOptions(map[string]any{
 		option.Temperature: 0.0,
 		option.RepeatLastN: 2,
 		option.RepeatPenalty: 2.0,
@@ -110,8 +110,8 @@ func main() {
 		Model:    model,
 		Messages: messages,
 		Options:  options,
-		Format:   "json",
-		Raw:      true,
+		//Format:   "json",
+		//Raw:      true,
 	}
 
 	answer, err := completion.Chat(ollamaUrl, query)
@@ -134,8 +134,8 @@ func main() {
 		Model:    model,
 		Messages: messages,
 		Options:  options,
-		Format:   "json",
-		Raw:      true,
+		//Format:   "json",
+		//Raw:      true,
 	}
 
 	answer, err = completion.Chat(ollamaUrl, query)

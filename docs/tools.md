@@ -75,7 +75,6 @@ query := llm.Query{
     Messages: messages,
     Tools:    toolsList,
     Options:  options,
-    Format:   "json",
 }
 ```
 
