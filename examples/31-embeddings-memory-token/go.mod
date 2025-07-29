@@ -2,7 +2,7 @@ module 31-embeddings-memory-token
 
 go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.8
+require github.com/parakeet-nest/parakeet v0.2.9
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect

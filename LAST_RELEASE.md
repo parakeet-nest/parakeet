@@ -4,8 +4,10 @@
 
 ### v0.2.9 🥧 [pie]
 
-Added
-- `squawk.SchemaJSON(schemaJSONString string) *Squawk`
+- Fixed: function calling: no need to use the JSON format with the query options
+- Added: 
+  - MCP Streamable HTTP Transport support. MCP HTTP client example: `95-mcp-http`
+  - `squawk.SchemaJSON(schemaJSONString string) *Squawk`
 
 ### v0.2.8 🍩 [doughnut]
 

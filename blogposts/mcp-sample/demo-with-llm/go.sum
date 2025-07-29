@@ -2,5 +2,5 @@ github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/mark3labs/mcp-go v0.8.3 h1:IzlyN8BaP4YwUMUDqxOGJhGdZXEDQiAPX43dNPgnzrg=
 github.com/mark3labs/mcp-go v0.8.3/go.mod h1:cjMlBU0cv/cj9kjlgmRhoJ5JREdS7YX83xeIG9Ko/jE=
-github.com/parakeet-nest/parakeet v0.2.8 h1:L/WjuGVQd6HFmZldNMj7V4JW/L1DRuDq2rFQbLUbTW0=
-github.com/parakeet-nest/parakeet v0.2.8/go.mod h1:MRoEt8rSzQNWhBbhOFhZSi7URADHas2pvtKWd5izd34=
+github.com/parakeet-nest/parakeet v0.2.9 h1:L/WjuGVQd6HFmZldNMj7V4JW/L1DRuDq2rFQbLUbTW0=
+github.com/parakeet-nest/parakeet v0.2.9/go.mod h1:MRoEt8rSzQNWhBbhOFhZSi7URADHas2pvtKWd5izd34=

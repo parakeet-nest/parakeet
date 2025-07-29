@@ -2,7 +2,7 @@ module 52-constraints
 
 go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.8
+require github.com/parakeet-nest/parakeet v0.2.9
 
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect

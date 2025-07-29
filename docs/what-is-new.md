@@ -1,5 +1,12 @@
 # What's new with Parakeet 
 
+## 🦜 Parakeet `v0.2.9` 🥧 [pie]
+
+- Fixed: function calling: no need to use the JSON format with the query options
+- Added: 
+  - MCP Streamable HTTP Transport support. MCP HTTP client example: `95-mcp-http`
+  - `squawk.SchemaJSON(schemaJSONString string) *Squawk`
+
 ## 🦜 Parakeet `v0.2.8` 🍩 [doughnut]
 
 - Landing of **[Squawk](squawk-getting-started.md)**: a Parakeet DSL

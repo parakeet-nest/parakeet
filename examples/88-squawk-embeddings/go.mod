@@ -2,7 +2,7 @@ module 88-squawk-embeddings
 
 go 1.24.0
 
-require github.com/parakeet-nest/parakeet v0.2.8
+require github.com/parakeet-nest/parakeet v0.2.9
 
 require (
 	github.com/elastic/elastic-transport-go/v8 v8.6.1 // indirect

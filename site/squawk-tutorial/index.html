@@ -1,0 +1,2813 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="🦜🪺 Parakeet is a GoLang library, made to simplify the development of small generative AI applications with Ollama 🦙.">
+      
+      
+        <meta name="author" content="Philippe Charrière (@k33g)">
+      
+      
+        <link rel="canonical" href="https://parakeet-nest.github.io/parakeet/squawk-tutorial/">
+      
+      
+        <link rel="prev" href="../squawk-getting-started/">
+      
+      
+        <link rel="next" href="../squawk-doc/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>🎉 Tutorial - Parakeet</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#squawk-tutorial" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Parakeet" class="md-header__button md-logo" aria-label="Parakeet" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Parakeet
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🎉 Tutorial
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/parakeet-nest/parakeet" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    parakeet-nest/parakeet
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Parakeet" class="md-nav__button md-logo" aria-label="Parakeet" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Parakeet
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/parakeet-nest/parakeet" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    parakeet-nest/parakeet
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🏠 Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../what-is-new/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📝 What's new
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generate-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🤖 Generate completion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chat-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    💬 Chat completion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../set-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧾 How to set the Options
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../embeddings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔖 Embeddings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ✂ Chunking
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            ✂ Chunking
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chunkers-and-splitters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Chunkers & Splitters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contextual-retrieval/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📝🔎 Contextual Retrieval
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Parsing Markdown
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-source-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Parsing Source Code
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../content-helpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Content Helpers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ⚒️ Function Calling with Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structured-outputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧾 Structured outputs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧭 MCP Client
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-model-runner-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🐳 Docker Model Runner support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openaiapi-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🌀 OpenAI API support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wasm-plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🟪 WASM Plugins
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../protected-endpoint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔐 Protected endpoint
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🦜 Squawk (Parakeet DSL)
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            🦜 Squawk (Parakeet DSL)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../squawk-getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🚀 Getting started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    🎉 Tutorial
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    🎉 Tutorial
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-chat-completions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Chat Completions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Chat Completions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-chat-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Chat Completion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streaming-chat-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming Chat Completion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conversation-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conversation Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-labeling-and-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Labeling and Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieval-augmented-generation-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieval-Augmented Generation (RAG)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieval-Augmented Generation (RAG)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-vector-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up a Vector Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating Embeddings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Similarity Search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-from-user-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search from User Message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-context-to-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Context to Conversation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-rag-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete RAG Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structured Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structured Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-structured-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Structured Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-schema-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Schema Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling-with-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Calling with Tools
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Function Calling with Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining Tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-function-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Function Calling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-function-calling-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Function Calling Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provider-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provider Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompting-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompting Templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../squawk-doc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📝 Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parakeet-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧪 Parakeet Examples & Recipes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ⚙️ Various helpers
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            ⚙️ Various helpers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧰 Tools box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../llms-helpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🛠️ LLMs & Parakeet Helpers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-helpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔨 Prompt Helpers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../verbose-mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🗣️ Verbose mode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-helpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📺 UI (Input/Print) Helpers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-helpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📺 CLI Helpers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🔬 Experimental
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            🔬 Experimental
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flock-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    👮‍♂️ Flock agents
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    😡 Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    📰 Various contents
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            📰 Various contents
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parakeet-blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    📝 Parakeet Blog Posts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    📚 Old content
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            📚 Old content
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../function-calling-before-tools-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Function Calling (before tools support)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../function-calling-without-tools-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Function Calling (without tools support)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parakeet-demos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🚀 Parakeet Demos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-chat-completions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Chat Completions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Chat Completions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-chat-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Chat Completion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streaming-chat-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming Chat Completion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conversation-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conversation Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-labeling-and-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Labeling and Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieval-augmented-generation-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieval-Augmented Generation (RAG)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieval-Augmented Generation (RAG)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-vector-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up a Vector Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating Embeddings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Similarity Search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-from-user-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search from User Message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-context-to-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Context to Conversation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-rag-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete RAG Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structured Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structured Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-structured-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Structured Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-schema-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Schema Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling-with-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Calling with Tools
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Function Calling with Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining Tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-function-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Function Calling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-function-calling-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Function Calling Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provider-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provider Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompting-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompting Templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="squawk-tutorial">Squawk Tutorial:</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial covers the core functionality of Squawk. For more advanced use cases and detailed API documentation, refer to the official Squawk documentation and source code.</p>
+</div>
+<p>This tutorial covers how to use Squawk for chat completions, retrieval-augmented generation (RAG), structured outputs, and function calling.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#basic-chat-completions">Basic Chat Completions</a></li>
+<li><a href="#retrieval-augmented-generation-rag">Retrieval-Augmented Generation (RAG)</a></li>
+<li><a href="#structured-output">Structured Output</a></li>
+<li><a href="#function-calling-with-tools">Function Calling with Tools</a></li>
+<li><a href="#additional-features">Additional Features</a></li>
+</ul>
+<h2 id="basic-chat-completions">Basic Chat Completions</h2>
+<h3 id="simple-chat-completion">Simple Chat Completion</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span><span class="w">                    </span><span class="c1">// Set the model</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span><span class="w">              </span><span class="c1">// Set the provider</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nx">BaseURL</span><span class="p">(</span><span class="s">&quot;http://localhost:11434&quot;</span><span class="p">).</span><span class="w">      </span><span class="c1">// Set the API URL</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;You are a Go expert&quot;</span><span class="p">).</span><span class="w">          </span><span class="c1">// Add a system message</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Explain concurrency in Go&quot;</span><span class="p">).</span><span class="w">      </span><span class="c1">// Add a user message</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">      </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Error:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">      </span><span class="k">return</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span><span class="w">   </span><span class="c1">// Print response</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">  </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="streaming-chat-completion">Streaming Chat Completion</h3>
+<p>For real-time responses as they are generated:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;You are a Go expert&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Explain channels in Go&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nx">ChatStream</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span><span class="w">     </span><span class="c1">// Print each chunk</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="conversation-management">Conversation Management</h3>
+<p>You can maintain a conversation by saving the assistant's responses:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nx">sq</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;mistral:latest&quot;</span><span class="p">).</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;You are a Go expert&quot;</span><span class="p">).</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;What is a goroutine?&quot;</span><span class="p">).</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">      </span><span class="k">return</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="p">}).</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">  </span><span class="nx">SaveAssistantAnswer</span><span class="p">()</span><span class="w">                   </span><span class="c1">// Save response to conversation history</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="c1">// Continue the conversation</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="nx">sq</span><span class="p">.</span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;How do they differ from threads?&quot;</span><span class="p">).</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">  </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">      </span><span class="k">return</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">  </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="message-labeling-and-management">Message Labeling and Management</h3>
+<p>Squawk allows labeling messages and selectively removing them:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;You are a Go expert&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;role&quot;</span><span class="p">).</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;What is a channel?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;question-1&quot;</span><span class="p">).</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="c1">// Handle response</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">  </span><span class="p">}).</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="nx">SaveAssistantAnswer</span><span class="p">(</span><span class="s">&quot;answer-1&quot;</span><span class="p">).</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">  </span><span class="nx">RemoveMessageByLabel</span><span class="p">(</span><span class="s">&quot;question-1&quot;</span><span class="p">).</span><span class="w">     </span><span class="c1">// Remove specific message</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;How do goroutines work?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;question-2&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="retrieval-augmented-generation-rag">Retrieval-Augmented Generation (RAG)</h2>
+<p>RAG enhances responses by retrieving relevant information from a knowledge base.</p>
+<h3 id="setting-up-a-vector-store">Setting Up a Vector Store</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1">// Initialize a memory vector store</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nx">store</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">embeddings</span><span class="p">.</span><span class="nx">MemoryVectorStore</span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="nx">Records</span><span class="p">:</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">VectorRecord</span><span class="p">),</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="generating-embeddings">Generating Embeddings</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1">// Sample documents</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nx">docs</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span><span class="s">&quot;Go is a statically typed language&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span><span class="s">&quot;Go supports concurrent programming&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="p">}</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="nx">sq</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">  </span><span class="nx">EmbeddingsModel</span><span class="p">(</span><span class="s">&quot;mxbai-embed-large:latest&quot;</span><span class="p">).</span><span class="w">     </span><span class="c1">// Set embeddings model</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">  </span><span class="nx">BaseURL</span><span class="p">(</span><span class="s">&quot;http://localhost:11434&quot;</span><span class="p">).</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">  </span><span class="nx">Store</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">store</span><span class="p">).</span><span class="w">                            </span><span class="c1">// Set the vector store</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">  </span><span class="nx">GenerateEmbeddings</span><span class="p">(</span><span class="nx">docs</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w">           </span><span class="c1">// Generate embeddings with logging</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="similarity-search">Similarity Search</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1">// Search by content</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nx">sq</span><span class="p">.</span><span class="nx">SimilaritySearch</span><span class="p">(</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="s">&quot;concurrent programming&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Query text</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="mf">0.7</span><span class="p">,</span><span class="w">                      </span><span class="c1">// Similarity threshold (0-1)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="mi">2</span><span class="p">,</span><span class="w">                        </span><span class="c1">// Max results</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="p">)</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="c1">// Get similarities</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="nx">similarities</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sq</span><span class="p">.</span><span class="nx">Similarities</span><span class="p">()</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">sim</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">similarities</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Similar Content: &quot;</span><span class="p">,</span><span class="nx">sim</span><span class="p">.</span><span class="nx">Prompt</span><span class="p">)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="search-from-user-message">Search from User Message</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nx">sq</span><span class="p">.</span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Tell me about Go concurrency&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;question-1&quot;</span><span class="p">).</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="nx">SimilaritySearchFromUserMessage</span><span class="p">(</span><span class="s">&quot;question-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="adding-context-to-conversation">Adding Context to Conversation</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nx">sq</span><span class="p">.</span><span class="nx">SimilaritySearch</span><span class="p">(</span><span class="s">&quot;concurrent Go features&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">).</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span><span class="nx">AddSimilaritiesToMessages</span><span class="p">().</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Explain these concepts&quot;</span><span class="p">).</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">  </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">  </span><span class="p">})</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="c1">// With custom prefix</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="nx">sq</span><span class="p">.</span><span class="nx">SimilaritySearch</span><span class="p">(</span><span class="s">&quot;concurrent Go features&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">).</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="nx">AddSimilaritiesToMessagesWithPrefix</span><span class="p">(</span><span class="s">&quot;Use this documentation as context: \n\n&quot;</span><span class="p">).</span><span class="w">    </span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Explain these concepts&quot;</span><span class="p">).</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="complete-rag-example">Complete RAG Example</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1">// Initialize a memory vector store</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nx">store</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">embeddings</span><span class="p">.</span><span class="nx">MemoryVectorStore</span><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">    </span><span class="nx">Records</span><span class="p">:</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">VectorRecord</span><span class="p">),</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="p">}</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="c1">// Star Wars characters example</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="nx">starWarsChars</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">  </span><span class="s">`Luke Skywalker is the main protagonist of the original Star Wars trilogy...`</span><span class="p">,</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">  </span><span class="s">`Princess Leia Organa is a leader of the Rebel Alliance...`</span><span class="p">,</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="p">}</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">    </span><span class="nx">EmbeddingsModel</span><span class="p">(</span><span class="s">&quot;mxbai-embed-large:latest&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="w">    </span><span class="nx">Store</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">store</span><span class="p">).</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="w">    </span><span class="nx">GenerateEmbeddings</span><span class="p">(</span><span class="nx">starWarsChars</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">).</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="w">    </span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;You are a Star Wars expert&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Who is Luke Skywalker?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;q1&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">    </span><span class="nx">SimilaritySearchFromUserMessage</span><span class="p">(</span><span class="s">&quot;q1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="w">    </span><span class="nx">AddSimilaritiesToMessages</span><span class="p">(</span><span class="s">&quot;sim1&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="w">    </span><span class="nx">ChatStream</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="w">    </span><span class="p">}).</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="w">    </span><span class="nx">SaveAssistantAnswer</span><span class="p">(</span><span class="s">&quot;a1&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="w">    </span><span class="nx">RemoveMessageByLabel</span><span class="p">(</span><span class="s">&quot;q1&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="w">    </span><span class="nx">RemoveMessageByLabel</span><span class="p">(</span><span class="s">&quot;sim1&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Who is Leia?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;q2&quot;</span><span class="p">).</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a><span class="w">    </span><span class="nx">SimilaritySearchFromUserMessage</span><span class="p">(</span><span class="s">&quot;q2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a><span class="w">    </span><span class="nx">AddSimilaritiesToMessages</span><span class="p">().</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a><span class="w">    </span><span class="nx">ChatStream</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a><span class="w">    </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="structured-output">Structured Output</h2>
+<p>Structured output allows you to get responses in a specific JSON format.</p>
+<h3 id="basic-structured-output">Basic Structured Output</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">    </span><span class="nx">Schema</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">        </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">        </span><span class="s">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">            </span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">                </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">                </span><span class="s">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;The name of the person&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">            </span><span class="s">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">                </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;integer&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">                </span><span class="s">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;The age of the person&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="w">        </span><span class="s">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;age&quot;</span><span class="p">},</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="w">    </span><span class="p">}).</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Extract name and age from: John is 25 years old&quot;</span><span class="p">).</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">    </span><span class="nx">StructuredOutput</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Error:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">            </span><span class="k">return</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="w">    </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="complex-schema-example">Complex Schema Example</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span>
+<span class="normal"><a href="#__codelineno-11-25">25</a></span>
+<span class="normal"><a href="#__codelineno-11-26">26</a></span>
+<span class="normal"><a href="#__codelineno-11-27">27</a></span>
+<span class="normal"><a href="#__codelineno-11-28">28</a></span>
+<span class="normal"><a href="#__codelineno-11-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">    </span><span class="nx">Schema</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">        </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">        </span><span class="s">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">            </span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">                </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">            </span><span class="s">&quot;capital&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">                </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">            </span><span class="s">&quot;languages&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">                </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;array&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">                </span><span class="s">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">                    </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">        </span><span class="s">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;capital&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;languages&quot;</span><span class="p">},</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="w">    </span><span class="p">}).</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Tell me about Canada&quot;</span><span class="p">).</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a><span class="w">    </span><span class="nx">StructuredOutput</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Error:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="w">            </span><span class="k">return</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Structured Output:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29"></a><span class="w">    </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="function-calling-with-tools">Function Calling with Tools</h2>
+<p>Function calling allows the model to call predefined functions or tools.</p>
+<h3 id="defining-tools">Defining Tools</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span>
+<span class="normal"><a href="#__codelineno-12-16">16</a></span>
+<span class="normal"><a href="#__codelineno-12-17">17</a></span>
+<span class="normal"><a href="#__codelineno-12-18">18</a></span>
+<span class="normal"><a href="#__codelineno-12-19">19</a></span>
+<span class="normal"><a href="#__codelineno-12-20">20</a></span>
+<span class="normal"><a href="#__codelineno-12-21">21</a></span>
+<span class="normal"><a href="#__codelineno-12-22">22</a></span>
+<span class="normal"><a href="#__codelineno-12-23">23</a></span>
+<span class="normal"><a href="#__codelineno-12-24">24</a></span>
+<span class="normal"><a href="#__codelineno-12-25">25</a></span>
+<span class="normal"><a href="#__codelineno-12-26">26</a></span>
+<span class="normal"><a href="#__codelineno-12-27">27</a></span>
+<span class="normal"><a href="#__codelineno-12-28">28</a></span>
+<span class="normal"><a href="#__codelineno-12-29">29</a></span>
+<span class="normal"><a href="#__codelineno-12-30">30</a></span>
+<span class="normal"><a href="#__codelineno-12-31">31</a></span>
+<span class="normal"><a href="#__codelineno-12-32">32</a></span>
+<span class="normal"><a href="#__codelineno-12-33">33</a></span>
+<span class="normal"><a href="#__codelineno-12-34">34</a></span>
+<span class="normal"><a href="#__codelineno-12-35">35</a></span>
+<span class="normal"><a href="#__codelineno-12-36">36</a></span>
+<span class="normal"><a href="#__codelineno-12-37">37</a></span>
+<span class="normal"><a href="#__codelineno-12-38">38</a></span>
+<span class="normal"><a href="#__codelineno-12-39">39</a></span>
+<span class="normal"><a href="#__codelineno-12-40">40</a></span>
+<span class="normal"><a href="#__codelineno-12-41">41</a></span>
+<span class="normal"><a href="#__codelineno-12-42">42</a></span>
+<span class="normal"><a href="#__codelineno-12-43">43</a></span>
+<span class="normal"><a href="#__codelineno-12-44">44</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nx">toolsList</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Tool</span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">    </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;function&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">    </span><span class="nx">Function</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Function</span><span class="p">{</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">      </span><span class="nx">Name</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;get_weather&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="w">      </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Get current weather for a location&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="w">      </span><span class="nx">Parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Parameters</span><span class="p">{</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="w">        </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="w">        </span><span class="nx">Properties</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Property</span><span class="p">{</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="w">          </span><span class="s">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="w">            </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a><span class="w">            </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;City name&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a><span class="w">          </span><span class="p">},</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a><span class="w">        </span><span class="nx">Required</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;location&quot;</span><span class="p">},</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20"></a><span class="w">    </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;function&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21"></a><span class="w">    </span><span class="nx">Function</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Function</span><span class="p">{</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22"></a><span class="w">      </span><span class="nx">Name</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;calculate&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23"></a><span class="w">      </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Perform a calculation&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24"></a><span class="w">      </span><span class="nx">Parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Parameters</span><span class="p">{</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25"></a><span class="w">        </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26"></a><span class="w">        </span><span class="nx">Properties</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Property</span><span class="p">{</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27"></a><span class="w">          </span><span class="s">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-28" name="__codelineno-12-28"></a><span class="w">            </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-29" name="__codelineno-12-29"></a><span class="w">            </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Math operation&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-30" name="__codelineno-12-30"></a><span class="w">          </span><span class="p">},</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31"></a><span class="w">          </span><span class="s">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-32" name="__codelineno-12-32"></a><span class="w">            </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;number&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33"></a><span class="w">            </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;First number&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34"></a><span class="w">          </span><span class="p">},</span>
+<a id="__codelineno-12-35" name="__codelineno-12-35"></a><span class="w">          </span><span class="s">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36"></a><span class="w">            </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;number&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-37" name="__codelineno-12-37"></a><span class="w">            </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Second number&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-38" name="__codelineno-12-38"></a><span class="w">          </span><span class="p">},</span>
+<a id="__codelineno-12-39" name="__codelineno-12-39"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-12-40" name="__codelineno-12-40"></a><span class="w">        </span><span class="nx">Required</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;operation&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">},</span>
+<a id="__codelineno-12-41" name="__codelineno-12-41"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-12-42" name="__codelineno-12-42"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-12-43" name="__codelineno-12-43"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-44" name="__codelineno-12-44"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="using-function-calling">Using Function Calling</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-13-10">10</a></span>
+<span class="normal"><a href="#__codelineno-13-11">11</a></span>
+<span class="normal"><a href="#__codelineno-13-12">12</a></span>
+<span class="normal"><a href="#__codelineno-13-13">13</a></span>
+<span class="normal"><a href="#__codelineno-13-14">14</a></span>
+<span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span>
+<span class="normal"><a href="#__codelineno-13-18">18</a></span>
+<span class="normal"><a href="#__codelineno-13-19">19</a></span>
+<span class="normal"><a href="#__codelineno-13-20">20</a></span>
+<span class="normal"><a href="#__codelineno-13-21">21</a></span>
+<span class="normal"><a href="#__codelineno-13-22">22</a></span>
+<span class="normal"><a href="#__codelineno-13-23">23</a></span>
+<span class="normal"><a href="#__codelineno-13-24">24</a></span>
+<span class="normal"><a href="#__codelineno-13-25">25</a></span>
+<span class="normal"><a href="#__codelineno-13-26">26</a></span>
+<span class="normal"><a href="#__codelineno-13-27">27</a></span>
+<span class="normal"><a href="#__codelineno-13-28">28</a></span>
+<span class="normal"><a href="#__codelineno-13-29">29</a></span>
+<span class="normal"><a href="#__codelineno-13-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="w">    </span><span class="nx">Tools</span><span class="p">(</span><span class="nx">toolsList</span><span class="p">).</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;What&#39;s the weather in Paris and calculate 2 + 2&quot;</span><span class="p">).</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="w">    </span><span class="nx">FunctionCalling</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Error:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="w">            </span><span class="k">return</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11"></a>
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">toolCall</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">ToolCalls</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Tool: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Arguments: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">)</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15"></a>
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a><span class="w">            </span><span class="c1">// Implement function logic</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17"></a><span class="w">            </span><span class="k">switch</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Name</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18"></a><span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;get_weather&quot;</span><span class="p">:</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19"></a><span class="w">                </span><span class="nx">location</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;location&quot;</span><span class="p">]</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20"></a><span class="w">                </span><span class="c1">// Call weather API</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21"></a><span class="w">                </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Getting weather for %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">location</span><span class="p">)</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22"></a><span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;calculate&quot;</span><span class="p">:</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23"></a><span class="w">                </span><span class="nx">a</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">].(</span><span class="kt">float64</span><span class="p">)</span>
+<a id="__codelineno-13-24" name="__codelineno-13-24"></a><span class="w">                </span><span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">].(</span><span class="kt">float64</span><span class="p">)</span>
+<a id="__codelineno-13-25" name="__codelineno-13-25"></a><span class="w">                </span><span class="nx">op</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;operation&quot;</span><span class="p">].(</span><span class="kt">string</span><span class="p">)</span>
+<a id="__codelineno-13-26" name="__codelineno-13-26"></a><span class="w">                </span><span class="c1">// Perform calculation</span>
+<a id="__codelineno-13-27" name="__codelineno-13-27"></a><span class="w">                </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Calculating %v %s %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">op</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span>
+<a id="__codelineno-13-28" name="__codelineno-13-28"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-13-29" name="__codelineno-13-29"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-13-30" name="__codelineno-13-30"></a><span class="w">    </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="complete-function-calling-example">Complete Function Calling Example</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span>
+<span class="normal"><a href="#__codelineno-14-17">17</a></span>
+<span class="normal"><a href="#__codelineno-14-18">18</a></span>
+<span class="normal"><a href="#__codelineno-14-19">19</a></span>
+<span class="normal"><a href="#__codelineno-14-20">20</a></span>
+<span class="normal"><a href="#__codelineno-14-21">21</a></span>
+<span class="normal"><a href="#__codelineno-14-22">22</a></span>
+<span class="normal"><a href="#__codelineno-14-23">23</a></span>
+<span class="normal"><a href="#__codelineno-14-24">24</a></span>
+<span class="normal"><a href="#__codelineno-14-25">25</a></span>
+<span class="normal"><a href="#__codelineno-14-26">26</a></span>
+<span class="normal"><a href="#__codelineno-14-27">27</a></span>
+<span class="normal"><a href="#__codelineno-14-28">28</a></span>
+<span class="normal"><a href="#__codelineno-14-29">29</a></span>
+<span class="normal"><a href="#__codelineno-14-30">30</a></span>
+<span class="normal"><a href="#__codelineno-14-31">31</a></span>
+<span class="normal"><a href="#__codelineno-14-32">32</a></span>
+<span class="normal"><a href="#__codelineno-14-33">33</a></span>
+<span class="normal"><a href="#__codelineno-14-34">34</a></span>
+<span class="normal"><a href="#__codelineno-14-35">35</a></span>
+<span class="normal"><a href="#__codelineno-14-36">36</a></span>
+<span class="normal"><a href="#__codelineno-14-37">37</a></span>
+<span class="normal"><a href="#__codelineno-14-38">38</a></span>
+<span class="normal"><a href="#__codelineno-14-39">39</a></span>
+<span class="normal"><a href="#__codelineno-14-40">40</a></span>
+<span class="normal"><a href="#__codelineno-14-41">41</a></span>
+<span class="normal"><a href="#__codelineno-14-42">42</a></span>
+<span class="normal"><a href="#__codelineno-14-43">43</a></span>
+<span class="normal"><a href="#__codelineno-14-44">44</a></span>
+<span class="normal"><a href="#__codelineno-14-45">45</a></span>
+<span class="normal"><a href="#__codelineno-14-46">46</a></span>
+<span class="normal"><a href="#__codelineno-14-47">47</a></span>
+<span class="normal"><a href="#__codelineno-14-48">48</a></span>
+<span class="normal"><a href="#__codelineno-14-49">49</a></span>
+<span class="normal"><a href="#__codelineno-14-50">50</a></span>
+<span class="normal"><a href="#__codelineno-14-51">51</a></span>
+<span class="normal"><a href="#__codelineno-14-52">52</a></span>
+<span class="normal"><a href="#__codelineno-14-53">53</a></span>
+<span class="normal"><a href="#__codelineno-14-54">54</a></span>
+<span class="normal"><a href="#__codelineno-14-55">55</a></span>
+<span class="normal"><a href="#__codelineno-14-56">56</a></span>
+<span class="normal"><a href="#__codelineno-14-57">57</a></span>
+<span class="normal"><a href="#__codelineno-14-58">58</a></span>
+<span class="normal"><a href="#__codelineno-14-59">59</a></span>
+<span class="normal"><a href="#__codelineno-14-60">60</a></span>
+<span class="normal"><a href="#__codelineno-14-61">61</a></span>
+<span class="normal"><a href="#__codelineno-14-62">62</a></span>
+<span class="normal"><a href="#__codelineno-14-63">63</a></span>
+<span class="normal"><a href="#__codelineno-14-64">64</a></span>
+<span class="normal"><a href="#__codelineno-14-65">65</a></span>
+<span class="normal"><a href="#__codelineno-14-66">66</a></span>
+<span class="normal"><a href="#__codelineno-14-67">67</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nx">toolsList</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Tool</span><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">        </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;function&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">        </span><span class="nx">Function</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Function</span><span class="p">{</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">            </span><span class="nx">Name</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;hello&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">            </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Say hello to a given person with their name&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="w">            </span><span class="nx">Parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Parameters</span><span class="p">{</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="w">                </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="w">                </span><span class="nx">Properties</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Property</span><span class="p">{</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="w">                    </span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">                        </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="w">                        </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;The name of the person&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">                    </span><span class="p">},</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="w">                </span><span class="nx">Required</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">},</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="w">        </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;function&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21"></a><span class="w">        </span><span class="nx">Function</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Function</span><span class="p">{</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22"></a><span class="w">            </span><span class="nx">Name</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;addNumbers&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="w">            </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Make an addition of the two given numbers&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24"></a><span class="w">            </span><span class="nx">Parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Parameters</span><span class="p">{</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25"></a><span class="w">                </span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26"></a><span class="w">                </span><span class="nx">Properties</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">llm</span><span class="p">.</span><span class="nx">Property</span><span class="p">{</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27"></a><span class="w">                    </span><span class="s">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28"></a><span class="w">                        </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;number&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29"></a><span class="w">                        </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;first operand&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30"></a><span class="w">                    </span><span class="p">},</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31"></a><span class="w">                    </span><span class="s">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32"></a><span class="w">                        </span><span class="nx">Type</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;number&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33"></a><span class="w">                        </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;second operand&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34"></a><span class="w">                    </span><span class="p">},</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36"></a><span class="w">                </span><span class="nx">Required</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">},</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-14-39" name="__codelineno-14-39"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40"></a><span class="p">}</span>
+<a id="__codelineno-14-41" name="__codelineno-14-41"></a>
+<a id="__codelineno-14-42" name="__codelineno-14-42"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-14-43" name="__codelineno-14-43"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-14-44" name="__codelineno-14-44"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-14-45" name="__codelineno-14-45"></a><span class="w">    </span><span class="nx">Tools</span><span class="p">(</span><span class="nx">toolsList</span><span class="p">).</span>
+<a id="__codelineno-14-46" name="__codelineno-14-46"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">`say &quot;hello&quot; to Bob, say &quot;hello&quot; to Sam`</span><span class="p">).</span>
+<a id="__codelineno-14-47" name="__codelineno-14-47"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">`add 2 and 40`</span><span class="p">).</span>
+<a id="__codelineno-14-48" name="__codelineno-14-48"></a><span class="w">    </span><span class="nx">FunctionCalling</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-49" name="__codelineno-14-49"></a><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="kt">string</span>
+<a id="__codelineno-14-50" name="__codelineno-14-50"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">toolCall</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">ToolCalls</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-51" name="__codelineno-14-51"></a><span class="w">            </span><span class="k">switch</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Name</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-52" name="__codelineno-14-52"></a><span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">:</span>
+<a id="__codelineno-14-53" name="__codelineno-14-53"></a><span class="w">                </span><span class="nx">results</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;Hello %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">])</span>
+<a id="__codelineno-14-54" name="__codelineno-14-54"></a><span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;addNumbers&quot;</span><span class="p">:</span>
+<a id="__codelineno-14-55" name="__codelineno-14-55"></a><span class="w">                </span><span class="nx">a</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-56" name="__codelineno-14-56"></a><span class="w">                </span><span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">toolCall</span><span class="p">.</span><span class="nx">Function</span><span class="p">.</span><span class="nx">Arguments</span><span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-57" name="__codelineno-14-57"></a><span class="w">                </span><span class="nx">results</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;Addition of %v and %v is %v\n&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-58" name="__codelineno-14-58"></a><span class="w">                    </span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">.(</span><span class="kt">float64</span><span class="p">)</span><span class="o">+</span><span class="nx">b</span><span class="p">.(</span><span class="kt">float64</span><span class="p">))</span>
+<a id="__codelineno-14-59" name="__codelineno-14-59"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-14-60" name="__codelineno-14-60"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-61" name="__codelineno-14-61"></a><span class="w">        </span><span class="nx">self</span><span class="p">.</span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;RESULTS:\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">results</span><span class="p">)</span><span class="w"> </span><span class="c1">// Add results to conversation</span>
+<a id="__codelineno-14-62" name="__codelineno-14-62"></a><span class="w">    </span><span class="p">}).</span>
+<a id="__codelineno-14-63" name="__codelineno-14-63"></a><span class="w">    </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Use the results and format the output with fancy emojis&quot;</span><span class="p">).</span>
+<a id="__codelineno-14-64" name="__codelineno-14-64"></a><span class="w">    </span><span class="nx">ChatStream</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-65" name="__codelineno-14-65"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-14-66" name="__codelineno-14-66"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-14-67" name="__codelineno-14-67"></a><span class="w">    </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="additional-features">Additional Features</h2>
+<h3 id="provider-configuration">Provider Configuration</h3>
+<p>Squawk supports multiple providers:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1">// Ollama</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;mistral:latest&quot;</span><span class="p">).</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">  </span><span class="nx">BaseURL</span><span class="p">(</span><span class="s">&quot;http://localhost:11434&quot;</span><span class="p">).</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">)</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="c1">// OpenAI</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;gpt-4&quot;</span><span class="p">).</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">OpenAI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-api-key&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="c1">// Docker Model Runner</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;llama:13b&quot;</span><span class="p">).</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="w">  </span><span class="nx">BaseURL</span><span class="p">(</span><span class="s">&quot;http://localhost:12434&quot;</span><span class="p">).</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">DockerModelRunner</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="model-options">Model Options</h3>
+<p>Configure model behavior:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;mistral:latest&quot;</span><span class="p">).</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="w">  </span><span class="nx">Options</span><span class="p">(</span><span class="nx">llm</span><span class="p">.</span><span class="nx">SetOptions</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">Temperature</span><span class="p">:</span><span class="w">   </span><span class="mf">0.7</span><span class="p">,</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">TopP</span><span class="p">:</span><span class="w">          </span><span class="mf">0.9</span><span class="p">,</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">RepeatLastN</span><span class="p">:</span><span class="w">   </span><span class="mi">64</span><span class="p">,</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">RepeatPenalty</span><span class="p">:</span><span class="w"> </span><span class="mf">1.1</span><span class="p">,</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a><span class="w">    </span><span class="nx">option</span><span class="p">.</span><span class="nx">MaxTokens</span><span class="p">:</span><span class="w">     </span><span class="mi">2000</span><span class="p">,</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a><span class="w">  </span><span class="p">}))</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="prompting-templates">Prompting Templates</h3>
+<p>Squawk includes built-in prompting templates:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span>
+<span class="normal"><a href="#__codelineno-17-16">16</a></span>
+<span class="normal"><a href="#__codelineno-17-17">17</a></span>
+<span class="normal"><a href="#__codelineno-17-18">18</a></span>
+<span class="normal"><a href="#__codelineno-17-19">19</a></span>
+<span class="normal"><a href="#__codelineno-17-20">20</a></span>
+<span class="normal"><a href="#__codelineno-17-21">21</a></span>
+<span class="normal"><a href="#__codelineno-17-22">22</a></span>
+<span class="normal"><a href="#__codelineno-17-23">23</a></span>
+<span class="normal"><a href="#__codelineno-17-24">24</a></span>
+<span class="normal"><a href="#__codelineno-17-25">25</a></span>
+<span class="normal"><a href="#__codelineno-17-26">26</a></span>
+<span class="normal"><a href="#__codelineno-17-27">27</a></span>
+<span class="normal"><a href="#__codelineno-17-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1">// Explain for kids</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">    </span><span class="nx">ForKids</span><span class="p">(</span><span class="s">&quot;Explain Docker&quot;</span><span class="p">).</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">    </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="w">    </span><span class="p">})</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a>
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="c1">// Brief explanation</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;qwen2.5:3b&quot;</span><span class="p">).</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="w">    </span><span class="nx">Brief</span><span class="p">(</span><span class="s">&quot;Explain Docker&quot;</span><span class="p">).</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="w">    </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">answer</span><span class="p">.</span><span class="nx">Message</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17"></a><span class="w">    </span><span class="p">})</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18"></a>
+<a id="__codelineno-17-19" name="__codelineno-17-19"></a>
+<a id="__codelineno-17-20" name="__codelineno-17-20"></a><span class="c1">// Other templates include:</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="c1">// - AsAPoem()</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22"></a><span class="c1">// - AsARecipe()</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23"></a><span class="c1">// - Timeline()</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24"></a><span class="c1">// - Comparison()</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25"></a><span class="c1">// - StepByStep()</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26"></a><span class="c1">// - ProsAndCons()</span>
+<a id="__codelineno-17-27" name="__codelineno-17-27"></a><span class="c1">// - InLaymansTerms()</span>
+<a id="__codelineno-17-28" name="__codelineno-17-28"></a><span class="c1">// - Summarize()</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="error-handling">Error Handling</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-18-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-18-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-18-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-18-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-18-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-18-10">10</a></span>
+<span class="normal"><a href="#__codelineno-18-11">11</a></span>
+<span class="normal"><a href="#__codelineno-18-12">12</a></span>
+<span class="normal"><a href="#__codelineno-18-13">13</a></span>
+<span class="normal"><a href="#__codelineno-18-14">14</a></span>
+<span class="normal"><a href="#__codelineno-18-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="nx">sq</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">  </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;mistral:latest&quot;</span><span class="p">).</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">  </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w">  </span><span class="nx">User</span><span class="p">(</span><span class="s">&quot;Generate some code&quot;</span><span class="p">).</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">  </span><span class="nx">Chat</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="nx">llm</span><span class="p">.</span><span class="nx">Answer</span><span class="p">,</span><span class="w"> </span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">      </span><span class="nx">self</span><span class="p">.</span><span class="nx">LastError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w">  </span><span class="c1">// Set error</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w">      </span><span class="k">return</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w">  </span><span class="p">})</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="c1">// Check for errors</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sq</span><span class="p">.</span><span class="nx">LastError</span><span class="p">();</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14"></a><span class="w">  </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Operation failed: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="command-execution">Command Execution</h3>
+<p>Execute custom commands on a Squawk instance:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span>
+<span class="normal"><a href="#__codelineno-19-5">5</a></span>
+<span class="normal"><a href="#__codelineno-19-6">6</a></span>
+<span class="normal"><a href="#__codelineno-19-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="nx">squawk</span><span class="p">.</span><span class="nx">New</span><span class="p">().</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="w">    </span><span class="nx">Model</span><span class="p">(</span><span class="s">&quot;mistral:latest&quot;</span><span class="p">).</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">Ollama</span><span class="p">).</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="w">    </span><span class="nx">System</span><span class="p">(</span><span class="s">&quot;You are a Go expert&quot;</span><span class="p">).</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="w">    </span><span class="nx">Cmd</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">self</span><span class="w"> </span><span class="o">*</span><span class="nx">squawk</span><span class="p">.</span><span class="nx">Squawk</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">Messages</span><span class="p">())</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="w">    </span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>👀 you will find complete examples in:</p>
+<ul>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/86-squawk-demo">examples/86-squawk-demo</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/87-squawk-meta-prompts">examples/87-squawk-meta-prompts</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/88-squawk-embeddings">examples/88-squawk-embeddings</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/89-squawk-tools">examples/89-squawk-tools</a></li>
+<li><a href="https://github.com/parakeet-nest/parakeet/tree/main/examples/92-squawk-tutorial">examples/92-squawk-tutorial</a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 - 2025 Philippe Charrière
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
